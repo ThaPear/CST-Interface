@@ -1,0 +1,101 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Curve
+
+Curve Object
+
+This object is used to apply operations on curves and curve items.
+
+Methods
+
+Example
+
+Methods
+
+NewCurve ( name curvename )
+
+Defines and names a new curve object.
+
+ 
+
+DeleteCurve ( name curvename )
+
+Deletes a specified curve object.
+
+ 
+
+RenameCurve ( name oldname, name newname )
+
+Renames a specified curve object.
+
+ 
+
+DeleteCurveItem ( name curvename, name curveitemname )
+
+Deletes a specified item object associated to a curve object.
+
+ 
+
+RenameCurveItem ( name curvename, name oldcurveitemname, name newcurveitemname )
+
+Renames a specified item object associated to a curve object.
+
+ 
+
+DeleteCurveItemSegment ( name curvename, name curveitemname, int edgeid )
+
+Deletes a segment of an item object associated to a curve object. The segment is specified by the name of the curve and the item that it belongs as well as an identity number.
+
+ 
+
+MoveCurveItem ( name curveitemname, name oldcurvename, name newcurvename )
+
+Moves a specified item from the curve it belongs to another curve object.
+
+ 
+
+StartCurveNameIteration ( string type ) long numberofcurves
+
+Start iterating over the curves:
+
+"all"
+
+All curves
+
+"open"
+
+Only the open curves
+
+"closed"
+
+Only the closed curves
+
+ 
+
+GetNextCurveName () name nextcurvename
+
+Returns the next curve name. Use StartCurveNameIteration to start the iteration.
+
+ 
+
+GetPointCoordinates (string curveitemname,  string pid, double &x,double &y,double &z )  bool
+
+Retrieves the coordinates of the point with the given pid. Returns false if there is no such point.
+
+ 
+
+GetNumberOfPoints (string curveitemname ) int
+
+Returns the maximum number of points.
+
+ 
+
+IsClosed (string curveitemname ) bool
+
+Returns whether it is a closed curve or not.
+
+Example
+
+Curve.RenameCurve "curve1", "MyCurves"
+
+Curve.DeleteCurveItemSegment "curve1", "rectangle1", "1"

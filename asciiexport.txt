@@ -1,0 +1,191 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | ASCIIExport
+
+ASCIIExport Object
+
+Export result data as an ASCII file.
+
+Supported result items
+
+Methods
+
+Default Settings
+
+Example
+
+Supported result items
+
+The ASCII data export functionality is available for the following result items:
+
+1D signals
+
+1D and 2D/3D farfields
+
+2D/3D field results
+
+Methods
+
+Reset
+
+Resets the export options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets the name of the exported file.
+
+ 
+
+Mode ( enum type )
+
+Use a fixed step width or a fixed number of samples for your data export. This settings are only available for 2D/3D field results.
+
+ 
+
+type can have one of  the following values:
+
+"FixedNumber"
+
+Fixed number of samples
+
+"FixedWidth"
+
+Fixed step width
+
+ 
+
+SetfileType(enum type)
+
+Set the file format for exports. This setting is only available for 2D/3D field results.
+
+ 
+
+type can have one of  the following values:
+
+"ascii"
+
+ASCII format (default)
+
+"csv"
+
+csv format
+
+"bix"
+
+binary format
+
+ 
+
+SetCsvSeparator(string val)
+
+Set the separator for "csv"-formats. This settings is only available for 2D/3D field results.
+
+ 
+
+ExportCoordinatesInMeter(bool val)
+
+if "val" is true, then the coordinates  will be exported in meter else in project unit.  This setting is only available for 2D/3D field results.
+
+ 
+
+Step ( int steps / double stepwidth )
+
+Number of steps or step width in all directions. Use the .Mode method to select the step definition. This setting is only available for 2D/3D field results.
+
+ 
+
+StepX ( int steps / double stepwidth )
+
+StepY ( int steps / double stepwidth )
+
+StepZ ( int steps / double stepwidth )
+
+Number of steps or step width in x / y / z-direction. Use the .Mode method to select the step definition. This settings are only available for 2D/3D field results.
+
+ 
+
+SetPointFile(filename name)
+
+Set the file name of a file containing points that are used for the field evaluation and export.
+
+ 
+
+ SetSubvolume( double xmin, doublexmax, double ymin, double ymax, double zmin, double zmax );
+
+       Define axis aligned sub volume for the volume exports. This setting is only available for 2D/3D field results.
+
+ 
+
+UseSubvolume( bool val )
+
+        Activate or deactivate defined sub volume defined with the ".SetSubvolume" method..
+
+ 
+
+SetTimeRange( double val_min, double val_max)
+
+        Set the time range for time dependent results. Times are expected in project units. This setting is only available for 2D/3D field results.
+
+ 
+
+SetSampleRange( int val_min, int val_max )
+
+        Set the time sample range for time dependent results.  This setting is only available for 2D/3D field results.
+
+ 
+
+ 
+
+Execute
+
+Performs the ASCIIExport.
+
+Default Settings
+
+FileName ("")
+
+Mode ("FixedWidth")
+
+Step (-1)
+
+File type  "ascii"
+
+Example
+
+' The following script exports a file containing the electric field  "e1" (if available)
+
+' The file will show 9 columns:
+
+'     3 for the positions (x, y, z) and
+
+'     6 for the electric field vector (3 x Re/Im)
+
+ 
+
+' Select the desired monitor in the tree.
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+ 
+
+With ASCIIExport
+
+    .Reset
+
+    .FileName (".\example.txt")
+
+    .Mode ("FixedNumber")
+
+    .StepX (12)
+
+    .StepY (12)
+
+    .StepZ (8)
+
+    .Execute
+
+End With
+
+ 

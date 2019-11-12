@@ -1,0 +1,346 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | Plot1D
+
+Plot1D Object
+Description: This object allows to plot one dimensional curves, for example S-parameters. It also allows various modifications to the plot, such as changing the ticking, modifying the curve line style, or adding curve markers.
+
+Methods
+
+Markers and Measure Lines
+
+Background Shapes
+
+Plot Styles
+
+Queries
+
+Example
+
+Please note that the corresponding tree item needs to be selected first via a SelectTreeItem call before the plot can be modified, as shown in the example. Some of the cartesian plot vba commands apply to polar plots as well. In this case "X" corresponds to the polar angle and "Y" to the radius.
+
+Methods
+
+Plot
+
+Plots the field with the actual settings. Most of the following commands need a subsequent call of this method to make changes visible.
+
+ 
+
+PlotView( string type ) bool
+
+This method corresponds to selecting a certain plot of the plot toolbar. The variable type specifies the type of view that should be plotted and can be one of the following strings: "real", "imaginary", "magnitude", "magnitudedb", "phase", "polar", "smith", "smithy". If the data could be plotted with the given view type, the method returns true, otherwise false.
+
+ 
+
+ResetView
+
+Resets the settings of the 1-dimensional plot to its default values. This does not affect the plot styles.
+
+ 
+
+SetCurveLimit( bool switch, long curvelimit )
+
+This command allows enabling and specifying a global limit for the number of curves that will be plotted within a single 1D plot. The variable switch specifies if the limit should be enabled, and the variable curvelimit specifies the global upper limit. These settings correspond to the setting "No. of curves" shown in the 1D Plot Ribbon. Please note that these settings are global and independent of the project, i.e. changes will affect all 1D Plots within CST Studio Suite. If curves are omitted in a plot, then a hint will be shown in the 1D plot legend. The stored settings can be queried with the GetCurveLimit command. The Plot method has to be called afterwards to make the changes visible.
+
+ 
+
+SetSmithChartZoom ( double value )
+
+The Smith chart will be zoomed in a logarithmic scale in dB. This method is available only for Smith chart plots.
+
+ 
+
+ShowReferenceCircle ( bool switch, double radius )
+
+In polar plots and Smith chart plots this method shows a background circle with the given radius. In polar plots, the radius unit is the same as in the current plot. In Smith charts the radius unit is a linear value. The Plot method has to be called afterwards to make the changes visible. This method is available only for polar and Smith chart plots.
+
+ 
+
+UseCurveSmoothing ( bool switch )
+
+The method enables or disables automatic smoothening of curves in polar plots and Smith chart plots. The Plot method has to be called afterwards to make the changes visible. This method is available only for polar and Smith chart plots.
+
+ 
+
+SetFont ( string fontname, string fonttype, string fontsize )
+
+This method modifies the font which is used in the plot. The variable fontname contains the name of the font (i.e. "Arial"). The variable fonttype can be either "bold", "italic", "bold italic" or an empty string. The variable fonstsize can be a positive integer value. The Plot method has to be called afterwards to make the changes visible.
+
+ 
+
+XAutorange ( bool switch )
+
+This method enables or disables auto-scaling of the x-axis. If switch is True the plot will always be auto-scaled to the maximum range. For polar and Smith chart plots this method enables or disables auto-scaling of the frequency range of the curve.
+
+ 
+
+XAutoTick ( bool switch )
+
+This method enables or disables automatic determination of the ticking of the x/phi-axis. If switch is True the ticking will be done automatically. See also XTicksDistance.
+
+ 
+
+XLogarithmic ( bool switch )
+
+This method enables or disables logarithmic plotting of the x-axis. If the lower bound of the current x-axis is non-positive, an error will be returned. Use the command XRange to change the plot range of the x-axis. The Plot method has to be called afterwards to make the changes visible. This method is available only for cartesian plots.
+
+ 
+
+XRange ( double min, double max )
+
+Specifies the range to be plotted for the x-axis. This method automatically turns the XAutorange switch off. For polar and Smith chart plots this method changes the frequency range of the curve.
+
+ 
+
+XRoundscale ( bool switch )
+
+This method will round the values of the x-axis ticks (switch = True). Otherwise the values are displayed up to four digits (switch = False). This method is available only for cartesian plots.
+
+ 
+
+XTicks ( int number )
+
+Specifies the number of ticks to be displayed at the x/phi-axis. This method automatically turns the XAutoTick switch off.
+
+ 
+
+XTicksDistance ( double distance )
+
+Specifies the distance between two successive ticks to be displayed at the x/phi-axis. This method automatically turns the XAutoTick switch off.
+
+ 
+
+YAutorange ( bool switch )
+
+This method enables or disables auto-scaling of the y/r-axis. If switch is True the plot will always be auto-scaled to the maximum range. For Smith chart plots this command has no effect.
+
+ 
+
+YAutoTick ( bool switch )
+
+This method enables or disables automatic determination of the ticking of the y/r-axis. If switch is True the ticking will be done automatically. See also YTicksDistance.
+
+ 
+
+YLogarithmic ( bool switch )
+
+This method enables or disables logarithmic plotting of the y/r-axis. If the lower bound of the current y-axis is non-positive, an error will be returned. Use the command YRange to change the plot range of the y-axis. The Plot method has to be called afterwards to make the changes visible.
+
+ 
+
+YRange ( double min, double max )
+
+Specifies the range to be plotted for the y/r-axis. This method automatically turns the YAutorange switch off. For Smith chart plots this command has no effect.
+
+ 
+
+YRoundscale ( bool switch )
+
+This method will round the values of the y/r-axis ticks (switch = True). Otherwise the values are displayed up to four digits (switch = False).
+
+ 
+
+YTicks ( int number )
+
+Specifies the number of ticks to be displayed at the y/r-axis.
+
+ 
+
+YTicksDistance ( double distance )
+
+Specifies the distance between two successive ticks to be displayed at the y/r-axis. This method automatically turns the YAutoTick switch off.
+
+ 
+
+AddMarker ( double absczissa )
+
+On each curve in the selected plot a curve marker will be set at the specified abscissa. For polar or Smith chart plots the markers will be set at the specified frequency. The Plot method has to be called afterwards to show the added markers.
+
+ 
+
+AddMarkerToCurve ( double abscissa, int curveindex )
+
+A curve marker will be set at the specified abscissa to the curve with the specified curve index. The curve index is zero based. The Plot method has to be called afterwards to show the added markers.
+
+ 
+
+DeleteAllMarker
+
+All curve markers that have been previously defined in the selected plot will be deleted. The Plot method has to be called afterwards to make the changes visible.
+
+ 
+
+DeleteMarker ( double abscissa )
+
+All curve markers that have previously been defined at the specified abscissa will be deleted. The argument corresponds with the frequency for polar or Smith chart plots. The Plot method has to be called afterwards to make the changes visible.
+
+ 
+
+MeasureLines ( bool switch )
+
+If switch is True four measure lines are displayed, each defining an interval on the x-axis and y-axis. The intervals can be defined using the methods XMeasureLines and YMeasureLines. The resulting widths are displayed together with the measure lines. This method is available only for cartesian plots.
+
+ 
+
+XMarker ( bool switch )
+
+If switch is True a marker is displayed, positioned with regard to the x-axis using XMarkerPos. In a box beside the marker axis the y-values of all curves are shown. This method is available only for cartesian plots.
+
+ 
+
+ShowMarkerAtMin
+
+Activates the marker and positions the marker at  the global y-minimum of all displayed curves. This method is available only for cartesian plots.
+
+ 
+
+ShowMarkerAtMax
+
+Activates the marker and positions the marker at  the global y-maximum of all displayed curves. This method is available only for cartesian plots.
+
+ 
+
+XMarkerPos ( double value )
+
+If XMarker is active, its position with respect to the x-axis will be specified here. This method is available only for cartesian plots.
+
+ 
+
+XMeasureLines ( double min, double max )
+
+If MeasureLines are active, their positions with respect to the x-axis will be specified here. This method is available only for cartesian plots.
+
+ 
+
+YMeasureLines ( double min, double max )
+
+If MeasureLines are active, their positions with respect to the y-axis will be specified here. This method is available only for cartesian plots.
+
+ 
+
+AddThickBackGroundLine( string x0, string y0, string x1, string y1 )
+
+Adds a thick background line to a cartesian plot going from (x0, y0) to (x1, y1). The points are given in data coordinates with respect to current plot. This method is available only for cartesian plots.
+
+ 
+
+AddThinBackGgroundLine( string x0,  string y0, string x1, string y1 )
+
+Adds a thin background line to a cartesian plot going from (x0, y0) to (x1, y1). The points are given in data coordinates with respect to current plot. This method is available only for cartesian plots.
+
+ 
+
+DeleteAllBackGroundShapes
+
+Deletes all previously set background lines. This method is available only for cartesian plots.
+
+ 
+
+SetLineColor( int curveindex, int red, int green, int blue )
+
+Sets the color of the curve with the given curve index to the specified RGB-value. Each parameter red, green and blue can be a value between 0 and 255. After this method has been called it is necessary to call the Plot method to make the changes visible.
+
+ 
+
+RemoveLineColor( int curveindex )
+
+Sets the color of the curve with the given curve index to a default value. After this method has been called it is necessary to call the Plot method to make the changes visible.
+
+ 
+
+SetLineStyle( int curveindex, string linetype, int linewidth )
+
+Sets the line style and the line thickness of the curve with the given curve index. The parameter linetype will specify the line style of the curve and can be either "solid", "dashed", "dotted" or "dashdotted". Any other string will not change the line style. The parameter linewidth specifies the line thickness and can be a value between 1 and 8. Any other value will not change the line thickness. After this method has been called it is necessary to call the Plot method to make the changes visible.
+
+ 
+
+RemoveLineStyle( int curveindex )
+
+Sets the line style and line thickness of the curve with the given curve index to default values. After this method has been called it is necessary to call the Plot method to make the changes visible.
+
+ 
+
+SetMarkerStyle( int curveindex, string markertype, string markershape, int markersize )
+
+Sets the style and shape of additional marks of the curve with the given curve index.  The parameter markertype specifies the type of the additional marks and can be either "auto", "additionalmarks","marksonly" or "nomarks" . Any other string will not change the type of the markers. The parameter markershape specifies the shape of the markers and can be an be either "auto", "circles", "diamonds", "squares", "triangle up" or "triangle down". Any other string will not change the shape of the markers. The parameter markersize specifies the size of the additional markers and can be a value between 1 and 8. Any other value will not change the size of the markers. After this method has been called it is necessary to call the Plot method to make the changes visible. The markers are not visible in Polar plots and Smith chart plots.
+
+ 
+
+RemoveMarkerStyle( int curveindex )
+
+Sets the line style and line thickness of the curve with the given curve index to default values. After this method has been called it is necessary to call the Plot method to make the changes visible. The markers are not visible in Polar plots and Smith chart plots.
+
+ 
+
+GetCurveIndexOfCurveLabel( string curvelabel ) int
+
+Returns the index of the curve with the specified curve label. If the curve label is not found  -1 will be returned. In case the curve label is not unique, the first matching index will be returned. Please note that it is the curve label which is needed, not the name of the Tree entry. In a Smith chart plot, this could be for example "S1,1 (var. ref. imp.)". Use the method GetCurveLabelOfCurveIndex to get the correct spelling of a certain curve label.
+
+ 
+
+GetCurveLabelOfCurveIndex( int curveindex ) string
+
+Returns the label of the curve with the specified index. If no curve with this index is found an empty string will be returned.
+
+ 
+
+GetCurveValue( string curvelabel, double abscissa ) double
+
+This method returns the ordinate value of the curve specified by curvelabel at the abscissa value specified by abscissa. If the value abscissa is in between two data points, the ordinate of the closest data point is returned. This method is available only for cartesian plots.
+
+ 
+
+GetMaximumLocation( string curvlabel ) double
+
+Get the maximum location of the specified curve. This method is available only for cartesian plots.
+
+ 
+
+GetMinimumLocation( string curvelabel ) double
+
+Get the minimum location of the specified curve. This method is available only for cartesian plots.
+
+ 
+
+GetNumberOfCurves double
+
+Returns the total number of displayed curves in a 1D plot. If some curves are hidden they are not counted anymore.
+
+ 
+
+GetCurrentPlotSettings( string options ) string
+
+Returns the current plot settings as a string. The parameter 'options' is expected to be an empty string. The string returned by this method contains VBA commands that can be used to restore the current plot state.
+
+ 
+
+GetCurveLimit( bool_ref enabled, long_ref  curvelimit )
+
+This method allows querying the settings that correspond to the "No. of curves" option shown in the 1D Plot Ribbon. The variable enabled will be set to True if a global limit for the number of plotted curves is enabled, otherwise to False. The variable curvelimit will be set to the stored global limit for the number of plotted curves. Please note that these settings are global and independent of the project. The settings can be modified with the SetCurveLimit command.
+
+ 
+
+ExportBitmap( int width,  int height, string filename )
+
+Creates a bitmap file of the current plot with the specified size. The string filename is expected to be an absolute file path.
+
+Example
+
+' change the plot style of S-Parameter S1,1
+
+SelectTreeItem("1D Results\S-Parameters")
+
+Dim index As Integer
+
+With Plot1D
+
+      index =.GetCurveIndexOfCurveLabel("S1,1")
+
+     .SetLineStyle(index,"dashed",8) ' thick dashed line
+
+     .SetLineColor(index,255,255,0)  ' yellow
+
+     .Plot ' make changes visible
+
+End With

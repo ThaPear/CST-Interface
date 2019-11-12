@@ -1,0 +1,93 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Brick
+
+Brick Object
+
+This object is used to create a new brick shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name brickname )
+
+Sets the name of the brick.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new brick. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new brick. The material must already exist.
+
+ 
+
+Xrange ( double xmin, double xmax )
+
+Sets the bounds for the x- or u-coordinate for the new brick, depending if a local coordinate system is active or not.
+
+ 
+
+Yrange ( double ymin, double ymax )
+
+Sets the bounds for the y- or v-coordinate for the new brick, depending if a local coordinate system is active or not.
+
+ 
+
+Zrange ( double zmin, double zmax )
+
+Sets the bounds for the z- or w-coordinate for the new brick, depending if a local coordinate system is active or not.
+
+ 
+
+Create
+
+Creates a new brick. All necessary settings for this brick have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Xrange (0, 0)
+
+Yrange (0, 0)
+
+Zrange (0, 0)
+
+Example
+
+With Brick
+
+    .Reset
+
+    .Name ("brick1")
+
+    .Component ("component1")
+
+    .Material ("PEC")
+
+    .Xrange (0, 2)
+
+    .Yrange (0, 3)
+
+    .Zrange (0, "a+3")
+
+    .Create
+
+End With

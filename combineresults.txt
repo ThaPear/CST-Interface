@@ -1,0 +1,239 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | CombineResults
+
+CombineResults Object
+
+Combine calculation results of field monitors for arbitrary excitations.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their initial values.
+
+ 
+
+SetMonitorType ( enum{"frequency", "time"} monitorType )
+
+Selects between time domain or frequency domain monitors. To combine farfield monitors set the monitor type to "frequency".
+
+ 
+
+SetOffsetType ( enum{"time", "phase"} offsetType )
+
+Selects the offset type when combining time domain monitors. This offset may be either a time shift or a phase shift at a given reference frequency.
+
+ 
+
+SetReferenceFrequency ( double fRef )
+
+Sets the reference frequency for the phase shift when combining time domain monitor results.
+
+ 
+
+EnableAutomaticLabeling ( bool bFlag )
+
+Activates or deactivates the automatic labeling when combining results.
+
+ 
+
+SetLabel ( name labelName )
+
+Sets the name for a result combination.
+
+ 
+
+SetExcitationValues ( string Type, string Source, int  Mode,  double amplitude, double phase_or_timedelay )
+
+Specifies the amplitude and phase (respectively  time shift value) for a selected excitation. Supported excitations are:
+
+Excitation source
+
+Type
+
+Source
+
+Mode
+
+Waveguide port
+
+"port"
+
+Port number
+
+Mode number
+
+Discrete port
+
+"port"
+
+Port number
+
+not available
+
+Farfield source
+
+"ffs"
+
+Farfield source name
+
+not available
+
+Nearfield source
+
+"cd"
+
+Nearfield source name
+
+not available
+
+ 
+
+For the specified excitation the amplitude is set to amplitude and the  phase value (respectively  time shift values) is set to phase_or_timedelay.
+
+ 
+
+GetCombinationFromLabel ( name labelName ) string
+
+Returns the combination string for the given label.
+
+ 
+
+SetAllExcitations ( double amplitude, double phase_or_timedelay )
+
+For all available excitations the amplitudes are set to amplitude and the phase values (respectively  time shift values) are set to phase_or_timedelay.
+
+ 
+
+SetSystemAmplitude ( double amplitude )
+
+The combine results feature may be used to simulate a network excitation. amplitude is the system stimulation amplitude which is equivalent to the excitation defined above.
+
+ 
+
+SetSystemBalance ( double balance )
+
+Sets the balance of the total system (i.e. model and exciting circuit).
+
+ 
+
+SetNone
+
+Sets the amplitudes and phase values (or time shift values) for all excitations to 0 and resets the system settings. Therefore no combination will be done.
+
+ 
+
+ClearFilters
+
+Clears the monitor selection filters. Only native 1D results are combined.
+
+ 
+
+AddFilter ( string Filter )
+
+Adds a monitor selection filter to the internal filter set. The following expressions are allowed:
+
+ 
+
+Filter
+
+Action
+
+*
+
+All monitors are added to the selection
+
+<MonitorName>
+
+This monitor is added to the selection
+
+:farfield:
+
+All farfield monitors are added to the selection
+
+:fieldsource:
+
+All Field source monitors are added to the selection
+
+:efield:
+
+All E-field monitors are added to the selection
+
+:hfield:
+
+All H-field monitors are added to the selection
+
+:current:
+
+All current monitors are added to the selection
+
+:powerflow:
+
+All power flow monitors are added to the selection
+
+:eenergy:
+
+All E-energy monitors are added to the selection
+
+:henergy:
+
+All H-energy monitors are added to the selection
+
+ 
+
+OnlyAtFrequency ( double freq )
+
+Combines all monitors defined the frequency "freq".
+
+ 
+
+Run
+
+Starts combining monitor results. The combined results are added to the result tree in the respective sub folders.
+
+Default Settings
+
+SetMonitorType ("frequency")
+
+SetOffsetType ("time")
+
+SetReferenceFrequency (0.0)
+
+EnableAutomaticLabeling (True)
+
+ClearFilters
+
+AddFilter ("*")
+
+SetNone
+
+Example
+
+With CombineResults
+
+    .Reset
+
+    .SetMonitorType ("frequency")
+
+    .EnableAutomaticLabeling (False)
+
+    .SetLabel ("My result combination")
+
+    .SetNone
+
+    .SetExcitationValues ("port", "1", 1, "Sqr(2.0)", 90.0)
+
+    .SetExcitationValues ("port", "2", 1, "Sqr(2.0)", -90.0)
+
+    .Run
+
+End With
+
+ 
