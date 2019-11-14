@@ -20,8 +20,7 @@ classdef FloquetPort < handle
     end
     methods
         function StartBulkMode(obj)
-            % Buffers all commands instead of sending them to CST
-            % immediately.
+            % Buffers all commands instead of sending them to CST immediately.
             obj.bulkmode = 1;
         end
         function EndBulkMode(obj)
@@ -49,14 +48,23 @@ classdef FloquetPort < handle
             obj.AddToHistory(['.Reset']);
         end
         function Port(obj, position)
-            % This methods is called before any other method in order to specify the Floquet port to which subsequent calls refer. The argument is either "Zmin" or "Zmax".
-            % position: 'zmin'
-            %           'zmax'
+            % This methods is called before any other method in order to specify the Floquet port to
+            % which subsequent calls refer. The argument is either "Zmin" or "Zmax".
+            %
+            % position: 'Zmin'
+            %           'Zmax'
             obj.AddToHistory(['.Port "', num2str(position, '%.15g'), '"']);
             obj.port = position;
         end
         function AddMode(obj, type, order_x, order_yprime)
-            % Adds a single Floquet mode to this port. The mode is specified by its type (TE for transversal electric field with respect to the port's plane, and TM for transversal magnetic field), and its signed integer order numbers along the unit cell lattice vectors. The order numbers need to be zero for LCP and RCP modes (also see SetUseCircularPolarization). Note that it is not necessary to specify all Floquet modes explicitly by calling this method unless a fully customized list of modes is required.
+            % Adds a single Floquet mode to this port. The mode is specified by its type (TE for
+            % transversal electric field with respect to the port's plane, and TM for transversal
+            % magnetic field), and its signed integer order numbers along the unit cell lattice
+            % vectors. The order numbers need to be zero for LCP and RCP modes (also see
+            % SetUseCircularPolarization). Note that it is not necessary to specify all Floquet
+            % modes explicitly by calling this method unless a fully customized list of modes is
+            % required.
+            %
             % type: 'TE'
             %       'TM'
             %       'LCP'
@@ -69,19 +77,28 @@ classdef FloquetPort < handle
             obj.addmode.order_yprime = order_yprime;
         end
         function SetUseCircularPolarization(obj, flag)
-            % If this flag is set to True, left and right circularly polarized waves (LCP, RCP) will be excited instead of the linearly polarized TE(0,0) and TM(0,0) modes.
+            % If this flag is set to True, left and right circularly polarized waves (LCP, RCP) will
+            % be excited instead of the linearly polarized TE(0,0) and TM(0,0) modes.
             obj.AddToHistory(['.SetUseCircularPolarization "', num2str(flag, '%.15g'), '"']);
             obj.setusecircularpolarization = flag;
         end
         function SetPolarizationIndependentOfScanAnglePhi(obj, value, flag)
-            % The polarization of the Floquet modes is usually given implicitly as a function of the scan angle phi. If the flag is set to True, the fundamental modes TE(0,0) and TM(0,0) will be linearily combined such that the resulting first mode's polarization is aligned to the given value (in degrees, with respect to the u-axis of the port, as for waveguide ports.)
+            % The polarization of the Floquet modes is usually given implicitly as a function of the
+            % scan angle phi. If the flag is set to True, the fundamental modes TE(0,0) and TM(0,0)
+            % will be linearily combined such that the resulting first mode's polarization is
+            % aligned to the given value (in degrees, with respect to the u-axis of the port, as for
+            % waveguide ports.)
             obj.AddToHistory(['.SetPolarizationIndependentOfScanAnglePhi "', num2str(value, '%.15g'), '", '...
                                                                         '"', num2str(flag, '%.15g'), '"']);
             obj.setpolarizationindependentofscananglephi.value = value;
             obj.setpolarizationindependentofscananglephi.flag = flag;
         end
         function SetDialogFrequency(obj, value)
-            % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as well as the scan angles theta and phi. As the modes should not change their order while a frequency sweep is performed, the frequency at which the modes are sorted needs to be fixed by calling this method. Pass an empty string to sort the modes at the uppermost frequency. Calling this method affects all Floquet ports.
+            % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as
+            % well as the scan angles theta and phi. As the modes should not change their order
+            % while a frequency sweep is performed, the frequency at which the modes are sorted
+            % needs to be fixed by calling this method. Pass an empty string to sort the modes at
+            % the uppermost frequency. Calling this method affects all Floquet ports.
             obj.AddToHistory(['.SetDialogFrequency "', num2str(value, '%.15g'), '"']);
             obj.setdialogfrequency = value;
         end
@@ -91,37 +108,72 @@ classdef FloquetPort < handle
             obj.setdialogmediafactor = value;
         end
         function SetDialogTheta(obj, value)
-            % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as well as the scan angles theta and phi. As the modes should not change their order while a frequency sweep is performed, the theta at which the modes are sorted needs to be fixed by calling this method. Calling this method affects all Floquet ports.
+            % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as
+            % well as the scan angles theta and phi. As the modes should not change their order
+            % while a frequency sweep is performed, the theta at which the modes are sorted needs to
+            % be fixed by calling this method. Calling this method affects all Floquet ports.
             obj.AddToHistory(['.SetDialogTheta "', num2str(value, '%.15g'), '"']);
             obj.setdialogtheta = value;
         end
         function SetDialogPhi(obj, value)
-            % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as well as the scan angles theta and phi. As the modes should not change their order while a frequency sweep is performed, the phi at which the modes are sorted needs to be fixed by calling this method. Calling this method affects all Floquet ports.
+            % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as
+            % well as the scan angles theta and phi. As the modes should not change their order
+            % while a frequency sweep is performed, the phi at which the modes are sorted needs to
+            % be fixed by calling this method. Calling this method affects all Floquet ports.
             obj.AddToHistory(['.SetDialogPhi "', num2str(value, '%.15g'), '"']);
             obj.setdialogphi = value;
         end
         function SetDialogMaxOrderX(obj, value)
-            % The number of Floquet modes which need to be considered depends on the size of the Floquet port in terms of wavelength. When the modes are not explicitly defined by calling AddMode, their maximum order needs to be specified. SetDialogMaxOrderX defines the range of the Floquet modes' first order number by means of its magnitude. For example, if "2" is passed as an argument, the Floquet modes (-2,*), (-1,*), (0,*), (1,*), and (2,*) will be considered. When an empty string is passed to this method, the maximum order is determined automatically from the size of the Floquet port in terms of the wavelength at the sorting frequency. Calling this method affects all Floquet ports.
+            % The number of Floquet modes which need to be considered depends on the size of the
+            % Floquet port in terms of wavelength. When the modes are not explicitly defined by
+            % calling AddMode, their maximum order needs to be specified. SetDialogMaxOrderX defines
+            % the range of the Floquet modes' first order number by means of its magnitude. For
+            % example, if "2" is passed as an argument, the Floquet modes (-2,*), (-1,*), (0,*),
+            % (1,*), and (2,*) will be considered. When an empty string is passed to this method,
+            % the maximum order is determined automatically from the size of the Floquet port in
+            % terms of the wavelength at the sorting frequency. Calling this method affects all
+            % Floquet ports.
             obj.AddToHistory(['.SetDialogMaxOrderX "', num2str(value, '%.15g'), '"']);
             obj.setdialogmaxorderx = value;
         end
         function SetDialogMaxOrderYPrime(obj, value)
-            % The number of Floquet modes which need to be considered depends on the size of the Floquet port in terms of wavelength. When the modes are not explicitly defined by calling AddMode, their maximum order needs to be specified. SetDialogMaxOrderYPrime defines the range of the Floquet modes' second order number by means of its magnitude. For example, if "2" is passed as an argument, the Floquet modes (*,-2), (*,-1), (*,0), (*,1), and (*,2) will be considered. When an empty string is passed to this method, the maximum order is determined automatically from the size of the Floquet port in terms of the wavelength at the sorting frequency. Calling this method affects all Floquet ports.
+            % The number of Floquet modes which need to be considered depends on the size of the
+            % Floquet port in terms of wavelength. When the modes are not explicitly defined by
+            % calling AddMode, their maximum order needs to be specified. SetDialogMaxOrderYPrime
+            % defines the range of the Floquet modes' second order number by means of its magnitude.
+            % For example, if "2" is passed as an argument, the Floquet modes (*,-2), (*,-1), (*,0),
+            % (*,1), and (*,2) will be considered. When an empty string is passed to this method,
+            % the maximum order is determined automatically from the size of the Floquet port in
+            % terms of the wavelength at the sorting frequency. Calling this method affects all
+            % Floquet ports.
             obj.AddToHistory(['.SetDialogMaxOrderYPrime "', num2str(value, '%.15g'), '"']);
             obj.setdialogmaxorderyprime = value;
         end
         function SetCustomizedListFlag(obj, flag)
-            % The flag should be set to True whenever modes are explicitly defined by calling AddMode. Otherwise, the Floquet modes are assigned automatically based on the arguments passed to SetDialogMaxOrderX and SetDialogMaxOrderYPrime.
+            % The flag should be set to True whenever modes are explicitly defined by calling
+            % AddMode. Otherwise, the Floquet modes are assigned automatically based on the
+            % arguments passed to SetDialogMaxOrderX and SetDialogMaxOrderYPrime.
             obj.AddToHistory(['.SetCustomizedListFlag "', num2str(flag, '%.15g'), '"']);
             obj.setcustomizedlistflag = flag;
         end
         function SetNumberOfModesConsidered(obj, value)
-            % As the number of Floquet modes specified for the given Floquet port might be much larger than the number of modes which are actually required for the given structure, this method defines how many modes to consider during the simulation. Note that the number of modes to consider is larger than or equal to the number of modes to excite.
+            % As the number of Floquet modes specified for the given Floquet port might be much
+            % larger than the number of modes which are actually required for the given structure,
+            % this method defines how many modes to consider during the simulation. Note that the
+            % number of modes to consider is larger than or equal to the number of modes to excite.
             obj.AddToHistory(['.SetNumberOfModesConsidered "', num2str(value, '%.15g'), '"']);
             obj.setnumberofmodesconsidered = value;
         end
         function SetSortCode(obj, code)
-            % Specifies how to sort the list of Floquet modes (unless it has been customized). The modes can be sorted by their type, their propagation constants alpha and beta, or by their order numbers. A plus in front of the sort code refers to the default order (for instance sort by decreasing beta), while a minus indicates a reversal of the sorting (for instance sort by increasing beta). Calling this method affects all Floquet ports. The default sort code is "+beta/pw", which means sorting by decreasing beta, but with the fundamental Floquet modes, which are the regular plane waves (pw), at the first place, regardless of their beta.
+            % Specifies how to sort the list of Floquet modes (unless it has been customized). The
+            % modes can be sorted by their type, their propagation constants alpha and beta, or by
+            % their order numbers. A plus in front of the sort code refers to the default order (for
+            % instance sort by decreasing beta), while a minus indicates a reversal of the sorting
+            % (for instance sort by increasing beta). Calling this method affects all Floquet ports.
+            % The default sort code is "+beta/pw", which means sorting by decreasing beta, but with
+            % the fundamental Floquet modes, which are the regular plane waves (pw), at the first
+            % place, regardless of their beta.
+            %
             % code: '+beta/pw'
             %       '+beta'
             %       '-beta'
@@ -139,7 +191,10 @@ classdef FloquetPort < handle
             obj.setsortcode = code;
         end
         function SetDistanceToReferencePlane(obj, value)
-            % Defines the phase deembedding distance for the Floquet port. The Frequency Domain solver with tetrahedral mesh will then calculate the S-parameters as if the Floquet port were placed at the given distance to the reference plane. The value is negative if the new reference plane is inside the structure.
+            % Defines the phase deembedding distance for the Floquet port. The Frequency Domain
+            % solver with tetrahedral mesh will then calculate the S-parameters as if the Floquet
+            % port were placed at the given distance to the reference plane. The value is negative
+            % if the new reference plane is inside the structure.
             obj.AddToHistory(['.SetDistanceToReferencePlane "', num2str(value, '%.15g'), '"']);
             obj.setdistancetoreferenceplane = value;
         end
