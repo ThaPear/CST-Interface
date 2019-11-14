@@ -30,6 +30,7 @@ classdef Transform_ < handle
         componentname
         materialname
         multipleselection
+        destinationname
     end
     
     methods(Access = ?CST.Project)
@@ -192,6 +193,12 @@ classdef Transform_ < handle
             obj.multipleselection = boolean;
             
             obj.AddToHistory(['.MultipleSelection "', num2str(boolean), '"']);
+        end
+        
+        function Destination(obj, destinationname)
+            obj.destinationname = destinationname;
+            
+            obj.AddToHistory(['.Destination "', destinationname, '"']);
         end
     end
 end

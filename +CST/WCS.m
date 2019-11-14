@@ -49,14 +49,14 @@ classdef WCS < handle
                                                     '"', num2str(z, '%.15g'), '"']);
         end
         function Enable(obj)
-            if(~obj.enabled)
+%             if(~obj.enabled)
                 obj.ActivateWCS('local');
-            end
+%             end
         end
         function Disable(obj)
-            if(obj.enabled)
+%             if(obj.enabled)
                 obj.ActivateWCS('global');
-            end
+%             end
         end
         function Reset(obj)
             obj.SetOrigin(0, 0, 0);
