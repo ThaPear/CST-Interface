@@ -1,21 +1,26 @@
 clear;
 
 % txt = clipboard('paste');
-% txt = fileread('asciiexport.txt');
-% txt = fileread('brick.txt');
-% txt = fileread('curve.txt');
-% txt = fileread('floquetport.txt');
-% txt = fileread('combineresults.txt');
-% txt = fileread('plot1d.txt');
-txt = fileread('result1d.txt');
-% txt = fileread('project.txt');
+% txt = fileread('Txt/asciiexport.txt');
+% txt = fileread('Txt/brick.txt');
+% txt = fileread('Txt/curve.txt');
+% txt = fileread('Txt/floquetport.txt');
+% txt = fileread('Txt/combineresults.txt');
+% txt = fileread('Txt/plot1d.txt');
+% txt = fileread('Txt/result1d.txt');
+txt = fileread('CST Interface/Txt/parametersweep.txt');
+% txt = fileread('Txt/project.txt');
 split = strsplit(txt, newline);
-split = strrep(split, split(1), '');
+split = strrep(split, split{2}, '');
 split([cellfun(@isempty, split)]) = [];
 
 % Find object name (e.g. 'Brick', 'Material').
-objecttype = strrep(split{3}, ' Object', '');
-objectdescr = split{4};
+i = 1;
+while(isempty(strfind(split{i}, ' Object')) || ~isempty(strfind(split{i}, 'Visual Basic (VBA) Language')))
+    i = i + 1;
+end
+objecttype = strrep(split{i}, ' Object', '');
+objectdescr = split{i+1};
 
 % Open output file.
 hOutfile = fopen(['CST Interface/test_', objecttype, '.m'], 'wt');

@@ -1,0 +1,205 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | ParameterSweep
+
+ParameterSweep Object
+
+Allows to automatically perform several simulations with varying parameters.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+SetSimulationType ( enum type )
+
+Sets the simulation type to the given type.
+
+type can have one of  the following values:
+
+"Transient"
+
+Transient simulation
+
+"Calculate port modes only"
+
+Port mode calculation only
+
+"Eigenmode"
+
+Eigenmode analysis
+
+"Frequency"
+
+Frequency domain simulation
+
+"TLM"
+
+Microstripes simulation
+
+"Asymtotic"
+
+Asymtotic simulation
+
+type can have one of  the following values:
+
+"E-Static"
+
+Electrostatic simulation
+
+"Electroquasistatic"
+
+Electroquasistatic simulation
+
+"Transient Electroquasistatic"
+
+Transient electroquasistatic simulation
+
+"M-Static"
+
+Magnetostatic simulation
+
+"Transient Magnetoquasistatic"
+
+Transient magnetoquasistatic simulation
+
+"J-Static"
+
+Stationary current simulation
+
+"Low Frequency"
+
+Low frequency simulation in frequency domain
+
+type can have one of  the following values:
+
+"Thermal"
+
+Stationary thermal simulation
+
+"Transient Thermal"
+
+Transient  thermal simulation
+
+"Structural Mechanics"
+
+Structural mechanics simulation
+
+type can have one of  the following values:
+
+"E-Static"
+
+Electrostatic simulation
+
+"M-Static"
+
+Magnetostatic simulation
+
+"PIC"
+
+Particle in cell simulation
+
+"Particle Tracking"
+
+Particle tracking
+
+ 
+
+AddSequence ( name name )
+
+Defines a new simulation sequence. In a sequence several different sets of parameters with different values can be defined. These sets are then taken by the parameter sweep to recreate the structure and automatically simulate it for each set.
+
+ 
+
+DeleteSequence ( name name )
+
+Deletes a sequence.
+
+ 
+
+DeleteAllSequences
+
+Deletes all previously defined sequences.
+
+ 
+
+RenameSequence ( name oldname, name newname )
+
+Renames a sequence.
+
+ 
+
+AddParameter_Samples ( name sequencename, name parametername,  double from, double to, int steps, bool logarithmic_sweep )
+
+Adds a parameter to a sequence.
+
+from: Specify the lower bound of the parameter variation.
+
+to: Specify  the upper bound of the parameter variation.
+
+steps: Specify the number of samples for the parameter variation. There must be at least 2 samples to allow a simulation for the from and the to parameter values.
+
+logarithmic_sweep: Specify if you need to perform a logarithmic sweep instead of a linear sweep.
+
+ 
+
+AddParameter_Stepwidth ( name sequencename, name parametername,  double from, double to, double width )
+
+Adds a parameter to a sequence.
+
+from: Specify the lower bound of the parameter variation.
+
+to: Specify  the upper bound of the parameter variation.
+
+width: Specify the width between the samples for the parameter variation.
+
+ 
+
+AddParameter_ArbitraryPoints ( name sequencename, name parametername,  string points )
+
+Adds a parameter to a sequence.
+
+points:  Specify the value of the sample. Use semicolon as a separator to specify multiple values. e.g. 2 ; 3 ; 3.1 ; 3.2 ; 3.3
+
+ 
+
+DeleteParameter ( name sequencename, name parametername )
+
+Deletes a parameter from a sequence.
+
+ 
+
+Start
+
+Starts the parameter sweep.
+
+ 
+
+UseDistributedComputing ( bool switch )
+
+Enables/disables the distributed calculation of different solver runs across the network.
+
+Default Settings
+
+SetSimulationType ("")
+
+UseDistributedComputing (False)
+
+Example
+
+With ParameterSweep
+
+    .SetSimulationType ("Transient")
+
+    .SetSimulationType ("E-Static")
+
+    .AddSequence ("Sweep")
+
+    .AddParameter_Samples ("Sweep", "l", 2.6, 2.8, 5, False)
+
+    .Start
+
+End With
+
+ 
