@@ -145,7 +145,10 @@ classdef ParameterSweep < handle
         end
         function Start(obj)
             % Starts the parameter sweep.
-            obj.AddToHistory(['.Start']);
+%             obj.AddToHistory(['.Start']);
+
+            % Removed history list item for this function.
+            obj.hParameterSweep.invoke('Start');
         end
         function UseDistributedComputing(obj, boolean)
             % Enables/disables the distributed calculation of different solver runs across the network.
@@ -158,6 +161,30 @@ classdef ParameterSweep < handle
             % Possibly toggles visual updating of the parameter sweep window.
             obj.AddToHistory(['.EnableTreeUpdate "', num2str(boolean, '%.15g'), '"']);
             obj.enabletreeupdate = boolean;
+        end
+        % Found in 'Library/Result Templates/S-Parameters/- Touchstone Export^+MWS+DS.rtp'
+        function nparams = GetNumberOfVaryingParameters(obj)
+            nparams = obj.hParameterSweep.invoke('GetNumberOfVaryingParameters');
+        end
+        % Found in 'Library\Macros\Solver\E-Solver\Model.pfc'
+        function value = GetValueOfVaryingParameter(obj, index)
+            % Sounds like it'd get the value of the parameter denoted by the index.
+            value = obj.hParameterSweep.invoke('GetValueOfVaryingParameter', index);
+        end
+        % Found in 'Library/Result Templates/Misc/- Send Outlook Notification E-Mail^-DS.rtp'
+        function name = GetNameOfVaryingParameter(obj, index)
+            % Sounds like it'd get the name of the parameter denoted by the index.
+            name = obj.hParameterSweep.invoke('GetNameOfVaryingParameter', index);
+        end
+        % Found in 'Library\Result Templates\Particles\- Export 3D Trajectory Plot as Bitmap^+PS.rtp'
+        function index = GetCurrentParameterIndex(obj)
+            index = obj.hParameterSweep.invoke('GetCurrentParameterIndex');
+        end
+        % Found in 'Library/Macros/Solver/E-solver/Define Slow Wave userdefined Watch^+MWS.mcr'
+        function AddUserdefinedWatch(obj)
+            % 'Library\Macros\Solver\E-Solver\Model.pfc' contains a method named ParameterSweepWatch
+            % That function might be related.
+            obj.hParameterSweep.invoke('AddUserdefinedWatch');
         end
     end
     %% MATLAB-side stored settings of CST state.

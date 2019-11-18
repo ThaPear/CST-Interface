@@ -876,6 +876,7 @@ classdef Project < handle
         meshadaption3d          CST.MeshAdaption3D
         meshsettings            CST.MeshSettings
         monitor                 CST.Monitor
+        parametersweep          CST.ParameterSweep
         pick                    CST.Pick
         plot                    CST.Plot
         plot1d                  CST.Plot1D
@@ -885,6 +886,7 @@ classdef Project < handle
         postprocess1d           CST.PostProcess1D
         rectangle               CST.Rectangle
         result1d                CST.Result1D
+        resulttree              CST.ResultTree
         solid                   CST.Solid
         solver                  CST.Solver
         touchstone              CST.Touchstone
@@ -1046,6 +1048,13 @@ classdef Project < handle
             monitor = obj.monitor;
         end
         
+        function parametersweep = ParameterSweep(obj)
+            if(isempty(obj.parametersweep))
+                obj.parametersweep = CST.ParameterSweep(obj, obj.hProject);
+            end
+            parametersweep = obj.parametersweep;
+        end
+        
         function pick = Pick(obj)
             if(isempty(obj.pick))
                 obj.pick = CST.Pick(obj, obj.hProject);
@@ -1111,6 +1120,13 @@ classdef Project < handle
             % Each result1d can be different depending on resultname.
             % So don't store it.
             result1d = CST.Result1D(obj, obj.hProject, resultname);
+        end
+        
+        function resulttree = ResultTree(obj)
+            if(isempty(obj.resulttree))
+                obj.resulttree = CST.ResultTree(obj, obj.hProject);
+            end
+            resulttree = obj.resulttree;
         end
         
         function solid = Solid(obj)
