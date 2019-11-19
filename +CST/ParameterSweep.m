@@ -222,3 +222,12 @@ end
 %     parametersweep.AddParameter_Samples('Sweep', 'l', 2.6, 2.8, 5, 0);
 %     parametersweep.Start();
 % 
+% % Usable example.
+% parametersweep = project.ParameterSweep();
+%     parametersweep.StartBulkMode();
+%     parametersweep.SetSimulationType('Frequency');
+%     parametersweep.AddSequence('Sequence 1');
+%     parametersweep.AddParameter_ArbitraryPoints('Sequence 1', 'aa_theta', '0;10');
+%     parametersweep.AddParameter_ArbitraryPoints('Sequence 1', 'aa_phi', '0');
+%     parametersweep.EndBulkMode();
+%     parametersweep.Start();

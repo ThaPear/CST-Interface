@@ -147,7 +147,13 @@ classdef Project < handle
             obj.hProject.invoke('SaveAs', filename, include_results);
         end
         function StoreInArchive(obj, filename, keepAllResults, keep1DResults, keepFarfieldData, deleteProjFolder)
-            % Stores a project in a zip-file with the specified settings. You have the choice to include different sets of files. Either you include all calculated results ('keepAllResults'') or you can keep the calculated 1D results ('keep1DResults'') and/or the calculated farfield data ('keepFarfieldData').  'filename' is the name of the project to be archived as well as the destination of the zip-file. The last option is to delete the project  folder. Note that the project folder has to be deleted if none of the result/data files are included.
+            % Stores a project in a zip-file with the specified settings. You have the choice to
+            % include different sets of files. Either you include all calculated results
+            % ('keepAllResults'') or you can keep the calculated 1D results ('keep1DResults'')
+            % and/or the calculated farfield data ('keepFarfieldData').  'filename' is the name of
+            % the project to be archived as well as the destination of the zip-file. The last option
+            % is to delete the project  folder. Note that the project folder has to be deleted if
+            % none of the result/data files are included.
             obj.hProject.invoke('StoreInArchive', filename, keepAllResults, keep1DResults, keepFarfieldData, deleteProjFolder);
         end
         function DeleteParameter(obj, name)
