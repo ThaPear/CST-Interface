@@ -1,0 +1,129 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | TOUCHSTONE
+
+TOUCHSTONE Object
+
+This command offers TOUCHSTONE file compatible export for the S-parameters. The extensions of the exported files names are specified by ”.sNp” where N stands for the number of ports in your model (e.g. ”.s3p”).
+
+The TOUCHSTONE file contains a fixed reference impedance. During the export process, usually the S-parameters will be automatically normed to this impedance, if necessary. In some rare cases it may also be useful to export the S-parameters as they are (without renorming), but nevertheless specifying a reference impedance in the TOUCHSTONE file.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the export options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets the name of the exported file.
+
+ 
+
+GetFileName string
+
+Returns the full filename of the stored touchstone file including the automatically generated extension.
+
+ 
+
+UserPrefix ( name name )
+
+Set prefix for the S-parameter input files. The expected filename will be i.e. "project^prefix^a1(1)1(1).sig". Renormalization is disabled in this case. Use this before ".Write". Prefix will be reset to "" after ".Write".
+
+ 
+
+Impedance ( double impedance )
+
+The TOUCHSTONE file contains a fixed reference impedance. During the export process the S-parameters will be automatically normed to the impedance specified by this method.
+
+ 
+
+FrequencyRange ( enum type )
+
+Sets the Frequency range to "Full" or "Limited".
+
+type can have one of  the following values:
+
+"Full" - Full frequency range export
+
+"Limited" - Limited frequency range export. This requires Fmin and Fmax to be set.
+
+ 
+
+Fmin ( double fmin )
+
+Sets the minimum for the frequency range. This is required if you want to export a limited frequency range.
+
+ 
+
+Fmax ( double fmax )
+
+Sets the maximum for the frequency range. This is required if you want to export a limited frequency range.
+
+ 
+
+Renormalize ( bool switch )
+
+This method offers the possibility to disable the automatic normalization to the reference impedance. The export data is automatically renormed to the specified reference impedance (switch = True), or is written as it is without renorming (switch = False).
+
+ 
+
+UseARResults ( bool switch )
+
+Use this method to export the S-parameter results provided by the AR-Filter analysis (switch = True).
+
+ 
+
+SetNSamples ( int samples )
+
+Sets the maximum number of samples stored in the touchstone file.
+
+ 
+
+Write
+
+Performs the export.
+
+Default Settings
+
+FileName ("")
+
+Impedance (50)
+
+FrequencyRange ("Full")
+
+Renormalize (True)
+
+UseARResults (False)
+
+SetNSamples (0)
+
+Example
+
+With TOUCHSTONE
+
+    .Reset
+
+    .FileName (".\example")
+
+    .Impedance (50)
+
+    .FrequencyRange ("Full")
+
+    .Renormalize (True)
+
+    .UseARResults (False)
+
+    .SetNSamples (100)
+
+    .Write
+
+End With
+
+ 

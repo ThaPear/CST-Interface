@@ -1,15 +1,17 @@
 clear;
 
 % txt = clipboard('paste');
-% txt = fileread('Txt/asciiexport.txt');
-% txt = fileread('Txt/brick.txt');
-% txt = fileread('Txt/curve.txt');
-% txt = fileread('Txt/floquetport.txt');
-% txt = fileread('Txt/combineresults.txt');
-% txt = fileread('Txt/plot1d.txt');
-% txt = fileread('Txt/result1d.txt');
-txt = fileread('CST Interface/Txt/parametersweep.txt');
-% txt = fileread('Txt/project.txt');
+% txt = fileread('CST Interface/Txt/asciiexport.txt');
+% txt = fileread('CST Interface/Txt/brick.txt');
+% txt = fileread('CST Interface/Txt/curve.txt');
+% txt = fileread('CST Interface/Txt/floquetport.txt');
+% txt = fileread('CST Interface/Txt/combineresults.txt');
+% txt = fileread('CST Interface/Txt/plot1d.txt');
+% txt = fileread('CST Interface/Txt/result1d.txt');
+% txt = fileread('CST Interface/Txt/parametersweep.txt');
+% txt = fileread('CST Interface/Txt/touchstone.txt');
+txt = fileread('CST Interface/Txt/resulttree.txt');
+% txt = fileread('CST Interface/Txt/project.txt');
 split = strsplit(txt, newline);
 split = strrep(split, split{2}, '');
 split([cellfun(@isempty, split)]) = [];

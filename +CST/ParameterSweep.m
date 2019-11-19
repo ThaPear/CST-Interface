@@ -156,6 +156,7 @@ classdef ParameterSweep < handle
             obj.usedistributedcomputing = boolean;
         end
         
+        %% Undocumented functions.
         % Implemented from History List.
         function EnableTreeUpdate(obj, boolean)
             % Possibly toggles visual updating of the parameter sweep window.

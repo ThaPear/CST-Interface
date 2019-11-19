@@ -811,7 +811,7 @@ classdef Project < handle
             % Plots a 3D field on a 2D plane if 'switch' is True.
             obj.hProject.invoke('Plot3DPlotsOn2DPlane', boolean);
         end
-        function string = ResultNavigatorRequest(obj, request, parameter)
+        function str = ResultNavigatorRequest(obj, request, parameter)
             % Sends modification requests or queries to the Result Navigator. Allowed strings for request are "set selection", "get selection", "reset selection". The expected format of the string parameter and the return value of the function depend on the request. The function requires a preselected 1D or 0D result in the Navigation Tree, which can be achieved by a preceding call of SelectTreeItem. If no 1D Plot is selected, the method will return an error.
             % The request "set selection" allows modifying the selection state of the Result Navigator and expects parameter to be a string containing a whitespace separated list of non-negative integers which correspond to Run IDs to be selected. The return value of the function will be an empty string. The following example shows how to select and plot parametric s-parameters from the Navigation Tree:
             % SelectTreeItem("1D Results\S-Parameters")
@@ -824,7 +824,13 @@ classdef Project < handle
             % The request "reset selection" resets the selection state of the Result Navigator to default behavior (similar to "Reset Selection" in the context menu). The variable parameter is ignored and the return value of the function will be an empty string. The following example shows how to reset the selection in the Result Navigator:
             % SelectTreeItem("1D Results\S-Parameters")
             % ResultNavigatorRequest("reset selection","") 'reset Result Navigator selection state to default behavior
-            string = obj.hProject.invoke('ResultNavigatorRequest', request, parameter);
+            
+            % Convert all double spaces into single spaces.
+            % This is added because num2str converts an array into a double-space separated string.
+            while(contains(parameter, '  '))
+                parameter = strrep(parameter, '  ', ' ');
+            end
+            str = obj.hProject.invoke('ResultNavigatorRequest', request, parameter);
         end
         function UseDistributedComputingForParameters(obj, flag)
             % Enables distributed computing for parameter sweep or optimizer runs.
@@ -845,6 +851,16 @@ classdef Project < handle
             % Sets the lower limit of required memory for a distributed computing run. A CST DC Solver Server with at least lowerLimit MB available memory will be used for the job.
             % Example: MinDistributedComputingMemoryLimit (1024)
             obj.hProject.invoke('MinDistributedComputingMemoryLimit', lowerLimit);
+        end
+        
+        %% Undocumented functions.
+        % Found at https://www.researchgate.net/post/How_to_export_all_tables_obtained_from_parameter_sweep_in_CST_together
+        function ExportPlotData(obj, filename)
+            % Appears to do the same as the following snippet:
+            % ASCIIExport.Reset();
+            % ASCIIExport.FileName([exportfilename, '.txt']);
+            % ASCIIExport.Execute();
+            obj.hProject.invoke('ExportPlotData', filename);
         end
     end
     %% MATLAB-side stored settings of CST state.
