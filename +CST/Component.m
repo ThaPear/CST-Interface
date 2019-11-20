@@ -35,7 +35,7 @@ classdef Component < handle
             % Delete the old one first.
             try
                 if(obj.Exists(name))
-                    disp(['Deleting old component "', name, '"']);
+                    fprintf('Deleting old component ''%s''', name);
                     obj.Delete(name);
                 end
             catch exception %#ok<NASGU>

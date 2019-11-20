@@ -24,7 +24,6 @@ classdef Application < handle
         end
         
         function project = NewMWS()
-            dispex('Creating project.\n');
             cst = CST.Application.GetHandle();
             hProject = cst.invoke('NewMWS');
             project = CST.Project(hProject);

@@ -92,8 +92,8 @@ end
 % % NOTE: This example does not work due to the fact that IntegrateField is
 % % not implemented.
 % evaluatefieldalongcurve = project.EvaluateFieldAlongCurve();
-% evaluatefieldalongcurve.FitCurveToGridForIntegration(1)
-% evaluatefieldalongcurve.IntegrateField('curve1', 'tangential", dIntReal, dIntImag)
-% evaluatefieldalongcurve.PlotField('curve1', 'tangential')
-% project.SelectTreeItem("1D Results\Field Along Curves\curve1\Mag")
-% disp([num2str(dIntReal)+'+j('+num2str(dIntImag), ')']);
+% evaluatefieldalongcurve.FitCurveToGridForIntegration(1);
+% evaluatefieldalongcurve.IntegrateField('curve1', 'tangential", dIntReal, dIntImag);
+% evaluatefieldalongcurve.PlotField('curve1', 'tangential');
+% project.SelectTreeItem("1D Results\Field Along Curves\curve1\Mag");
+% fprintf('%g+j%g\n', dIntReal, dIntImag);
