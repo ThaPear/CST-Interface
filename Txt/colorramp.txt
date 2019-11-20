@@ -1,0 +1,140 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ColorRamp
+
+ 
+
+ColorRamp Object
+Use this to change the color order for the color-by-value field plots.
+
+Methods
+
+Reset
+
+Resets internal settings to defaults.
+
+ 
+
+Type ( enum ramptype )
+
+Sets the color ramp to a predefined color order.
+
+enum ramptype
+
+color order
+
+"Rainbow"
+
+blue-cyan-green-yellow-red (default)
+
+"Fire"
+
+cyan-blue-magenta-red-yellow
+
+"Inspire"
+
+green-blue-magenta-red-yellow
+
+"FarFire"
+
+blue-magenta-red-yellow (for far fields)
+
+"Gray"
+
+for black-and-white printer
+
+"Hot"
+
+black-red-yellow-white
+
+ 
+
+Invert ( bool switch )
+
+Inverts the color order, e.g. turn the rainbow type to red-yellow-green-cyan-blue.
+
+ 
+
+NumberOfContourValues ( int number )
+
+Changes the number of contour values. The number must be greater 2, numbers greater 99 are not recommended for normal use. A higher value results in a smoother coloring.
+
+ 
+
+GetNumberOfContourValues long
+
+Returns the number of contour values.
+
+ 
+
+DrawContourLines ( bool switch )
+
+Outline the contour values with black lines between the color steps. Does only apply for 2D / 3D contour plots and 3D farfield plots.
+
+ 
+
+SetClampRange( double min, double max )
+
+Sets the min and max value of the "clamp to range" feature. Is ignored for 3D farfield plots.
+
+ 
+
+SetScalingMode( enum scalingmode )
+
+Sets the scaling mode.  Is ignored for 3D farfield plots.
+
+enum scalingtype
+
+scaling
+
+"linear"
+
+linear scaling (default)
+
+"log"
+
+logarithmic color scaling
+
+"dbmax"
+
+dB scaling mode with maximum as reference value
+
+"db"
+
+dB scaling mode with 1[unit] as reference value
+
+"dbmilli"
+
+dB scaling mode with 0.001[unit] as reference value
+
+"dbmicro"
+
+dB scaling mode with 1e-6[unit] as reference value
+
+ 
+
+SetLogStrength( double strength )
+
+Sets the log strength if the log scaling mode is active. Values from >1.0 to 100000 are allowed.  Is ignored for 3D farfield plots.
+
+ 
+
+SetdBRange( double range)
+
+Sets the dB range if a db scaling mode is active.  Is ignored for 3D farfield plots.
+
+ 
+
+Style (enum {"None" / "Vertical"} )
+
+This switch either hides (None) the color ramp or positions it vertically in the main view.
+
+Default Settings
+
+Type ("rainbow")
+
+Invert (False)
+
+NumberOfContourValues (33)
+
+DrawContourLines (False)
+
+ 

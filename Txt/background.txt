@@ -1,0 +1,175 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Background
+
+Background Object
+
+The background object defines the kind of material that surrounds your structure. And defines its volume. By default the volume is defined by the maximum distances of your structure.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Type ( enum materialType )
+
+Sets the material type used for the background.
+
+materialType can have one of the following values:
+
+normal
+
+Not  conducting, with relative permittivity epsilon and relative permeability mu.
+
+pec
+
+Perfect electric conducting material
+
+ 
+
+Epsilon ( double value )
+
+Defines the electric permittivity of the background material.
+
+ 
+
+Mu ( double value )
+
+Defines the permeability of the background material.
+
+ 
+
+ElConductivity ( double value )
+
+Defines the electric conductivity of the background material. This value is considered only for Low Frequency simulations.
+
+ 
+
+XminSpace ( double value )
+
+Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
+
+ 
+
+XmaxSpace ( double value )
+
+Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
+
+ 
+
+YminSpace ( double value )
+
+Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
+
+ 
+
+YmaxSpace ( double value )
+
+Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
+
+ 
+
+ZminSpace ( double value )
+
+Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
+
+ 
+
+ZmaxSpace ( double value )
+
+Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
+
+ 
+
+ThermalType ( enum thermalMaterialType )
+
+Sets the material type used for the background.
+
+thermalMaterialType can have one of the following values:
+
+normal
+
+Not thermal conducting, with relative permittivity epsilon and relative permeability mu.
+
+ptc
+
+Perfect thermal conducting material
+
+ 
+
+ThermalConductivity ( double  value )
+
+Thermal conductivity is a property of materials that expresses the heat flux f (W/m2) that will flow through the material if a certain temperature gradient DT (K/m) exists over the material. The unit for value is W/K/m.
+
+ 
+
+ApplyInAllDirections ( bool  flag )
+
+Is at the moment used for the background dialog to identify if the xmin value should be applied in all directions.
+
+Default Settings
+
+Type ("pec")
+
+Epsilon (1.0)
+
+Mu (1.0)
+
+XminSpace (0.0)
+
+XmaxSpace (0.0)
+
+YminSpace (0.0)
+
+YmaxSpace (0.0)
+
+ZminSpace (0.0)
+
+ZmaxSpace (0.0)
+
+ThermalType ("normal")
+
+ThermalConductivity (0.0)
+
+ApplyInAllDirections (False)
+
+Example
+
+With Background
+
+.Reset
+
+.Type ("normal")
+
+.Epsilon ("eps")
+
+.Mu (1.0)
+
+.XminSpace (50.0)
+
+.XmaxSpace (50.0)
+
+.YminSpace (25.0)
+
+.YmaxSpace (25.0)
+
+.ZminSpace (50.0)
+
+.ZmaxSpace (50.0)
+
+.ThermalType ("normal")
+
+.ThermalConductivity (0.0)
+
+.ApplyInAllDirections (False)
+
+End With
+
+ 

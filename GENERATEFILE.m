@@ -1,17 +1,7 @@
 clear;
 
 % txt = clipboard('paste');
-% txt = fileread('CST Interface/Txt/asciiexport.txt');
-% txt = fileread('CST Interface/Txt/brick.txt');
-% txt = fileread('CST Interface/Txt/curve.txt');
-% txt = fileread('CST Interface/Txt/floquetport.txt');
-% txt = fileread('CST Interface/Txt/combineresults.txt');
-% txt = fileread('CST Interface/Txt/plot1d.txt');
-% txt = fileread('CST Interface/Txt/result1d.txt');
-% txt = fileread('CST Interface/Txt/parametersweep.txt');
-% txt = fileread('CST Interface/Txt/touchstone.txt');
-txt = fileread('CST Interface/Txt/resulttree.txt');
-% txt = fileread('CST Interface/Txt/project.txt');
+txt = fileread('CST Interface/Txt/force.txt');
 split = strsplit(txt, newline);
 split = strrep(split, split{2}, '');
 split([cellfun(@isempty, split)]) = [];
@@ -25,9 +15,9 @@ objecttype = strrep(split{i}, ' Object', '');
 objectdescr = split{i+1};
 
 % Open output file.
-hOutfile = fopen(['CST Interface/test_', objecttype, '.m'], 'wt');
+hOutfile = fopen(['CST Interface/', objecttype, '.m'], 'wt');
 if(hOutfile == -1)
-    warning('Error opening file %s', ['test_', objecttype, '.m']);
+    warning('Error opening file %s', ['', objecttype, '.m']);
     return;
 end
 
@@ -36,7 +26,7 @@ methodsstartI = find(strcmp(split, 'Methods'), 1, 'last');
 if(isempty(methodsstartI))
     methodsstartI = find(strcmp(split, 'General Methods'), 1, 'last');
     if(isempty(methodsstartI))
-        warning('Could not find methods.');
+        warning('Could not find methods in %s.', objecttype);
         return;
     end
 end
@@ -70,6 +60,12 @@ while(i <= length(methodlines))
         continue;
     end
     
+    if(line(1) == '%')
+        fprintf(hOutfile, '        %s\n', line);
+        i = i + 1;
+        continue;
+    end
+    
     errorfunc = 0;
     invoking = 0;
     nargs = 1;
@@ -77,12 +73,12 @@ while(i <= length(methodlines))
     bropen = strfind(line, '(');
     brclose = strfind(line, ')');
     if(~isempty(bropen))
-        args = line(bropen+1:brclose-1);
+        args = line(bropen(1)+1:brclose(end)-1);
         if(~isempty(args))
             % Detect enums that use brackets.
-            if(contains(args, '{'))
-                enumstart = strfind(args, '{');
-                enumend = strfind(args, '}');
+            while(contains(args, '{'))
+                enumstart = strfind(args, '{'); enumstart = enumstart(1);
+                enumend = strfind(args, '}'); enumend = enumend(1);
                 enumargs = args(enumstart+1:enumend-1);
                 % Cut out the enum
                 args = args([1:enumstart-1, enumend+1:end]);
@@ -141,7 +137,7 @@ while(i <= length(methodlines))
             funcargs = {'obj'};
         end
         % Cut out the arguments from the function name.
-        line = line([1:bropen-1, brclose+1:end]);
+        line = line([1:bropen(1)-1, brclose(end)+1:end]);
     else
         funcargs = {'obj'};
     end

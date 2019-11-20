@@ -1,0 +1,77 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | Arfilter
+
+Arfilter Object
+
+Defines the settings for the Ar-filter. Ar-filters may be applied to time signals at the ports, probe signals or current and voltage monitor signals. You may define different settings for port, probe and monitor signals. An Ar-filter run can be started by using the PostProcess1D object.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+SetType ( enum{"s-parameter", "probe", "monitor"} type )
+
+Sets the type of signals the AR-filter settings are applied to.
+
+ 
+
+SetFirstTime ( double time )
+
+The first time step (in seconds) from which filter determination starts.
+
+ 
+
+SetSkip ( long skip )
+
+The number of time steps which will be skipped after an AR-filter has been found and before the next filter will be determined.
+
+ 
+
+SetMaxFrq ( double fMax )
+
+Because the time signals will be low pass filtered within the AR calculation process, the maximum frequency of the low pass filter need to be specified here (usually : 1,2 * fmax (from the Frequency dialog box)).
+
+ 
+
+SetMaxOrder ( long order )
+
+Sets the number of recursive filter elements. Higher order filters usually deliver more accurate results, but the calculation time increases parabolically with the number of filter elements (max. 100 elements).
+
+ 
+
+SetWindowLength ( double length )
+
+This method sets the length of the analyzed time interval relative to the maximum number of elements. E.g. with maximum order of filter 40 and a window length of 2.0 the number of analyzed time samples is 40 * 2.0 = 80.
+
+Default Settings
+
+SetSkip (10)
+
+SetMaxOrder (40)
+
+SetWindowLength (2.0)
+
+Example
+
+With Arfilter
+
+    .SetType ("s-parameter")
+
+    .SetFirstTime (0.1777274577508)
+
+    .SetSkip (10)
+
+    .SetMaxFrq ("fMax * 1.2")
+
+    .SetMaxOrder (40)
+
+    .SetWindowLength (2.0)  
+
+End With
+
+ 
+
+ 

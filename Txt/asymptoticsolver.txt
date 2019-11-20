@@ -1,0 +1,549 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | High Frequency | AsymptoticSolver
+
+AsymptoticSolver Object
+
+This object controls the asymptotic high frequency solver. Use the 'Start' command to run the solver.
+
+ 
+
+Asymptotic Solver Settings
+
+General
+
+Detailed solver control options
+
+Detailed solver control options specific to SBR_RAYTUBES
+
+Detailed solver control options specific to SBR
+
+Methods
+
+SetSolverType ( enum{"SBR", "SBR_RAYTUBES"} type )
+
+This selection specifies whether the solver should use independent rays (SBR) or raytubes (SBR_RAYTUBES). Independent rays are generally more robust for complex geometries, but the performance of the raytube solver is better at higher frequencies for large and relatively smooth objects.
+
+ 
+
+SetSolverMode ( enum{"MONOSTATIC_SCATTERING", "BISTATIC_SCATTERING","FIELD_SOURCES","RANGE_PROFILES"} type )
+
+This selection specifies whether the solver should run in Monostatic or Bistatic Scattering, Field source or Range profile mode. For monostatic calculations, the observation angles are identical to the excitation angles. Therefore, for this mode the specification of an observation angle sweep is required only. For bistatic calculations, the excitation and observation angles do not need to be the same. As a consequence, an additional excitation angle sweep needs to be defined when the solver is used in bistatic mode. For field source calculations, no incident plane wave is required, therefore the definition of an observation angle sweep is sufficient. The range profile mode uses similar observation angle definitions as the monostatic mode, but only either single point or single angle sweeps are supported. In case of a single observation point definition, a one dimensional range profile is calculated whereas for two dimensional sweep definitions, a sinogram (range vs. angle) will be generated.
+
+ 
+
+SetAccuracyLevel ( enum{"LOW", "MEDIUM", "HIGH", "CUSTOM"} type )
+
+This setting allows you to choose from one of the predefined accuracy configurations such as Low,  Medium or High. Low accuracy means that the simulation settings will be optimized for fast simulations whereas High accuracy implies settings optimized for obtaining very accurate results. Typically the Medium accuracy default provides a good compromise between accuracy and simulation speed. In addition to these default configurations, you may also choose Custom which allows specifying more detailed solver options by using the detailed solver control options.
+
+ 
+
+SetSolverStoreResultsAsTablesOnly ( bool flag )
+
+If this option is turned on, the farfield results for all angular points and frequency samples are stored together in an ASCII table rather than in individual graphs for each angle sweep definition. This option is useful if large quantities of results are to be computed, which will then be further processed in other tools. Typical applications include ISAR imaging, etc. Please note that one result table is written for each polarization setting. The result tables can be accessed from the corresponding Navigation Tree item located in 2D/3D Results > ASCII Data. The data files named farfield_<polarization>.txt are stored in the Result folder.
+
+ 
+
+CalculateRCSMapFor1DSweeps ( bool flag )
+
+This parameter is only available for Monostatic Scattering mode. It specifies how one-dimensional angular observation angle sweeps (either sweeping phi or theta) will store the computation results. If this option is turned off, individual farfield results will be computed for every computation frequency. If this option is activated, RCS maps will be calculated instead where each one-dimensional sweep definition will correspond to one set of RCS maps (magnitude, phase) regardless of the number of computation frequencies. The RCS maps therefore contain magnitude or phase information as a function of incident angle and frequency.
+
+ 
+
+SetCalculateMonitors ( bool flag )
+
+Activate calculation of monitors on 2D Planes (E-Field / H-Field).
+
+ 
+
+ResetPolarizations
+
+Resets the current excitation polarization list
+
+ 
+
+AddHorizontalPolarization ( double value )
+
+This method allows you to add a new horizontal plane wave polarization to the list of excitations. The amplitude of the plane wave electric field vector in V/m is given as an argument.
+
+ 
+
+AddVerticalPolarization ( double value )
+
+This method allows you to add a new vertical plane wave polarization to the list of excitations. The amplitude of the plane wave electric field vector in V/m is given as an argument.
+
+ 
+
+AddLHCPolarization ( double value )
+
+This method allows you to add a new left hand side circular plane wave polarization to the list of excitations. The amplitude of the plane wave electric field vector in V/m is given as an argument.
+
+ 
+
+AddRHCPolarization ( double value )
+
+This method allows you to add a new right hand side circular plane wave polarization to the list of excitations. The amplitude of the plane wave electric field vector in V/m is given as an argument.
+
+ 
+
+AddCustomPolarization( double ethetare, double ethetaim, double ephire, double ephiim )
+
+This method allows you to add a new custom polarization to the list of excitations. The complex amplitudes of the plane wave electric field vector components in V/m are given as arguments.
+
+ 
+
+SetSolverMaximumNumberOfReflections ( int value )
+
+This parameter specifies the maximum number of ray reflections which will be taken into account for the ray tracing computation.
+
+ 
+
+SetSolverRangeProfilesCenterFrequency ( double value )
+
+This method allows you to specify the center frequency for the range profile and sinogram calculation. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+SetSolverRangeProfilesAutomatic ( bool flag )
+
+This method allows you to specify if the range extend or bandwidth settings will be determined automatically or whether the values set by the respective methods will be taken. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+SetSolverRangeProfilesNumberOfSamples ( int value )
+
+This method allows you to specify the number of spectral samples for the range profile or sinogram computation. This value needs to be a power of two larger or equal 16. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+SetSolverRangeProfilesWindowFunction (  enum{"RECTANGULAR", "HANNING", "HAMMING", "BLACKMAN"} type )
+
+This method allows you to specify the spectral window function being used for calculating range profiles or sinograms. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+SetSolverRangeProfilesSpecMode (  enum{"RANGE_EXTEND", "BANDWIDTH"} type )
+
+This method allows you to specify whether the resolution of the range profile or sinogram calculation shall be specified by either specifying the maximum range extend or by setting the calculation bandwidth around the center frequency. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+SetSolverRangeProfilesRangeExtend ( double value )
+
+This method allows you to specify the maximum range extend for the range profile and sinogram calculation if the specification mode is set to RANGE_EXTEND. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+SetSolverRangeProfilesBandwidth ( double value )
+
+This method allows you to specify the bandwidth for the range profile and sinogram calculation if the specification mode is set to BANDWIDTH. Please note that this setting is only effective for the Range profile computation mode.
+
+ 
+
+ResetFrequencyList
+
+Resets the current frequency sweep list.
+
+ 
+
+AddFrequencySweep ( double fmin, double fmax, double fstep )
+
+This method allows you to add a new frequency sweep definition to the list of frequency sweeps. Each sweep is defined by its lower and upper bounds as well as a step width. You can specify a single frequency point by setting the lower and upper bounds to the same value. Please note that the step width must match with the frequency range such that an integer number of frequency points will be defined.
+
+ 
+
+ResetExcitationAngleList
+
+Resets the current excitation angle sweep list.
+
+ 
+
+AddExcitationAngleSweep ( enum{"POINT", "THETA", "PHI", "BOTH"} type, double thetamin, double thetamax, double thetastep, double phimin, double phimax, double phistep )
+
+This method allows you to add a new angular sweep definition to the list of excitation angle sweeps. The meaning of the angular parameters depends on the type setting:
+
+"POINT"
+
+Specify a single angular point for this sweep definition. In this case, thetamin must be set equal to thetamax and phimin must be set equal to phimax. The settings for thetastep and phistep have no effect.
+
+"THETA"
+
+Specify a one dimensional sweep for the theta angle while keeping the phi angle fixed. In this case, phimin must be set equal to phimax. The setting for phistep has no effect.
+
+"PHI"
+
+Specify a one dimensional sweep for the phi angle while keeping the theta angle fixed. In this case, thetamin must be set equal to thetamax. The setting for thetastep has no effect.
+
+"BOTH"
+
+Specify a two dimension sweep for both angles theta and phi. For each angle, lower and upper bounds need to be defined. The corresponding step widths must match with the range definition such that an integer number of angular sampling points will be defined.
+
+ 
+
+AddExcitationAngleSweepWithRays ( enum{"POINT", "THETA", "PHI", "BOTH"} type, double thetamin, double thetamax, double thetastep, double phimin, double phimax, double phistep )
+
+This method has the same effect as AddExcitationAngleSweep, but in addition the solver will store the rays for each excitation direction for visualization. Please refer to the description of the AddExcitationAngleSweep method for more information. For more information on ray storage, please refer to the asymptotic solver control dialog box description in the online documentation.
+
+ 
+
+ResetFieldSources
+
+Resets the current field source excitation list.
+
+ 
+
+SetFieldSourceActive ( string fieldsourcename, bool flag )
+
+This method allows you to specify whether the field source should be used for calculation. If the flag is set to False, the field source will not take part in any computation.
+
+ 
+
+SetFieldSourcePhasor ( string fieldsourcename, double amplitude, double phase )
+
+This method allows you to define the amplitude and phase shift which should be applied to a previously defined field source.
+
+ 
+
+SetFieldSourceRays ( string fieldsourcename, bool flag )
+
+This method allows you to specify whether the rays should be stored for a previously defined field source. For more information on ray storage, please refer to the asymptotic solver control dialog box description in the online documentation.
+
+ 
+
+SimultaneousFieldSourceExcitation( bool flag )
+
+If this flag is set to True, all field sources are excited simultaneously. In this case only one farfield result will be calculated which contains the superposition of all field sources. If this flag is set to False, a sequence of calculations will be performed where only one field source is active for each run. The default setting is to perform a simultaneous excitation.
+
+ 
+
+SetCalculateSParameters ( bool flag )
+
+Check this option to calculate antenna coupling coefficients between activated nearfield or farfield sources. The results are calculated as F-Parameters as described in farfield source and nearfield source. Note that this option is only available for sequential field source excitation.
+
+ 
+
+ResetObservationAngleList
+
+Resets the current observation angle sweep list.
+
+ 
+
+AddObservationAngleSweep ( enum{"POINT", "THETA", "PHI", "BOTH"} type, double thetamin, double thetamax, double thetastep, double phimin, double phimax, double phistep )
+
+This method allows you to add a new angular sweep definition to the list of observation angle sweeps. The meaning of the angular parameters depends on the type setting:
+
+"POINT"
+
+Specify a single angular point for this sweep definition. In this case, thetamin must be set equal to thetamax and phimin must be set equal to phimax. The settings for thetastep and phistep have no effect.
+
+"THETA"
+
+Specify a one dimensional sweep for the theta angle while keeping the phi angle fixed. In this case, phimin must be set equal to phimax. The setting for phistep has no effect.
+
+"PHI"
+
+Specify a one dimensional sweep for the phi angle while keeping the theta angle fixed. In this case, thetamin must be set equal to thetamax. The setting for thetastep has no effect.
+
+"BOTH"
+
+Specify a two dimension sweep for both angles theta and phi. For each angle, lower and upper bounds need to be defined. The corresponding step widths must match with the range definition such that an integer number of angular sampling points will be defined.
+
+ 
+
+AddObservationAngleSweepWithRays ( enum{"POINT", "THETA", "PHI", "BOTH"} type, double thetamin, double thetamax, double thetastep, double phimin, double phimax, double phistep )
+
+This method has the same effect as AddObservationAngleSweep, but in addition the solver will store the rays for each excitation direction for visualization. Please refer to the description of the AddObservationAngleSweep method for more information. For more information on ray storage, please refer to the asymptotic solver control dialog box description in the online documentation.
+
+ 
+
+UseParallelization  ( bool flag )
+
+Enable or disable parallelization (multithreading) for the asymptotic solver.  
+
+ 
+
+MaximumNumberOfThreads ( int number )
+
+Define the maximum number of parallel threads to be used for the asymptotic solver run.
+
+ 
+
+RemoteCalculation  ( bool  flag )
+
+Enable or disable remote calculation for the asymptotic solver. When enabled, an asymptotic solver run is submitted to the network instead of performing the calculation locally. Please note that activating remote calculation turns off other distributed computing options. The setting does not influence parameter sweeps and optimizer runs with distributed computing.
+
+ 
+
+DistributedComputing( bool  flag )
+
+Enable or disable distributed computing for the asymptotic solver. When enabled, an asymptotic solver run will be subdivided into a number of distributed computing jobs as specified by the DistributedComputingNodes setting. Each job will then handle a certain subset of excitation directions.  Please note that activating distributed computing turns off other remote calculation options. The setting does not influence parameter sweeps and optimizer runs with distributed computing.
+
+ 
+
+DistributedComputingNodes( int number )
+
+Define the maximum number of computing nodes to be used for distributed computing of excitation directions. This setting will also determine the number of jobs to be submitted for a single asymptotic solver run.
+
+ 
+
+Start int
+
+Starts the solver with the current settings and returns 1 if the calculation is successfully finished and 0 if it failed.
+
+ 
+
+% Detailed Solver Control Options
+
+% Please note that these settings will only take effect if the AccuracyLevel is set to Custom. Otherwise these settings will be overridden by the values given by the predefined accuracy levels.
+
+ 
+
+SetSolverIncludeMetallicEdgeDiffraction ( bool flag )
+
+This option specifies whether diffraction at edges should be included in the simulation which will improve the accuracy at the expense of longer simulation times. It is generally recommended to turn this option on for more accurate results.
+
+ 
+
+SetMeshMaxWedgeLengthPerLambda ( double value )
+
+This option controls the maximum length of the generated segments for edge diffraction. Smaller values increase the accuracy of the edge diffraction contributions but also lead to a longer runtime. This option is only available if the option SetSolverIncludeMetallicEdgeDiffraction is activated.
+
+ 
+
+SetSolverExitBlockageCheck ( bool flag )
+
+This option specifies whether the visibility of a reflection point for a particular ray from the current observation point will be checked or not. For better accuracy it is recommended to turn this option on. In some cases it may be useful to turn this option off in order to quickly obtain potentially less accurate results.
+
+ 
+
+StoreResultsInCache ( bool flag )
+
+Stores results of the asymptotic solver in the result cache.
+
+ 
+
+StorePOResults ( bool flag )
+
+This option controls whether the first order PO farfields are calculated in addition to the total farfields including all multiple reflection and diffraction effects. Comparing the two sets of results can be used for checking the influence of the higher order effects on the solution. This option is only available for the Monostatic and Bistatic scattering modes.
+
+ 
+
+SetMeshCurved ( bool flag )
+
+This setting specifies whether the mesh triangles will be curved for a better representation of non-planar geometries. If this option is set to false, the mesh will be created such that it consists of planar triangles only. Using curved triangles will usually improve accuracy, at the expense of a little bit higher memory consumption and longer simulation times.
+
+ 
+
+SetMeshUseCurvatureExtraction ( bool flag )
+
+This setting specifies whether the curvature information should be extracted out of the input data. This is especially helpful when the model has been imported from a file format that does not provide surface normal information like, e.g., NASTRAN or STL. This option is only available if the option SetMeshCurved is activated.
+
+ 
+
+SetMeshNormalTolerance ( double value )
+
+This parameter specifies the maximum allowable tolerance of the (planar) triangle normals as compared to the true normals of the structure's geometry. Lower settings will lead to a more accurate geometrical representation at the expense of generating more triangles. If this parameter is set to zero, no constraint concerning the normal tolerance will be applied during the mesh generation.
+
+ 
+
+SetMeshSurfaceTolerance ( double value )
+
+This parameter specifies the maximum allowable deviation of the (planar) triangle from the actual geometry in model dimensions. Lower settings will lead to a more accurate geometrical representation at the expense of generating more triangles. If this parameter is set to zero, no constraint concerning the surface tolerance will be applied during the mesh generation.
+
+ 
+
+SetMeshMaxEdgeLengthPerLambda ( double value )
+
+This setting specifies the maximum allowable length of the triangle edges as compared to the wave length of the upper frequency limit as it is specified globally. This parameter has a strong influence on the number of triangles generated for a particular mesh. The solver run time will suffer from drastically varying triangle sizes, so extreme settings should be avoided.
+
+ 
+
+SetMeshMaxEdgeLengthPerDiagonal ( double value )
+
+This setting specifies the maximum allowable length of the triangle edges as compared to the size of the structure (bounding box diagonal). This parameter has a strong influence on the number of triangles generated for a particular mesh. The solver run time will suffer from drastically varying triangle sizes, so extreme settings should be avoided.
+
+ 
+
+SetSolverAllowStorageOfIncidentRays ( bool flag )
+
+This option controls whether the incident rays will be stored if the corresponding rays option is set for the excitation. If this option is turned off, ray storage will be suppressed for all incident rays.
+
+ 
+
+SetSolverAllowStorageOfInitialHits ( bool flag )
+
+This option controls whether the points where the incident rays hit the structure will be stored if the corresponding rays option is set for the excitation. If this option is turned off, the initial hit point storage will be suppressed for all incident rays.
+
+ 
+
+SetSolverAllowStorageOfObservedRays ( bool flag )
+
+This option controls whether the scattered rays will be stored if the corresponding rays option is set for the excitation as well as the observation direction. If this option is turned off, scattered ray storage will be suppressed.
+
+ 
+
+SetSolverMaximumNumberOfIncidentRaysOutput ( int value )
+
+This option allows you to set an upper limit for the number of incident rays being stored per direction and per reflection level. This option is important in order to avoid storing huge files which may slow down the computation tremendously. Please note that this limit is set for each reflection level independently. Therefore, a limit of e.g. 1000 means that up to 1000 rays will be stored which do not intersect with the structure, another up to 1000 rays will be stored which are reflected once and so on.
+
+ 
+
+SetSolverMaximumNumberOfInitialHitsOutput ( int value )
+
+This option allows you to set an upper limit for the number of points where the incident rays hit the structure being stored per excitation.
+
+ 
+
+SetSolverMaximumNumberOfObservedRaysOutput ( int value )
+
+This option allows you to set an upper limit for the number of scattered rays being stored per incident direction and per reflection level. This option is important in order to avoid storing huge files which may slow down the computation tremendously. Please note that this limit is set for each incident direction and reflection level independently.
+
+ 
+
+SetSolverObservedRaysAngleTolerance ( double value )
+
+This option allows you to set an angular tolerance for the scattered rays which will be used for assigning these rays to a particular observation angle. This setting will only be considered when the AccuracyLevel is set to Custom.
+
+ 
+
+SetSolverRayOutputAmplitude ( bool flag )
+
+This option enables computation of ray amplitudes along the visualized ray paths. The ray amplitudes are computed at the intersection points between ray path and object according to the laws of geometrical optics. In the region between two intersection points the ray amplitude is linearly interpolated and thus incorrect - please note that the focus of the generated results is merely on giving an overview of a ray path's importance. Please use nearfield monitors or field probes to obtain proper field values in free space.
+
+ 
+
+SetSolverShowEntireRayPath ( bool flag )
+
+This option enables storage of entire ray paths. If this option is deactivated, only the transmitted ray path is stored at transparent material boundaries, as it is usually the one that carries most of the ray's energy. If this option is activated, all reflected and transmitted ray paths will be stored.
+
+ 
+
+SetSolverAllowHotspots ( bool flag )
+
+This checkbox specifies whether contributions stemming from direct ray-reflections are considered for the hotspot calculation. Toghether with the next option, consider higher order contributions, this allows you to gain a detailed insight where hotspot contributions are coming from.
+
+ 
+
+SetSolverAllowHOHotspots ( bool flag )
+
+This checkbox specifies whether higher-order contributions, stemming from multiple ray-reflections, are considered for hotspot calculations.
+
+ 
+
+SetSolverHotspotNumberOfPixels ( int value )
+
+This value sets the resolution for the visualization image, i.e. the number of pixels in each spatial direction.
+
+ 
+
+SetSolverHotspotAngularRange ( double value )
+
+This value sets the maximum angular range (angle between observation direction and reflected ray) for which specular contributions will be evaluated. This allows you to hide contributions that don't originate from reflections in the observers' direction. Its effect resembles that of an aperture. A small value (greater than 0°) only selects contributions going in the observer's direction. A setting of 180° includes all contributions, resembling an open aperture.
+
+ 
+
+SetSolverHotspotWeightingExponent ( int value )
+
+This factor pronounces specular contributions that originate from reflections going in the observers' direction and diminishes those from reflections in other directions. This option allows you to fine-tune the image-contrast. When set to 0, no contrast enhancement is performed, higher values lead to a more pronounced contrast. To highlight hotspots in the observer's direction a value of 5 is a good choice.
+
+ 
+
+SetSolverHotspotHOAngularRange ( double value )
+
+This value sets the maximum angular range (angle between observation direction and reflected ray) for which higher-order contributions will be evaluated. This allows you to hide contributions that don't originate from reflections in the observers' direction. Its effect resembles that of an aperture. A small value (greater than 0°) only selects contributions going in the observer's direction. A setting of 180° includes all contributions, resembling an open aperture.
+
+ 
+
+SetSolverHotspotHOWeightingExponent( int value )
+
+This factor pronounces higher-order contributions that originate from reflections going in the observers' direction and diminishes those from reflections in other directions. This option allows you to fine-tune the image-contrast. When set to 0, no contrast enhancement is performed, higher values lead to a more pronounced contrast. To highlight hotspots in the observer's direction a value of 5 is a good choice.
+
+ 
+
+SetNearfieldPartitioningAccuracy ( double value )
+
+This setting specifies how sub sources are chosen for illumination of the scattering object: the size of the sub sources used to illuminate a particular part of the scattering object is adjusted to fulfil the farfield criterion R > accuracy*2*D²/?, where accuracy is the current setting. If this value is set to zero, sub sources are not used. Instead, the whole field distribution is modeled as a single point source.
+
+ 
+
+SetNearfieldRadiatedPowerInaccuracy ( double value )
+
+To save computation time, a certain amount of sub sources can be neglected for scattered field calculation. This value specifies the tolerated error as a fraction of the power radiated by the nearfield source.
+
+ 
+
+SetNearfieldPartitionSize ( double value )
+
+This value sets the smallest possible diameter of the sub sources in terms of the smallest simulated wavelength. A smaller value results in a more accurate representation of the total nearfield distribution at the expense of increased runtime.
+
+ 
+
+SetNearfieldDoNearfieldEvaluations ( bool flag )
+
+With this option, portions of the field source very close to the scattering target (closer than ?) are not simply represented by their farfield pattern: the radial parts of the field impinging on the scatterer are also considered. This considerably increases accuracy in the shadow zones. Please note that this option may strongly increase simulation time.
+
+ 
+
+SetNearfieldExclusionBoundaries ( bool flag )
+
+This value is useful to include blockage effects of the structure inside the NFS bounding box (internal structure). The internal structure is only illuminated by the field that is scattered back from the external structure. Please be aware that this option does only work as expected if the NFS bounding box does not touch or cross any materials.
+
+ 
+
+% Detailed Solver Control Options specific to SBR_RAYTUBES Solver
+
+% Please note that these settings will only take effect if the AccuracyLevel is set to Custom. Otherwise these settings will be overridden by the values given by the predefined accuracy levels.
+
+ 
+
+SetSolverRaySpacingRT ( double value )
+
+This parameter specifies the distance in between the rays launched in wavelengths. This setting will only be considered when the AccuracyLevel is set to Custom. Please note that this setting is only valid for the SBR_RAYTUBES solver.
+
+ 
+
+SetSolverAdaptiveRaySubdivisionRT ( bool flag )
+
+This option specifies whether the ray tubes shall be automatically refined when needed. The actual refinement is controlled by the two parameters SetSolverMaximumRayDistanceRT and SetSolverMinimumRayDistanceRT. This setting will only be considered when the AccuracyLevel is set to Custom. Please note that this setting is only valid for the SBR_RAYTUBES solver.
+
+ 
+
+SetSolverMaximumRayDistanceRT ( double value )
+
+This parameter controls the maximum edge length of a ray tube before it gets automatically refined. This setting will only be considered when the AccuracyLevel is set to Custom and the SetSolverAdaptiveRaySubdivisionRT option is active. Please note that this setting is only valid for the SBR_RAYTUBES solver.
+
+ 
+
+SetSolverMinimumRayDistanceRT ( double value )
+
+This parameter controls the minimum edge length of a ray tube which can be further refined automatically. This setting is needed in order to avoid excessive refinement of ray tubes at discontinuities. This setting will only be considered when the AccuracyLevel is set to Custom and the SetSolverAdaptiveRaySubdivisionRT option is active. Please note that this setting is only valid for the SBR_RAYTUBES solver.
+
+ 
+
+SetSolverMinimumNumberOfRaysRT ( int value )
+
+For electrically smaller structures, there may be too few rays launched due to the Ray density / wavelength setting. In order to ensure that a reasonable number of rays are launched to properly illuminate all regions of the structure, this parameter defines a lower bound for the number of rays. For more accurate simulations of electrically not very large structures you may need to increase this parameter. This setting will only be considered when the AccuracyLevel is set to Custom. Please note that this setting is only valid for the SBR_RAYTUBES solver.
+
+ 
+
+Detailed Solver Control Options specific to SBR Solver
+
+Please note that these settings will only take effect if the AccuracyLevel is set to Custom. Otherwise these settings will be overridden by the values given by the predefined accuracy levels.
+
+ 
+
+SetSolverRayDensityPerLambda ( double value )
+
+This parameter specifies the number of rays which are launched per wavelength of the actual simulation frequency. For electrically smaller structures, this parameter may need to be increased in order to achieve a better accuracy. Typical values are in between 10 for electrically very large structures and 40 or more for electrically not very large structures. This parameter is the main parameter to vary for controlling solver accuracy and performance. This setting will only be considered when the AccuracyLevel is set to Custom. Please note that this setting is only valid for the SBR solver.
+
+ 
+
+SetSolverMaxAreaOfRayTube ( double value )
+
+This parameter controls the maximum ray tube cross section for consideration of a particular beam for the scattered field computation. The scattering results become inaccurate for beams with very large cross sections, therefore it makes sense not to consider these beams since their contribution will be very small anyway. This setting will only be considered when the AccuracyLevel is set to Custom. Please note that this setting is only valid for the SBR solver.
+
+ 
+
+SetSolverMinimumNumberOfRays ( int value )
+
+For electrically smaller structures, there may be too few rays launched due to the Ray density / wavelength setting. In order to ensure that a reasonable number of rays are launched to properly illuminate all regions of the structure, this parameter defines a lower bound for the number of rays. For more accurate simulations of electrically not very large structures you may need to increase this parameter. This setting will only be considered when the AccuracyLevel is set to Custom. Please note that this setting is only valid for the SBR solver.
+
+ 

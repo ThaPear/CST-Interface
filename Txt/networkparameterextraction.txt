@@ -1,0 +1,367 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | NetworkParameterExtraction
+
+NetworkParameterExtraction Object
+
+Determine an equivalent SPICE circuit which has the same behavior at the ports as the simulation model. This command represents the "Spice Extraction" in the "Signal Post-Processing" ribbon. Two different methods exist for this task. The "transmission line model" (TL) is based on a fixed topology of a network of parallel and coupled transmission lines. The other more general method is based on a "model order reduction" (MOR) and does not assume any fixed topology. The drawback of the latter approach, however, is that the derived SPICE circuit elements do not allow any physical interpretation.
+
+General Methods
+
+Methods for Transmission Line (TL) Based Extraction
+
+Queries Concerning Settings for TL
+
+Queries Concerning Results for TL
+
+General Methods for Model Order Reduction (MOR)
+
+Default Settings
+
+Example for TL
+
+Example for MOR
+
+General Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Method ( enum {"TransmissionLine", "MOR"} extractionMethod )
+
+Selects the method to be used when running network parameter extraction.
+
+ 
+
+GetMethod enum {"TransmissionLine", "MOR"}
+
+Returns the currently set method for extracting network parameters.
+
+ 
+
+Calculate
+
+Starts the network parameter extraction with the previously made settings.
+
+ 
+
+%% Methods for Transmission Line (TL) Based Extraction
+
+ 
+
+AddWire ( long  number, long  portA, long  modeA, long  portB, long  modeB )
+
+Define a wire element between two ports to obtain the network parameters. The number denotes the number of the wire. The wire starts at port  portA (modeA) and ends at port portB (modeB).
+
+Please note: all arguments must be long value here. Any expression is not allowed.
+
+ 
+
+SetFrequency ( double freq )
+
+Defines the extraction frequency for the network parameter model. The calculated network model is most accurate at this frequency.
+
+Please note: freq must be a double value here. Any expression is not allowed.
+
+ 
+
+SetNCascades ( long number )
+
+Defines how many network elements are cascaded to approximate the input/output behavior of the simulated structure.
+
+Please note: number must be a long integer value here. Any expression is not allowed.
+
+ 
+
+SetLimitCoupling ( bool bFlag, double limit )
+
+If activated (bFlag is True) the coupling between wires is limited if a certain minimum coupling value is not reached. Then coupling elements between these wires will be omitted. Enable or disable this behavior here and set the limit value.
+
+ 
+
+SetKeepTopology ( bool bFlag, double minR, double minG, double minL, double minC, double minK )
+
+if bFlag is True the topology of the extracted network will not be changed even if some elements have values close to 0. Those elements with values lower than a given limit will be set to this limit. Set the limit using the minR, minG, minL, minC and minK parameters. MinR, minG, minL, minC and minK set the limits for the resistance in Ohms, the transconductance in S the inductance in H, the capacitance in F and the couling respectively.
+
+ 
+
+GenerateSubCircuit ( bool bFlag )
+
+ If bFlag is True the resulting SPICE netlist of the transmission line based network parameter extraction is enclosed in a sub-circuit. The sub-circuit begins with the ".subckt" statement and ends with the ".ends" statement.
+
+ 
+
+CreateNetList( filename fileName )
+
+Creates a netlist file with the name fileName for SPICE simulation after the transmission line based calculation (performed by the method Calculate) has finished.
+
+ 
+
+%% Queries Concerning Settings for TL
+
+ 
+
+GetNWires long
+
+Returns the number of defined wires
+
+ 
+
+GetWireId ( long index ) long
+
+Returns the id of the wire. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires.
+
+ 
+
+GetWirePortA ( long index ) long
+
+Returns the port number where the wire starts (GetWirePortA) or ends (GetWirePortB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWirePortB ( long index ) long
+
+Returns the port number where the wire starts (GetWirePortA) or ends (GetWirePortB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWirePortAFromId ( long id ) long
+
+Returns the port number where the wire starts (GetWirePortA) or ends (GetWirePortB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWirePortBFromId ( long id ) long
+
+Returns the port number where the wire starts (GetWirePortA) or ends (GetWirePortB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWireModeA ( long index ) long
+
+Returns the mode number of the port where the wire starts  (GetWireModeA) or ends (GetWireModeB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWireModeB ( long index ) long
+
+Returns the mode number of the port where the wire starts  (GetWireModeA) or ends (GetWireModeB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWireModeAFromId ( long id ) long
+
+Returns the mode number of the port where the wire starts  (GetWireModeA) or ends (GetWireModeB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetWireModeBFromId ( long id ) long
+
+Returns the mode number of the port where the wire starts  (GetWireModeA) or ends (GetWireModeB) respectively. Index is a number between 0 and n-1, where n is the number of defined wires as returned by GetNWires. Id is the identification number of a wire. It can be determined using the GetWireId method.
+
+ 
+
+GetFrequency double
+
+Returns the extraction frequency for the network parameter model. The calculated network model is most accurate at this frequency.
+
+ 
+
+GetNCascade long
+
+Returns how many cascaded network elements have been used to approximate the input/output behavior of the simulated structure.
+
+ 
+
+%% Queries Concerning Results for TL
+
+ 
+
+GetRFromId ( long id ) double
+
+Returns the calculated resistance R, conductance G, or inductance L of the transmission line based network parameter model respectively. It is specified by the identity number id of the corresponding wire.
+
+ 
+
+GetGFromId ( long id ) double
+
+Returns the calculated resistance R, conductance G, or inductance L of the transmission line based network parameter model respectively. It is specified by the identity number id of the corresponding wire.
+
+ 
+
+GetLFromId ( long id ) double
+
+Returns the calculated resistance R, conductance G, or inductance L of the transmission line based network parameter model respectively. It is specified by the identity number id of the corresponding wire.
+
+ 
+
+GetCFromId ( long id1, long id2 ) double
+
+Returns the calculated capacitance C of the transmission line based network parameter model. It is specified by the identity number of the corresponding wires id1 and id2. In case that both identity numbers are identically the self capacitance of the network element results, in case of two different numbers the mutual capacitance between two elements.
+
+ 
+
+GetKFromId ( long id1, long id2 ) double
+
+Returns the calculated mutual inductance K of the transmission line based network parameter model. It is specified by the identity number of the two corresponding wires id1 and id2.
+
+ 
+
+%% Methods for Model Order Reduction (MOR) Based Extraction
+
+ 
+
+CircuitFileName ( filename  fileName )
+
+Sets the filename of the resulting SPICE netlist based on model order reduction to fileName.
+
+ 
+
+GetCircuitFileName filename
+
+Returns the filename of the resulting SPICE netlist based on model order reduction.
+
+ 
+
+EnsureOutOfBandPassivity ( bool bFlag )
+
+If bFlag is True passivity for frequency values out of the given band is ensured, otherwise not.
+
+ 
+
+UseARFilterResults ( bool bFlag )
+
+If this method is activated the MOR method uses S-parameter data based on AR-Filter results if available.
+
+ 
+
+Accuracy ( double value )
+
+Specifies the maximum error value for the S-parameter approximation.
+
+Please note: The accuracy can be violated after performing the passivity step which is activated using the EnsureOutOfBandPassivity method.
+
+ 
+
+InitalNumberOfPoles ( int number )
+
+Specifies the initial number of poles considered by the MOR scheme.
+
+ 
+
+MaximumNumberOfPoles ( int number )
+
+Specifies the maximum number of poles considered by the MOR scheme.
+
+ 
+
+ApplyCouplingThreshold ( bool bFlag )
+
+If bFlag is True, the MOR neglects all S-Parameters below a certain threshold. This may save computation time and memory, especially, if the network has many ports.
+
+ 
+
+CouplingThreshold ( double value )
+
+Specifies the threshold in dB below which S-Parameters Sij are neglected by the MOR. This may save computation time and memory, especially, if the network has many ports. The threshold is activated by the ApplyCouplingThreshold method.
+
+ 
+
+DifferentialNetlist(bool bFlag)
+
+Specifies whether the netlist should be written with differential ports
+
+ 
+
+NetlistFormat(enum {"Berkeley SPICE", "HSPICE"} format)
+
+Specifies the output format of the netlist. "Berkeley SPICE" uses standard Berkeley SPICE notation with controlled sources while "HSPICE" uses Laplace formulation of the fitted Y parameter.
+
+Default Settings
+
+Method ("TransmissionLine")
+
+ 
+
+' defaults for transmission line based network parameter extraction
+
+SetFrequency (0.0)
+
+SetNCascades (1)
+
+SetLimitCoupling (False, 60.0)
+
+SetKeepTopology (False, 1e-30, 1e-30, 1e-30, 1e-30, 1e-30)
+
+GenerateSubCircuit (False)
+
+ 
+
+' defaults for model order reduction based network parameter extraction
+
+EnsureOutOfBandPassivity (True)
+
+UseARFilterResults (False)
+
+Accuracy ("1e-2")
+
+InitalNumberOfPoles (10)
+
+NetlistFormat ("Berkeley SPICE")
+
+Examples
+
+Example for TL
+
+' start a transmission line based network extraction
+
+ 
+
+With NetworkParameterExtraction
+
+.Method ("TransmissionLine")
+
+.SetFrequency (0.9)
+
+.SetNCascades (3)
+
+.SetLimitCoupling (True, 30.0)
+
+.SetKeepTopology (False, 1e-30, 1e-30, 1e-30, 1e-30, 1e-30)
+
+.GenerateSubCircuit (True)
+
+.Calculate
+
+End With
+
+Example for MOR
+
+' start a MOR based network extraction
+
+ 
+
+With NetworkParameterExtraction
+
+.Method ("MOR")
+
+.CircuitFileName ("my_netlist.net")
+
+.EnsureOutOfBandPassivity (False)
+
+.UseARFilterResults (False)
+
+.Accuracy ("1e-2")
+
+.InitalNumberOfPoles (10)
+
+.DifferentialNetlist (True)
+
+.NetlistFormat ("HSPICE")
+
+.Calculate
+
+End With
+
+ 

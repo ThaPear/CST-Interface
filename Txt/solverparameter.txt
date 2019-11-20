@@ -1,0 +1,126 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | SolverParameter
+
+SolverParameter Object
+This object controls the model simplification settings for a specific solver.
+
+ 
+
+Methods
+
+SolverType ( enum solverkey, enum meshkey )
+
+The settings below apply to the solver which is specified by the solverkey:
+
+"Transient solver"
+
+"Frequency domain solver"
+
+"Asymptotic solver"
+
+"Eigenmode solver"
+
+"Electrostatics solver"
+
+"Magnetostatic solver"
+
+"LF Frequency domain solver"
+
+"LF Frequency domain solver (EQS)"
+
+"Stationary current solver"
+
+"Particle tracking solver"
+
+"PIC solver"
+
+"Thermal solver"
+
+"Integral equation solver"
+
+"Multilayer solver"
+
+"LF Time domain solver (MQS)"
+
+"LF Time domain solver (EQS)"
+
+"Thermal transient solver"
+
+ "Structural mechanics solver"
+
+"Wakefield solver"
+
+The following values are allowed for the meshkey:
+
+"Hexahedral"
+
+"Tetrahedral"
+
+"Surface"
+
+ 
+
+IgnoreLossyMetals ( bool flag  )
+
+Do not consider losses of metal materials during a simulation run.
+
+ 
+
+IgnoreLossyDielectrics ( bool flag  )
+
+Do not consider losses of normal materials during a simulation run.
+
+ 
+
+IgnoreLossyMetalsForWires ( bool flag  )
+
+Neglect losses of metal materials for wires during a simulation run.
+
+ 
+
+IgnoreNonlinearMaterials ( bool flag  )
+
+Neglect nonlinear material settings and simulate all materials as linear (normal).
+
+ 
+
+UseThinWireModel ( bool flag  )
+
+Use infinite thin wires mapped to the mesh during a simulation run.
+
+UseZeroWireRadius (bool flag  )
+
+Do not consider a radius greater zero wires during a simulation run.
+
+Default Settings
+
+SolverType ("", "")
+
+IgnoreLossyMetals ("False")
+
+IgnoreLossyDielectrics ("False")
+
+IgnoreLossyMetalsForWires ("False")
+
+UseThinWireModel ("False")
+
+UseZeroWireRadius ("False")
+
+Examples
+
+' Settings for the T-Solver
+
+With SolverParameter
+
+     .SolverType "Transient solver", "Hexahedral"
+
+     .IgnoreLossyMetals "False"
+
+     .IgnoreLossyDielectrics "True"
+
+     .IgnoreLossyMetalsForWires "False"
+
+     .UseThinWireModel "False"
+
+     .UseZeroWireRadius "False"
+
+End With

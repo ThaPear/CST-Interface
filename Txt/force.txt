@@ -1,0 +1,291 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | Force
+
+Force Object
+
+The force object calculates forces and torques by the maxwell stress tensor for solids, current wires or coils. Please note that the same VBA functions are used for both, local and global coordinates. If the working coordinate system is activated all settings are made in local  coordinates, with the following assignment:
+
+x = u,  y = v and z = w.
+
+Methods
+
+Functions
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+ 
+
+CalcType (enum  calctype)
+
+Select for which simulation type the force calculation should be performed.
+
+calctype (enum )
+
+meaning
+
+"E-Statics" - Force calculation of an electrostatic field
+
+"M-Statics" - Force calculation of a magnetostatic  field
+
+"Low Frequency" or "LF" - Force calculation of a magnetic field from a low frequency (magnetoquasistatic) simulation
+
+"Electroquasistatic" - Force calculation of an electric field from a low frequency (electroquasistatic) simulation
+
+ 
+
+Frequency (double  frequency)
+
+Specify a frequency domain result by its frequency value.
+
+ 
+
+NormalX (double  xvalue)
+
+Sets the x/y/z-component of the axis used for the torque calculation.
+
+ 
+
+NormalY (double  yvalue)
+
+Sets the x/y/z-component of the axis used for the torque calculation.
+
+ 
+
+NormalZ (double zvalue)
+
+Sets the x/y/z-component of the axis used for the torque calculation.
+
+ 
+
+OriginX (double xvalue)
+
+Sets the x/y/zcoordinate of the axis' origin used for the torque calculation.
+
+ 
+
+OriginY (double yvalue)
+
+Sets the x/y/zcoordinate of the axis' origin used for the torque calculation.
+
+ 
+
+OriginZ (double zvalue)
+
+Sets the x/y/zcoordinate of the axis' origin used for the torque calculation.
+
+ 
+
+CoordinateSystem (enum  cosystem)
+
+Select for which simulation type the force calculation should be performed.
+
+cosystem (enum )
+
+meaning
+
+"Global" - Global coordinate system
+
+"WCS" - Local coordinate system (Working coordinate system)
+
+ 
+
+Extend2TouchingShapes ( bool bFlag )
+
+This setting concerns only the force computation with tetrahedral solvers and will be ignored otherwise.
+
+The force computation method requires objects which are surrounded completely by the background or by objects that are equivalent to the background. If bFlag is True, all shapes connected to a specified solid or coil will be collected into one group and the force on this group will be computed. If no 3d object is specified, all solids and coils will be collected into groups of connected shapes, and the forces will be computed groupwise. If bFlag is False, the force will be computed on the specified object only (or shape by shape), and a warning will be printed if shapes are detected which are not entirely embedded in background or equivalent material.
+
+Please note that objects with background (or equivalent) material are ignored by the force computation method unless a source is assigned or the object is the one which was marked by ForceObject for single object force computation.
+
+Please see Force and Torque Calculation for further information.
+
+ 
+
+ForceObject ( name  name )
+
+By default, the forces will be computed on all define objects (or object groups). If only one of the objects is of interest then it's name can be specified here and the force computation will be performed only on the specified object (or, if specified by Extend2TouchingShapes, on the group of shapes connected to the specified object).
+
+ 
+
+ComputeForceDensity ( bool bFlag )
+
+If bFlag is set True, the distributions of volume and surface force densities as well as nodal forces will be computed and exported. Background material and materials equivalent to it are hereby ignored. These distributions can afterwards be imported by the Structural Mechanics Solver for computation of mechanical deformation.
+
+ 
+
+Start
+
+Starts the force calculation.
+
+ 
+
+% Functions
+
+ 
+
+GetForceX (name name, enum calctype, double  frequency,  double_ref force_dc, double_ref force_re, double_ref force_im) double
+
+Get the x/y/z  force-component value of a solid. The paradigm for the name is:
+
+name (name) :
+
+meaning
+
+For solids
+
+layername:solidname
+
+For coils
+
+ coilname
+
+For current pathes
+
+ wire:pathname
+
+The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetForceY (name name, enum calctype, double  frequency,  double_ref force_dc, double_ref force_re, double_ref force_im) double
+
+Get the x/y/z  force-component value of a solid. The paradigm for the name is:
+
+name (name) :
+
+meaning
+
+For solids
+
+layername:solidname
+
+For coils
+
+ coilname
+
+For current pathes
+
+ wire:pathname
+
+The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetForceZ (name name, enum calctype, double  frequency,  double_ref force_dc, double_ref force_re, double_ref force_im) double
+
+Get the x/y/z  force-component value of a solid. The paradigm for the name is:
+
+name (name) :
+
+meaning
+
+For solids
+
+layername:solidname
+
+For coils
+
+ coilname
+
+For current pathes
+
+ wire:pathname
+
+The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetNormalX(enum  calctype, double frequency) double
+
+Get the x/y/z-component of the axis used for the torque calculation.. The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetNormalY(enum  calctype, double frequency) double
+
+Get the x/y/z-component of the axis used for the torque calculation.. The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetNormalZ (enum  calctype, double frequency) double
+
+Get the x/y/z-component of the axis used for the torque calculation.. The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetOriginX (enum  calctype, double  frequency) double
+
+Get the x/y/z-coordinate of the axis' origin used for the torque calculation. The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetOriginY (enum  calctype, double  frequency) double
+
+Get the x/y/z-coordinate of the axis' origin used for the torque calculation. The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetOriginZ (enum  calctype, double  frequency) double
+
+Get the x/y/z-coordinate of the axis' origin used for the torque calculation. The enum-type of the field under study is defined in the CalcType command.
+
+ 
+
+GetTorque (name name, enum calctype, double frequency,  double_ref force_dc, double_ref force_re, double_ref force_im) double
+
+Get the torque value for a solid. The paradigm for the solid's name is described in the GetForce command. The return value is the absolute torque value. In case of low frequency fields the reference value force_dc returns the DC part and torque_re / torque_im the complex part of the torque.
+
+Default Settings
+
+Frequency "0"
+
+CoordinateSystem "Global"
+
+NormalX "0"
+
+NormalY "0"
+
+NormalZ "1"
+
+OriginX "0"
+
+OriginY "0"
+
+OriginZ "0"
+
+Example
+
+With Force
+
+     .NormalX "0"
+
+     .NormalY "0"
+
+     .NormalZ "1"
+
+     .OriginX "0"
+
+     .OriginY "0"
+
+     .OriginZ "0"
+
+     .CalcType "low frequency"
+
+     .Frequency "0"
+
+     .CoordinateSystem "Global"
+
+     .Extend2TouchingShapes "True"
+
+End With
+
+ 

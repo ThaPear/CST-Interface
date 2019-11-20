@@ -1,0 +1,351 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | FarfieldArray
+
+FarfieldArray Object
+
+Defines the antenna array pattern for a farfieldplot based on a single antenna element.
+
+Methods
+
+Queries
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their initial values.
+
+ 
+
+UseArray ( bool bFlag )
+
+Activates the array pattern for farfield calculation.
+
+ 
+
+Arraytype ( enum type )
+
+Sets the type of the array pattern.
+
+type can have one of the following values:
+
+”rectangular” - A rectangular array pattern (linear: 1D, planar: 2D, cubic: 3D) can be defined by setting the corresponding antenna numbers together with the space and phaseshift information using the methods XSet, YSet, and ZSet. The resulting list is then calculated by SetList. The array setup uses automatically the unit cell geometry and phasing if unit cell or periodic boundaries are active.
+
+”edit” - This mode offers the possibility to edit the current antennalist by adding single antenna elements to the list using the method Antenna.
+
+ 
+
+XSet ( int  number, double spaceshift, double phaseshift )
+
+Defines a linear array pattern in the x,y or z-direction respectively. Thus a linear, planar or cubic antenna array structure may be created.
+
+number
+
+The number of single antenna elements in x,y or z-direction
+
+spaceshift
+
+The constant spaceshift between two single antenna elements in x,y or z-direction
+
+phaseshift
+
+The constant phaseshift between two single antenna elements in x,y or z-direction
+
+ 
+
+YSet ( int  number, double spaceshift, double phaseshift )
+
+Defines a linear array pattern in the x,y or z-direction respectively. Thus a linear, planar or cubic antenna array structure may be created.
+
+number
+
+The number of single antenna elements in x,y or z-direction
+
+spaceshift
+
+The constant spaceshift between two single antenna elements in x,y or z-direction
+
+phaseshift
+
+The constant phaseshift between two single antenna elements in x,y or z-direction
+
+ 
+
+ZSet ( int  number, double spaceshift, double phaseshift )
+
+Defines a linear array pattern in the x,y or z-direction respectively. Thus a linear, planar or cubic antenna array structure may be created.
+
+number
+
+The number of single antenna elements in x,y or z-direction
+
+spaceshift
+
+The constant spaceshift between two single antenna elements in x,y or z-direction
+
+phaseshift
+
+The constant phaseshift between two single antenna elements in x,y or z-direction
+
+ 
+
+SetList
+
+Calculates a complete list of single antenna elements based on the specified array configuration and transfers these settings to the farfield plotter.
+
+ 
+
+DeleteList
+
+Deletes the current list of single antenna elements defining the array pattern.
+
+ 
+
+Antenna ( double x, double y, double z, double amplitude, double phase )
+
+Defines the properties of a single antenna element. This method is only applicable in the editing mode set by Arraytype.
+
+x
+
+The x-position of the single antenna element in space
+
+y
+
+The y-position of the single antenna element in space
+
+z
+
+The z-position of the single antenna element in space
+
+amplitude
+
+The amplitude value of the single antenna element
+
+phase
+
+The phase value of the single antenna element
+
+ 
+
+AddAntennaItem ( filename sfile, double x, double y, double z, double alpha, double beta, double gamma, double A, double phase)
+
+Loads an antenna farfield from sfile and adds it to the combine list.
+
+ 
+
+AddAntennaItemA ( filename sfile, double x, double y, double z, double z1, double z2, double z3, double x1, double x2, double x3, double A, double phase)
+
+The command is similar to AddAntennaItem, but the orientation is specified by the antenna frame z-axis and x-axis in global coordinates.
+
+The following table summarizes the antenna parameters:
+
+x, y, z
+
+Position of the antenna in space
+
+alpha, beta, gamma
+
+Orientation of the antenna in Euler-x angles
+
+z1, z2, z3
+
+Antenna frame z-axis in global coordinate
+
+x1, x2, x3
+
+Antenna frame x-axis in global coordinate
+
+A
+
+ Amplitude of the antenna emission
+
+Phase
+
+ Phase of the antenna emission
+
+ 
+
+ClearAntennaItems
+
+Clears the antenna combine list.   
+
+ 
+
+SetNormalizeAntennas ( bool bflag )
+
+Activates the normalization of all antennas  to 1 W(peak) stimulated power before the execution of the combine command. The user specified amplitudes are  applied to the scaled farfields.
+
+ 
+
+SetCombineFrequency ( double  frequency )
+
+Sets the frequency of the combined antenna. All antennas in the combine list must have the same frequency, otherwise the consistent combination of the antennas is not possible.
+
+ 
+
+SetCombineReferenceAxes ( double z1, double z2, double z3, double x1, double x2, double x3 )
+
+Sets the theta reference axis (z1, z2, z3) and the phi reference axis (x1, x2, x3) of the combined antenna.
+
+ 
+
+SetCombineReferenceOrigin ( double p1, double p2, double  p3 )
+
+Sets the phase reference origin (p1, p2, p3) of the combined antenna.
+
+ 
+
+ExecuteCombine ( filename sfile, double stepInDegree )
+
+Combines all antennas from the combine list to a single antenna. The new antenna data is sampled with stepInDegree and written to sfile. No further scaling is applied to the combined field.
+
+%% Queries
+
+GetCombinePowerRatio double
+
+Returns the ratio of the actual emitted power to the integrated input power of all antennas from the combine list. A strong deviation from unity indicates a non-negligible interaction of the antennas.
+
+Default Settings
+
+UseArray (False)
+
+Arraytype ("rectangular")
+
+XSet (1, 0.0, 0.0)
+
+YSet (1, 0.0, 0.0)
+
+ZSet (1, 0.0, 0.0)
+
+SetCombineFrequency (-1.0)
+
+SetCombineReferenceAxes (0, 0, 1, 1, 0, 0)
+
+SetCombineReferenceOrigin (0, 0, 0)
+
+SetNormalizeAntennas (True)
+
+Example
+
+% The first example defines a linear antenna array:
+
+ 
+
+ With FarfieldArray
+
+    .Reset
+
+    .UseArray (True)
+
+    .Arraytype ("rectangular")
+
+    .ZSet (2, 2.5, 90)
+
+    .SetList
+
+    .Arraytype ("edit")
+
+    .Antenna (0, 0, 0, 1.0, 0.0)
+
+ End With
+
+ 
+
+% The second example combines two antennas with different orientation and position:
+
+ 
+
+With FarfieldArray
+
+ResultPath = GetProjectPath("Result")                 ' Assume that the farfield files are in the result folder
+
+.ClearAntennaItems()
+
+.SetCombineFrequency(100.0)
+
+.AddAntennaItem(ResultPath + "farfield_1.ffp", 0.0, -1.0, 0.0, 0,   0, 30.0, 1.0, 90.0)
+
+.AddAntennaItem(ResultPath + "farfield_2.ffp", 0.0,  1.0, 0.0, 0, -30,  0.0, 1.0,  0.0)
+
+.ExecuteCombine(ResultPath + "combined_ff.ffp", 5.0)  ' Store the combined antenna in the result folder
+
+MsgBox "Actual Power / Power Sum = " & .GetCombinePowerRatio()
+
+End With
+
+ 
+
+% The third example combines antennas to a finite-size array of unit cells with seven times seven elements:
+
+ 
+
+With FarfieldArray
+
+.SetCombineFrequency(100.0)
+
+.SetNormalizeAntennas(False)
+
+.SetUnitCellArray("farfield_1.ffp", 7, 7)
+
+.ExecuteCombine("combined_ff.ffp", 5.0)
+
+End With
+
+ 
+
+ 
+
+% The fourth example sets the farfield origin:
+
+ 
+
+NewOriginX = -100
+
+NewOriginY = 300
+
+NewOriginZ = 400
+
+ 
+
+Frequency = 30.0
+
+ 
+
+MonitorName = "farfield (f=30)"
+
+ 
+
+With FarfieldArray
+
+ResultPath = GetProjectPath("Result")
+
+.ClearAntennaItems()
+
+.SetCombineFrequency(Frequency)
+
+.AddAntennaItemA(ResultPath + MonitorName + "2D_1.ffp", 0,0,0, 0,0,1,1,0,0, 1, 0)
+
+.SetCombineReferenceOrigin ( NewOriginX, NewOriginY ,NewOriginZ )
+
+.ExecuteCombine(ResultPath + "MovedOrigin.ffp", 1.0)
+
+End With
+
+ 
+
+' Add to result tree
+
+With ResultTree
+
+.Name "Farfields\MovedOrigin"
+
+.File ResultPath + "MovedOrigin.ffp"
+
+.Type "Farfield"
+
+.Add
+
+End With

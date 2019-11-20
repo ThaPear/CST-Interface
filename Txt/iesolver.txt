@@ -1,0 +1,228 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | High Frequency | IESolver
+
+IESolver Object
+
+This object together with the FDSolver Object controls the integral equation solver and multilayer solver.
+
+ 
+
+Integral Equation Solver Settings
+
+General
+
+Defaults
+
+Methods
+
+Reset
+
+Resets all previously made settings concerning the solver to the default values.
+
+ 
+
+SetAccuracySetting ( enum{"Custom" , "Low", "Medium", "High"} key )
+
+This command makes it easy to control the solver accuracy. Please see below a description of the sets. If a predefined set (Low, Medium or High) is used, the specific user-defined settings in the IESolver and FDSolver objects are ignored for the settings mentioned below. For Medium and High only the changes from one level below are listed.
+
+Custom:
+Settings from the IESolver and FDSolver objects are used.
+
+Low Accuracy:
+First order,
+Single precision,
+Disabled low frequency stabilization,
+PEC solid handling: CFIE ,
+Matrix type: Auto,
+MLFMM Accuracy: Low,
+Minimum Box size: 0.20 lambda,
+ACA accuracy: 0.0001,
+Iterative solver stopping criteria: 1e-3
+
+Medium:
+PEC solid handling: alternative CFIE,
+MLFMM Accuracy: Medium,
+Minimum Box size: 0.3 lambda,
+
+High:
+Double precision,
+MLFMM Accuracy: High,
+Minimum Box size: 0.50 lambda,
+
+UseFastFrequencySweep  ( bool flag )
+
+Activates (flag = True) or deactivates (flag = False) the broadband frequency sweep for the solver.
+
+ 
+
+UseIEGroundPlane  ( bool flag )
+
+Activates (flag = True) or deactivates (flag = False) the infinite ground plane formulation for an electric boundary condition at ZMin.
+
+ 
+
+SetRealGroundMaterialName ( string name )
+
+Specifies the material of the real ground for an open boundary condition at ZMin. If no material is specified (name = ""), real ground plane calculation is deactivated.
+
+ 
+
+CalcFarFieldInRealGround  ( bool flag )
+
+Activates (flag = True) or deactivates (flag = False) calculation of the far field in the real ground.
+
+ 
+
+RealGroundModelType ( enum{"Auto", "Type 1", "Type 2"} key )
+
+Sets the model type for real ground (only relevant in the presence of objects touching the real ground plane).
+
+Auto:
+The model type is determined automatically taking into account the material properties of the real ground.
+
+Type 1:
+This model type is well suited for a real ground material with low electrical conductivity (low imaginary part of the permittivity).
+
+Type 2:
+This model type is well suited for a real ground material with high electrical conductivity (high imaginary part of the permittivity). This model type may also lead to be a better solver convergence compared to "Type 1".
+
+ 
+
+PreconditionerType  ( enum{"Auto", "Type 1", "Type 2", "Type 3"} key )
+
+Sets the preconditioner type.
+
+ 
+
+LowFrequencyStabilization  ( bool flag )
+
+This option controls the low frequency stabilization for the iterative and direct MoM solver. If enabled the accuracy for electrically small models or models with small triangles compared to the wavelength will increase.
+
+ 
+
+LowFrequencyStabilizationML  ( bool flag )
+
+This Multilayer solver option controls the low frequency stabilization for the iterative and direct MoM solver. If enabled the accuracy for electrically small models or models with small triangles compared to the wavelength will increase.
+
+ 
+
+Multilayer  ( bool flag )
+
+Activates (flag = True) or deactivates (flag = False) the multilayer solver.
+
+ 
+
+SetiMoMACC_I ( double value )
+
+This accuracy determines the accuracy of the Iterative MoM system matrix for the Integral equation solver. A lower accuracy leads to lower memory requirement but also to a lower accuracy.
+
+ 
+
+SetiMoMACC_M ( double value )
+
+This accuracy determines the accuracy of the Iterative MoM system matrix for the Multilayer solver. A lower accuracy leads to lower memory requirement but also to a lower accuracy.
+
+ 
+
+SetCFIEAlpha ( double value )
+
+If the option UseCFIEForCPECIntEq is enabled and the CFIE alpha is set to 1 the Electric Field Integral Equation will be used. This is an option if you are sure there will be no spurious resonances inside the PEC solids e.g. for electrically small PEC solids. The default value is 0.5.
+
+ 
+
+DeembedExternalPorts ( bool flag )
+
+Activates the automatic deembedding of external ports as multipin ports.
+
+ 
+
+IgnoreBC_XY_And_Set_To_Open ( bool flag )
+
+This command is used to control the handling of boundary conditions in x- and y-direction for the Multilayer Solver.  If flag is set to "True" the boundary conditions in x- and y-directions will be set to open. If flag is set to "False" the boundary conditions in x- and y-directions will be set as defined with the methods of the Boundary Object.
+
+ 
+
+ModeTrackingCMA ( bool flag )
+
+Activates automatic mode tracking for the characteristic mode analysis.
+
+ 
+
+NumberOfModesCMA ( int nModes )
+
+Specifies the number of modes for the characteristic mode analysis.
+
+ 
+
+StartFrequencyCMA (  double value )
+
+Specifies the frequency for sorting of the modes according to their modal significance for the characteristic mode analysis. If this value has not been specified before (value = "-1.0"), the minimal frequency of the simulation frequency range is chosen.
+
+ 
+
+SetAccuracySettingCMA (  enum{"Default", "Custom"} key )
+
+Specifies the accuracy settings for the characteristic mode analysis. Please see below a description of the sets.
+
+Default:
+Default settings are used.
+
+Custom:
+Settings from the IESolver and FDSolver objects are used.
+
+FrequencySamplesCMA ( int nSamples )
+
+Specifies the number of samples for the characteristic mode analysis with mode tracking. By default (nSamples = "0") this number is determined automatically.
+
+ 
+
+SetMemSettingCMA ( enum{"Auto", "Low", "Medium", "High"} key )
+
+Sets the memory setting for the characteristic mode analysis with mode tracking. By default ("Auto") the memory setting is determined automatically taking into account the available main memory.
+
+ 
+
+Default Settings
+
+SetAccuracySetting ( "Low" )
+
+UseFastFrequencySweep  ( False )
+
+UseIEGroundPlane  ( False )
+
+SetRealGroundMaterialName ( "" )
+
+CalcFarFieldInRealGround ( False )
+
+RealGroundModelType ( "Auto" )
+
+PreconditionerType ( "Auto" )
+
+LowFrequencyStabilization ( False )
+
+LowFrequencyStabilizationML( True )
+
+Multilayer ( FALSE )
+
+SetiMoMACC_I ( 0.0001 )
+
+SetiMoMACC_M ( 0.0001 )
+
+SetCFIEAlpha ( 0.5 )
+
+DeembedExternalPorts ( False )
+
+IgnoreBC_XY_And_Set_To_Open ( True )
+
+ModeTrackingCMA ( True )
+
+NumberOfModesCMA ( 3 )
+
+StartFrequencyCMA ( -1.0 )
+
+SetAccuracySettingCMA ( "Default" )
+
+FrequencySamplesCMA ( 0 )
+
+SetMemSettingCMA ( "Auto" )
+
+ 

@@ -1,0 +1,89 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Optimizer
+
+LayerStacking Object
+
+The layerstacking object can be used to define one or more background items to the project. The specified layers differ in thickness and material and are aligned at the borders of the bounding box.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+LayerStackingActive ( bool  flag )
+
+Identifies the activation state of the layer stacking feature.
+
+ 
+
+AlignValueBackgroundItems ( double value )
+
+Defines the value all layers are aligned on. Usually on the bottom line of the lowest layer. But also layers with negative thickness can be defined below the align value.
+
+ 
+
+NormalBackgroundItems ( enum{"x", "y", "z"} direction )
+
+Sets the normal axis of the background items .
+
+ 
+
+InvertDirection ( bool  flag )
+
+Identifies if the layer stacking is aligned at positive or negative normal direction.
+
+ 
+
+FixTransversal ( bool  flag )
+
+Identifies if the layer stacking should be fixed with the actual transversal measurements.
+
+ 
+
+AddItem ( int  index, double  thickness, name  materialname )
+
+Adds a new background layer to the model. Index defines the order of the layer stacking items. Positive thickness is in positive direction of the normal beginning at the align value. Vice versa for negative thickness. Materialname defines the material the background item consist of. The material must already exist.
+
+ 
+
+Create
+
+Creates the background items. All necessary settings for the layers have to be made previously.
+
+Default Settings
+
+MinValueBackgroundItems (0.0)
+
+NormalBackgroundItems ("z")
+
+Example
+
+With LayerStacking
+
+     .Reset
+
+     .LayerStackingActive (True)
+
+     .MinValueBackgroundItems (-2.0)
+
+     .NormalBackgroundItems ("y")
+
+     .InvertDirection "True"
+
+     .FixTransversal "False"
+
+     .AddItem ( 1, 1, "Vacuum" )
+
+     .AddItem ( 2, 0.5, "PEC" )
+
+     .Create
+
+End With

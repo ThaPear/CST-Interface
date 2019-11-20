@@ -1,0 +1,42 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | EvaluateFieldOnFace
+
+EvaluateFieldOnFace Object
+Evaluate a field, previously selected in the Navigation Tree, on a specified face.
+
+Methods
+
+IntegrateField ( name  sFaceName, enum{"x", "y", "z", "abs", "normal"} component, double_ref  dIntReal, double_ref  dIntImag, double_ref  dArea )
+
+Integrates the real and imaginary part of the selected field component / absolute value over the face named by sFaceName. The integrals and the area of the face are returned in the double variables dIntReal, dIntImag and dArea.
+
+ 
+
+GetValue ( enum key ) double
+
+Returns the double value of max/min and their position depending on the key "max", "min", "max x", "max y", "max z", "min x", "min y", "min z".
+
+ 
+
+EvaluateOnSurface ( bool  switch )
+
+If switch is set to True, the field is evaluated on the nearest surface to the curve path, disregarding volume results. This can be used to avoid zero result values, if the curve path is defined on a surface bordering a volume without field results (e.g. PEC).
+
+ 
+
+FitToGrid ( bool  switch )
+
+If switch is set to True, the face is mapped on the underlying grid. All field components on this staircase surface are taken into account then. Be aware that this also might increase the area returned. This feature is only available for hexahedral meshes, but is active by default then.
+
+Example
+
+Dim dIntReal as Double, dIntImag as Double
+
+Dim dArea, dMax As Double
+
+EvaluateFieldOnFace.IntegrateField ("face1", "normal", dIntReal, dIntImag, dArea)
+
+dMax = EvaluateFieldOnFace.GetValue ("max")
+
+MsgBox Str$(dIntReal)+"+i("+Str$(dIntImag)+") A="+Str$(dArea)+" max="+Str$(dMax)
+
+ 

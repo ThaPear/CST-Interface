@@ -1,0 +1,304 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | High Frequency | EigenmodeSolver
+
+EigenmodeSolver Object
+This is the object that controls some of the eigenmode solver settings and provides access to basic eigenmode solver results. Currently most VBA settings for the eigenmode solvers are controled by the Solver Object.
+
+ 
+
+Eigenmode Solver Settings and Result Queries
+
+General Methods
+
+Result Queries
+
+Force Calculation
+
+Defaults
+
+General Methods
+
+Reset
+
+Resets the eigenmode solver settings to their default values.
+
+ 
+
+Start int
+
+Starts the eigenmode solver with the current settings and returns 1 if the calculation is successfully finished and 0 if it failed.
+
+ 
+
+SetMeshAdaptationHex ( bool flag )
+
+Enable automatic hexahedral mesh adaptation for the eigenmode solver.
+
+ 
+
+SetMeshAdaptationTet ( bool flag )
+
+Enable automatic tetrahedral mesh adaptation for the eigenmode solver.
+
+ 
+
+SetNumberOfModes ( int nModes )
+
+Sets the number of modes which should be calculated by the eigenmode solver. Modes are sorted by ascending eigenmode frequency.
+
+ 
+
+SetModesInFrequencyRange ( bool flag )
+
+Calculates all modes in the global frequency range. This is only available for the JDM eigenmode solver.
+
+ 
+
+SetConsiderStaticModes  ( bool  flag )
+
+If flag = True then the static modes are saved and can be accessed via the result tree. Otherwise the static modes are not saved.
+
+ 
+
+SetRemoteCalculation  ( bool  flag )
+
+This method allows to switch between local and remote solver runs. When enabled, an Eigenmode solver run is submitted to the network. The setting does not influence parameter sweeps and optimizer runs with distributed computing.
+
+ 
+
+SetMethod ( enum {"AKS", "JDM", "JDM (low memory)"} key )
+
+This method affects the Eigenmode solver with hexahedral mesh. Two different eigenmode solver methods are provided for that mesh, namely AKS (Krylov Subspace method) and JDM (Jacobi-Davidson method). The JDM solver is capable to solve loss free as well as lossy problems with a frequency independent complex permittivity or reluctivity. The "JDM (low memory)" is a variant of "JDM" that is more efficient in terms of memory usage, but may be less robust in terms of the underlying iterative solver's convergence.
+
+ 
+
+SetMeshType ( enum {"Hexahedral Mesh", "Tetrahedral Mesh"} key )
+
+The eigenmode solver supports both hexahedral and tetrahedral meshes. Specify which mesh type should be used. Please note that there is no choice of the method for the "Tetrahedral Mesh".
+
+ 
+
+SetMaterialEvaluationFrequency ( bool flag, double freq )
+
+This setting applies to the lossy JD eigenmode solver method only. Electrically conductive materials and dispersive materials are evaluated either at the center frequency, or at another frequency. This yields a complex permittivity which is assumed to be frequency independent.
+
+ 
+
+SetFrequencyTarget ( bool flag, double freq )
+
+This method allows to specify a lower limit to the modes' frequencies. Admissible values are zero to the maximum frequency of the frequency range. The eigenmodes above this frequency are then calculated in ascending order.
+
+ 
+
+SetLowerBoundForQ ( bool flag, double value )
+
+This method allows to specify a lower limit to the modes' Q factor. It affects those Eigenmode calculations with the tetrahedral mesh for which losses are considered. Pass an empty string "" as the value to disable or enable the lower bound without changing the value. The settings are not considered in case the hexahedral mesh is active.
+
+ 
+
+SetMaxNumberOfThreads ( int nThreads )
+
+Maximum number of threads to use for the eigenmode calculation. Whether or not the eigenmode solver can use that many threads depends not only on the hardware, but also on the mesh and method chosen.
+
+ 
+
+SetUseParallelization ( bool flag )
+
+Specifies whether or not parallelization with different threads may be used for the eigenmode calculation to speed up the simulation.
+
+ 
+
+SetConsiderLossesInPostprocessingOnly  ( bool  flag )
+
+It is common practise for Eigenmode calculations to ignore the losses in a first step, namely for the calculation of the Eigenmode solutions themselves. An approximate consideration of the losses is still possible in the post-processing however, by assuming that the losses generated on the boundary can be calculated from the loss-free case. This approach, also referred to as perturbation method, speeds up the calculation.
+
+The method SetConsiderLossesInPostprocessingOnly has an effect on the JDM solver (hexahedral mesh) and the Eigenmode solver with tetrahedral mesh. The lossfree AKS solver always ignores losses and only allows to use the pertubation method to calculate the Q-factor.
+
+ 
+
+GetConsiderLossesInPostprocessingOnly bool
+
+Returns the last value passed to SetConsiderLossesInPostprocessingOnly or the corresponding default, if the method has not been called before.
+
+ 
+
+SetCalculateExternalQFactor ( bool  flag )
+
+The solver calculates the external Q-factor of all modes if the flag is set to true, to account for the effect of waveguide port coupling with the modes.
+
+ 
+
+SetQExternalAccuracy ( double acc )
+
+Sets the desired linear equation system solver accuracy for calculating the external Q factor of the modes. Only applies if external Q factors are calculated, see SetCalculateExternalQFactor.
+
+ 
+
+SetOrderTet ( int Value )
+
+Specify a value between "1" and "3" for the solver order of the Eigenmode solver with tetrahedral mesh. The choice is between low memory (1), the default second order (2) for good accuracy, or highly accurate results (3) for a given number of mesh cells. Higher order also allows to achieve accurate results with less mesh cells and possibly less memory consumption than lower order, if the structure contains electrically large voids rather than many geometric details.
+
+ 
+
+SetStoreResultsInCache ( bool flag )
+
+Stores results of the solver in the result cache. For each parameter combination in a parameter sweep, for instance, a full backup of the results is stored in a sub folder like {Projectname}/Result/Cache/run000001.
+
+ 
+
+SetTDCompatibleMaterials ( bool flag )
+
+Defines wheter constant tangent delta materials should be treated as in the time domain solver, that is by using a dispersive Debye model fit (flag = True), or by a constant imaginary part of the permittivity (flag = False).
+
+ 
+
+SetCalculateThermalLosses ( bool flag )
+
+This setting allows to activate or deactivate the surface loss calculation for the thermal coupling.
+
+ 
+
+SetAccuracy ( double acc )
+
+Sets the desired accuracy of the eigenmode solver in terms of the relative residual norm.
+
+ 
+
+GetNumberOfModesCalculated int
+
+Returns the number of modes which have been calculated by the eigenmode solver, as stored in the results. This value may differ from the solver setting if for any reason the solver has calculated less modes than requested, or if a frequency range was specified rather than the number of modes. In any case, the number of modes returned by this method should be retrieved for the following queries and before calling any of those queries.
+
+ 
+
+GetModeFrequencyInHz ( int ModeNumber ) double
+
+Returns the Eigenmode frequency f in Hertz of the mode specified by its One-based number.
+
+ 
+
+GetModeRelResidualNorm ( int ModeNumber ) double
+
+Returns the relative residual norm achieved when solver the linear equation system for a given mode. This value usually is lower than the accuracy threshold in the solver specials.
+
+ 
+
+GetModeQFactor ( int ModeNumber ) double
+
+For structures with lossy materials and solver methods which support considering those losses, the query returns the Q factor of the mode specified by its One-based number. If none was calculated, the method returns Zero. The Q factor is derived from the real and imaginary part of the complex Eigenfrequency.
+
+ 
+
+GetModeExternalQFactor ( int ModeNumber ) double
+
+While the Eigenmode solver usually solves problems with closed boundaries, the external Q factor calculation allows to take into account the coupling effects of transmission lines being connected to the device, as described by waveguide ports. If the corresponding option was activated at the time the solver started, the method returns the external Q factor of the mode specified by its One-based number.
+
+ 
+
+GetLoadedFrequencyInHz ( int ModeNumber ) double
+
+This results is only available with the external Q factor calculation. The Eigenfrequency of the device changes as couplers are connected to it. The query returns the loaded frequency of the mode in Hertz.
+
+ 
+
+GetNumberOfSensitivityDesignParameters int
+
+Returns the number of Eigenmode sensitivity design parameters for which results are available.
+
+ 
+
+GetSensitivityDesignParameter ( int Number ) name
+
+Returns the name of a sensitivity design parameter for which results had been calculated. Number is One-based.
+
+ 
+
+GetFrequencySensitivity ( string DesignParameter, int ModeNumber ) double
+
+Returns the result stored for the derivative of the Eigenmode frequency with respect to the given design parameter. All units are SI base units, so that for a geometric sensitivity result, the value is in Hertz per meter, and just Hertz for material sensitivity. The mode number is One-based.
+
+ 
+
+GetQFactorSensitivity ( string DesignParameter, int ModeNumber ) double
+
+Returns the result stored for the derivative of the Eigenmode Q factor with respect to the given design parameter. The units are SI base units, and depend on the design parameter. The mode number is again One-based.
+
+ 
+
+ResetForceCalculation
+
+Clears the list of modes selected for Lorentz force computation.
+
+ 
+
+CalculateLorentzForceForMode (int ModeIndex)
+
+Adds the mode with index ModeIndex to the list of modes selected for Lorentz force calculation. Mode indices are 1-based.
+
+ 
+
+CalculateLorentzForceForAllModes
+
+Adds all the available modes to the list of modes selected for Lorentz force calculation.
+
+ 
+
+IsModeSelectedForForceCalculation (int ModeIndex)
+
+Checks whether the mode with index ModeIndex is selected for Lorentz force calculation. Mode indices are 1-based.
+
+ 
+
+IsAnyModeSelectedForForceCalculation
+
+Checks whether any modes are selected for Lorentz force calculation.
+
+ 
+
+StartForceCalculation
+
+Starts the calculation of Lorentz force density distributions for selected modes.
+
+Defaults
+
+SetMethod ("AKS")
+
+SetMeshType ("Hexahedral Mesh")
+
+SetMeshAdaptationHex (False)
+
+SetMeshAdaptationTet (True)
+
+SetNumberOfModes (10)
+
+SetModesInFrequencyRange (False)
+
+SetFrequencyTarget (False, 0.0)
+
+SetLowerBoundForQ (False, 1000)
+
+SetMaterialEvaluationFrequency (True, 0.0)
+
+SetUseParallelization (True)
+
+SetMaxNumberOfThreads (48)
+
+SetConsiderLossesInPostprocessingOnly (True)
+
+SetOrderTet (2)
+
+SetStoreResultsInCache (False)
+
+SetTDCompatibleMaterials (False)
+
+SetCalculateThermalLosses (True)
+
+CalculateLorentzForceForMode: the list of modes is empty.
+
+SetConsiderStaticModes (True)
+
+SetAccuracy (1e-6)
+
+SetQExternalAccuracy (1e-4)
+
+SetCalculateExternalQFactor (False)
+
+ 
