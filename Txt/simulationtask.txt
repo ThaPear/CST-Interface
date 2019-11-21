@@ -1,0 +1,786 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Simulation Task Object
+
+SimulationTask Object
+ 
+
+Object referring to a simulation task. Use this object to create or to manipulate a simulation task.
+
+General Methods
+
+Methods Concerning Properties
+
+Methods Concerning Result Options
+
+Methods Concerning Monitor
+
+Special Methods
+
+Queries
+
+Default Settings
+
+Example
+
+General Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Type ( string type )
+
+Sets the type for a simulation task. This setting must be made before calling Create. The type can not be modified after the creation. Most task settings can be accessed by a simulation task object. In addition, specialized objects are available for some types of tasks. Valid task types and specialized objects are:
+
+Type
+
+Object
+
+"s-parameters"
+
+"dc"
+
+"ac"
+
+"spectral lines"
+
+"mixer"
+
+"amplifier"
+
+"transient"
+
+"template"
+
+"sequence"
+
+"array"
+
+Phased Array Antenna Task Object
+
+"parameter sweep"
+
+ParameterSweep Object
+
+"optimization"
+
+Optimizer Object
+
+ 
+
+Name ( name taskname )
+
+Sets the name of a simulation task before calling Create. Furthermore, this method can be used to select an existing task of your project. The task name needs to include all parent tasks for nested tasks, separated by backslashes, e.g. "Seq1\SPara1".
+
+ 
+
+Create
+
+Creates a new simulation task.
+
+ 
+
+Delete
+
+Deletes the task with the given name. Name needs to be called before this function can be evaluated.
+
+ 
+
+Update
+
+Executes the task with the given name, including all sub tasks. Name needs to be called before this function can be evaluated.
+
+Note: To update all Tasks in the tree, the command  "UpdateResults" can be used. This command is not part of the object SimulationTask.
+
+ 
+
+SetName ( name taskname )
+
+Modifies the name of an existing simulation task. The name needs to include parent tasks, like for Name. By specifying a different parent part it is also possible to move a task from one parent to another.
+
+ 
+
+MoveInTree ( name newparent, name nexttask )
+
+Moves an existing simulation task to a different position in the tree. newparent specifies the new parent task (including parents of the parent like for Name). If newparent is empty the task will be moved to the top level. If nexttask is empty the task will be moved behind all tasks at the new level. If nexttask is not empty the task will be moved in front of nexttask. nexttask specifies the task name only (without parent tasks).
+
+ 
+
+%% Methods Concerning Properties
+
+ 
+
+SetProperty ( name propertyname, double value )
+
+SetProperty ( name propertyname, string value)
+
+Sets the given value for the specified property. The following properties are available for the different simulation task types:
+
+All tasks
+
+"parallelization " (possible values: "Maximum", "None" or any positive integer): specifies how much parallelization is applied, the maximum possible number of threads, no parallelization, or a custom number of threads, respectively.
+
+"auto solver" (possible values: "True" or "False"): specifies whether the Nonlinear solver settings in the Solver Specials dialog of the task are calculated automatically and manual settings are ignored.
+
+"error current": specifies tolerance on error current (=sum of all currents to/from a node) in simulation
+
+"tolerance type" (possible values: "relative" or "absolute"): Type of tolerance on error current. Reference value is the impressed current.
+
+"iterations": specifies the maximum number of iterations in the calculation of the initial operation point.
+
+"auto condition" (possible values: "True" or "False"): specifies whether the Circuit condition settings in the Solver Specials dialog of the task are calculated automatically and manual settings are ignored.
+
+"gmin": conductance to ground, attached to possibly floating nodes to achieve convergence in circuit simulation. The conductance is calculated automatically if the expression evaluates to a negative number.
+
+"rmin": resistance value, below which resistors are treated as ideal shorts in circuit simulation.
+
+S-Parameters
+
+"fmin", "fmax": simulation frequency range. These settings are only used if "maximum frequency range" is off.
+
+"maximum frequency range" (possible values: "True" or "False"): enables or disables the maximum frequency sweep range. If the maximum frequency range is disabled, the frequencies set by the properties "fmin" and "fmax" will be used. If the maximum frequency range is enabled, those properties are ignored. The maximum frequency range must be disabled if the model is not frequency limited.
+
+"td block representation" (possible values: "True" or "False"): indicates whether a time domain representation, i.e., vector fitting, is used for frequency-dependent blocks.
+
+"circuit simulator": the type of simulator to be used (possible values: "cst", "hspice" or "pspice"). For the latter, a SPICE netlist is exported and no simulation is carried out.
+
+"broadband sweep accuracy": specifies the desired accuracy of S-Parameters for the broadband frequency sweep applied in the S-Parameter task.
+
+Operating point (DC)
+
+"circuit simulator": the type of simulator to be used (possible values: "cst", "hspice" or "pspice"). For the latter, a SPICE netlist is exported and no simulation is carried out.
+
+Transient
+
+"integration method" (possible values: "adams" or "gear")
+
+"integration order" (possible values: 1, 2, 3, or 4)
+
+"time stepping" (possible values: "automatic" ,"adaptive", and "fixed")
+
+"time step": maximum/fixed time step for adaptive/fixed time stepping
+
+"minimum time step": minimum time step for adaptive time stepping
+
+"transient accuracy": the desired relative accuracy of the transient solution.
+
+"circuit simulator": the type of simulator to be used (possible values: "cst", "cosimulation", "hspice" or "pspice"). For the latter two, a SPICE netlist is exported and no simulation is carried out.
+
+"sampling method" (possible values: "Automatic", "Nyquist", and "Manual"). Note that the method SetSweepData() resets the sampling method to "Manual".
+
+"fmax estimator": the type of estimation on the maximum excitation frequency (possible values: "automatic", "energy", "transitiontime", or "manual fmax").
+
+"energy threshold": relative energy threshold for the estimation of the maximum excitation frequency. It only applies if the energy-based fmax estimator has been selected.
+
+"manual fmax": maximum excitation frequency. It only applies if the manual fmax estimator has been selected.
+
+"nfdsamples": The number of frequency sample points used for calculating spectral densities or FD voltages/currents.
+
+"docombineresults": Starts the field combination in the 3D solver with respect to the calculated excitations in DS. Be sure to set the property "blocknameforcombineresults" to activate combine results correctly.
+
+"blocknameforcombineresults": Selects the MWS - block for which the fields are to be combined.
+
+AC
+
+"fmin", "fmax": simulation frequency range. These settings are only used if "maximum frequency range" is off.
+
+"maximum frequency range" (possible values: "True" or "False"): enables or disables the maximum frequency sweep range. If the maximum frequency range is disabled, the frequencies set by the properties "fmin" and "fmax" will be used. If the maximum frequency range is enabled, those properties are ignored. The maximum frequency range must be disabled if the model is not frequency limited.
+
+"docombineresults": Starts the field combination in the 3D solver with respect to the calculated excitations in DS. Be sure to set the property "blocknameforcombineresults" to activate combine results correctly.
+
+"blocknameforcombineresults": Selects the MWS - block for which the fields are to be combined.
+
+"td block representation" (possible values: "True" or "False"): indicates whether a time domain representation, i.e., vector fitting, is used for frequency-dependent blocks.
+
+"circuit simulator": the type of simulator to be used (possible values: "cst", "pspice" or "hspice"). For the latter, a SPICE netlist is exported and no simulation is carried out.
+
+Spectral lines
+
+no task type specific property
+
+Mixer
+
+"input frequency",
+
+"lo frequency",
+
+"input resistance",
+
+"lo resistance",
+
+"output resistance",
+
+"input power",
+
+"lo power"
+
+Amplifier
+
+"input frequency",
+
+"input res",
+
+"input pow",
+
+"load res"
+
+"logarithmic sweep" (possible values: "True" or "False"): switches between logarithmic and linear frequency or power sampling.
+
+Methods Concerning Result Options
+
+EnableResult ( string resultname, bool enable )
+
+Switches on/off the consideration of the result specified by name. The following results are available:
+
+S-Parameters
+
+"block"
+
+Operating point (DC)
+
+none
+
+Transient
+
+"block", "block impulse response"
+
+AC
+
+"block"
+
+Spectral lines
+
+none
+
+Mixer
+
+"vswr", "spectrum", "isolation", "gain"
+
+Amplifier
+
+"s-param", "group delay", "linear gain", "stability", "spectrum", "distortion", "power", "gain"
+
+ 
+
+ResultEnabled ( string resultname ) bool
+
+Tells whether the result specified by name is considered. The available result names are identical to those used by EnableResult.
+
+ 
+
+GetResultOption ( string resultoptiondescription ) string
+
+Returns the value of the named result option of  the selected task.
+
+Parameter resultoptiondescription: (case sensitive as displayed in the 'Results Settings'-tab in the 'Simulation Task'-dialog). An error is thrown if the name couldn't be recognized as a result option name of the task .
+
+An error is thrown if no task is selected or if the given name couldn't be recognized as a result option of the task .
+
+ 
+
+SetResultOption ( string resultoptiondescription , string resultoptionvalue  )
+
+Sets the value of the named result option of  the selected task to the named value.
+
+Parameter resultoptiondescription: (case sensitive as displayed in the 'Description'-column in the 'Results Settings'-tab in the 'Simulation Task'-dialog). An error is thrown if the name couldn't be recognized as a result option name of the task. An error is thrown if no task is selected or if the given name couldn't be recognized as a result option of the task .
+
+Parameter resultoptionvalue: (case insensitive as displayed in the 'Value'-column in the 'Results Settings'-tab in the 'Simulation Task'-dialog). An error is thrown if the task couldn't set the value (e.g. because it doesn't pass to the option type). For example a boolean result option (displayed as checkbox) can be set using the values "true" "True" or even "tRuE" but setting it to "1" would throw an error.
+
+ 
+
+%% Monitor
+
+ 
+
+ResetCombineMonitorFilters
+
+Clears all monitor selection filters.
+
+ 
+
+GetNCombineMonitorFilters int
+
+Gets the number of defined monitor selections.
+
+ 
+
+GetCombineMonitorFilter( int index ) name
+
+Gets the filter string of index "index".
+
+ 
+
+AddCombineMonitorFilter( name filterName )
+
+Adds a monitor selection filter to the internal filter set. The following expressions are allowed:
+
+Filter
+
+Action
+
+*
+
+All monitors are added to the selection
+
+<MonitorName>
+
+This monitor is added to the selection
+
+:farfield:
+
+All farfield monitors are added to the selection
+
+:fieldsource:
+
+All Field source monitors are added to the selection
+
+:efield:
+
+All E-field monitors are added to the selection
+
+:hfield:
+
+All H-field monitors are added to the selection
+
+:current:
+
+All current monitors are added to the selection
+
+:powerflow:
+
+All power flow monitors are added to the selection
+
+:eenergy:
+
+All E-energy monitors are added to the selection
+
+:henergy:
+
+All H-energy monitors are added to the selection
+
+ 
+
+%% Special Methods
+
+ 
+
+SetSweepType ( string sweeptype )
+
+Specifies the property to sweep. Valid arguments are "no", "frequency" and "power" for amplifier tasks and "no", "frequency", "lo power" and "input power" for mixer tasks.
+
+ 
+
+SetSweepData ( double min, double max, int samples )
+
+Specifies the sweep range and the number of samples. The sweep range is Tmin and Tmax for transient tasks. For frequency domain tasks it is Fmin and Fmax, and for mixer and amplifier tasks it is either Fmin and Fmax or Pmin and Pmax (depending on the task settings). Note that for transient tasks the sampling method is reset to "Manual".
+
+ 
+
+SetLocalUnit ( string unittype, string unit )
+
+Sets the task to local units, i.e. values of all properties associated with the selected simulation task will not refer to the project's global units any more but to the tasks local units. Additionally, the unit of the specified type of unit is set to the given value.
+
+ 
+
+SetGlobalUnit ( string unittype )
+
+Sets the task to global units. The local unit of the specified type is deleted. All other local units are preserved, but not active. They can be activated again by calling SetLocalUnit.
+
+ 
+
+SetDiamondScheme ( bool diamond )
+
+Switches on/off the consideration of the frequencies according to the diamond scheme for a spectral lines simulation task.
+
+ 
+
+SetDiamondHarmonics ( int harmonics )
+
+Sets the number of harmonics for the diamond scheme for a spectral lines simulation task.
+
+ 
+
+AddFundamentalFrequency ( double frequency, int harmonics )
+
+Adds a fundamental frequency to a spectral lines simulation task with a given number of harmonics that will be considered if the diamond scheme is switched off.
+
+ 
+
+ClearFundamentalFrequencies
+
+Removes all entries from the list of fundamental frequencies for a spectral lines simulation task.
+
+ 
+
+SetInputPort ( name portname )
+
+Sets the input port for an amplifier simulation task or a mixer simulation task. For a mixer simulation task, IF is the input port in case of a consideration of the up-converting mode, for the down-converting mode RF is the input port.
+
+ 
+
+SetOutputPort ( name portname )
+
+Sets the output port for an amplifier simulation task or a mixer simulation task. For a mixer simulation task, RF is the input port in case of a consideration of the up-converting mode, for the down-converting mode IF is the input port.
+
+ 
+
+SetLOPort ( name portname )
+
+Sets the local oscillator port for a mixer simulation task by name.
+
+ 
+
+SetUpconverting ( bool upconverting )
+
+Switches on/off the consideration of the up-converting mode of the selected mixer simulation task.
+
+ 
+
+SetPortSignal ( string portname, string type, string array values )
+
+Sets the signal type associated with the given port for the selected simulation task. The possible types are the same that are returned by GetPortSignalType. Values is an array of expressions that define the signal.
+
+%
+
+Type/Values pairs for Transient tasks:
+
+Signal name
+
+Parameters to be given in the values array
+
+"Gaussian"
+
+Fmin, Fmax, Vampl
+
+"Pulse"
+
+Vinit, Vpulse, Tdelay, Trise, Tfall, Thold, Ttotal
+
+"Sine"
+
+Voffset, Vampl, Freq, Tdelay
+
+"Damped sine"
+
+Voffset, Vampl, Freq, Tdelay, Damp
+
+"Exponential rising"
+
+Vinit, Vend, Tdelay, Crise
+
+"Exponential rising and falling"
+
+Vinit, Vpulse, Tdelayrise, Crise, Tdelayfall, Cfall
+
+"PRBS"
+
+N, Vpulse, Trise, Tfall, TPulse
+
+"PRBS random initialization"
+
+N, Vpulse, Trise, Tfall, TPulse
+
+"K285"
+
+Vpulse, Trise, Tfall, TPulse
+
+"K285 inverted"
+
+Vpulse, Trise, Tfall, TPulse
+
+"Random"
+
+N, Vpulse, Trise, Tfall, TPulse
+
+"Pulse Sequence"
+
+Vinit, Vpulse, Trise, Tfall, TdelayR, TdelayF, Ttotal, Initbit, Bitsequence (e.g. "100110") , Periodic ("true" or "false")
+
+"Import"
+
+Filename
+
+%
+
+Type/Values pairs for AC-tasks:
+
+Signal name
+
+Parameters to be given in the values array
+
+"Constant"
+
+Amplitude, Phase (in degree)
+
+"Import_File"
+
+Filename of an external file with frequency - amplitude pairs
+
+"Import_DS_Result"
+
+Result tree name of an existing DS-Result. These values will be used as excitation.
+
+ 
+
+SetComplexPortExcitation (string portname, string amplitude,  string phase)
+
+Sets the complex excitation amplitude of an AC-Tasks. The task needs to exist before this function can be called.
+
+ 
+
+SetRealPortExcitation (string portname, string amplitude)
+
+Sets the excitation amplitude of an DC-Tasks. The task needs to exist before this function can be called.
+
+ 
+
+SetPortSourceType ( string portname, string type )
+
+Sets the source type associated with the given port for the selected simulation task. Possible values are:
+
+"None"
+
+"Voltage"
+
+"Current"
+
+ "Signal"
+
+ 
+
+The value "None" deletes the excitation signal of this port. The port will therefore be considered as impedance.
+
+The task needs to exist and "SetComplexPortExcitation" ("SetRealPortExcitation") has to be called before this function can be executed.
+
+ 
+
+SetPortSignalName ( string portname, string signalname)
+
+Sets a user defined name for an already existing excitation signal of port no. portname.
+
+ 
+
+LoadLisFile
+
+This method is only applicable for circuit simulation tasks that have the "HSPICE export" enabled in their "Circuit simulator" frame. Furthermore, it requires that the HSPICE simulator has been executed on the HSPICE netlist, generated by the circuit simulation task. The method reads the results from the lis-file that has been generated by the HSPICE simulator and puts them into the Design Studio result tree. .
+
+ 
+
+%% Queries
+
+ 
+
+ArePortsDependent ( string portname1, string portname2 ) bool
+
+Checks if two external ports specified by their names are dependent. The method returns True if the two ports are connected through some components of the model.
+
+ 
+
+GetUnit ( string unittype ) string
+
+Returns the unit for the given type specified for the selected task. This is either the task's local unit or the project's global unit.
+
+ 
+
+GetUnitScale ( string unittype ) double
+
+Returns the unit scale for the given type specified for the selected task. This is either the task's local scale or the project's global scale.
+
+ 
+
+GetNameOfCurrentTask name
+
+Returns the name of the currently running task while the simulation is performed.
+
+ 
+
+GetModelFolder ( bool absolute ) string
+
+Returns the generic model folder of the selected task, or an empty string if no task is selected. If absolute is false, the path is returned relative to the project model folder that can be obtained with GetProjectPath("ModelDS"). Note that not all tasks store individual model files, so the returned folder might not contain any files or not exist.
+
+ 
+
+GetResultFolder ( bool absolute ) string
+
+Returns the generic result folder of the selected task, or an empty string if no task is selected. If absolute is false, the path is returned relative to the project result folder that can be obtained with GetProjectPath("ResultDS"). Note that the returned folder is only used for result files without tree item. 1D results and tables are stored in different locations. You can get those paths via the ResultTree Object from the corresponding tree names.
+
+ 
+
+GetProperty ( name propertyname)   string
+
+Inverse method to SetProperty(). Returns the value of the specified property.  For details on valid properties, see SetProperty().
+
+ 
+
+GetUpconverting bool
+
+Returns if the selected mixer simulation task considers the up-converting mode.
+
+ 
+
+GetPortSignalType ( string portname ) string
+
+Returns the signal type associated with the given port for the selected simulation task. Possible return values are "None" (if no signal is assigned to the specified port, i.e. the port will be considered as impedance), "Gaussian", "Pulse", "Sine", "Damped sine", "Exponential rising", "Exponential rising and falling", "PRBS", "PRBS random initialization", "K285", "K285 inverted", "Random", "Pulse Sequence" and "Import".
+
+ 
+
+GetPortSourceType ( string portname ) string
+
+Returns the source type associated with the given port for the selected simulation task. Possible return values are "None" (if no signal is assigned to the specified port, i.e. the port will be considered as impedance), "Voltage", "Current" and "Signal".
+
+ 
+
+GetGaussProperties ( string portname, double& amplitude, double& fmin, double& fmax )
+
+Retrieves the settings for a gaussian excitation signal at the given port.
+
+ 
+
+StartTaskNameIteration int
+
+Resets the iterator for the simulation tasks and returns the number of simulation tasks.
+
+ 
+
+GetNextTaskName name
+
+Returns the next simulation task's name. Call StartTaskNameIteration before the first call of this method.
+
+ 
+
+DoesExist
+
+Checks if a task with the given name does already exist.
+
+ 
+
+GetTypeForTask ( name taskname ) name
+
+Returns the type of the simulation task given by name.
+
+ 
+
+GetSequenceTaskLoopCurrentIteration int
+
+If a sequence task is currently performing a loop, this function returns the current iteration number. If no loop is currently running, -1 is returned.
+
+ 
+
+GetSequenceTaskLoopMaxIteration int
+
+If a sequence task is currently performing a loop, this function returns the maximum number of iterations. If no loop is currently running, -1 is returned.
+
+ 
+
+Default Settings
+
+SetProperty ("enabled", "True")
+
+SetProperty ("logarithmic sweep", "False")
+
+SetProperty ("maximum frequency range", "True")
+
+SetLocalUnit (<any>, False)
+
+SetDiamondScheme (True)
+
+SetUpconverting (True)
+
+SetProperty ("gmin", "-1")
+
+SetProperty ("rmin", "1e-6")
+
+Example
+
+'Creates a simulation task
+
+ 
+
+With SimulationTask
+
+.Reset
+
+.Type ("S-Parameters")
+
+.Name ("MyTask")
+
+.Create
+
+End With
+
+ 
+
+With SimulationTask
+
+.reset
+
+.name("AC1")
+
+.type("AC")
+
+.SetProperty("fmin",0)
+
+.SetProperty("fmax",1000)
+
+.SetProperty("maximum frequency range", "False")
+
+.create
+
+.SetComplexPortExcitation("1", "1", "45")
+
+.SetPortSourceType("1", "CURRENT")
+
+End With
+
+ 
+
+'Modifies an existing simulation task
+
+ 
+
+With SimulationTask
+
+.Reset
+
+.Name ("MyTask")
+
+.SetProperty("maximum frequency range", "False")
+
+.SetLocalUnit ("Frequency", "GHz")
+
+.SetSweepData (1.0e-5, 10.0, 101)
+
+.SetProperty ("logarithmic sweep", "True")
+
+End With
+
+ 
+
+'Tests if a simulation task with a given name exists
+
+ 
+
+SimulationTask.Name("Sweep1\SPara1")
+
+If SimulationTask.DoesExist Then
+
+ReportInformationToWindow("Task exists.")
+
+Else
+
+ReportInformationToWindow("Task doesn't exist.")
+
+End If
+
+ 
+
+' Update all tasks  (UpdateAllTasks)
+
+ 
+
+UpdateResults
+
+ 
+
+ 

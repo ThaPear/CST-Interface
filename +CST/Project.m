@@ -876,53 +876,84 @@ classdef Project < handle
     end
     %% Matlab interface Project functions.
     properties(Access = protected)
-        analyticalcurve         CST.AnalyticalCurve
-        arc                     CST.Arc
-        asciiexport             CST.ASCIIExport
-        blendcurve              CST.BlendCurve
-        boundary                CST.Boundary
-        brick                   CST.Brick
-        component               CST.Component
-        curve                   CST.Curve
-        cylinder                CST.Cylinder
-        discretefaceport        CST.DiscreteFacePort
-        evaluatefieldalongcurve CST.EvaluateFieldAlongCurve
-        extrude                 CST.Extrude
-        extrudecurve            CST.ExtrudeCurve
-        fdsolver                CST.FDSolver
-        floquetport             CST.FloquetPort
-        group                   CST.Group
-        line                    CST.Line
-        loft                    CST.Material
-        material                CST.Material
-        meshadaption3d          CST.MeshAdaption3D
-        meshsettings            CST.MeshSettings
-        monitor                 CST.Monitor
-        parametersweep          CST.ParameterSweep
-        pick                    CST.Pick
-        plot                    CST.Plot
-        plot1d                  CST.Plot1D
-        polygon                 CST.Polygon
-        polygon3d               CST.Polygon3D
-        port                    CST.Port
-        postprocess1d           CST.PostProcess1D
-        rectangle               CST.Rectangle
-        result1d                CST.Result1D
-        resulttree              CST.ResultTree
-        solid                   CST.Solid
-        solver                  CST.Solver
-        touchstone              CST.Touchstone
-        tracefromcurve          CST.TraceFromCurve
-        transform               CST.Transform_
-        units                   CST.Units
-        wcs                     CST.WCS
+        adscosimulation             CST.ADSCosimulation
+        analyticalcurve             CST.AnalyticalCurve
+        arc                         CST.Arc
+        arfilter                    CST.Arfilter
+        asciiexport                 CST.ASCIIExport
+        asymptoticsolver            CST.AsymptoticSolver
+        background                  CST.Background
+        blendcurve                  CST.BlendCurve
+        boundary                    CST.Boundary
+        brick                       CST.Brick
+        colorramp                   CST.ColorRamp
+        component                   CST.Component
+        curve                       CST.Curve
+        cylinder                    CST.Cylinder
+        discretefaceport            CST.DiscreteFacePort
+        eigenmodesolver             CST.EigenmodeSolver
+        evaluatefieldalongcurve     CST.EvaluateFieldAlongCurve
+        evaluatefieldonface         CST.EvaluateFieldOnFace
+        extrude                     CST.Extrude
+        extrudecurve                CST.ExtrudeCurve
+        farfieldarray               CST.FarfieldArray
+        farfieldplot                CST.FarfieldPlot
+        fdsolver                    CST.FDSolver
+        floquetport                 CST.FloquetPort
+        force                       CST.Force
+        group                       CST.Group
+        iesolver                    CST.IESolver
+        layerstacking               CST.LayerStacking
+        line                        CST.Line
+        loft                        CST.Material
+        material                    CST.Material
+        meshadaption3d              CST.MeshAdaption3D
+        meshsettings                CST.MeshSettings
+        monitor                     CST.Monitor
+        networkparameterextraction  CST.NetworkParameterExtraction
+        optimizer                   CST.Optimizer
+        parametersweep              CST.ParameterSweep
+        pick                        CST.Pick
+        plot                        CST.Plot
+        plot1d                      CST.Plot1D
+        polygon                     CST.Polygon
+        polygon3d                   CST.Polygon3D
+        port                        CST.Port
+        postprocess1d               CST.PostProcess1D
+        qfactor                     CST.QFactor
+        rectangle                   CST.Rectangle
+        result1d                    CST.Result1D
+        resulttree                  CST.ResultTree
+        simulationtask              CST.SimulationTask
+        solid                       CST.Solid
+        solver                      CST.Solver
+        solverparameter             CST.SolverParameter
+        touchstone                  CST.Touchstone
+        tracefromcurve              CST.TraceFromCurve
+        transform                   CST.Transform_
+        units                       CST.Units
+        wcs                         CST.WCS
     end
     methods
+        function adscosimulation = ADSCosimulation(obj)
+            if(isempty(obj.adscosimulation))
+                obj.adscosimulation = CST.ADSCosimulation(obj, obj.hProject);
+            end
+            adscosimulation = obj.adscosimulation;
+        end
+        
         function analyticalcurve = AnalyticalCurve(obj)
             if(isempty(obj.analyticalcurve))
                 obj.analyticalcurve = CST.AnalyticalCurve(obj, obj.hProject);
             end
             analyticalcurve = obj.analyticalcurve;
+        end
+        
+        function arfilter = Arfilter(obj)
+            if(isempty(obj.arfilter))
+                obj.arfilter = CST.Arfilter(obj, obj.hProject);
+            end
+            arfilter = obj.arfilter;
         end
         
         function arc = Arc(obj)
@@ -937,6 +968,20 @@ classdef Project < handle
                 obj.asciiexport = CST.ASCIIExport(obj, obj.hProject);
             end
             asciiexport = obj.asciiexport;
+        end
+        
+        function asymptoticsolver = AsymptoticSolver(obj)
+            if(isempty(obj.asymptoticsolver))
+                obj.asymptoticsolver = CST.AsymptoticSolver(obj, obj.hProject);
+            end
+            asymptoticsolver = obj.asymptoticsolver;
+        end
+        
+        function background = Background(obj)
+            if(isempty(obj.background))
+                obj.background = CST.Background(obj, obj.hProject);
+            end
+            background = obj.background;
         end
         
         function blendcurve = BlendCurve(obj)
@@ -958,6 +1003,13 @@ classdef Project < handle
                 obj.brick = CST.Brick(obj, obj.hProject);
             end
             brick = obj.brick;
+        end
+        
+        function colorramp = ColorRamp(obj)
+            if(isempty(obj.colorramp))
+                obj.colorramp = CST.ColorRamp(obj, obj.hProject);
+            end
+            colorramp = obj.colorramp;
         end
         
         function component = Component(obj)
@@ -987,11 +1039,26 @@ classdef Project < handle
             end
             discretefaceport = obj.discretefaceport;
         end
+        
+        function eigenmodesolver = EigenmodeSolver(obj)
+            if(isempty(obj.eigenmodesolver))
+                obj.eigenmodesolver = CST.EigenmodeSolver(obj, obj.hProject);
+            end
+            eigenmodesolver = obj.eigenmodesolver;
+        end
+        
         function evaluatefieldalongcurve = EvaluateFieldAlongCurve(obj)
             if(isempty(obj.evaluatefieldalongcurve))
                 obj.evaluatefieldalongcurve = CST.EvaluateFieldAlongCurve(obj, obj.hProject);
             end
             evaluatefieldalongcurve = obj.evaluatefieldalongcurve;
+        end
+        
+        function evaluatefieldonface = EvaluateFieldOnFace(obj)
+            if(isempty(obj.evaluatefieldonface))
+                obj.evaluatefieldonface = CST.EvaluateFieldOnFace(obj, obj.hProject);
+            end
+            evaluatefieldonface = obj.evaluatefieldonface;
         end
         
         function extrude = Extrude(obj)
@@ -1008,6 +1075,20 @@ classdef Project < handle
             extrudecurve = obj.extrudecurve;
         end
         
+        function farfieldarray = FarfieldArray(obj)
+            if(isempty(obj.farfieldarray))
+                obj.farfieldarray = CST.FarfieldArray(obj, obj.hProject);
+            end
+            farfieldarray = obj.farfieldarray;
+        end
+        
+        function farfieldplot = FarfieldPlot(obj)
+            if(isempty(obj.farfieldplot))
+                obj.farfieldplot = CST.FarfieldPlot(obj, obj.hProject);
+            end
+            farfieldplot = obj.farfieldplot;
+        end
+        
         function fdsolver = FDSolver(obj)
             if(isempty(obj.fdsolver))
                 obj.fdsolver = CST.FDSolver(obj, obj.hProject);
@@ -1022,11 +1103,32 @@ classdef Project < handle
             floquetport = obj.floquetport;
         end
         
+        function force = Force(obj)
+            if(isempty(obj.force))
+                obj.force = CST.Force(obj, obj.hProject);
+            end
+            force = obj.force;
+        end
+        
         function group = Group(obj)
             if(isempty(obj.group))
                 obj.group = CST.Group(obj, obj.hProject);
             end
             group = obj.group;
+        end
+        
+        function iesolver = IESolver(obj)
+            if(isempty(obj.iesolver))
+                obj.iesolver = CST.IESolver(obj, obj.hProject);
+            end
+            iesolver = obj.iesolver;
+        end
+        
+        function layerstacking = LayerStacking(obj)
+            if(isempty(obj.layerstacking))
+                obj.layerstacking = CST.LayerStacking(obj, obj.hProject);
+            end
+            layerstacking = obj.layerstacking;
         end
         
         function line = Line(obj)
@@ -1035,6 +1137,7 @@ classdef Project < handle
             end
             line = obj.line;
         end
+        
         function loft = Loft(obj)
             if(isempty(obj.loft))
                 obj.loft = CST.Loft(obj, obj.hProject);
@@ -1068,6 +1171,20 @@ classdef Project < handle
                 obj.monitor = CST.Monitor(obj, obj.hProject);
             end
             monitor = obj.monitor;
+        end
+        
+        function networkparameterextraction = NetworkParameterExtraction(obj)
+            if(isempty(obj.networkparameterextraction))
+                obj.networkparameterextraction = CST.NetworkParameterExtraction(obj, obj.hProject);
+            end
+            networkparameterextraction = obj.networkparameterextraction;
+        end
+        
+        function optimizer = Optimizer(obj)
+            if(isempty(obj.optimizer))
+                obj.optimizer = CST.Optimizer(obj, obj.hProject);
+            end
+            optimizer = obj.optimizer;
         end
         
         function parametersweep = ParameterSweep(obj)
@@ -1126,6 +1243,13 @@ classdef Project < handle
             postprocess1d = obj.postprocess1d;
         end
         
+        function qfactor = QFactor(obj)
+            if(isempty(obj.qfactor))
+                obj.qfactor = CST.QFactor(obj, obj.hProject);
+            end
+            qfactor = obj.qfactor;
+        end
+        
         function rectangle = Rectangle(obj)
             if(isempty(obj.rectangle))
                 obj.rectangle = CST.Rectangle(obj, obj.hProject);
@@ -1151,6 +1275,13 @@ classdef Project < handle
             resulttree = obj.resulttree;
         end
         
+        function simulationtask = SimulationTask(obj)
+            if(isempty(obj.simulationtask))
+                obj.simulationtask = CST.SimulationTask(obj, obj.hProject);
+            end
+            simulationtask = obj.simulationtask;
+        end
+        
         function solid = Solid(obj)
             if(isempty(obj.solid))
                 obj.solid = CST.Solid(obj, obj.hProject);
@@ -1163,6 +1294,13 @@ classdef Project < handle
                 obj.solver = CST.Solver(obj, obj.hProject);
             end
             solver = obj.solver;
+        end
+        
+        function solverparameter = SolverParameter(obj)
+            if(isempty(obj.solverparameter))
+                obj.solverparameter = CST.SolverParameter(obj, obj.hProject);
+            end
+            solverparameter = obj.solverparameter;
         end
         
         function touchstone = Touchstone(obj)
