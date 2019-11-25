@@ -1,0 +1,214 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Link Object
+
+Link Object
+ 
+
+Object referring to a link. Use this object to create a connection of two blocks or to connect a block with an external port, or to query properties of a connection. The queries always work on exactly one link, but it is possible to create multiple connected links at once by specifying more than two link ends.
+
+General Methods
+
+Getter
+
+Setter
+
+Positioning
+
+Examples
+
+Connect two blocks with an external port
+
+Set a manual route with five points in total
+
+General Methods
+
+Create
+
+Creates a new link. All necessary settings for this connection have to be made previously, i.e. source port and target port must be set by some of the methods above. A new node is created for each link end that connects to an already connected pin. If the link has more than two ends, as many new nodes as needed to connect each end are created. They are positioned automatically.
+
+ 
+
+Delete
+
+Deletes a link. All necessary settings for this connection have to be made previously, i.e. source port and target port must be set by some of the methods above.
+
+ 
+
+DoesExist bool
+
+Checks if a link with the currently selected settings already exists.
+
+ 
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+%% Getter
+
+ 
+
+GetBusSize int
+
+Returns the bus size of the link. Bus size is the number of electrical connection that the link carries. Non bus links have the bus size 1.
+
+ 
+
+GetSourceComponent( out:string linkendtype out:string linkendcomponentname out:string linkendpinname )
+
+Returns the 3 strings to identify the source component of the link. See SetConnection for a description of the strings.
+
+ 
+
+GetTargetComponent( out:string linkendtype out:string linkendcomponentname out:string linkendpinname )
+
+Returns the 3 strings to identify the target component of the link. See SetConnection for a description of the strings.
+
+ 
+
+HasOrthogonalPath bool
+
+Checks whether the link has an orthogonal or polygonal path.
+
+ 
+
+IsManuallyRouted bool
+
+Checks if the link was manually routed.
+
+ 
+
+ 
+
+IsOrthogonalMode bool
+
+Checks whether new links will be created with an orthogonal or polygonal path.
+
+ 
+
+%% Setter
+
+ 
+
+SetManualRoute ( string array points )
+
+Set a specific route for the link. points is an array containing the x and y coordinates of each route point, so the dimension of the array is twice the number of points. The start and end point cannot be set and are always added to the specified points. Additional intermediate points are added if the specified points do not result in an orthogonal route. This method may only be called for a link with exactly two ends.
+
+ 
+
+SetOrthogonalMode ( bool orthogonal )
+
+Specify whether new links should be routed with an orthogonal or polygonal path. This does not change existing links.
+
+ 
+
+SetOrthogonalPath ( bool orthogonal )
+
+Specify whether the link should be routed with an orthogonal or polygonal path. If this method is not called before creating a link, the default as returned by IsOrthogonalMode is used.
+
+ 
+
+SetConnection ( int endnumber, name type, name componentname, name pinname )
+
+Sets a port of a block, an external port or a connection label as port endnumber of the link. componentname is the name of the component as displayed in the Navigation Tree or the properties dialog. For connection labels this is not to be confused with the label that is diplayed on the schematic (this would not be unique). The smallest possible endnumber is 1. All ends of a link need to be connected with an external port, a block port or a connection label. The chosen pin of the component must not be connected already if endnumber is higher than 2. The following component types are supported:
+
+Component Type
+
+type
+
+pinname
+
+Block
+
+"B"
+
+Name of the pin as displayed in the schematic. For blocks without visible pin names (e.g. resistors or transistors) use the names that are displayed near the block icon in the online help of the corresponding block, or numbers starting with 1 if the icon does not contain pin names.
+
+External Port
+
+"P"
+
+"" to choose the main pin or "ref" to choose the reference pin (only valid for differential external ports).
+
+Connection Label
+
+"L"
+
+Not used
+
+ 
+
+%% Positioning
+
+ 
+
+Reroute
+
+Recalculates the route of the link. If the link was manually routed before, it will now be automatically routed.
+
+ 
+
+SetSourceNodePosition ( int x, int y )
+
+Sets the position of the node created at the source end of the link. This has only an effect if the chosen source port is already connected with a link. Possible values are 0 < x, y <100000, i.e. (50000, 50000) is the center of the schematic. It is always ensured that the created node is aligned with the grid, therefore the specified position might get adjusted slightly.
+
+ 
+
+SetTargetNodePosition ( int x, int y )
+
+Sets the position of the node created at the target end of the link. This has only an effect if the chosen target port is already connected with a link. Possible values are 0 < x, y <100000, i.e. (50000, 50000) is the center of the schematic. It is always ensured that the created node is aligned with the grid, therefore the specified position might get adjusted slightly.
+
+Examples
+
+'Connect two blocks with an external port
+
+ 
+
+With Link
+
+.Reset
+
+.SetConnection (1, "B", "R1", "2")
+
+.SetConnection (2, "B", "L1", "1")
+
+.SetConnection (3, "P", "1", "")
+
+.Create
+
+End With
+
+ 
+
+'Set a manual route with five points in total
+
+ 
+
+Dim points(0 To 5) As String
+
+points(0) = "50670" ' x(1)
+
+points(1) = "50200" ' y(1)
+
+points(2) = "50700" ' x(2)
+
+points(3) = "50200" ' y(2)
+
+points(4) = "50700" ' x(3)
+
+points(5) = "50250" ' y(3)
+
+With Link
+
+.Reset
+
+.SetConnection (1, "B", "R1", "1")
+
+.SetConnection (2, "B", "R2", "1")
+
+.SetManualRoute (points)
+
+.Create
+
+End With

@@ -924,7 +924,6 @@ classdef Project < handle
         rectangle                   CST.Rectangle
         result1d                    CST.Result1D
         resulttree                  CST.ResultTree
-        simulationtask              CST.SimulationTask
         solid                       CST.Solid
         solver                      CST.Solver
         solverparameter             CST.SolverParameter
@@ -1273,13 +1272,6 @@ classdef Project < handle
                 obj.resulttree = CST.ResultTree(obj, obj.hProject);
             end
             resulttree = obj.resulttree;
-        end
-        
-        function simulationtask = SimulationTask(obj)
-            if(isempty(obj.simulationtask))
-                obj.simulationtask = CST.SimulationTask(obj, obj.hProject);
-            end
-            simulationtask = obj.simulationtask;
         end
         
         function solid = Solid(obj)

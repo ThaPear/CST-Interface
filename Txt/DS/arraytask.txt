@@ -1,0 +1,120 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Array Task Object
+
+ArrayTask Object
+Object referring to an array task. Use this object to create or to manipulate an array task.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name taskname )
+
+Sets the name of a phased array antenna task before calling Create.
+
+ 
+
+SetExcitationPattern (string pattern)
+
+Sets the excitation pattern for the phased array antenna. Valid choices are: Uniform, Cosine, Cosine-Sq., Taylor, Binomial and Chebyshev
+
+ 
+
+SetShapeCustom (int elements_in_x, int elements_in_y, double spacing_in_x, double spacing_in_y, double grid_angle)
+
+Sets the settings for creating a custom shape phased array antenna
+
+elements_in_x: Specify the number of elements in the X direction.
+
+elements_in_y: Specify the number of elements in the Y direction.
+
+spacing_in_x: Specify the spacing in the X direction. This is the distance from an element's center to the center of an adjacent element in the X direction.
+
+spacing_in_y: Specify the spacing in the Y direction. This is the distance from an element's center to the center of an adjacent element in the Y direction.
+
+grid_angle: Specify the grid angle of the array.
+
+ 
+
+SetShapeDiamond (int elements_in_a_side, double spacing_in_x, double spacing_in_y)
+
+Sets the settings for creating a diamond shape phased array antenna
+
+elements_in_a_side: Specify the number of elements in one side of the diamond.
+
+spacing_in_x: Specify the spacing in the X direction. This is the distance from an element's center to the center of an adjacent element in the X direction.
+
+spacing_in_y: Specify the spacing in the Y direction. This is the distance from an element's center to the center of an adjacent element in the Y direction.
+
+ 
+
+SetShapeHexagonal (int elements_in_a_side, double spacing_in_x, double spacing_in_y)
+
+Sets the settings for creating a hexagonal shape phased array antenna
+
+elements_in_a_side: Specify the number of elements in one side of the hexagon.
+
+spacing_in_x: Specify the spacing in the X direction. This is the distance from an element's center to the center of an adjacent element in the X direction.
+
+spacing_in_y: Specify the spacing in the Y direction. This is the distance from an element's center to the center of an adjacent element in the Y direction.
+
+ 
+
+SetShapeOctagonal (int elements_in_a_side, double spacing_in_x, double spacing_in_y)
+
+Sets the settings for creating a octagonal shape phased array antenna
+
+elements_in_a_side: Specify the number of elements in one side of the octagon.
+
+spacing_in_x: Specify the spacing in the X direction. This is the distance from an element's center to the center of an adjacent element in the X direction.
+
+spacing_in_y: Specify the spacing in the Y direction. This is the distance from an element's center to the center of an adjacent element in the Y direction.
+
+ 
+
+Create
+
+Creates a new phased array antenna task.
+
+Example
+
+'Delete the task if it exists
+
+ 
+
+With SimulationTask
+
+.Reset
+
+.Name ("Task1")
+
+If .doesexist Then .delete
+
+End With
+
+ 
+
+'Create a new phased array antenna task
+
+ 
+
+With PhasedArrayTask
+
+.Reset
+
+.Name ("Task1")    
+
+.SetShapeCustom ("5", "5", "10.0", "10.0", "63.43")
+
+.SetExcitationPattern ("Cosine")
+
+.Create
+
+End With

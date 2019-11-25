@@ -1,0 +1,175 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Table Object
+
+Table Object
+This object offers access and manipulation functions to result tables. A table contains a collection of individual data items. Each of these data items is associated with a particular parameter combination and can be a either single 0d result (real or complex data value) or an entire xy data set.
+Initialization, File Operation
+
+Access to General Table Data
+
+Access to Table Parameters
+
+Access to Data Items
+
+Methods
+
+%% Initialization, File Operation
+
+ 
+
+Load ( filename sTableFileName)
+
+Loads a result table file named sTableFileName into the current Table object.
+
+ 
+
+ExportData ( filename name )
+
+Exports the contents of the currently loaded table into an ASCII text file specified by its name. The results of all parameter combinations will be exported.
+
+ 
+
+%% Access to General Table Data
+
+ 
+
+GetName string
+
+This method returns the name which has been assigned with the current table.
+
+ 
+
+%% Access to Table Parameters
+
+ 
+
+GetNumberOfParameters long
+
+This method returns the number of parameters which are associated with the data of the current table object.
+
+ 
+
+GetParameterNameFromIndex ( long index ) string
+
+This method returns the name of a parameter by specifying its index. The index must be within the range of 0 to GetNumberOfParameters - 1.
+
+ 
+
+GetParameterValueFromIndex ( long index ) double
+
+This method returns the current value of a parameter by specifying its index. The index must be within the range of 0 to GetNumberOfParameters - 1. This value will be used when the table properties dialog box is opened.
+
+ 
+
+%% Access to Data Items
+
+ 
+
+GetNumberOfDataItems long
+
+This method returns the total number of data items contained in the table.
+
+ 
+
+GetResultTypeOfDataItem ( long index ) string
+
+This method returns a string containing the type of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1. The type can be any one of the following strings:
+
+"0d real"
+
+The data item represents a single real value.
+
+"0d complex"
+
+The data item represents a single complex value.
+
+"1d"
+
+The data item represents an entire xy curve.
+
+"1d complex"
+
+The data item represents an entire complex curve.
+
+ 
+
+GetParameterValueOfDataItem ( long dataindex, long parameterindex ) double
+
+This method returns the value of a parameter corresponding to the data item specified by its index (dataindex). The parameter itself is speicifed by its index, too (parameterindex). The dataindex must be within the range of 0 to GetNumberOfDataItems - 1 and the parameterindex must be within the range of 0 to GetNumberOfParameters - 1.
+
+ 
+
+Get0DDataItem ( long index  ) double
+
+This method is only available when the type of the data item is "0d real". The return value is the actual real value of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
+
+ 
+
+Get0DDataItemRe ( long index  ) double
+
+This method is only available when the type of the data item is "0d complex". The return value is the real part of the actual complex value of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
+
+ 
+
+Get0DDataItemIm ( long index  ) double
+
+This method is only available when the type of the data item is "0d complex". The return value is the imaginary part of the actual complex value of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
+
+ 
+
+Get1DDataItem ( long index ) Result1D
+
+This method is only available when the type of the data item is "1d". The return value is a Result1D object containing the xy data curve of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
+
+ 
+
+Get1DComplexDataItem ( long index ) Result1DComplex Object
+
+This method is only available when the type of the data item is "1d complex". The return value is a Result1DComplex Object object containing the complex data curve of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
+
+Example
+
+' Construction
+
+' A Table object can be created as follows:
+
+ 
+
+' From within CST DESIGN STUDIO™:
+
+dim objName as object
+
+set objName = Table("adapt_error.tab")
+
+ 
+
+' From an external progam:
+
+' create a CSTStudio Application
+
+Dim app As Object
+
+Set app = CreateObject("CSTStudio.Application")
+
+ 
+
+' open a Design Studio example
+
+Dim designstudio As Object
+
+Set designstudio = app.OpenFile("C:\Program Files (x86)\CST STUDIO SUITE 2017\Examples\DS\S-Parameter\Circuit-EM\Matched Antenna\antenna.cst")
+
+If designstudio.GetApplicationName <> "DS" Then MsgBox ("Example is not a Design Studio example.")
+
+ 
+
+' load a table located in the project folder of the example
+
+Dim myTable As Object
+
+Set myTable = designstudio.Table(designstudio.GetProjectPath("Project") + "\Result\DS\Generic\1D\magdB(S1,1).tab")
+
+MsgBox ("Table has " + CStr(myTable.GetNumberOfDataItems) + " curves.")
+
+ 
+
+' While ”adapt_error.tab” is the name of the result table which should be loaded into the Table object.

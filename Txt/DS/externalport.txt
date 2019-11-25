@@ -1,0 +1,241 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | External Port Object
+
+ExternalPort Object
+ 
+
+Object referring to an external port. Use this object to create or to manipulate an external port.
+
+
+General Methods
+
+Identification
+
+Getter
+
+Setter
+
+Iteration
+
+Positioning
+
+Default Settings
+
+Examples
+
+Create a new external port
+
+Modify an existing external port's position
+
+General Methods
+
+Create
+
+Creates a new external port.
+
+ 
+
+Delete
+
+Deletes the currently selected external port.
+
+ 
+
+DoesExist bool
+
+Checks if an external port with the currently selected number already exists.
+
+ 
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+%% Identification
+
+ 
+
+Name ( name portname )
+
+Sets the name of an external port before calling Create. Furthermore, this method can be used to select an existing external port of your model. The name must either be an integer number or of the form "n(m)", where n is the integer number of the port and m is the mode index. The latter form is used for higher order mode ports.
+
+ 
+
+Number ( int portnumber )
+
+Sets the number of an external port before calling Create. Furthermore, this method can be used to select an existing external port of your model.
+
+ 
+
+%% Getter
+
+ 
+
+GetNumber int
+
+Returns the external port's number.
+
+ 
+
+%% Setter
+
+ 
+
+SetName ( name portname )
+
+Modifies the name of an existing external port. The name must either be an integer number or of the form "n(m)", where n is the integer number of the port and m is the mode index. The latter form is used for higher order mode ports.
+
+ 
+
+SetNumber ( int portnumber )
+
+Modifies the number of an existing external port.
+
+ 
+
+SetHigherOrderMode ( bool higher, int mode )
+
+Switches on/off the higher order mode naming convention for an external port.
+
+ 
+
+SetImpedanceType ( string type )
+
+Sets the external port's impedance type. This setting must be called for already existing ports.
+
+type = 0
+
+block dependent
+
+type = 1
+
+fixed value
+
+type = 2
+
+file dependent
+
+ 
+
+ 
+
+SetImpedance ( double value )
+
+Sets a value to the port's  fixed real impedance property. Call "SetImpedanceType(1)" to use this impedance in the simulation. This setting must be called for already existing ports.
+
+ 
+
+SetComplexImpedance ( double re, double im )
+
+Sets the real and the imaginary values to the port's  fixed complex impedance property. Call "SetImpedanceType(1)" to use this impedance in the simulation. This setting must be called for already existing ports.
+
+ 
+
+SetImpedanceFileName ( string filename  )
+
+Sets the file name of a "s1p" touchstone file, specifying a frequency dependent port impedance. The file may contain either impedances, admittances or reflection coefficients. Call "SetImpedanceType(2)" to use this impedance in the simulation. This setting must be called for already existing ports.
+
+ 
+
+SetLocalUnitForImpedance ( string unit )
+
+Sets the given impedance unit for the external port's impedance, i.e. the impedance's value will not refer to the project's global unit any more but to this local unit.
+
+ 
+
+SetGlobalUnitForImpedance
+
+Sets the global impedance unit for the external port's impedance.
+
+ 
+
+SetDifferential ( bool differential )
+
+Makes the external port a differential port, i.e. its reference pin can be accessed.
+
+ 
+
+%% Iteration
+
+ 
+
+StartPortNameIteration int
+
+Resets the iterator for external ports and returns the number of external ports.
+
+ 
+
+GetNextPortName name
+
+Returns the next external port's name. Call StartPortNameIteration before the first call of this method.
+
+ 
+
+%% Positioning
+
+ 
+
+Position ( int x, int y )
+
+Specifies the position of the external port. This setting must be made before calling Create. Furthermore, it can be used to modify an external port's position. Possible values are 0 < x, y <100000, i.e. (50000, 50000) is the center of the schematic. It is always ensured that the external port is aligned with the grid, therefore the specified position might get adjusted slightly.
+
+ 
+
+Rotate ( int angle )
+
+Rotates the external port by the given angle in degrees around its center point. If this setting is made before calling Create, the angle is only stored. The rotation will then be done in Create.
+
+ 
+
+Move ( int x, int y )
+
+Moves an external port by the given offset. Note that the schematic size is given by 0 < x, y <100000. Use Position to specify a certain location. It is always ensured that the external port is aligned with the grid, therefore the specified offset might get adjusted slightly.
+
+Default Settings
+
+Position (50000, 50000)
+
+Examples
+
+'Create an external port
+
+ 
+
+With ExternalPort
+
+.Reset
+
+.Number (1)
+
+.Position(50000, 50000)
+
+.Create
+
+.SetImpedanceType 1 ' Set fixed impedance
+
+.SetImpedance 50
+
+End With
+
+ 
+
+'Modify an existing external port's position
+
+ 
+
+With ExternalPort
+
+.Reset
+
+.Number (1)
+
+.Position(57000, 50500) ' Move to absolute position (57000, 50500)
+
+.Move(7000, 500) ' Move by offset (7000, 500) relative to old position
+
+End With
+
+ 
+
+ 

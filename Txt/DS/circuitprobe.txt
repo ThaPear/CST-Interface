@@ -1,0 +1,258 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Circuit Probe Object
+
+CircuitProbe Object
+ 
+
+Object referring to a probe. Use this object to create or to manipulate a probe.
+
+General Methods
+
+Identification
+
+Getter
+
+Setter
+
+Iteration
+
+Positioning
+
+Examples
+
+Get link names
+
+Create a new normal probe
+
+Create a new differential probe
+
+Modify an existing probe
+
+Methods
+
+%% General Methods
+
+Create
+
+Creates a new probe. All necessary settings for this connection have to be made previously.
+
+ 
+
+Delete
+
+Deletes a probe. All necessary settings for this connection have to be made previously.
+
+ 
+
+DoesExist bool
+
+Checks if a probe with the currently defined properties already exists.
+
+ 
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+%% Identification
+
+ 
+
+Name ( name probename )
+
+Sets the name of a probe before calling Create. Furthermore, this method can be used to select an existing probe of your model prior of calling queries.
+
+ 
+
+LinkName ( name linkname )
+
+Sets the name of a probe link before calling Create. Furthermore, this method can be used to select an existing probe link of your model prior of calling queries.
+
+ 
+
+ReferenceLinkName ( name probename )
+
+Sets the name of a reference link of a differential probe before calling Create. Furthermore, this method can be used to select an existing differential probe using its reference link of your model prior of calling queries.
+
+ 
+
+%% Getter
+
+ 
+
+GetName name
+
+Returns the name of the probe with the currently defined properties.
+
+ 
+
+GetLinkName name
+
+Returns the link name of the probe with the currently defined properties.
+
+ 
+
+GetReferenceLinkName name
+
+Returns the name of the reference link of the differential probe with the currently defined properties.
+
+ 
+
+GetType int
+
+Returns the type of the probe with the currently defined properties. The following int values are returned:
+
+0: No probe
+
+1: normal probe
+
+2: differential probe
+
+ 
+
+%% Setter
+
+ 
+
+SetName ( name probename )
+
+Modifies the name of an existing probe.
+
+ 
+
+SetNodeFromBlockPort ( name blockname, name portname, bool directioninwards, bool referencepin )
+
+Sets the probe's location by the specification of a block's port or its associated reference pin. Furthermore, the probe's direction must be given.
+
+ 
+
+%% Iteration
+
+ 
+
+StartProbeNameIteration int
+
+Resets the iterator for the probes and returns the number of probes.
+
+ 
+
+GetNextProbeName name
+
+Returns the next probe's name. Call StartProbeNameIteration before the first call of this method.
+
+ 
+
+%% Positioning
+
+ 
+
+GetLabelPositionX int
+
+Returns the horizontal position of the center point of the label of the probe with the currently defined properties.
+
+ 
+
+GetLabelPositionY int
+
+Returns the vertical position of the center point of the label of the probe with the currently defined properties.
+
+ 
+
+NormalDirection bool
+
+Returns True if the direction of the probe with the currently defined properties is normal.
+
+ 
+
+ChangeDirection
+
+Changes a probe's direction, i.e. the current is considered with opposite sign.
+
+Examples
+
+' Get link names
+
+Dim sLinkName1 As String ' link name of normal probe 1
+
+Dim sLinkName2 As String ' link name of probe
+
+Dim sLinkName3 As String ' reference link name of probe
+
+With Link
+
+.Reset
+
+.EndComponents("P", "1", "1", "B", "Block1", "1") ' link between external port 1 and Block1-Pin1
+
+sLinkName1 = .GetName()
+
+ 
+
+.Reset
+
+.EndComponents("P", "2", "1", "B", "Block1", "2") ' link between external port 2 and Block1-Pin2
+
+sLinkName2 = .GetName()
+
+ 
+
+.Reset
+
+.EndComponents("P", "3", "1", "B", "Block1", "3") ' link between external port 3 and Block1-Pin3
+
+sLinkName3 = .GetName()
+
+End With
+
+ 
+
+'Create a new normal probe
+
+With CircuitProbe
+
+.Reset
+
+.Name ("Probe1")
+
+.LinkName sLinkName1
+
+.Create ' Create normal probe 'Probe1' on link sLinkName1
+
+End With
+
+ 
+
+'Create a new differential probe
+
+With CircuitProbe
+
+.Reset
+
+.Name ("DiffProbe")
+
+.LinkName sLinkName2
+
+.ReferenceLinkName sLinkName3
+
+.Create ' Create differential probe 'DiffProbe' between links sLinkName2 and sLinkName3
+
+End With
+
+ 
+
+'Modify an existing probe
+
+With CircuitProbe
+
+.Reset
+
+.Name ("Probe1")
+
+.SetName ("NormalProbe") ' Rename
+
+.ChangeDirection ' Change probe direction
+
+End With
+
+ 

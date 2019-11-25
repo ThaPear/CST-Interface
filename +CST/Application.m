@@ -46,5 +46,11 @@ classdef Application < handle
             hProject = cst.invoke('Active3D');
             project = CST.Project(hProject);
         end
+        
+        function dsproject = ActiveDS()
+            cst = CST.Application.GetHandle();
+            hDSProject  = cst.invoke('ActiveDS');
+            dsproject = CST.DS.Project(hDSProject);
+        end
     end
 end

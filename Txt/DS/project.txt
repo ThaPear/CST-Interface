@@ -1,0 +1,1040 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Project Object
+
+Project Object
+ 
+
+The Project Object offers miscellaneous functions concerning the program in general.
+
+General Methods
+
+File Handling
+
+Parameter Handling
+
+Simulation
+
+Global Data Cache
+
+Mathematical Functions / Constants
+
+Result Templates
+
+Macros
+
+Result Curve Handling
+
+Result Data Access
+
+Queries
+
+Result Plotting
+
+View
+
+General Methods
+
+SelectTreeItem ( string  itemname ) bool
+
+Selects the tree Item, specified by name. The view will be updated according to the selection or a different view will be activated. A tree Item is specified by the full path, e.g. SelectTreeItem ("Tasks\SPara1"). The return value is True if the selection was successful.
+
+ 
+
+GetSelectedTreeItem string
+
+Returns the path name of the currently selected tree item or folder with regard to the root of the tree. E.g. if the task "SPara1" is selected, the returned path name will be "Tasks\SPara1".
+
+ 
+
+PositionWindow (string location,  long  handle)
+
+This functions sets the position of a window relatively to the location of the main application window. The following settings are valid locations:
+
+%
+
+"center"
+
+Position the window in the center of the main application window
+
+"top left"
+
+Position the window in the top left corner of the main application window
+
+"top right"
+
+Position the window in the top right corner of the main application window
+
+"bottom left"
+
+Position the window in the bottom left corner of the main application window
+
+"bottom right"
+
+Position the window in the bottom right corner of the main application
+
+ window
+
+%
+
+The window which needs to be positioned is specified by its window handle. The typical usage of this function is in the initialization part of a user defined dialog box function as shown in the example below:
+
+%
+
+Private Function DlgFunc(DlgItem$, Action%, SuppValue&) As Boolean
+
+Select Case Action%
+
+Case 1 ' Dialog box initialization
+
+PositionWindow "top right", SuppValue
+
+Case 2 ' Value changing or button pressed
+
+Case 3 ' TextBox or ComboBox text changed
+
+Case 4 ' Focus changed
+
+Case 5 ' Idle
+
+Case 6 ' Function key
+
+End Select
+
+End Function
+
+ 
+
+TouchstoneExport ( string  itemname, filename  filename,  string  impedance) bool
+
+Performs a Touchstone export of S-, Y-, or Z-Parameter results. 'itemname'  is a tree item specified by name.  It must contain S-, Y-, or Z-Parameters for the Touchstone export to be successfull. 'filename' is the name of the Touchstone file to be generated without extension. An appropriate extension, .s*p, .y*p, or .z*p, will be automatically appended.   'impedance'  is the reference impedance, to which the N-Port parameters will be normalised. It is applied to all ports. The return type indicates whether the Touchstone export was successful.
+
+ 
+
+CopySelectionToClipboard
+
+Copies the currently selected items to the clipboard.
+
+ 
+
+SelectAllComponents
+
+Selects all components on the schematic.
+
+ 
+
+DeleteSelectedComponents ( bool  keepconnectors )
+
+Deletes all selected components. If keepconnectors is false, all connectors which are connected to one of the deleted components are deleted as well. Otherwise they are kept.
+
+ 
+
+GetBBoxAllComponents( string opMode,  long_ref  nXMin,  long_ref nXMax, long_ref nYMin,  long_ref nYMax)
+
+Gets the bounding box of all existing components on a schematic. You may restrict the bounding box calculation to specific component types by specifying first argument opMode:
+
+%
+
+"all"
+
+All component types are considered
+
+"no labels"
+
+Only components but labels are considered
+
+%
+
+NOTE: The positive coordinate directions of the schematic go like this: from Left to Right and from Top to Bottom. However, nYmin specifies the bottom of the bounding box and nYmax specifies the top of the bounding box.
+
+ 
+
+EnableSchematicBlockPins ( bool  enable )
+
+Enables or disables the creation of pins for the automatically created schematic block. This can only be called for 3D projects, since no schematic block exists in pure CST DS projects. Disabling the pins can improve performance for projects with many sources in the 3D part, but this should only be done if the schematic part is not needed.
+
+ 
+
+CreateProjectTemplate ( string application, string workflow ) string
+
+Creates a project template for the specified application ("MW & RF & Optical", "EDA / Electronics", "EMC / EMI", "Charged Particle Dynamics" or "Statics and Low Frequency") and workflow (needs to match the name shown in the project template wizard). The function returns the name of the project template. If a project template for the workflow does already exist no new template is created and the name of the existing template is returned.
+
+ 
+
+%% File Handling
+
+ 
+
+OpenFile ( filename  filename )
+
+Opens an existing project. A previous project will be closed. 'filename' is the name of the project to be opened.
+
+ 
+
+Quit
+
+Closes the project without saving.
+
+ 
+
+Save
+
+Saves the current state of the project.
+
+ 
+
+SaveAs ( filename  filename, bool  include_results )
+
+Saves the current state of the project under the file name specified by the parameter filename. Results will be included if include_results is set to True.
+
+ 
+
+UpdateFileReferences
+
+Updates all file blocks that are outdated.
+
+ 
+
+%% Parameter Handling
+
+ 
+
+DeleteParameter ( string  name )
+
+Deletes an existing parameter with the specified name.
+
+ 
+
+DoesParameterExist ( string  name ) bool
+
+Returns if a parameter with the given name exists.
+
+ 
+
+GetNumberOfParameters long
+
+Returns the number of parameters defined so far.
+
+ 
+
+GetParameterName ( long  index ) string
+
+Returns the name of the parameter referenced by the given index. The first parameter is reference by the index 0.
+
+ 
+
+GetParameterNValue ( long  index ) double
+
+Returns the value of the double parameter referenced by the given index. The first parameter is referenced by the index 0.
+
+ 
+
+GetParameterSValue ( long  index ) string
+
+Returns the numerical expression for the parameter referenced by the given index. The first parameter is referenced by the index 0.
+
+ 
+
+RenameParameter ( string  oldName, string  newName  )
+
+Change the name of existing parameter 'oldName' to 'newName'.
+
+ 
+
+RestoreParameter ( string  name ) string
+
+Gets the value of the specified string parameter.
+
+ 
+
+RestoreDoubleParameter ( string  name ) double
+
+Gets the value of a specified double parameter.
+
+ 
+
+RestoreParameterExpression ( string  name ) string
+
+Gets the numerical expression for the specified string parameter.
+
+ 
+
+StoreParameterWithDescription ( string  name, string  value, string  description  )
+
+Creates a new string parameter or changes an existing one, with the specified string value and the description.
+
+ 
+
+StoreParameter ( string  name, string  value )
+
+Creates a new string parameter or changes an existing one, with the specified string value.
+
+ 
+
+StoreParameters ( string array names, string array values )
+
+Adds or modifies an arbitrary number of parameters in one go. For bulk changes of many parameters this method can be considerably faster than changing parameters one after another in a loop.
+The parameters are allowed to arbitrarily depend on each other or on other already existing parameters.
+
+Example:
+
+Dim names(1 To 2) As String, values(1 To 2) As String
+names(1) = "a"
+
+names(2) = "b"
+
+values(1) = "5*b"
+
+values(2) = "2"
+
+StoreParameters(names, values)
+
+ 
+
+StoreDoubleParameter ( string  name, double  value )
+
+Creates a new double parameter or changes an existing one, with the specified double value.
+
+Example: StoreDoubleParameter ( "test", 100.22 )
+
+ 
+
+GetParameterCombination( string  resultID, variant parameterNames, variant  parameterValues  ) bool
+
+Fills the variant 'parameterValues'  with an array of double values that correspond to the parameter combination 'resultID' . The variant 'parameterNames'  is filled with an array containing the parameter names. In case the parameter combination does not exist, the variants will not be modified and the method returns false. The string 'resultID'  corresponds to an existing Run ID and is of the format "Schematic:RunID:1." Existing Result IDs can be queried using the command GetResultIDsFromTreeItem of the ResultTree Object. The method returns an error for Result IDs of invalid format. The following example prints parameter names and parameter values to the message window:
+
+Dim names As Variant, values As Variant, exists As Boolean
+
+exists = DS.GetParameterCombination( "Schematic:RunID:1", names, values )
+
+If Not exists Then
+
+DS.ReportInformationToWindow( "Parameter combination does not exist."  )
+
+Else
+
+Dim N As Long
+
+For N = 0 To UBound( values )
+
+DS.ReportInformationToWindow( names( N )  + ": " + CStr( values( N ) ) )
+
+Next
+
+End If
+
+ 
+
+%% Simulation
+
+ 
+
+UpdateResults
+
+Starts the simulator for all tasks (Update all tasks)
+
+ 
+
+ConvertSParameterToY ( string  source, string  task )
+
+Converts the S-Parameters of a block or the complete circuit and a task to admittance parameters and adds them to the result tree. The S-Parameters must already exist.
+
+Example (using the S-parameters of the whole circuit): ConvertSParameterToY ( "Design", "S-Parameters1" )
+
+ 
+
+ConvertSParameterToZ ( string  source, string  task )
+
+Converts the S-Parameters of a block or the complete circuit and a task to impedance parameters and adds them to the result tree. The S-Parameters must already exist.
+
+Example (using the S-parameters of block "MWS1"): ConvertSParameterToZ ( "MWS1", "S-Parameters1" )
+
+ 
+
+ConvertSParameterToVSWR ( string  source, string  task )
+
+Converts the S-Parameters of a block or the complete circuit and a task to voltage standing wave ratios and adds them to the result tree. The S-Parameters must already exist.
+
+ 
+
+ConvertSParameterToPseudoWaveS ( string  source, string  task )
+
+Converts the S-Parameters of a block or the complete circuit and a task to pseudo wave S-Parameters and adds them to the result tree. The S-Parameters must already exist.
+
+ 
+
+CalculatePassivityMeasure( name  S-ParameterContainerPath )
+
+Calculates a Passivity Measure of S-Parameter data from the Navigation Tree and inserts it into the Navigation Tree. S-Parameters are passive, if the matrix [I]-[S]*Transjugate{[S]} is semi-positive definite. Here, [I] is the unity matrix and [S] is the S-Matrix. The calculated passivity measure is the minimum eigenvalue of [I]-[S]*Transjugate{[S]} as a function of frequency. S-Parameters are non-passive, if the passivity measure is negative. S-ParameterContainerPath is the path of the S-Parameter container in the Navigation Tree, for which the passivity measure is to be calculated, e.g., "Tasks\SPara1\S-Parameters" for the results of a default S-Parameter task.
+
+ 
+
+%% Global Data Cache
+
+ 
+
+ClearGlobalDataValues
+
+Clear all global data values.
+
+ 
+
+DeleteGlobalDataValue ( string  name )
+
+Delete a global data value with a given name.
+
+ 
+
+RestoreGlobalDataValue ( string  name ) string
+
+Returnes a global data value with a given name.
+
+ 
+
+StoreGlobalDataValue ( string  name, string  value )
+
+Creates a new global data value with a given name and value or changes an existing one.
+
+ 
+
+%% Mathematical Functions / Constants
+
+ 
+
+ACos ( double  value ) double
+
+Returns the arc cosine of the input parameter as a radian value.
+
+ 
+
+ACosD ( double  value ) double
+
+Returns the arc cosine of the input parameter in degree.
+
+ 
+
+ASin ( double  value ) double
+
+Returns the arc sine of the input parameter as a radian value.
+
+ 
+
+ASinD ( double  value ) double
+
+Returns the arc sine of the input parameter in degree.
+
+ 
+
+ATnD ( double  value ) double
+
+Returns the arc tangent of the input parameter in degree.
+
+ 
+
+ATn2 ( double  value1, double  value2 ) double
+
+Returns the arc tangent of the relation of value1 to value2 as a radian value.
+
+value1
+
+Numerator of the arc tangent calculation.
+
+value2
+
+Denominator of the arc tangent calculation.
+
+ 
+
+ATn2D ( double  value1, double  value2 ) double
+
+Returns the arc tangent of the relation of value1 to value2 in degree.
+
+value1
+
+Numerator of the arc tangent calculation.
+
+value2
+
+Denominator of the arc tangent calculation.
+
+ 
+
+CLight double
+
+Returns the constant value for the speed of light in vacuum.
+
+ 
+
+CosD ( double  value ) double
+
+Returns the cosine of the input parameter in degree.
+
+ 
+
+Eps0 double
+
+Returns the constant value for the permittivity of vacuum.
+
+ 
+
+Evaluate ( string  expression ) double
+
+Evaluates and returns the numerical double result of a string expression.
+
+ 
+
+im ( double  amplitude, double  phase ) double
+
+Calculates the imaginary part of a complex number defined by its amplitude and phase.
+
+ 
+
+Mu0 double
+
+Returns the constant value for the permeability of vacuum.
+
+ 
+
+Pi double
+
+Returns the constant value of Pi.
+
+ 
+
+re ( double  amplitude, double  phase ) double  
+
+Calculates the real part of a complex number defined by its amplitude and phase.
+
+ 
+
+SinD ( double  value ) double
+
+Returns the sine of the input parameter in degree.
+
+ 
+
+TanD ( double  value ) double
+
+Returns the tangent of the input parameter in degree.
+
+ 
+
+ChargeElementary double
+
+Returns the constant value of the elementary charge.
+
+ 
+
+MassElectron double
+
+Returns the constant value of the mass of an electron.
+
+ 
+
+MassProton double
+
+Returns the constant value of the mass of a proton.
+
+ 
+
+ConstantBoltzmann double
+
+Returns the constant value of the Stefan-Boltzmann constant.
+
+ 
+
+%% Result Templates
+
+ 
+
+ActivateScriptSettings ( bool  switch )
+
+This method activates (switch = "True") or deactivates (switch = "False")  the script settings of a customized result item.
+
+ 
+
+ClearScriptSettings
+
+This method clears the internal settings of a previously customized result item.
+
+ 
+
+GetLast0DResult ( string  name ) double
+
+This method returns the last 0D result of the selected result template. 'name' is the name of a previously defined result template.
+
+ 
+
+GetLast1DResult ( string  name ) Result1D
+
+This method returns the last 1D result of the selected result template. 'name' is the name of a previously defined result template.
+
+ 
+
+GetLast1DComplexResult ( string  name ) Result1DComplex
+
+This method returns the last complex 1D result of the selected result template. 'name' is the name of a previously defined result template.
+
+ 
+
+GetLastResultID string
+
+This method returns the Result ID which identifies the last result. It allows access to the last 1D or 0D result via DSResulttree.GetResultFromTreeItem, e.g.:
+
+Dim o As Object
+
+Set o = DSResultTree.GetResultFromTreeItem("Tasks\SPara1\S-Parameters\S1,1", DS.GetLastResultID())
+
+DS.ReportInformationToWindow("Last 1D/0D result object type: " + o.GetResultObjectType())
+
+ 
+
+GetScriptSetting ( string  name, string  default_value ) string
+
+This function is only active if a result template is currently in process. It returns the internal settings of the previously customized result item using the StoreScriptSetting method. In case that no settings has been stored, the default value will be returned.
+
+ 
+
+StoreScriptSetting ( string  name, string  value )
+
+This function is only active if a result template is currently in process. It offers the possibility to customize the corresponding result item with help of internal settings, which can be recalled using the GetScriptSetting function. 'name' is the name defining the internal setting. 'value' is the value of the setting.
+
+ 
+
+GetTreeNameScriptSetting ( string  name, string  default_value ) string
+
+This function is only active if a result template is currently in process. It returns the internal settings of the previously customized result item using the StoreTreeNameScriptSetting method. In case that no settings has been stored, the default value will be returned. This function should be used instead of GetScriptSetting for all settings that correspond to tree items. It should recieve a full tree path, e.g. "Tasks\S-Parameters1". Settings stored with this method will be automatically adjusted if the corresponding tree item is renamed or moved, so that they still refer to the same object. This also includes the case when a template using this setting is part of a task hierarchy that is moved. If a template using this setting is part of a task hierarchy that is copied, and the referenced object is copied as well, then the template setting will also be adjusted to point to the copied object. It will not be adjusted if the referenced object is not copied. The following items will be automatically adjusted: Blocks, tasks, external ports and probes.
+
+ 
+
+StoreTreeNameScriptSetting ( string  setting, string  value )
+
+This function is only active if a result template is currently in process. It offers the possibility to customize the corresponding result item with help of internal settings, which can be recalled using the GetTreeNameScriptSetting function. 'name' is the name defining the internal setting. 'value' is the value of the setting. See the description of GetTreeNameScriptSetting for details about the differences to StoreScriptSetting.
+
+ 
+
+StoreTemplateSetting ( string  setting, string  value )
+
+This function is only active if a result template is processed. It defines the type of the template and needs to be set in the define method of every result template. The variable 'setting' has to be the string "TemplateType". The variable 'value' can be"0D", "1D", "1DC", "M0D", "M1D" or "M1DC". The choice of the template type determines which evaluation method of the template is called when being processed and what return type is expected. More details can be found on the Post-Processing Template Layout help page.
+
+ 
+
+SetApplicationName ( string  name )
+
+Sets the application name ("EMS", "PS", "MWS", "MS",  "DS for MWS", "DS for PCBS", "DS for CS", "DS for MS", "DS"). Use this function for developing a result template.
+
+ 
+
+ResetApplicationName
+
+Reset the application name to the default name. Use this function for developing a result template.
+
+ 
+
+ResetTemplateIterator
+
+Resets the template iterator to the beginning of the list of defined result templates and clears all template filters.
+
+ 
+
+SetTemplateFilter( string filtername, string value)
+
+Sets a filter for the template iterator which iterates over the list of defined result templates. Allowed values for 'filtername' are "resultname", "type", "templatename" and "folder". If 'filtername' is set to 'type' , then 'value'  can be "0D", "1D", "1DC", "M0D", "M1D", or "M1DC". For all other filternames, 'value' can be an arbitrary string.
+
+ 
+
+GetNextTemplate( string_ref resultname, string_ref type, string_ref templatename, string_ref folder) bool
+
+Fills the parameter variables with the data of the next template of the list of defined result templates. The variable "resultname" will be filled with the result name of the defined template, e.g. "S11". The variable "type" will be filled with the type of the current result template and can be "0D", "1D", "1DC", "M0D", "M1D" or "M1DC". The variable "templatename" will be filled with the name of the template definition file, e.g. "S-Parameter (1D)". The variable "folder" will be filled with the relative folder where the template definition file is located (e.g. "Farfield and Antenna Properties"). If a filter was defined (see SetTemplateFilter) the method only returns the data of templates that match the filter. If the end of the template list is reached or no more templates are present that meet the defined filter, the method returns false. The method requires ResetTemplateIterator to be called in advance.
+
+The following example shows all defined 0D Templates:
+
+Dim Resultname As String, Templatetype As String, Templatename As String, Folder As String
+
+ResetTemplateIterator
+
+SetTemplateFilter("type","0D")
+
+While (GetNextTemplate( Resultname, Templatetype, Templatename, Folder) = True)
+
+MsgBox(Resultname & vbNewLine & Templatetype & vbNewLine & Templatename & vbNewLine & Folder)
+
+Wend
+
+GetFileType( string filename) string
+
+Checks the file type of the file with absolute path specified in the variable 'filename'. If the file is a complex signal file, the string "complex" will be returned. If the file is a real-valued signal file, the string "real" will be returned. If the file is a real-valued 0D file, the string "real0D" will be returned. If the file is a complex-valued 0D file, the string "complex0D" will be returned. If the file type is unknown or the file can not be found, "unknown" will be returned.
+
+ 
+
+GetImpedanceFromTreeItem( string treename ) Result1DComplex
+
+If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this method returns a Result1DComplex object filled with the corresponding impedance data. If no impedance data is available, this method returns an empty Result1DComplex object.
+
+ 
+
+GetFirstTableResult( string resultname) string
+
+Returns the name of the table that was created on evaluation of the template with the name 'resultname' or an empty string.
+
+ 
+
+GetNextTableResult( string resultname) string
+
+If the template created more than one table on evaluation, this method returns the names of next table that was created on evaluation of the template with the name 'resultname'. If no more table names are available, this method returns an empty string. Please note that GetFirstTableName needs to be called before and that this method needs to be called with the same value for parameter 'resultname'.
+
+ 
+
+GetTemplateAborted bool
+
+Returns true if the user aborted the template based post-processing evaluation, otherwise false.
+
+ 
+
+GetActivePostprocessingTask string
+
+Returns the tree path of the running Post-Processing task or an empty string.
+
+ 
+
+%% Macros
+
+ 
+
+GetMacroPath string
+
+Returns the directory, that has been set as preferential location for globally defined macros.
+
+ 
+
+GetMacroPathFromIndex ( int  index ) string
+
+Returns the indexth directory, that has been set as location for globally defined macros.
+
+ 
+
+RunAndWait ( string  command )
+
+Executes a 'command' and waits with the execution of the current VBA-Script until 'command' has finished. The VBA-command shell in contrast, executes a command in a second thread such that the execution of the script continues. 'command' is the command to be executed. For instance every properly installed program on the current computer can be started.
+
+ 
+
+RunMacro ( string  macroname )
+
+Starts the execution of a macro.
+
+ 
+
+RunScript ( string  scriptname )
+
+Reads the script input of a file.
+
+ 
+
+ReportInformationToWindow ( string  message )
+
+Reports an information message to the user. This is either be done in the solver's logfile (if a solver is currently running) or in a message box.
+
+ 
+
+ReportWarningToWindow ( string  message )
+
+Reports a warning message to the user. This is either be done in the solver's logfile (if a solver is currently running) or in a message box.
+
+ 
+
+ReportError ( string  message )
+
+Reports an error message to the user. This is either be done in the solver's logfile (if a solver is currently running) or in a message box. The currently active VBA command evaluation will be stopped immediately. An On Error Goto statement will be able to catch this error.
+
+ 
+
+%% Result Curve Handling
+
+ 
+
+StoreCurvesInASCIIFile ( string  file_name )
+
+Stores the selected 1D or 2D plot in the specified filename as ASCII data.
+
+ 
+
+StoreCurvesInClipboard
+
+Stores the selected 1D or 2D plot in the clipboard.
+
+ 
+
+%% Result Data Access
+
+ 
+
+Result1D ( string  file_name )
+
+Creates a Result1D object with the given file. If file_name is empty, an empty object is created.
+
+ 
+
+CalculateFourierComplex ( Result1DComplex Input, string InputUnit, Result1DComplex Output, string OutputUnit, int isign, double normalization, double vMin, double vMax, int vSamples )
+
+This VBA command computes the integral:
+
+%
+
+f(u) represents an arbitrarily sampled input signal Input. The meaning of u and v abscissas depends on the values specified via InputUnit and OutputUnit. Allowed values and the corresponding project units are:
+
+%
+
+Unit string value
+
+Unit
+
+"time"
+
+TIME UNIT
+
+"frequency"
+
+FREQUENCY UNIT
+
+"angularfrequency"
+
+RADIAN x FREQUENCY UNIT
+
+"space"
+
+LENGTH UNIT
+
+"wavenumber"
+
+1/LENGTH UNIT
+
+"angularwavenumber"
+
+RADIAN/LENGTH UNIT
+
+%
+
+vMin and vMax speficy the desired data interval in transformed coordinates and vSamples defines the desired number of equidistant samples. Only time-frequency and space-wavenumber space transforms are supported. Frequency and wavenumber functions are related as follows to their angular frequency/wavenumber counterparts:
+
+%
+
+No further scaling is applied. isign controls the sign of the exponent to affect a forward or a backward transform. The argument normalization may assume any value, depending on the employed normalization convention. However, forward and backward transform normalizations must always guarantee:
+
+%
+
+Fourier transform conventions adopted by  CST MICROWAVE STUDIO® are:
+
+%
+
+CalculateFourierComplex(Signal, "time", Spectrum, "frequency", "-1", "1.0", ...)
+
+CalculateFourierComplex(Spectrum, "frequency", Signal, "time", "+1", "1.0/(2.0*Pi)", ...)
+
+ 
+
+CalculateCONV ( Result1D seuence_a, Result1Dsequence_b, Result1D sequence_conv )
+
+This method calculates the convolution of two sequences. All signals are given asResult1D objects.
+
+sequence_a
+
+First sequence to be convoluted.
+
+sequence_b
+
+Second sequence to be convoluted.
+
+sequence_conv
+
+Convolution of sequence_a and sequence_b
+
+ 
+
+ 
+
+CalculateCROSSCOR ( Result1D a, Result1D b, Result1D corr, bool bNorm )
+
+This method calculates the cross correlation sequence of two sequences. All signals are given as Result1D objects. If "bNorm" is "False"  then the standard cross correlation sequence is calculated by the following equation.
+
+%
+
+For "bNorm = True" a normed correlation sequence is determined. The resulting sequence will have values in the interval [-1,1] and will be independent to scalar multiplication of the sequences "a" and "b".  This normed sequence is derived from the term below.
+
+%
+
+Please note that "corr" may have a different sampling than "a" and "b". An internal resampling is done to assure compatibility of the x-values of the processed sequences.
+
+a
+
+First sequence to be correlated.
+
+b
+
+Second sequence to be correlated.
+
+corr
+
+Sequence of correlation coefficients of the sequences above.
+
+bNorm
+
+Flag if normed or standard correlation is calculated.
+
+ 
+
+DeleteResults
+
+Deletes all results of the actual project.
+
+ 
+
+%% Queries
+
+ 
+
+GetApplicationName string
+
+Returns the application name.
+
+ 
+
+GetApplicationVersion string
+
+Returns the current version number as a string.
+
+ 
+
+GetInstallPath string
+
+Returns the path where the program is installed.
+
+ 
+
+GetProjectPath ( string  path_id )  string
+
+Returns the path to the project's sub-folder specified by path_id. Valid settings for path_id are:
+
+"Root"
+
+Returns the path to the folder where the project file is stored, e.g. "c:\test" for a project stored under "c:\test\project.cst".
+
+"Project"
+
+Returns the path to the project's main folder, e.g. "c:\test\project" for a project stored under "c:\test\project.cst".
+
+"Model3D"
+
+Returns the path to the sub-folder where all 3D model information is stored.
+
+"ModelDS"
+
+Returns the path to the sub-folder where all model information is stored. Any project settings can be restored with the files located there.
+
+"ModelCacheDS"
+
+Returns the path to the sub-folder where additional model information is stored that is used to speed up some updates, etc.
+
+"ResultDS"
+
+Returns the path to the sub-folder where result data are stored that have been generated while executing the simulation tasks or added by a parameter sweep or by the template based post-processing.
+
+"ResultDSGeneric"
+
+Returns the path to the sub-folder where result data are stored that have been added by the user.
+
+"TempDS"
+
+Returns the path to a temporary sub-folder where temporary data is stored for the current session.
+
+ 
+
+GetProjectSeparator string
+
+Gets the separator character used for separating the project's base name from specific result file endings. Currently the default separator character is the hat separator "^".
+
+ 
+
+GetOwnProject object
+
+Returns the COM interface of the current project.
+
+ 
+
+GetSimulationProject ( string name ) object
+
+Returns the COM interface of the simulation project.
+
+ 
+
+GetLicenseHostId string
+
+Gets the host id for the currently used license (hardlock). This information may be useful for support purposes.
+
+ 
+
+GetLicenseCustomerNumber string
+
+Gets the current customer number from the license. This information may be useful for support purposes.
+
+ 
+
+SchematicBlockPinsEnabled bool
+
+Gets whether the pins of the schematic block are enabled. This can only be called for 3D projects, since no schematic block exists in pure CST DS projects.
+
+ 
+
+%% Result Plotting
+
+ 
+
+ResultNavigatorRequest ( string request, string parameter ) string
+
+Sends modification requests or queries to the Result Navigator. Allowed strings for request are "set selection", "get selection", "reset selection". The expected format of the string parameter and the return value of the function depend on the request. The function requires a preselected 1D or 0D result in the Navigation Tree, which can be achieved by a preceding call of SelectTreeItem. If no 1D Plot is selected, the method will return an error.
+
+The request "set selection" allows modifying the selection state of the Result Navigator and expects parameter to be a string containing a whitespace separated list of non-negative integers which correspond to Run IDs to be selected. The return value of the function will be an empty string. The following example shows how to select and plot parametric s-parameters from the Navigation Tree:
+
+SelectTreeItem("Tasks\SPara1\S-Parameters")
+
+Dim selection As String
+
+selection = Join(Array(0,1,5)) 'selection = "0 1 5"
+
+ResultNavigatorRequest("set selection",selection)
+
+The request "get selection" queries the current selection state of the Result Navigator and returns a string containing a whitespace separated list of integers which correspond to the selected Run IDs. The variable parameter is ignored. The following example shows how to query the selected parametric results and print the selection to the message window:
+
+SelectTreeItem("Tasks\SPara1\S-Parameters")
+
+ReportInformationToWindow( ResultNavigatorRequest("get selection","") )'print current selection to message window
+
+The request "reset selection" resets the selection state of the Result Navigator to default behavior (similar to "Reset Selection" in the context menu). The variable parameter is ignored and the return value of the function will be an empty string. The following example shows how to reset the selection in the Result Navigator:
+
+SelectTreeItem("Tasks\SPara1\S-Parameters")
+
+ResultNavigatorRequest("reset selection","") 'reset Result Navigator selection state to default behavior
+
+ 
+
+%% View
+
+ 
+
+StoreViewInBmpFile ( string  file_name )
+
+Stores the contents of the main view into a bitmap file defined by 'file_name'.
+
+Example: StoreViewInBmpFile ("MyPicture.bmp")
+
+ 
+
+StoreViewInClipboard
+
+Stores the contents of the main window to the clipboard as a bitmap.
+
+ 
+
+Default Settings
+
+ 
+
+Example

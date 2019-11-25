@@ -1,0 +1,656 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Units Object
+
+Units Object
+Offers functions concerning the units of the current project.
+
+Methods for Geometric Units
+
+Methods for Time Units
+
+Methods for Frequency Units
+
+Methods for Voltage Units
+
+Methods for Current Units
+
+Methods for Resistance Units
+
+Methods for Conductance Units
+
+Methods for Capacitance Units
+
+Methods for Inductance Units
+
+Methods for Temperature Units
+
+Example
+
+Methods
+
+%% Methods for Geometric Units
+
+ 
+
+Geometry ( enum gUnit )
+
+Sets the unit of lengths.
+
+%
+
+gUnit may have the following settings:
+
+"m"
+
+Meter
+
+"cm"
+
+Centimeter
+
+"mm"
+
+Millimeter
+
+"um"
+
+Micrometer
+
+"ft"
+
+Feet
+
+"in"
+
+Inch
+
+"mil"
+
+A Thousandth Inch
+
+ 
+
+GetGeometryUnit enum gUnit
+
+Returns the unit of length of the current project.
+
+ 
+
+GetGeometryUnitToSI double
+
+Returns the factor to convert a geometry value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetGeometrySIToUnit double
+
+Returns the factor to convert a geometry value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Time Units
+
+ 
+
+Time ( enum tUnit )
+
+Sets the unit of time.
+
+%
+
+tUnit may have the following settings:
+
+"fs"
+
+Femtosecond
+
+10 -15s
+
+"ps"
+
+Picosecond
+
+10 -12s
+
+"ns"
+
+Nanosecond
+
+10 –9 s
+
+"us"
+
+Microsecond
+
+10 -6 s
+
+"ms"
+
+Millisecond
+
+10 -3 s
+
+"s"
+
+Second
+
+1 s 
+
+ 
+
+GetTimeUnit enum tUnit
+
+Returns the unit of time of the current project.
+
+ 
+
+GetTimeUnitToSI double
+
+Returns the factor to convert a time value measured in units of the current project into SI units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetTimeSIToUnit double
+
+Returns the factor to convert a time value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Frequency Units
+
+ 
+
+Frequency ( enum fUnit )
+
+Sets the unit of frequency.
+
+%
+
+fUnit may have the following settings:
+
+"Hz"
+
+Hertz
+
+1 Hz 
+
+"kHz"
+
+Kilohertz
+
+10 3 Hz
+
+"MHz"
+
+Megahertz
+
+10 6 Hz
+
+"GHz"
+
+Gigahertz
+
+10 9 Hz
+
+"THz"
+
+Terahertz
+
+10 12 Hz
+
+"PHz"
+
+Petahertz
+
+10 15 Hz
+
+ 
+
+GetFrequencyUnit enum fUnit
+
+Returns the unit of frequency of the current project.
+
+ 
+
+GetFrequencyUnitToSI double
+
+Returns the factor to convert a frequency value measured in units of the current project into SI units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetFrequencySIToUnit double
+
+Returns the factor to convert a frequency value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Voltage Units
+
+ 
+
+Voltage ( enum gUnit )
+
+Sets the unit of lengths.
+
+%
+
+gUnit may have the following settings:
+
+"MegaV"
+
+Megavolt
+
+"KiloV"
+
+Kilovolt
+
+"V"
+
+Volt
+
+"MilliV"
+
+Millivolt
+
+"MicroV"
+
+Microvolt
+
+"NanoV"
+
+Nanovolt
+
+ 
+
+GetVoltageUnit enum gUnit
+
+Returns the unit of voltage of the current project.
+
+ 
+
+GetVoltageUnitToSI double
+
+Returns the factor to convert a voltage value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetVoltageSIToUnit double
+
+Returns the factor to convert a voltage value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Current Units
+
+ 
+
+Current ( enum gUnit )
+
+Sets the unit of currents.
+
+%
+
+gUnit may have the following settings:
+
+"MegaA"
+
+Megaampere
+
+"KiloA"
+
+Kiloampere
+
+"A"
+
+Ampere
+
+"MilliA"
+
+Milliampere
+
+"MicroA"
+
+Microampere
+
+"NanoA"
+
+Nanoampere
+
+ 
+
+GetCurrentUnit enum gUnit
+
+Returns the unit of current of the current project.
+
+ 
+
+GetCurrentUnitToSI double
+
+Returns the factor to convert a current value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetCurrentSIToUnit double
+
+Returns the factor to convert a current value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Resistance Units
+
+ 
+
+Resistance ( enum gUnit )
+
+Sets the unit of resistances.
+
+%
+
+gUnit may have the following settings:
+
+"MicroOhm"
+
+Microohm
+
+"MilliOhm"
+
+Milliohm
+
+"Ohm"
+
+Ohm
+
+"KiloOhm"
+
+Kiloohm
+
+"MegaOhm"
+
+Megaohm
+
+"GOhm"
+
+Gigaohm
+
+ 
+
+GetResistanceUnit enum gUnit
+
+Returns the unit of resistance of the current project.
+
+ 
+
+GetResistanceUnitToSI double
+
+Returns the factor to convert a resistance value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetResistanceSIToUnit double
+
+Returns the factor to convert a resistance value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Conductance Units
+
+ 
+
+Conductance ( enum gUnit )
+
+Sets the unit of conductances.
+
+%
+
+gUnit may have the following settings:
+
+"Siemens"
+
+Siemens
+
+"MilliS"
+
+Millisiemens
+
+"MicroS"
+
+Microsiemens
+
+"NanoS"
+
+Nanosiemens
+
+ 
+
+GetConductanceUnit enum gUnit
+
+Returns the unit of conductance of the current project.
+
+ 
+
+GetConductanceUnitToSI double
+
+Returns the factor to convert a conductance value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetConductanceSIToUnit double
+
+Returns the factor to convert a conductance value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Capacitance Units
+
+ 
+
+Capacitance ( enum gUnit )
+
+Sets the unit of capacitances.
+
+%
+
+gUnit may have the following settings:
+
+"F"
+
+Farad
+
+"MilliF"
+
+Millifarad
+
+"MicroF"
+
+Microfarad
+
+"NanoF"
+
+Nanofarad
+
+"PikoF"
+
+Picofarad
+
+"FemtoF"
+
+Femtofarad
+
+ 
+
+GetCapacitanceUnit enum gUnit
+
+Returns the unit of capacitance of the current project.
+
+ 
+
+GetCapacitanceUnitToSI double
+
+Returns the factor to convert a capacitance value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetCapacitanceSIToUnit double
+
+Returns the factor to convert a capacitance value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Inductance Units
+
+ 
+
+Inductance ( enum gUnit )
+
+Sets the unit of inductances.
+
+%
+
+gUnit may have the following settings:
+
+"H"
+
+Henry
+
+"MilliH"
+
+Millihenry
+
+"MicroH"
+
+Microhenry
+
+"NanoH"
+
+Nanohenry
+
+"PicoH"
+
+Picohenry
+
+ 
+
+GetInductanceUnit enum gUnit
+
+Returns the unit of inductance of the current project.
+
+ 
+
+GetInductanceUnitToSI double
+
+Returns the factor to convert a inductance value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetInductanceSIToUnit double
+
+Returns the factor to convert a inductance value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+ 
+
+%% Methods for Temperature Units
+
+ 
+
+TemperatureUnit( enum gUnit )
+
+Sets the unit of temperatures.
+
+%
+
+gUnit may have the following settings:
+
+"Celsius"
+
+dito
+
+"Kelvin"
+
+dito
+
+"Fahrenheit"
+
+dito
+
+ 
+
+GetTemperatureUnit enum gUnit
+
+Returns the unit of temperature of the current project.
+
+ 
+
+GetTemperatureUnitToSI double
+
+Returns the factor to convert a temperature value measured in units of the current project into the units.
+
+-> a(SI Unit) = factor * b(project Unit)
+
+ 
+
+GetTemperatureSIToUnit double
+
+Returns the factor to convert a temperature value in SI units into the units defined in the current project.
+
+-> a(project Unit) = factor * b(SI Unit)
+
+Example
+
+With Units
+
+     .Geometry ("mm")
+
+     .Frequency ("GHz")
+
+     .Time ("s")
+
+     .Voltage ("MilliV")
+
+     .Current ("MicroA")
+
+     .Resistance ("KiloOhm")
+
+     .Conductance ("MilliS")
+
+     .Capacitance ("PikoF")
+
+     .Inductance ("NanoH")
+
+     .TemperatureUnit ("Celsius")
+
+End With

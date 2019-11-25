@@ -1,0 +1,568 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Result1D Object
+
+Result1D Object
+This object offers access and manipulation functions to 1D results.
+When this object is constructed an argument specifies what result will be represented by this object. The corresponding data is read from file and stored within the memory of this object.
+As an Result1D object represents a signal it stores x-values and the corresponding y-values. If, for instance, the object represents a magnitude over frequency, the x-values are the frequency values and the y-values are the corresponding magnitude values.
+All data is stored in arrays so that access to the values is possible by specifying an zero-based index.
+Initialization, File Operation
+
+1D to 1D Operations
+
+1D to 0D Operations
+
+Local Operations
+
+General Settings
+
+Examples
+
+Methods
+
+%% Initialization, File Operation
+
+Initialize ( long n )
+
+Initializes an empty Result1D object with the specified dimension n.
+
+ 
+
+Load ( name sObjectName )
+
+Loads a 1D result. sObjectName is the signal file name extension for the signal to be loaded.
+
+ dim app As Object
+
+ set app = CreateObject("CSTStudio.Application")
+
+ dim ds As Object
+
+ set ds = app.NewDS
+
+ dim res as object
+
+ set res = ds.Result1D("")
+
+ res.Load("E:\Test\Project\Result\DS\Tasks\AC1\Components\P1\Data\P1\aAC Voltage")
+
+ 
+
+LoadPlainFile ( filename sObjectName )
+
+Loads an external 1D result stored in the file sObjectName. If the file name sObjectName starts with a '^' the project name will automatically be added such that the corresponding signal of the current project will be loaded.
+
+sObjectName may be a signal file of any source. It may have an arbitrary header, followed by the signal data organized in two columns.
+
+ 
+
+Save ( name sObjectName )
+
+Saves the object with the given filename. Note, that like in the LoadPlainFile method, the project name is added if the first character is a '^'. If the filename is blank the data is saved with name of the previous loaded file.
+
+ 
+
+AddToTree ( name sTreePath )
+
+Inserts the Result1D object into the tree at the folder specified by sTreePath.
+
+ 
+
+%% 1D to 1D Operations
+
+ 
+
+Copy Result1D Object
+
+Returns a copy of the object.
+
+ 
+
+Add ( Result1D Object oObject )
+
+Adds the components in oObject  to/from the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
+
+ 
+
+Subtract ( Result1D Object oObject )
+
+Subtracts the components in oObject  to/from the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
+
+ 
+
+ScalarMult ( double dFactor )
+
+Scales the Result1D Object with the given factor.
+
+ 
+
+ComponentMult ( Result1D Object oObject )
+
+Multiplies the components in oObject  with/by the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
+
+ 
+
+ComponentDiv ( Result1D Object oObject )
+
+Divides the components in oObject  with/by the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
+
+ 
+
+ApplyTimeWindow ( double smoothness )
+
+Applies a squared cosine windowing function to the result. Set smoothness to a value from 0 to 100 to specify when the cosine shape starts. At a value of 100, t0 equals to zero and at a value of zero, t0 equals to tmax, which means that it is identical to a rectangular window.
+
+ 
+
+ApplyLowPass ( double fmax )
+
+Filters the result using a low pass filter with the cut-off-frequency fmax.
+
+ 
+
+ResampleTo ( double min, double max, long nSamples )
+
+Resample the result to a given number of samples between a minimum and maximum value. The new data samples are calculated by a linear interpolation of the original data samples.
+
+ 
+
+MakeCompatibleTo ( Result1D Object oObject )
+
+Re-samples the result in the calling object to make it compatible to the sampling of oObject. The new data samples are calculated by a linear interpolation of the original data samples.
+
+ 
+
+SortByX
+
+Sorts the data contained in the result object to have monotonically increasing x-values.
+
+ 
+
+%% 1D to 0D Operations
+
+ 
+
+ScalarProd ( Result1D Object oObject ) double
+
+Performs a scalar product between two Result1D objects. The result will be returned as a double value.
+
+ 
+
+GetGlobalMaximum long
+
+Returns the index of the overall maximum of the y-values.
+
+ 
+
+GetGlobalMinimum long
+
+Returns the index of the overall minimum of the y-values.
+
+ 
+
+GetMaximumInRange ( double x1, double x2 ) long
+
+Returns the index to the maximum y-value that can be found between x1 and x2.
+
+ 
+
+GetMinimumInRange ( double x1, double x2 ) long
+
+Returns the index to the minimum y-value that can be found between x1 and x2.
+
+ 
+
+GetMaximumInIndexRange ( long i1, long i2 ) long
+
+Returns the index to the maximum y-value that can be found between two x-values referenced by the indices i1 and i2.
+
+ 
+
+GetMinimumInIndexRange ( long i1, long i2 ) long
+
+Returns the index to the minimum y-value that can be found between two x-values referenced by the indices i1 and i2.
+
+ 
+
+GetFirstMaximum ( double yLimit ) long
+
+Returns the index to the first maximum y-value. The parameter yLimit defines a minimum difference between the found local maximum y-value and the previous and next local maximum y-value. If no further maximum could be found the returned index will be –1.
+
+ 
+
+GetFirstMinimum ( double yLimit ) long
+
+Returns the index to the first minimum y-value. The parameter yLimit defines a minimum difference between the found local minimum y-value and the previous and next local minimum y-value. If no further minimum could be found the returned index will be –1.
+
+ 
+
+GetNextMaximum ( double yLimit ) long
+
+Returns the index to the next maximum y-value. The parameter yLimit defines a minimum difference between the found local maximum/minimum y-value and the previous and next local maximum y-value. If no further maximum could be found the returned index will be –1.
+
+ 
+
+GetNextMinimum ( double yLimit ) long
+
+Returns the index to the next minimum y-value. The parameter yLimit defines a minimum difference between the found local maximum/minimum y-value and the previous and next local minimum y-value. If no further minimum could be found the returned index will be –1.
+
+ 
+
+GetMeanValue double
+
+Returns the mean value of the Result1D object's y-values.
+
+ 
+
+GetSigma double
+
+Returns the deviation of the Result1D object's y-values.
+
+ 
+
+GetIntegral double
+
+Returns the integral of the Result1D object, which is calculated via the Trapezoidal Rule.
+
+ 
+
+GetNorm double
+
+Returns the square root mean norm of the Result1D object.
+
+ 
+
+%% Local Operations:
+
+ 
+
+SetX ( long index, double dValue )
+
+Sets the x-value at the specified index in the Result1D object.
+
+ 
+
+SetY ( long index, double dValue )
+
+Sets the y-value at the specified index in the Result1D object.
+
+ 
+
+GetX ( long index ) double
+
+Returns the x-value at the specified index in the Result1D object.
+
+ 
+
+GetY ( long index ) double
+
+Returns the y-value at the specified index in the Result1D object.
+
+ 
+
+SetXY ( long index, double xValue, double yValue )
+
+Sets the x- and  y-value at the specified index in the Result1D object.
+
+ 
+
+SetXYDouble ( long index, double xValue, double yValue )
+
+Sets the x- and  y-value at the specified index in the Result1D object.
+
+Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
+
+ 
+
+GetXYDouble ( long index, double_ref xValue, double_ref yValue )
+
+Returns the x- and  y-value at the specified index in the Result1D object.
+
+Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
+
+ 
+
+AppendXY ( double xValue, double yValue )
+
+Appends a new pair of values to the end of the result object.
+
+ 
+
+GetClosestIndexFromX ( double dValue ) long
+
+Returns the index of the x-value stored in the Result1D object that is closest to the specified value.
+
+ 
+
+GetArray ( string component ) variant
+
+Returns data of  the Result 1D object as double array . The string component can be 'x' or 'y' and specifies which component of the Result 1D object will be returned, analogous to 'GetX' and 'GetY'.
+
+ 
+
+SetArray ( variant doubleArray, string component )
+
+Overwrites the data in the Result 1D object with the data provided as double array . The string component can be 'x' or 'y' and specifies which component of the Result 1D object will be overwritten, analogous to 'SetX' and 'SetY'. The variant doubleArray can be an array of double values. It has to start with index zero and it is expected to have at least as many elements as the Result 1D object contains. In case more elements are provided, they will be ignored. Consider using the methods 'GetN' to query and 'Initialize' to modify the size of the Result1D object.
+
+ 
+
+%% General Settings
+
+ 
+
+Title ( string name )
+
+Defines the title of the result.
+
+ 
+
+Xlabel ( string name )
+
+Defines the x-axis label of the result.
+
+ 
+
+Ylabel ( string name )
+
+Defines the y-axis label of the result.
+
+ 
+
+GetTitle string
+
+Returns the title label of the result. This function works only for user added tree result objects.
+
+ 
+
+GetXlabel string
+
+Returns the x-axis label of the result. This function works only for user added tree result objects.
+
+ 
+
+GetYlabel string
+
+Returns the y-axis label of the result. This function works only for user added tree result objects.
+
+ 
+
+Type ( enum key )
+
+Defines the type of the Result1D object.
+
+enum key
+
+meaning
+
+"magnitude"
+
+Magnitude
+
+"dB"
+
+Magnitude in dB
+
+"phase"
+
+Phase in degrees
+
+"real"
+
+Real part
+
+"imaginary"
+
+Imaginary part
+
+"linear_points"
+
+A linear scaled result plotted as unconnected points
+
+"farfield:polar"
+
+Polar Farfield result
+
+The type "farfield:polar" is considered only if the Result1D object is created and processed within a template evaluation in the Template Based Post-Processing framework.
+
+ 
+
+GetN long
+
+Returns the total number of value pairs stored in the Result1D object.
+
+ 
+
+GetResultObjectType string
+
+Returns the string "1D". This method can be used to distinguish the result object from Result0D and Result1DComplex objects in a context where the type of a result object is unknown.
+
+Examples
+
+% Construction
+
+% An Result1D object can be created within the built-in basic editor as follows:
+
+dim objName1 as object
+
+set objName1 = Result1D(GetProjectPath("ResultsDSTask") + "AC1\Components\P1\Data\P1\aAC Voltage")
+
+
+
+% From an external progam:
+
+dim app As Object
+
+set app = CreateObject("CSTStudio.Application")
+
+dim ds As Object
+
+set ds = app.OpenFile("E:\Test\Project.cst")
+
+dim objName1 as object
+
+set objName1 = ds.Result1D(ds.GetProjectPath("ResultsDSTask") + "AC1\Components\P1\Data\P1\aAC Voltage")
+
+% NOTE: The behavior of the "Result1D" object depends on the context it is used. If you use it in CST DESIGN ENVIRONMENT, the .AddToTree command will place the curves into the result tree of CST DESIGN STUDIO. However, if for example used from within CST MICROWAVE STUDIO, the curves will be placed into the result tree of CST MICROWAVE STUDIO. To have the curves placed into CST DESIGN STUDIO you need to construct the result object as "DS.Result1D("")".
+
+ 
+
+%% The following example shows how a Result1D object can be filled with data and added to the Navigation Tree.
+
+ 
+
+Dim o As Object
+
+Set o = Result1D("")
+
+'fill empty object with data
+
+Dim n As Long
+
+For n = 0 To 1000
+
+Dim x As Double
+
+x = 2.0*PI*n/1000
+
+o.Appendxy(x,Cos(x))
+
+Next
+
+'set label, save data, add it to the Navigation Tree
+
+o.ylabel("cosine")
+
+o.Save("cosine_curve.sig")
+
+o.AddToTree("Results\Data\curve_1D")
+
+ 
+
+This example shows how  ASCII data from an external file can be loaded into a Result1D object and added to the Navigation Tree.
+
+ 
+
+Dim o As Object
+
+Set o = Result1D("")
+
+'load external ASCII file containing two data columns separated by white space or tabulator
+
+o.LoadPlainFile("C:\two_column_data.txt")
+
+'set labels
+
+o.xlabel("x-axis label")
+
+o.ylabel("y-axis label")
+
+'save it within the project
+
+o.Save("imported_curve.sig")
+
+'add it to the Navigation Tree
+
+o.AddToTree("Results\Data\curve_import")
+
+ 
+
+The example shows how to access all values of a result stored under the tree path "Tasks\Tran1\TD Voltages\Port1". Please note that depending on type of the tree result, a Result1DComplex object might be needed to load the data.
+
+ 
+
+Dim nPoints As Long
+
+Dim n As Long
+
+Dim x As Double
+
+Dim y As Double
+
+Dim filename As String
+
+filename = DSResulttree.GetFileFromTreeItem("Tasks\Tran1\TD Voltages\Port1")
+
+If filename = "" Then
+
+DS.ReportInformationToWindow("Result does not exist.")
+
+Else
+
+With Result1D(filename ) 'load data
+
+nPoints = .GetN 'get number of points
+
+For n = 0 To nPoints-1
+
+'read all points, index of first point is zero.
+
+x = .GetX(n)
+
+y = .GetY(n)
+
+'print to message window
+
+DS.ReportInformationToWindow("x: " + Cstr(x) + " y: " + CStr(y))
+
+Next n
+
+End With
+
+End If
+
+ 
+
+This example loads S1,1 and extracts the real part of the complex-valued S-Parameter. It then determines the closest existing data point to a certain frequency (here 0.65 GHz) and prints the result to the message window. It shows how the ResultTree object , the Result1DComplex object and the Result1D object can be used together to access 1D data.
+
+ 
+
+Dim filename As String
+
+filename = DSResulttree.GetFileFromTreeItem("Tasks\SPara1\S-Parameters\S1,1")
+
+If filename = "" Then
+
+DS.ReportInformationToWindow("Result does not exist.")
+
+Else
+
+Dim o As Object
+
+Set o = Result1DComplex(filename) 'load complex-valued S1,1
+
+Dim realPart As Object
+
+Set realPart = o.Real() 'extract a Result1D-object containing the real part of S1,1
+
+Dim n As Integer
+
+n = realPart.GetClosestIndexFromX(0.65)
+
+DS.ReportInformationToWindow("Closest data point to frequency 0.65 Ghz: " + Cstr(realPart.GetX(n)) + ", " + Cstr(realPart.GetY(n)))
+
+End If
+
+ 
+
+ 
+
+ 

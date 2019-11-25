@@ -1,7 +1,7 @@
 clear;
 
 % txt = clipboard('paste');
-txt = fileread('CST Interface/Txt/force.txt');
+txt = fileread('CST Interface/Txt/DS/simulationtask.txt');
 split = strsplit(txt, newline);
 split = strrep(split, split{2}, '');
 split([cellfun(@isempty, split)]) = [];
@@ -376,7 +376,7 @@ if(examplesstartI <= length(split))
         end
         
         % If the object is referenced VBA-style, ensure it exists.
-        if(line(1:4) == 'With')
+        if(length(line) > 3 && all(line(1:4) == 'With'))
             % Ensure object is retrieved from the project object.
             if(~objectcreated)
                 fprintf(hOutfile, '%% %s = project.%s();\n', lower(objecttype), objecttype);
@@ -410,7 +410,7 @@ if(examplesstartI <= length(split))
 end
 fclose(hOutfile);
 
-
+open(['CST Interface/', objecttype, '.m']);
 
 
 

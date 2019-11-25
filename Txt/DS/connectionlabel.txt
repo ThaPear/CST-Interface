@@ -1,0 +1,172 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Connection Label Object
+
+ConnectionLabel Object
+ 
+
+Object referring to a connection label. Use this object to create or to manipulate a connection label.
+
+Methods
+
+General Methods
+
+Identification
+
+Getter
+
+Setter
+
+Iteration
+
+Positioning
+
+Default Settings
+
+Examples
+
+Create a new connection label
+
+Methods
+
+%% General Methods
+
+Create
+
+Creates a new connection label with the current settings. The new label will use the text of the last created connection label if the label text has not been set. If the name has not been set a new name will be generated automatically.
+
+ 
+
+Delete
+
+Deletes the currently selected connection label.
+
+ 
+
+DoesExist bool
+
+Checks if a connection label with the currently selected name already exists.
+
+ 
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+%% Identification
+
+ 
+
+Name ( name labelname )
+
+Sets the name of a connection label before calling Create. Furthermore, this method can be used to select an existing connection label of your model prior of calling queries.
+
+ 
+
+%% Getter
+
+ 
+
+GetLabel string
+
+Returns the label text of the currently selected connection label.
+
+ 
+
+%% Setter
+
+ 
+
+SetName ( name labelname )
+
+Modifies the name of the currently selected connection labe.
+
+ 
+
+SetLabel ( string label )
+
+Sets the label text of the currently selected connection label.
+
+ 
+
+%% Iteration
+
+ 
+
+StartConnectionLabelNameIteration int
+
+Resets the iterator for the connection labels and returns the number of connection labels.
+
+ 
+
+GetNextConnectionLabelName name
+
+Returns the next connection label's name. Call StartConnectionLabelNameIteration before the first call of this method.
+
+ 
+
+%% Positioning
+
+ 
+
+Position ( int x, int y )
+
+Specifies the position of the connection label. This setting must be made before calling Create. Furthermore, it can be used to modify a connection label's position. Possible values are 0 < x, y <100000, i.e. (50000, 50000) is the center of the schematic. It is always ensured that the connection label is aligned with the grid, therefore the specified position might get adjusted slightly.
+
+ 
+
+Move ( int x, int y )
+
+Moves a connection label by the given offset. Note that the schematic size is given by 0 < x, y <100000. Use Position to specify a certain location. It is always ensured that the connection label is aligned with the grid, therefore the specified offset might get adjusted slightly. This setting must not be made before calling Create.
+
+ 
+
+GetPositionX int
+
+Returns the horizontal position of the port of a connection label.
+
+ 
+
+GetPositionY int
+
+Returns the vertical position of the port of a connection label.
+
+ 
+
+Rotate ( int angle )
+
+Rotates the connection label by the given angle in degrees around its center point. If this setting is made before calling Create, the angle is only stored. The rotation will then be done in Create (after any horizontal or vertical flip was applied).
+
+ 
+
+FlipHorizontal
+
+Horizontally flips a connection label. If this setting is made before calling Create, the flip is only stored. It will then be done in Create (before any rotation is applied).
+
+ 
+
+FlipVertical
+
+Vertically flips a connection label. If this setting is made before calling Create, the flip is only stored. It will then be done in Create (before any rotation is applied).
+
+Default Settings
+
+Position (50000, 50000)
+
+Examples
+
+'Create a new connection label
+
+ 
+
+With ConnectionLabel
+
+.Reset
+
+.SetLabel ("3.3V")
+
+.Position (52000, 51000)
+
+.Create
+
+End With

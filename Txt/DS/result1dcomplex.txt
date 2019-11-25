@@ -1,0 +1,439 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Result1DComplex Object
+
+Result1DComplex Object
+This object offers access and manipulation functions to complex 1D results. A Result1DComplex object can hold a number of points ( x, y ) where x is a real number and y is a complex number. Access to the points is possible by specifying an zero-based index.
+A typical use case for a Result1DComplex object would be to load a previously calculated S-Parameter and do some post-processing on the data.
+
+Initialization, File Operation
+
+1D Complex to 1D Complex Operations
+
+1D Complex to 1D Operations
+
+Local Operations
+
+General Settings
+
+Examples
+
+Methods
+
+%% Initialization, File Operation
+
+Initialize ( string Size )
+
+Initializes an empty Result1DComplex object with the given number of samples.
+
+ 
+
+Load ( string FileName )
+
+Loads a 1D Complex result from a file. The string FileName is the signal file name for the complex signal to be loaded. If you do not specify an absolute path, the path of the current project will be used. If you do not specify a file ending, the default file ending ".sig" will be used.
+
+Note: The names used in the ResultTree do not necessarily correspond to the file names. The file names of tree items can be queried using the ResultTree Object.
+
+ 
+
+Save ( string FileName )
+
+Saves the object to a file with the given filename. If you do not specify an absolute path, the path of the current project will be used. If you do not specify a file ending, the default file ending ".sig" will be used.
+
+ 
+
+LoadFromMagnitudeAndPhase ( string MagnitudeFilename , string PhaseFilename )
+
+Loads a 1D Complex result out of two files. The string MagnitudeFilename specifies the file where the magnitude of the data is stored. The string PhaseFilename specifies the file where the phase in degree of the data is stored. If the two files have a different sampling, an error will be returned. If you do not specify an absolute path, the path of the current project will be used. If you do not specify a file ending, the default file ending ".sig" will be used.
+
+ 
+
+LoadFromRealAndImaginary ( string RealFilename , string ImaginaryFilename )
+
+Loads a 1D Complex result out of two files. The string RealFilename specifies the file where the real part of the data is stored. The string ImaginaryFilename specifies the file where the imaginary part of the data is stored. If the two files have a different sampling, an error will be returned. If you do not specify an absolute path, the path of the current project will be used. If you do not specify a file ending, the default file ending ".sig" will be used.
+
+ 
+
+AddToTree ( string TreePath )
+
+Inserts the Result1DComplex object into the tree at the folder specified by TreePath. Please note that the Result1DComplex object needs to be saved before it can be added to the tree. It will be automatically added below the "Results" tree folder. See also SetReferenceImpedanceLink.
+
+ 
+
+Clear
+
+Deletes all data stored in the Result1DComplex object.
+
+ 
+
+DeleteDataAt ( string Index )
+
+Deletes the data point at the given index.
+
+ 
+
+%% 1D Complex to 1D Complex Operations
+
+ 
+
+Copy Result1DComplex Object
+
+Returns a copy of the Result1D Complex object.
+
+ 
+
+%% 1D Complex to 1D Operations
+
+ 
+
+Real Result1D Object
+
+Returns a Result1D object filled with the real part of the data stored in the Result1DComplex object.
+
+ 
+
+Imaginary Result1D Object
+
+Returns a Result1D object filled with the imaginary part of the data stored in the Result1DComplex object.
+
+ 
+
+Magnitude Result1D Object
+
+Returns a Result1D object filled with the magnitude of the data stored in the Result1DComplex object.
+
+ 
+
+Phase Result1D Object
+
+Returns a Result1D object filled with the phase in degrees of the data stored in the Result1DComplex object.
+
+ 
+
+%% Local Operations:
+
+ 
+
+GetN long
+
+Returns the number of elements in the Result1DComplex object.
+
+ 
+
+SetX ( long index, double dValue )
+
+Sets the x-value at the specified index in the Result1D object.
+
+ 
+
+SetYRe ( long index, double dValue )
+
+Sets the y-value at the specified index in the Result1D object.
+
+ 
+
+SetYIm ( long index, double dValue )
+
+Sets the y-value at the specified index in the Result1D object.
+
+ 
+
+GetX ( long index ) double
+
+Returns the x-value at the specified index in the Result1D object.
+
+ 
+
+GetYRe ( long index ) double
+
+Returns the y-value at the specified index in the Result1D object.
+
+ 
+
+GetYIm ( long index ) double
+
+Returns the y-value at the specified index in the Result1D object.
+
+ 
+
+GetDataFromIndex( long Index, double X, double YReal, double YImaginary )
+
+Fills the variables X, YReal and YImaginary with the data point at the given index.
+
+ 
+
+AppendXY( double XValue, double YReal , double YImaginary )
+
+Appends a data point  to the end of the complex result object.
+
+ 
+
+AppendXYDouble(  double XValue, double YReal , double YImaginary )
+
+This command has the same behavior as AppendXY, but it accepts double values, which may be evaluated more efficiently depending on the context.
+
+ 
+
+ScalarMultReIm( string YReal, string YImaginary )
+
+Multiplies all y-values of the current object with the given complex number.
+
+ 
+
+ScalarMultAmPh( string YAmplitude, string YPhase)
+
+Multiplies all y-values of the current object with the given complex number. The phase needs to be scaled in degrees.
+
+ 
+
+Conjugate
+
+Conjugates all complex y-values of the current object.
+
+ 
+
+NthPower( string Exponent )
+
+Raises each complex y-value of the current object to the real power of Exponent .
+
+ 
+
+ResampleTo( string Min, string Max, string Samples )
+
+Re-samples the data points of the object to a given number of samples between a minimum specified in Min and maximum value specified in Max. The new data samples are calculated using an interpolation of the original data samples. The method returns an error if less than three data points are contained in the object.
+
+ 
+
+Add( Result1DComplex Object Other )
+
+Adds the complex y-values of the other object to the y-values of the current object. The number of points need to be the same in both objects. The x-values are taken from the current object.
+
+ 
+
+Subtract( Result1DComplex Object Other )
+
+Subtracts the complex y-values of the other object from the y-values of the current object. The number of points need to be the same in both objects. The x-values are taken from the current object.
+
+ 
+
+ComponentMult( Result1DComplex Object Other )
+
+Multiplies the complex y-values of the other object with the y-values of the current object. The number of points need to be the same in both objects. The x-values are taken from the current object.
+
+ 
+
+ComponentDiv( Result1DComplex Object Other )
+
+Divides the complex y-values of the current object by the y-values of the other object. The method returns an error if a division by zero was encountered. The number of points need to be the same in both objects. The x-values are taken from the current object.
+
+ 
+
+MakeCompatibleTo( Result1DComplex Object Other )
+
+Result1D Object/Result1DComplex Object
+
+Re-samples the result data of the current object to make it compatible to the sampling of the other object. The new data samples are calculated by an interpolation of the original data samples. The method returns an error if less than three data points are contained in the current object or less than two data points are contained in the other object.
+
+ 
+
+SortByX
+
+Sorts the data contained in the result object to have monotonically increasing x-values.
+
+ 
+
+ZthPower( Result1DComplex Object Other )
+
+Raises each complex y-value of the current object to the complex power of the y-value of the other object at the same index. The number of points need to be the same in both objects. The x-values remain unchanged. The method returns an error if an invalid operation was encountered (e.g. zero to the power of zero).
+
+ 
+
+GetArray ( string component ) variant
+
+Returns data of  the Result1DComplex object as double array . The string component can be 'x', 'yre' or 'yim' and specifies which component of the Result1DComplex object will be returned, analogous to 'GetX' and 'GetYRe' and 'GetYIm' .
+
+ 
+
+SetArray ( variant doubleArray, string component )
+
+Overwrites the data in the Result1DComplex object with the data provided as double array . The string component can be 'x', 'yre'  or 'yim' and specifies which component of the Result1DComplex object will be overwritten, analogous to 'SetX' and 'SetYRe' and 'SetYIm'. The variant doubleArray can be an array of double values. It has to start with index zero and it is expected to have at least as many elements as the Result1DComplex object contains. In case more elements are provided, they will be ignored. Consider using the methods 'GetN' to query and 'Initialize' to modify the size of the Result1DComplex object.
+
+ 
+
+%% General Settings
+
+ 
+
+Title ( string name )
+
+Defines the title of the result.
+
+ 
+
+Xlabel ( string name )
+
+Defines the x-axis label of the result.
+
+ 
+
+Ylabel ( string name )
+
+Defines the y-axis label of the result.
+
+ 
+
+GetTitle string
+
+Returns the title label of the result. This function works only for user added tree result objects.
+
+ 
+
+GetXlabel string
+
+Returns the x-axis label of the result. This function works only for user added tree result objects.
+
+ 
+
+GetYlabel string
+
+Returns the y-axis label of the result. This function works only for user added tree result objects.
+
+ 
+
+SetLogarithmicFactor( string LogFactor )
+
+When the complex curve contained in the Result1DComplex object is visualized in dB, the logarithmic factor provides the scaling of the data. The string LogFactor can be 10 for a power quantity, 20 for a field quantity, or -1 which will disable the dB option. The default is 20.
+
+ 
+
+GetLogarithmicFactor double
+
+Returns the logarithmic factor.
+
+ 
+
+SetReferenceImpedanceLink( string TreePath )
+
+This command allows adding a 1D result to the Navigation Tree which can be visualized as a Smith Chart. One can specify a link to another existing 1D result in the Navigation Tree which will be interpreted as reference impedance data. The link is created when the Result1DComplex object is added to the Navigation Tree via a subsequent call of AddToTree. The reference impedance item needs to be an existing complex-valued item of the same sampling as the processed data. It also needs to be located within the same Navigation Tree folder as the reference impedance tree item, otherwise AddToTree will report an error. See also Examples.
+
+ 
+
+GetReferenceImpedanceLink string
+
+Returns the tree item specified by SetReferenceImpedanceLink.
+
+ 
+
+SetDefaultPlotView( string Type  )
+
+This setting specifies the default plot view type that should be used when a 1D plot of  this result is opened. The variable Type specifies the type of view that should be plotted and can be one of the following strings: "real", "imaginary", "magnitude", "magnitudedb", "phase", "polar", or an empty string. This setting is considered if the Result1DComplex object is created and processed within a template evaluation in the Template Based Post-Processing framework or if the object is added to the Navigation Tree via AddToTree.
+
+ 
+
+GetDefaultPlotView string
+
+Returns the default plot view type specified by SetDefaultPlotView.
+
+ 
+
+GetResultObjectType string
+
+Returns the string "1DC". This method can be used to distinguish the result object from Result0D and Result1D objects in a context where the type of a result object is unknown.
+
+ 
+
+Examples
+
+% An Result1DComplex object can be created as follows:
+
+ 
+
+Dim result As Object
+
+Set result = Result1DComplex("")
+
+ 
+
+This will create an empty object. Alternatively, a filename of a complex .sig-file can be given as a parameter, then the object loads the data from the .sig-file (see Examples).
+
+% This example creates an empty object, fills it with data and adds it to the ResultTree.
+
+ 
+
+NOTE: The behavior of the "Result1DComplex" object depends on the context it is used. If you use it in CST DESIGN ENVIRONMENT, the .AddToTree command will place the curves into the result tree of CST DESIGN STUDIO. However, if for example used from within CST MICROWAVE STUDIO, the curves will be placed into the result tree of CST MICROWAVE STUDIO. To have the curves placed into CST DESIGN STUDIO you need to construct the result object as "DS.Result1DComplex("")".
+
+ 
+
+Dim result As Object
+
+Set result = Result1DComplex("")
+
+With result
+
+    .AppendXY(1,1,1)
+
+    .AppendXY(2,2,1)
+
+    .AppendXY(3,2,2)
+
+    .Title("A complex curve")
+
+    .Save("a_file_name")
+
+    .AddToTree("Results\Test\complex_curve")
+
+End With
+
+ 
+
+% This example loads a S-Parameter and adds it to the ResultTree.
+
+ 
+
+Dim TreeItem As String, FileName As String
+
+TreeItem = "Tasks\SPara1\S-Parameters\S1,1"
+
+FileName = DSResultTree.GetFileFromTreeItem(TreeItem)
+
+Dim result As Object
+
+Set result = DS.Result1DComplex("")
+
+With result
+
+    .Load(FileName)
+
+    .Save("my_file_name")
+
+    .AddToTree("Results\S-Parameter\S1,1")
+
+End With
+
+ 
+
+% This example links two objects via the command SetReferenceImpedanceLink.
+
+ 
+
+Dim refImp As Object
+
+Set refImp = Result1DComplex("")
+
+refImp.Appendxy(1,50,0)
+
+refImp.Save("refimp_name.sig")
+
+refImp.AddToTree("Results\Data\result-ref-imp")
+
+ 
+
+Dim result As Object
+
+Set result = Result1DComplex("")
+
+result.Appendxy(1,0.4,0.6)
+
+result.Save("result_name.sig")
+
+result.SetReferenceImpedanceLink("Results\Data\result-ref-imp")
+
+result.AddToTree("Results\Data\result")

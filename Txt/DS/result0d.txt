@@ -1,0 +1,185 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | Result0D Object
+
+Result0D Object
+This object offers access and manipulation functions to 0D solver results. A Result0D object can hold a real or a complex number.
+A typical use case for a Result0D is the frequency of an Eigenmode or the external Q-factor created by the Eigenmode Solver.
+
+Initialization, File Operation
+
+0D to 0D Operations
+
+Local Operations
+
+Example
+
+Methods
+
+%% Initialization, File Operation
+
+Load (  name FileName )
+
+Loads a 0D result from the database. The string FileName is the result name, which may address the result inside the project database. If you do not specify an absolute path, the path of the current project will be used.
+
+Note: The names used in the ResultTree do not necessarily correspond to the file names. The file names of tree items can be queried using the ResultTree Object.
+
+ 
+
+SetFileName (  name FileName )
+
+Sets the filename to the Result0D object. If you do not specify an absolute path, the path of the current project will be used.
+
+ 
+
+Save ()
+
+Saves the object to a filename set previously. If you do not specify an absolute path, the path of the current project will be used.
+
+ 
+
+AddToTree (  name TreePath )
+
+Inserts the Result0D object into the tree at the folder specified by TreePath. Please note that the Result0D object needs to be saved before it can be added to the tree. It will be automatically added below the "Results" tree folder.
+
+ 
+
+%% 0D to 0D Operations:
+
+ 
+
+Copy result0D
+
+Returns a copy of the Result0D object. Please note that in case a filename was specified, the filename will not be copied.
+
+ 
+
+%% Local Operations:
+
+ 
+
+GetData( double Value )
+
+The value of the real 0D result can be found in Value.
+
+ 
+
+GetDataComplex( double ValueRe, double ValueIm )
+
+The values of real and imaginary part of a complex 0D result can be found in ValueRe and ValueIm.
+
+ 
+
+GetDerivativeData(  name Parameter,  double Value )
+
+Writes the value of derivative information corresponding to the Parameter to the variable Value, if set previously.
+
+ 
+
+GetDerivativeDataComplex(  name Parameter, double ValueRe, doubleValueIm )
+
+Writes real and imaginary part of the derivative information corresponding to the Parameter into the variables ValueRe and ValueIm, if set previously.
+
+ 
+
+GetN() long
+
+Returns 1 if the object is nonempty, otherwise 0.
+
+ 
+
+SetData( double Value)
+
+Sets the Value to the result object, which then is defined to be of type "double".
+
+ 
+
+SetDataComplex( double ValueRe, double ValueIm)
+
+Sets the real and imaginary part to the result object, which then is defined to be of type "complex double".
+
+ 
+
+HasNDerivatives( ) long
+
+Returns the number of derivatives set to the result.
+
+ 
+
+GetDervativeParName( long Index )  name
+
+Returns the name of the parameter corresponding to the derivative Index.
+
+ 
+
+HasDerivativeForParameter(  name Parameter )
+
+Returns if a derivative value was set for the corresponding Parameter.
+
+ 
+
+%% General Settings
+
+ 
+
+Title ( string Name )
+
+Defines the title of the result.  
+
+ 
+
+GetTitle string
+
+Returns the title of the result.
+
+ 
+
+GetType string
+
+Returns "double" if the result is real valued or "complex double" if the result is complex valued.
+
+ 
+
+GetResultObjectType string
+
+Returns the string "0DC" if the result object contains complex-valued data, otherwise it returns the string "0D" . This method can be used to distinguish the result object from Result1D and Result1DComplex objects in a context where the type of a result object unknown.
+
+Example
+
+Construction
+
+An Result0D object can be created as follows:
+
+Dim result As Object
+
+Set result = Result0D("")
+
+This will create an empty object. Alternatively, a file or database name can be given as a parameter, then the object loads the data from the hard disc.
+
+ 
+
+This example creates an empty object, fills it with data and adds it to the ResultTree.
+
+ 
+
+NOTE: The behavior of the "Result0D" object depends on the context it is used. If you use it in CST DESIGN ENVIRONMENT, the .AddToTree command will place the curves into the result tree of CST DESIGN STUDIO. However, if for example used from within CST MICROWAVE STUDIO, the curves will be placed into the result tree of CST MICROWAVE STUDIO. To have the curves placed into CST DESIGN STUDIO you need to construct the result object as "DS.Result0D("")".
+
+ 
+
+Dim result As Object
+
+Set result = Result0D("")
+
+With result
+
+.SetDataComplex(0.0, 1.0)
+
+.Title("A result")
+
+.SetFileName("my_result")
+
+.Save()
+
+.AddToTree("Results\Test\complex_i")
+
+End With
+
+ 

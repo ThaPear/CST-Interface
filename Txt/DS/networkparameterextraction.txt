@@ -1,0 +1,160 @@
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | NetworkParameterExtraction Object
+
+NetworkParameterExtraction Object
+Determine an equivalent SPICE circuit which has the same behavior at the ports as the simulation model. This command represents the "Spice Extraction" in the "Signal Post-Processing" ribbon.
+
+General Methods
+
+General Methods for Model Order Reduction (MOR)
+
+Default Settings
+
+Example for MOR
+
+General Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+TaskName (name task)
+
+Sets the task to be used for the network parameter extraction.
+
+ 
+
+BlockName (name block)
+
+Sets the block for which the network parameter extraction should run. An empty block name selects the whole circuit.
+
+ 
+
+Calculate
+
+Starts the network parameter extraction with the previously made settings.
+
+ 
+
+%% Methods for Model Order Reduction (MOR) Based Extraction
+
+ 
+
+CircuitFileName ( filename  fileName )
+
+Sets the filename of the resulting SPICE netlist based on model order reduction to fileName.
+
+ 
+
+GetCircuitFileName filename
+
+Returns the filename of the resulting SPICE netlist based on model order reduction.
+
+ 
+
+EnsureOutOfBandPassivity ( bool bFlag )
+
+If bFlag is True, passivity for frequency values out of the given band is ensured, otherwise not.
+
+ 
+
+UseARFilterResults ( bool bFlag )
+
+If this method is activated the MOR method uses S-parameter data based on AR-Filter results if available.
+
+ 
+
+Accuracy ( double value )
+
+Specifies the acceptable error value for the S-parameter approximation.
+
+Please note: The accuracy can be violated after performing the passivity step which is activated using the EnsureOutOfBandPassivity method.
+
+ 
+
+EnhanceAccuracyAtDC ( bool bFlag )
+
+If bFlag is True, the MOR puts a higher emphasis on DC to improve the steady-state behavior of the model. Note that the overall accuracy of the model might be decreased when enforcing a high accuracy at DC. Note also that it might be not possible to achieve a high accuracy at DC if the input data has strong passivity violations at DC.
+
+ 
+
+InitalNumberOfPoles ( int number )
+
+Specifies the initial number of poles considered by the MOR scheme.
+
+ 
+
+MaximumNumberOfPoles ( int number )
+
+Specifies the maximum number of poles considered by the MOR scheme.
+
+ 
+
+NumberOfPolesIncrement ( int increment )
+
+Specifies the increment in the number of poles between iterations considered by the MOR scheme.
+
+ 
+
+ErrorNorm ( enum {"Max", "L2"} norm )
+
+Specifies the type of error norm to be applied by the MOR. The maximum norm considers the maximum error within the frequency range of interest while the L2 norm averages the error. .
+
+ 
+
+DifferentialNetlist(bool bFlag)
+
+Specifies whether the netlist should be written with differential ports
+
+ 
+
+NetlistFormat(enum {"Berkeley SPICE", "HSPICE"} format)
+
+Specifies the output format of the netlist. "Berkeley SPICE" uses standard Berkeley SPICE notation with controlled sources while "HSPICE" uses Laplace formulation of the fitted Y parameter.
+
+Default Settings
+
+ 
+
+' defaults for model order reduction based network parameter extraction
+
+EnsureOutOfBandPassivity (True)
+
+UseARFilterResults (False)
+
+Accuracy ("1e-2")
+
+InitalNumberOfPoles (10)
+
+NetlistFormat ("Berkeley SPICE")
+
+Example
+
+' start a MOR based network extraction
+
+ 
+
+With NetworkParameterExtraction
+
+.TaskName ("SParam1")
+
+.CircuitFileName ("my_netlist.net")
+
+.EnsureOutOfBandPassivity (False)
+
+.UseARFilterResults (False)
+
+.Accuracy ("1e-2")
+
+.InitalNumberOfPoles (10)
+
+.DifferentialNetlist (True)
+
+.NetlistFormat ("HSPICE")
+
+.Calculate
+
+End With
+
+ 
