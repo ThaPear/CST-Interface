@@ -1,9 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Author: Cyrus Tirband                                            %%%
-%%%                                                                     %%%
-%%% File Author: Alexander van Katwijk                                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % This object allows operations on the CST DESIGN STUDIO result tree.

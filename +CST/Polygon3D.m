@@ -1,83 +1,81 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Author: Cyrus Tirband                                            %%%
-%%%                                                                     %%%
-%%% File Authors: Alexander van Katwijk, Cyrus Tirband                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Suppress warnings:
-% "Use of backets [] is unnecessary. Use parentheses to group, if needed."
-%#ok<*NBRAK>
+% This object is used to create a new polygon3D curve item.
 classdef Polygon3D < handle
-    properties
-        project
-        hPolygon3D
-        history
-    
-        version
-        name
-        curvename
-        points
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
-        % Only CST.Project can create a CST.Polygon3D object.
+        % Only CST.Project can create a Polygon3D object.
         function obj = Polygon3D(project, hProject)
             obj.project = project;
             obj.hPolygon3D = hProject.invoke('Polygon3D');
-            obj.Reset();
+            obj.history = [];
         end
     end
-    
     methods
         function AddToHistory(obj, command)
             obj.history = [obj.history, '     ', command, newline];
         end
-        function Create(obj)
-            obj.AddToHistory(['.Create']);
-            
-            % Prepend With and append End With
-            obj.history = ['With Polygon3D', newline, obj.history, 'End With'];
-            obj.project.AddToHistory(['define curve 3dpolygon: ', obj.curvename, ':', obj.name], obj.history);
-            obj.history = [];
-        end
-        
+    end
+    %% CST Object functions.
+    methods
         function Reset(obj)
-            obj.history = [];
+            % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
-            obj.name = '';
-            obj.curvename = '';
-            obj.points = [];
         end
-        function Version(obj, version)
-            if(nargin < 2); version = 10;   end
-            obj.version = version;
-            
-            obj.AddToHistory(['.Version ', num2str(version), '']);
-        end
-        function Name(obj, name)
-            obj.name = name;
-            
-            obj.AddToHistory(['.Name "', name, '"']);
+        function Name(obj, polygon3Dname)
+            % Sets the name of the polygon3D.
+            obj.AddToHistory(['.Name "', num2str(polygon3Dname, '%.15g'), '"']);
+            obj.name = polygon3Dname;
         end
         function Curve(obj, curvename)
-            obj.curvename = curvename;
-            
-            obj.AddToHistory(['.Curve "', curvename, '"']);
+            % Sets the name of the curve for the new polygon3D curve item. The curve must already exist.
+            obj.AddToHistory(['.Curve "', num2str(curvename, '%.15g'), '"']);
+            obj.curve = curvename;
         end
-        function Point(obj, x, y, z)
-            obj.points = [obj.points, {x, y, z}];
-            
-            obj.AddToHistory(['.Point "', num2str(x, '%.15g'), '", '...
-                                     '"', num2str(y, '%.15g'), '", '...
-                                     '"', num2str(z, '%.15g'), '"']);
+        function Point(obj, xCoord, yCoord, zCoord)
+            % Sets the coordinates for a point the polygon3D exist of.
+            obj.AddToHistory(['.Point "', num2str(xCoord, '%.15g'), '", '...
+                                     '"', num2str(yCoord, '%.15g'), '", '...
+                                     '"', num2str(zCoord, '%.15g'), '"']);
+            obj.point.xCoord = xCoord;
+            obj.point.yCoord = yCoord;
+            obj.point.zCoord = zCoord;
         end
+        function Create(obj)
+            % Creates a new polygon3D curve item. All necessary settings for this polygon3D have to be made previously.
+            obj.AddToHistory(['.Create']);
+            
+            % Prepend With Polygon3D and append End With
+            obj.history = [ 'With Polygon3D', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define polygon3d: ', obj.name], obj.history);
+            obj.history = [];
+        end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hPolygon3D
+        history
+
+        name
+        curve
+        point
     end
 end
 
-                
-                
- 
-
+%% Example - Taken from CST documentation and translated to MATLAB.
+% polygon3d = project.Polygon3D();
+%     polygon3d.Reset
+%     polygon3d.Name('3dpolygon1');
+%     polygon3d.Curve('curve1');
+%     polygon3d.Point('2', 'a+2', '2');
+%     polygon3d.Point('4.5', '-5', '2');
+%     polygon3d.Point('8.78', '-6.6', '0');
+%     polygon3d.Create
+% End With  

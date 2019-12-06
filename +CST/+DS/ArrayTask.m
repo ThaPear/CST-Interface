@@ -1,9 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Author: Cyrus Tirband                                            %%%
-%%%                                                                     %%%
-%%% File Author: Alexander van Katwijk                                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Object referring to an array task. Use this object to create or to manipulate an array task.

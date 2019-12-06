@@ -1,9 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Authors: Cyrus Tirband, Bart de Vos                              %%%
-%%%                                                                     %%%
-%%% File Author: Alexander van Katwijk                                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 classdef Application < handle

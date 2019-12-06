@@ -1,0 +1,99 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Curve Operations | ExtrudeCurve
+
+ExtrudeCurve Object
+
+This object enables an extrude operation on a curve item, which has to be closed and planar. The curve plane will be filled up as a solid with a specified thickness associated to a determined component and material. After that operation the curve item will not exist any longer. As soon as the new shape is created it will appear in the main plot window and on the Navigation Tree.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name solidname )
+
+Sets the name of the new solid.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new solid. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new solid. The material must already exist.
+
+ 
+
+Thickness ( double thicknessvalue )
+
+Sets the thickness which the extrude operation will take place. Thus it determines the extension of the resulting solid shape. Negative thickness settings will result in an extrusion into the opposite direction.
+
+ 
+
+Twistangle ( double twistvalue )
+
+Sets the angle to twist the created shape around the direction of the extrusion.
+
+ 
+
+Taperangle ( double tapervalue )
+
+Sets the angle to taper the created shape along the direction of the extrusion. A negative angle will taper the shape, a positive angle will flare the shape.
+
+ 
+
+Curve ( name curvename )
+
+The name of the curve item the new solid should be created. The correct format for the name should be 'curvename:curveitemname' (see the example below). If the curve item (e.g. a line) is connected with an other curve item (e.g. a polygon) both curve items will be transformed into the new solid.
+
+ 
+
+Create
+
+Creates a new solid. All necessary settings for this solid have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Thickness (0.0)
+
+Twistangle (0.0)
+
+Taperangle (0.0)
+
+Example
+
+With ExtrudeCurve
+
+     .Reset
+
+     .Name "solid2"
+
+     .Component "component1"
+
+     .Material "Vacuum"
+
+     .Thickness "2"
+
+     .Twistangle "0.0"
+
+     .Taperangle "0.0"
+
+     .Curve "curve1:circle1"
+
+     .Create
+
+End With

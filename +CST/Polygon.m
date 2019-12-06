@@ -1,89 +1,96 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Author: Cyrus Tirband                                            %%%
-%%%                                                                     %%%
-%%% File Authors: Alexander van Katwijk, Cyrus Tirband                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Suppress warnings:
-% "Use of brackets [] is unnecessary. Use parentheses to group, if needed."
-%#ok<*NBRAK>
+% This object is used to create a new polygon curve item.
 classdef Polygon < handle
-    properties
-        project
-        hPolygon
-        history
-        
-        name
-        curvename
-        point
-        lineto
-        rline
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
-        % Only CST.Project can create a CST.Polygon3D object.
+        % Only CST.Project can create a Polygon object.
         function obj = Polygon(project, hProject)
             obj.project = project;
             obj.hPolygon = hProject.invoke('Polygon');
-            obj.Reset();
+            obj.history = [];
         end
     end
-    
     methods
         function AddToHistory(obj, command)
             obj.history = [obj.history, '     ', command, newline];
         end
-        function Create(obj)
-            obj.AddToHistory(['.Create']);
-            
-            % Prepend With and append End With
-            obj.history = ['With Polygon', newline, obj.history, 'End With'];
-            obj.project.AddToHistory(['define curve polygon: ', obj.curvename, ':', obj.name], obj.history);
-            obj.history = [];
-        end
-        
+    end
+    %% CST Object functions.
+    methods
         function Reset(obj)
-            obj.history = [];
+            % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
-            obj.name = '';
-            obj.curvename = '';
-            obj.point = [];
-            obj.lineto = [];
-            obj.rline = [];
         end
-        
-        function Name(obj, name)
-            obj.name = name;
-            
-            obj.AddToHistory(['.Name "', name, '"']);
+        function Name(obj, polygonname)
+            % Sets the name of the polygon.
+            obj.AddToHistory(['.Name "', num2str(polygonname, '%.15g'), '"']);
+            obj.name = polygonname;
         end
         function Curve(obj, curvename)
-            obj.curvename = curvename;
+            % Sets the name of the curve for the new polygon curve item. The curve must already exist.
+            obj.AddToHistory(['.Curve "', num2str(curvename, '%.15g'), '"']);
+            obj.curve = curvename;
+        end
+        function Point(obj, xCoord, yCoord)
+            % Sets the coordinates for the first point of the polygon to be defined.
+            obj.AddToHistory(['.Point "', num2str(xCoord, '%.15g'), '", '...
+                                     '"', num2str(yCoord, '%.15g'), '"']);
+            obj.point.xCoord = xCoord;
+            obj.point.yCoord = yCoord;
+        end
+        function LineTo(obj, xCoord, yCoord)
+            % Sets a line from the point previously defined to the point defined by x, y here. x and y specify a location in absolute coordinates in the actual working coordinate system.
+            obj.AddToHistory(['.LineTo "', num2str(xCoord, '%.15g'), '", '...
+                                      '"', num2str(yCoord, '%.15g'), '"']);
+            obj.lineto.xCoord = xCoord;
+            obj.lineto.yCoord = yCoord;
+        end
+        function RLine(obj, xCoord, yCoord)
+            % Sets a line from the point previously defined to the point defined by x, y here. x and y specify a location relative to the previous point in the current working coordinate system.
+            obj.AddToHistory(['.RLine "', num2str(xCoord, '%.15g'), '", '...
+                                     '"', num2str(yCoord, '%.15g'), '"']);
+            obj.rline.xCoord = xCoord;
+            obj.rline.yCoord = yCoord;
+        end
+        function Create(obj)
+            % Creates a new polygon curve item. All necessary settings for this polygon have to be made previously.
+            obj.AddToHistory(['.Create']);
             
-            obj.AddToHistory(['.Curve "', curvename, '"']);
+            % Prepend With Polygon and append End With
+            obj.history = [ 'With Polygon', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define polygon: ', obj.name], obj.history);
+            obj.history = [];
         end
-        function Point(obj, x, y)
-            obj.point = [obj.point, {x, y}];
-            
-            obj.AddToHistory(['.Point "', num2str(x, '%.15g'), '", '...
-                '"', num2str(y, '%.15g'), '"']);
-        end
-        function LineTo(obj, x, y)
-            %draw to absolute coordinate
-            obj.lineto = [obj.lineto, {x, y}];
-            obj.AddToHistory(['.LineTo "', num2str(x, '%.15g'), '", '...
-                '"', num2str(y, '%.15g'), '"']);
-        end
-        function RLine(obj, x, y)
-            %draw to relative coordinate
-            obj.rline = [obj.rline, {x, y}]; 
-            obj.AddToHistory(['.RLine "', num2str(x, '%.15g'), '", '...
-                '"', num2str(y, '%.15g'), '"'])
-        end
-        
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hPolygon
+        history
+
+        name
+        curve
+        point
+        lineto
+        rline
     end
 end
 
+%% Example - Taken from CST documentation and translated to MATLAB.
+% polygon = project.Polygon();
+%     polygon.Reset
+%     polygon.Name('polygon1');
+%     polygon.Curve('curve1');
+%     polygon.Point('-9.2', '8.5');
+%     polygon.LineTo('-5.4', '-1.2');
+%     polygon.LineTo('-0.2', 'a+6.5');
+%     polygon.RLine('5.3', '-0.6');
+%     polygon.LineTo('8.3', '5.3');
+%     polygon.Create

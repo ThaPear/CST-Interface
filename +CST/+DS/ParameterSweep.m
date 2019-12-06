@@ -1,9 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Author: Cyrus Tirband                                            %%%
-%%%                                                                     %%%
-%%% File Author: Alexander van Katwijk                                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Allows to automatically perform several simulations with varying parameters. Instead of  ParameterSweep you may also use  DSParameterSweep, especially recommended in the schematic of a 3D project to avoid ambiguities with the 3D vba interface.

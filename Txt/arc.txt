@@ -1,0 +1,149 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Arc
+
+Arc Object
+
+This object is used to create a new arc curve item.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name arcname )
+
+Sets the name of the arc.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new arc curve item. The curve must already exist.
+
+ 
+
+Orientation ( enum{"Clockwise", "CounterClockwise"} orientationtype )
+
+Sets the direction for the arc. If the start point and the end point is connected clockwise or counter clockwise.
+
+ 
+
+Xcenter ( double xcenter )
+
+Sets the x-coordinate from the center point of the arc.
+
+ 
+
+Ycenter ( double ycenter )
+
+Sets the y-coordinate from the center point of the arc.
+
+ 
+
+X1 ( double  xStartPoint )
+
+Sets the x-coordinate from the start point of the arc.
+
+ 
+
+Y1 ( double  yStartPoint )
+
+Sets the y-coordinate from the start point of the arc.
+
+ 
+
+X2 ( double  xEndPoint )
+
+Sets the x-coordinate from the end point of the arc. The end point will be projected to the circle, because the radius is already defined by center point and start point. If UseAngle is true, this information is not used.
+
+ 
+
+Y2 ( double  yEndPoint )
+
+Sets the y-coordinate from the end point of the arc. The end point will be projected to the circle, because the radius is already defined by center point and start point. If UseAngle is true, this information is not used.
+
+ 
+
+Angle ( double  angle )
+
+Sets the interior angle of the arc. This is alternative information to the end point. See UseAngle.
+
+ 
+
+UseAngle ( boolean useAngle )
+
+If this boolean is true, the angle information is used and has to be specified instead of an end point. This Method might be omitted, as well as Angle; the end point is used as default.
+
+ 
+
+Segments ( int segments )
+
+Sets the number of parts the arc should be segmented.
+
+ 
+
+Create
+
+Creates a new arc curve item. All necessary settings for this arc have to be made previously.
+
+Default Settings
+
+Orientation ("Clockwise")
+
+Xcenter (0.0)
+
+Ycenter (0.0)
+
+X1 (0.0)
+
+Y1 (0.0)
+
+X2 (0.0)
+
+Y2 (0.0)
+
+Angle (90.0)
+
+UseAngle (False)
+
+Segments (0)
+
+Example
+
+With Arc
+
+     .Reset
+
+     .Name "arc1"
+
+     .Curve "curve1"
+
+     .Orientation "Clockwise"
+
+     .XCenter "-2"
+
+     .YCenter "a+4.7"
+
+     .X1 "-0.2"
+
+     .Y1 "7.3"
+
+     .X2 "-8.2"
+
+     .Y2 "4"
+
+     .UseAngle "False"
+
+     .Segments "0"
+
+     .Create
+
+End With

@@ -1,0 +1,59 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Polygon3D
+
+Polygon3D Object
+
+This object is used to create a new polygon3D curve item.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name polygon3Dname )
+
+Sets the name of the polygon3D.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new polygon3D curve item. The curve must already exist.
+
+ 
+
+Point ( double xCoord, double yCoord, double zCoord )
+
+Sets the coordinates for a point the polygon3D exist of.
+
+ 
+
+Create
+
+Creates a new polygon3D curve item. All necessary settings for this polygon3D have to be made previously.
+
+Example
+
+With Polygon3D
+
+     .Reset
+
+     .Name "3dpolygon1"
+
+     .Curve "curve1"
+
+     .Point "2", "a+2", "2"
+
+     .Point "4.5", "-5", "2"
+
+     .Point "8.78", "-6.6", "0"
+
+     .Create
+
+End With  

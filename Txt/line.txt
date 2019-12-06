@@ -1,0 +1,91 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Line
+
+Line Object
+
+This object is used to create a new line curve item.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name linename )
+
+Sets the name of the line.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new line curve item. The curve must already exist.
+
+ 
+
+X1 ( double x1 )
+
+Sets the x-coordinate from the first point of the line.
+
+ 
+
+Y1 ( double y1 )
+
+Sets the y-coordinate from the first point of the line.
+
+ 
+
+X2 ( double x2 )
+
+Sets the x-coordinate from the second point of the line.
+
+ 
+
+Y2 ( double y2 )
+
+Sets the y-coordinate from the second point of the line.
+
+ 
+
+Create
+
+Creates a new line curve item. All necessary settings for this line have to be made previously.
+
+Default Settings
+
+X1 (0.0)
+
+Y1 (0.0)
+
+X2 (0.0)
+
+Y2 (0.0)
+
+Example
+
+With Line
+
+    .Reset
+
+    .Name ("line1")
+
+    .Curve ("curve1")
+
+    .X1 (-3)
+
+    .Y1 (1)
+
+    .X2 (2.5)
+
+    .Y2 (0, "a+1.6")
+
+    .Create
+
+End With

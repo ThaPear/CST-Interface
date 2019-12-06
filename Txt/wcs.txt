@@ -1,0 +1,239 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Transformations and Picks | WCS
+
+WCS Object
+
+Defines a working coordinate system which will be the base for the next new solids.
+
+General Methods
+
+Defining a WCS
+
+Defining a WCS
+
+WCS Appearance
+
+Queries
+
+Default Settings
+
+Examples
+
+Methods
+
+%% General Methods
+
+ActivateWCS ( enum{"local","global"} axis)
+
+This method allows to switch from global to local coordinates and reverse.
+
+ 
+
+Store ( name WCSName )
+
+Stores the active WCS with the given name.
+
+ 
+
+Restore ( name WCSName )
+
+Restores the WCS with the given name.
+
+ 
+
+Delete ( name WCSName )
+
+Deletes the WCS with the given name.
+
+ 
+
+Rename ( name oldName, name newName  )
+
+Changes the name of an already named WCS.
+
+ 
+
+%% Defining a WCS
+
+ 
+
+SetNormal ( double x , double y, double z )
+
+Defines the Normal axis (w) of the Working Coordinate System (WCS) in global coordinates (x,y,z).
+
+ 
+
+SetOrigin ( double x , double y, double z )
+
+Defines the origin of the Working Coordinate System (WCS).
+
+ 
+
+SetUVector ( double x , double y, double z )
+
+Define u-vector of the WCS coordinate system.
+
+ 
+
+AlignWCSWithSelected( enum{ "Point", "3Points", "Edge", "EdgeCenter", "RotationEdge", "Face" } mode)
+
+Depending on mode does the following:
+
+"Point": Moves the origin of the Working Coordinate System to the coordinates of the selected point.
+
+"3Points": Aligns the Working Coordinate System with the plane of the three most recently selected points. The origin is placed at the first selected point, while the u axis is orientated from point No.1 to No.2.
+
+"Edge": Aligns the WCS to the previously picked edge. The u axis will be parallel to the edge. If possible, the w axis will be preserved. If the edge is nonlinear, the direction will be taken from closest point on that edge relative to the current WCS.
+
+"EdgeCenter": This moves the origin of the WCS to the center of the selected edge, the u axis will be aligned onto the edge's direction. If any faces are connected to the selected edge, the w axis of the WCS will be aligned to the normal of one of these faces. If not, the w axis will be preserved as much as possible.
+
+"RotationEdge": This mode is used for defining the rotation axis of Rotate Objects. It does the same as the "Edge" mode but additionally moves the WCS to the start point of the picked edge.
+
+"Face": For selected planar faces, the WCS will be moved to the face center. For all other faces it will be moved to the closest point on the face, relative to the current WCS. After moving, the w axis of the WCS (w axis) will be aligned to the normal of the face in the given point.
+
+"EdgeAndFace": If the selected edge is not directly connected to the selected face, this will do the same as AlignWCSWithSelected "EdgeCenter". Else, this will place the WCS origin onto the middle of the selected edge; The u axis will be aligned to the direction of the selected edge in the given point. The w axis will be set to the normal of the selected face in the given point.
+
+RotateWCS ( enum{ "u", "v", "w" } axis,   double angle )
+
+Rotates the axis of the Working Coordinate System clockwise of about the angle degree.
+
+ 
+
+MoveWCS ( enum{ "global", "local" } axis, double du, double dv, double dw )
+
+Shifts the Working Coordinate System (WCS). With the key option ”local” you can move the WCS about (du, dv, dw) in local coordinates. To move the WCS in global coordinates use the key setting ”global”.
+
+ 
+
+AlignWCSWithGlobalCoordinates
+
+The position of the WCS will be changed to the position of the Global Coordinate System. In other words, a reset of the WCS into its origin position.
+
+ 
+
+%% WCS Appearance
+
+ 
+
+SetWorkplaneSize ( double wpSize )
+
+The workplane is a square grid. This setting can be used to enlarge its size. The value wpSize defines the shortest distance between the origin and one of the sizes of the workplane. A value of wpSize smaller than the outer dimensions of a already defined structure will have no effect.
+
+ 
+
+SetWorkplaneRaster ( double rasterSize )
+
+Sets the raster width of the working plane.
+
+ 
+
+SetWorkplaneSnap ( bool flag )
+
+Switches the snap option on or off. This causes that only input values that match the snap width can be input by mouse because the value will always be snapped to the snap raster.
+
+ 
+
+SetWorkplaneAutoadjust ( bool flag )
+
+Switches the raster auto adjust option on or off. This causes an automatic change of  the raster size if the working plane is too large or too small.
+
+ 
+
+SetWorkplaneSnapAutoadjust ( bool flag )
+
+Switches the snap width auto adjust option on or off. If enabled, the snap steps is dependent on zoom state, raster size, screen size and a factor given by SetWorkplaneAutosnapFactor. If switched off, the snap width is determined by SetWorkplaneSnapRaster alone.
+
+ 
+
+SetWorkplaneAutosnapFactor ( double autosnapFactor)
+
+This value acts as a factor to the snap width if the auto flag for snapping is set. If you prefer bigger steps while snapping, use a bigger factor here. The default factor is 1.0 which yields to a snapping behavior of more or less the raster width in not zoomed state. This setting has only an effect on the interactive construction via mouse. The Snap Raster is a grid of snap points. Any point picked on the workplane is snapped to this grid. The Snap switch must be turned on, otherwise this setting will have no effect.
+
+ 
+
+SetWorkplaneSnapRaster ( double snapRasterSize)
+
+Sets the Snap Raster width. This setting has only an effect on the interactive construction via mouse and auto adjustment for snapping is turned off. The Snap Raster is a grid of snap points. If a point is picked by mouse near to one of these snap points, the selected point snaps to the grid point. The Snap switch must be turned on, otherwise this setting will have no effect.
+
+ 
+
+%% Queries
+
+% A general remark to Queries:
+
+% Those methods need special care in case of being used within macros that are added to the History List. During fast opening and Rebuilds, not all information is generally available that is queried by those methods. To improve the situation, it might be necessary to add some of the following commands to the macro or the beginning of the history:
+
+% ResultTree.UpdateTree()
+
+% FastModelLoad ("False")
+
+% IsWCSActive (  ) string <"local","global">
+
+% This method queries whether global or local coordinates are active
+
+ 
+
+DoesExist ( name WCSName ) bool
+
+Checks if the WCS with the given name does exist.
+
+ 
+
+GetOrigin ( name WCSName, double_ref x, double_ref y, double_ref z ) bool
+
+Stores the origin of the specified* working coordinate system in x, y and z, returns True if successful.
+
+ 
+
+GetNormal ( name WCSName, double_ref x, double_ref y, double_ref z ) bool
+
+Stores the normal of the specified* working coordinate system in x, y and z, returns True if successful.
+
+ 
+
+GetUVector ( name WCSName, double_ref x, double_ref y, double_ref z ) bool
+
+Stores the u-vector of the specified* working coordinate system in x, y and z, returns True if successful.
+
+*If you don't specify a WCSName for the commands above (use an empty string instead), the current local coordinates system is queried instead.
+
+ 
+
+GetAffineMatrixUVW2XYZ ( name WCSName, double_ref ux, double_ref uy, double_ref uz,double_ref vx, double_ref vy, double_ref vz, double_ref wx, double_ref wy, double_ref wz ) bool
+
+Returns True if succeeded and fills the 9 parameters with the affine transformation matrix from the specified working coordinate system to the global coordinate system.
+
+ 
+
+GetAffineMatrixXYZ2UVW ( name WCSName, double_ref ux, double_ref vx, double_ref wx,double_ref uy, double_ref vy, double_ref wy, double_ref uz, double_ref vz, double_ref wz )  bool
+
+Returns True if succeeded and fills the 9 parameters with the affine transformation matrix from the global coordinate system to the specified working coordinate system.
+
+ 
+
+GetWCSPointFromGlobal ( name WCSName, double_ref u, double_ref v, double_ref w, double x , double y, double z  ) bool
+
+Fills u, v and w with the coordinates in the WCS of a point specified by the global coordinates, returns True if successful.
+
+ 
+
+GetGlobalPointFromWCS ( name WCSName, double_ref x, double_ref y, double_ref z , double u , double v, double w ) bool
+
+Fills x, y and z with the global coordinates of a point specified by the local coordinates of the working coordinate system, returns True if successful.
+
+Default Settings:
+
+SetWorkplaneSnap (True)
+
+ActivateWCS ("global")
+
+SetWorkplaneAutoadjust (True)
+
+SetWorkplaneSnapRaster (0.1)
+
+Example:
+
+WCS.MoveWCS ("local", 0.0, "b+5", 10)
+
+ 

@@ -1,0 +1,663 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | High Frequency | Port
+
+Port Object
+
+Defines a waveguide port object. Waveguide ports are used to feed the calculation domain with power and to absorb the returning power. For each waveguide port, time signals and S-Parameters will be recorded during a solver run. In practice the port can be substituted by a longitudinal homogeneous waveguide connected to the structure. You will need at least one port (either waveguide port or discrete port) or a plane wave excitation source to feed the structure, before starting a solver run.
+
+General Methods
+
+Port Creation / Modification
+
+Port Settings
+
+Mode Settings
+
+Queries
+
+Default Settings
+
+Examples
+
+General Methods
+
+Delete ( int portnumber )
+
+Deletes an existing port.
+
+ 
+
+Rename( int oldportnumber, int newportnumber )
+
+Changes the number of a port
+
+ 
+
+RenameLabel( int portnumber, string  label )
+
+Changes the label of the port with the given number
+
+ 
+
+StartPortNumberIteration int
+
+This function resets the counter for an iteration loop over all defined ports and returns the total number of the ports. The port numbers are successively available by using the GetNextportNumber method.
+
+ 
+
+StartSParaPortNumberIteration int
+
+Similar to the method above, this function resets the counter for an iteration loop but restricts the loop to S-parameter ports only. Consequently, it  returns the total number of S-parameter ports. The port numbers are successively available by using the GetNextportNumber method.
+
+ 
+
+GetNextPortNumber int
+
+This function successively returns the portnumber of the next port, looping over all defined ports. The counter for the iteration loop can be reset using the StartPortNumberIteration method.
+
+ 
+
+%% Port Creation / Modification
+
+ 
+
+LoadContentForModify int
+
+If you want to modify an existing port with the Modify command, the first step is, to load the properties of that port. Then you may use methods to change particular settings and call Modify in the end. Loading the content first is mandatory for flawless operation of port modification even if all properties will be overwritten by the Port Settings and Mode Settings commands.
+
+ 
+
+Create
+
+Creates a new or modifies an existing waveguide port.
+
+Please note, that all necessary settings have to be made previously before calling one of these commands.
+
+This also implies that the following Port and Mode Settings in the Port Creation / Modification section cannot be used separately, but only for port creation or modification.
+
+ 
+
+Modify
+
+Creates a new or modifies an existing waveguide port.
+
+Please note, that all necessary settings have to be made previously before calling one of these commands.
+
+This also implies that the following Port and Mode Settings in the Port Creation / Modification section cannot be used separately, but only for port creation or modification.
+
+ 
+
+%% Port Settings
+
+ 
+
+PortNumber ( int portnumber )
+
+Chooses the waveguide port by its number.
+
+ 
+
+Label ( string  label )
+
+Sets the label of the port.
+
+ 
+
+NumberOfModes ( int modenumber )
+
+Sets the number of modes for the waveguide port.
+
+ 
+
+Orientation ( enum key )
+
+This method defines the orientation, i.e. the direction of excitation, of the waveguide port. "xmin" means that the port is located at the lower x-boundary of the calculation domain and feeds the structure in positive x-direction. This excitation direction is also valid for internal ports, determined by the PortOnBound method.
+
+  
+
+key = {"xmin", "xmax", "ymin", "ymax", "zmin", "zmax"}
+
+  
+
+Coordinates ( enum {"Free", "Full", "Picks"} key )
+
+This method determines how the transversal expansion of a waveguide port is defined.
+
+  
+
+key can have one of  the following values:
+
+Free
+
+The transversal plane of the port is defined by the free input of the dimensions (Xrange, Yrange, Zrange).
+
+Full
+
+The full plane of the calculation domain will work as the waveguide port.
+
+Picks
+
+The transversal plane of the port is defined by selected pickpoints.
+
+ 
+
+Xrange ( double xmin, double xmax )
+
+In case that the transversal  Coordinates of the waveguide port are defined as "Free", these methods determine the range in each direction in global (x, y, z) coordinates.
+
+ 
+
+Yrange ( double ymin, double ymax )
+
+In case that the transversal  Coordinates of the waveguide port are defined as "Free", these methods determine the range in each direction in global (x, y, z) coordinates.
+
+ 
+
+Zrange ( double zmin, double zmax )
+
+In case that the transversal  Coordinates of the waveguide port are defined as "Free", these methods determine the range in each direction in global (x, y, z) coordinates.
+
+ 
+
+XrangeAdd ( double xminadd, double xmaxadd )
+
+In case that the transversal  Coordinates of the waveguide port are defined by selected pickpoints, these methods allow to extend the resulting range in each direction in global (x, y, z) coordinates if the port is axis aligned. If the port is tilted in any way, ZrangeAdd shall only contain "0" values, while XrangeAdd and YrangeAdd are thought to be in port local coordinates. (A coordinate system with u and v is shown, XrangeAdd defines the additionell range in u-direction, whereas YrangeAdd specifies the v-direction additions.)
+
+ 
+
+YrangeAdd ( double yminadd, double ymaxadd )
+
+In case that the transversal  Coordinates of the waveguide port are defined by selected pickpoints, these methods allow to extend the resulting range in each direction in global (x, y, z) coordinates if the port is axis aligned. If the port is tilted in any way, ZrangeAdd shall only contain "0" values, while XrangeAdd and YrangeAdd are thought to be in port local coordinates. (A coordinate system with u and v is shown, XrangeAdd defines the additionell range in u-direction, whereas YrangeAdd specifies the v-direction additions.)
+
+ 
+
+ZrangeAdd ( double zminadd, double zmaxadd )
+
+In case that the transversal  Coordinates of the waveguide port are defined by selected pickpoints, these methods allow to extend the resulting range in each direction in global (x, y, z) coordinates if the port is axis aligned. If the port is tilted in any way, ZrangeAdd shall only contain "0" values, while XrangeAdd and YrangeAdd are thought to be in port local coordinates. (A coordinate system with u and v is shown, XrangeAdd defines the additionell range in u-direction, whereas YrangeAdd specifies the v-direction additions.)
+
+ 
+
+PortOnBound ( bool flag )
+
+This method decides if the port is located on the boundaries of the calculation domain (flag = True) or could be located inside the calculation domain due to its normal position definition (Xrange, Yrange or Zrange method) (flag = False). This method is not relevant for picked ports, since here the location is determined by the picked face.
+
+ 
+
+ClipPickedPortToBound ( bool flag )
+
+In case of a picked port this method decides if the port  plane should be located  on the boundaries of the calculation domain (flag = True) or should be defined correspondent to the pick information (flag = False). In general this method should not be used, since the intention is to locate the port due to its pick information.
+
+ 
+
+TextSize ( int value )
+
+ 
+
+ChangeTextSize ( int portnumber, int value )
+
+Determines the textsize of the labeling of a new created or an existing waveguide port, specified by its portnumber. The relative textsize can be defined as an integer value between 1 and 100.
+
+ 
+
+TextMaxLimit( bool flag)
+
+If set to zero the port label may exceed the size of the port depending on TextSize. Otherwise the label textsize will be fitted until the label is completely within the boundary of the port.
+
+ 
+
+ReferencePlaneDistance ( double dist )
+
+Sets the distance to the reference plane. The S-Parameters will then be calculated (phase deembedded) related to this reference plane. A negative distance corresponds to a reference plane inside the structure, a  positive distance to an outside located plane.
+
+ 
+
+%% Mode Settings
+
+ 
+
+AddPotentialNumerically ( int modeset, enum {"Positive", "Negative"} potential, double upos, double vpos )
+
+This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
+
+  
+
+The potential can have one of  the following values:
+
+Positive
+
+Defines a positive electrical potential setting.
+
+Negative
+
+Defines a negative electrical potential setting.
+
+ 
+
+AddPotentialPicked ( int modeset, enum {"Positive", "Negative"} potential, solidname name, int face_id )
+
+This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
+
+  
+
+The potential can have one of  the following values:
+
+Positive
+
+Defines a positive electrical potential setting.
+
+Negative
+
+Defines a negative electrical potential setting.
+
+ 
+
+AddPotentialEdgePicked ( int modeset, enum {"Positive", "Negative"} potential, solidname name, int fedge_id )
+
+This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
+
+  
+
+The potential can have one of  the following values:
+
+Positive
+
+Defines a positive electrical potential setting.
+
+Negative
+
+Defines a negative electrical potential setting.
+
+ 
+
+AdjustPolarization ( bool flag )
+
+Switch that decides if the polarization of the electric field should be adjusted or not. This method works together with the PolarizationAngle method.
+
+Note: Only works if two or more degenerated modes exists.
+
+ 
+
+PolarizationAngle ( double angle )
+
+If you have activated the AdjustPolarization switch, here the polarization angle can be defined.
+
+ 
+
+PortImpedanceAndCalibration (  bool flag )
+
+This switch activates the enhanced impedance and calibration evaluation for the port, based on the definition of corresponding reference lines. The lines are defined with help of the AddLineByPoint, AddLineByFace or AddLineByBoundary method and assigned to the mode with the AddModeLine method.
+
+ 
+
+AddModeLineByPoint ( int linenumber, double xstart, double ystart, double zstart, double xend, double yend, double zend, bool reverse )
+
+Adds a new line with a given linenumber to the port mode description. xstart / ystart / zstart defines the start point  and xend / yend / zend the end point. Afterwards the defined line can be used as an impedance, calibration or polarization reference with help of the AddModeLine method. The reverse flag toggles the start and end point.
+
+ 
+
+AddModeLineByFace ( int linenumber, double xstart, double ystart, double zstart, solidname name, int face_id , bool reverse )
+
+Adds a new line with a given linenumber to the port mode description. xstart / ystart / zstart defines the start point. The end point is determined by the nearest point on the face face_id of the solid name. The face needs to be a planar face on the port plane . Afterwards the defined line can be used as an impedance, calibration or polarization reference with help of the AddModeLine method. The reverse flag toggles the start and end point.
+
+ 
+
+AddModeLineByBoundary ( int linenumber, double xstart, double ystart, double zstart, enum {"Umin", "Umax", "Vmin", "Vmax"} position, bool reverse )
+
+Adds a new line with a given linenumber to the port mode description. xstart / ystart / zstart defines the start point. The end point is determined by the port boundary at position. The line will be perpendicular on the port boundary. Afterwards the defined line can be used as an impedance, calibration or polarization reference with help of the AddModeLine method. The reverse flag toggles the start and end point.
+
+ 
+
+AddModeLine ( int modenumber,  int impedance_linenumber,  int calibration_linenumber,  int polarization_linenumber )
+
+This method assigns previously defined lines to a port mode, specified by its modenumber, and are used as references for the evaluation of the impedance, calibration and polarization of the mode. The lines are indicated by their linenumber and can be represented by only one or even three different lines. All of them have to be defined previously by using the AddLineByPoint, AddLineByFace or AddLineByBoundary method.
+
+ 
+
+SetEstimation ( int portnumber, double value )
+
+Defines an estimation of the propagation constant for the mode calculation of a waveguide port, specified by its portname. A positive value refers to the propagation constant beta, a negative value to the damping constant alpha. This method is necessary only for some special application cases, normally it need not to be used.
+
+Note: The made setting is only valid for one solver run and will not be stored in the project files.
+
+ 
+
+SingleEnded (  bool flag )
+
+This method offers the possibility to automatically recalculate the scattering parameters as a post-processing step due to previously defined single-ended multipin ports. Consequently during setup of the multipin definition a separate mode set has to be created for each of the inner conductors, i.e. one (usually the outermost) conductor remains undefined representing the ground conductor.
+
+Note: All ports has to be defined as single-ended type in this way, otherwise the simulation can not be started. By applying single-ended port mode calculation the solvers automatically activate renormalization to fixed impedance, however, the impedance value itself can be modified in the corresponding solver dialog box before starting the simulation.
+
+ 
+
+Shield ( enum {"none", "PEC"} key )
+
+The boundary of the waveguide port is treated as a perfectly shielding (PEC) frame when calling this method with key = "PEC".
+
+ 
+
+%% Queries
+
+ 
+
+GetFrequency ( int portnumber,  int modenumber ) double
+
+Returns the calculation frequency of a port mode, specified by its portnumber and modenumber.
+
+For homogeneous waveguide port modes this function returns the frequency for which the modes have been calculated. If there are multiple mode evaluation frequencies at an inhomogeneous port the center frequency of the chosen frequency range is returned.
+
+Note: The given frequency also corresponds to the calculated port parameters as the propagation constant beta, the damping constant alpha and the different impedance values.
+
+ 
+
+GetFcutoff ( int portnumber,  int modenumber ) double
+
+In case of a TE or TM mode, this function returns the Cutoff Frequency for the port mode, specified by its portnumber and modenumber.
+
+ 
+
+GetModeType ( int portnumber,  int modenumber ) enum  type
+
+This function returns the mode type of  the port mode, specified by its portnumber and modenumber.
+
+  
+
+The return type can have one of the following values:
+
+TE
+
+Mode with a transverse electric field
+
+TM
+
+Mode with a transverse magnetic field
+
+TEM
+
+Mode with a transverse electromagnetic field
+
+QTEM
+
+Mode with a quasi-transverse electromagnetic field
+
+UNDEF
+
+Unknown mode type.
+
+DAMPED
+
+Currently not used.
+
+"PLANE WAVE"
+
+Plane wave mode type
+
+"FLOQUET"
+
+Floquet mode type
+
+ 
+
+GetBeta ( int portnumber,  int modenumber ) double
+
+This function returns the beta value (equivalent to the propagation constant) of  the port mode, specified by its portnumber and modenumber. It is calculated at the frequency returned by GetFrequency method.
+
+ 
+
+GetAlpha ( int portnumber,  int modenumber ) double
+
+This function returns the alpha value (equivalent to the damping constant) of  the port mode, specified by its portnumber and modenumber. It is calculated at the frequency returned by GetFrequency method.
+
+ 
+
+GetAccuracy ( int portnumber,  int modenumber ) double
+
+This function returns the accuracy of the eigenmode calculation of  the port mode, specified by its portnumber and modenumber.
+
+ 
+
+GetWaveImpedance ( int portnumber,  int modenumber ) double
+
+This function returns the wave impedance of  the port mode, specified by its portnumber and modenumber.
+
+ 
+
+GetLineImpedance ( int portnumber,  int modenumber ) double
+
+This function returns the line impedance of  the port mode, specified by its portnumber and modenumber. Please note, that this method is only reasonable for "TEM" or "Quasi TEM" mode types, otherwise the return value is zero.
+
+ 
+
+GetLineImpedanceBroadByIndex ( int portnumber,  int modenumber,  int index ) double
+
+This function returns the line impedance of  the port mode, specified by its portnumber and modenumber. The impedance value is given at a specific frequency, either determined by the frequency value itself or a corresponding index. Please note, that this method is only reasonable for "TEM" or "Quasi TEM" mode types, otherwise the return value is zero.
+
+ 
+
+GetLineImpedanceBroadByFreq ( int portnumber,  int modenumber, double frequency ) double
+
+This function returns the line impedance of  the port mode, specified by its portnumber and modenumber. The impedance value is given at a specific frequency, either determined by the frequency value itself or a corresponding index. Please note, that this method is only reasonable for "TEM" or "Quasi TEM" mode types, otherwise the return value is zero.
+
+ 
+
+GetType ( int portnumber ) enum {"Waveguide", "Discrete"} type
+
+This function returns the type of an existing port, specified by its portnumber.
+
+ 
+
+GetNumberOfModes ( int portnumber ) int
+
+This function returns the number of modes of an existing port, specified by its portnumber.
+
+ 
+
+GetPortMeshLocation ( int portnumber, long_ref orientation, long_ref ixmin, long_ref ixmax, long_ref iymin, long_ref iymax, long_ref izmin, long_ref izmax )
+
+This function returns the mesh line location of an existing port, specified by its portnumber.
+
+   
+
+The reference values have the following meaning:
+
+orientation
+
+0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
+
+ixmin / ixmax
+
+The min / max  meshline number in x-direction.
+
+iymin / iymax
+
+The min / max  meshline number in y-direction.
+
+izmin / izmax
+
+The min / max  meshline number in z-direction.
+
+ 
+
+GetPortMeshCoordinates ( int portnumber, long_ref orientation, double_ref dxmin, double_ref dxmax, double_ref dymin, double_ref dymax, double_ref dzmin, double_ref dzmax )
+
+This function returns the mesh line coordinates in local units of an existing port, specified by its portnumber.
+
+   
+
+The reference values have the following meaning:
+
+orientation
+
+0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
+
+dxmin / dxmax
+
+The min / max mesh location in x-direction.
+
+dymin / dymax
+
+The min / max mesh location in y-direction.
+
+dzmin / dzmax
+
+The min / max mesh location in z-direction.
+
+ 
+
+GetPortCenterCoordinates ( int portnumber, double_ref dxcenter, double_ref dycenter, double_ref dzcenter)
+
+This function returns the center point of a waveguide or discrete port, specified by its portnumber.
+
+ 
+
+GetFacePortTypeAndSize( int portnumber, long_ref faceporttype, double_ref dsizevalue1, double_ref dsizevalue2 )
+
+This function returns characteristic values of the discrete face port of a special geometry type (enumerated by faceporttype).
+
+The size value parameters  have the following meaning:
+
+faceporttype
+
+type
+
+dsizevalue1
+
+dsizevalue2
+
+0
+
+unknown
+
+---
+
+---
+
+1
+
+rectangular
+
+width
+
+length
+
+2
+
+barrel shaped / cylindrical
+
+radius
+
+length
+
+3
+
+coaxial
+
+radius of excited edge
+
+radius of ground edge
+
+ 
+
+GetLabel ( int portnumber ) string
+
+This function returns the label of the port.
+
+Default Settings
+
+Label("")
+
+NumberOfModes (1)
+
+AdjustPolarization (False)
+
+PolarizationAngle (0.0)
+
+ReferencePlaneDistance (0.0)
+
+TextSize (50)
+
+Coordinates ("Free")
+
+Orientation ("zmin")
+
+PortOnBound (False)
+
+ClipPickedPortToBound (False)
+
+Xrange (0.0, 0.0)
+
+Yrange (0.0, 0.0)
+
+Zrange (0.0, 0.0)
+
+Examples
+
+With Port     ' Definition of a normal waveguide port
+
+     .Reset
+
+     .PortNumber (1)
+
+     .NumberOfModes (2)
+
+     .AdjustPolarization (False)
+
+     .PolarizationAngle (0.0)
+
+     .ReferencePlaneDistance (-5)
+
+     .TextSize (50)
+
+     .Coordinates ("Free")
+
+     .Orientation ("zmax")
+
+     .PortOnBound (False)
+
+     .ClipPickedPortToBound (False)
+
+     .Xrange (-1, 1)
+
+     .Yrange (-0.3, 0.2)
+
+     .Zrange (1.1, 1.1)
+
+     .Create
+
+End With
+
+ 
+
+With Port      ' Definition of a multipin port
+
+     .Reset
+
+     .PortNumber (2)
+
+     .ReferencePlaneDistance (0)
+
+     .TextSize (50)
+
+     .Coordinates ("Full")
+
+     .Orientation ("zmin")
+
+     .PortOnBound (True)
+
+     .ClipPickedPortToBound (False)
+
+     .Xrange (-9.2, 9.2)
+
+     .Yrange (-9.2, 9.2)
+
+     .Zrange (0.0, 0.0)
+
+     .AddPotentialNumerically (1, "Positive", -2.0, 0.0)
+
+     .AddPotentialNumerically (1, "Positive", 2.0, 0.0)
+
+     .AddPotentialNumerically (2, "Positive", -2.0, 0.0)
+
+     .AddPotentialNumerically (2, "Negative", 2.0, 0.0)
+
+     .Create
+
+End With

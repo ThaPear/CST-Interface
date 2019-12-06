@@ -1,0 +1,90 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | AnalyticalCurve
+
+AnalyticalCurve Object
+This object is used to create a new analytical curve item.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name analyticalcurvename )
+
+Sets the name of the analytical curve.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new analytical curve item. The curve must already exist.
+
+ 
+
+LawX ( double  xlaw)
+
+Sets the analytical function defining the x-coordinates for the analytical curve dependent on the parameter t.
+
+ 
+
+LawY ( double  ylaw)
+
+Sets the analytical function defining the y-coordinates for the analytical curve dependent on the parameter t.
+
+ 
+
+LawZ ( double  zlaw )
+
+Sets the analytical function defining the z-coordinates for the analytical curve dependent on the parameter t.
+
+ 
+
+ParameterRange ( double tmin, double tmax )
+
+Sets the bounds for the parameter t.
+
+ 
+
+Create
+
+Creates a new analytical curve item. All necessary settings for this analytical curve have to be made previously.
+
+Default Settings
+
+LawX (0.0)
+
+LawY (0.0)
+
+LawZ (0.0)
+
+ParameterRange (0.0, 1.0)
+
+Example
+
+With AnalyticalCurve
+
+     .Reset
+
+     .Name "analytical1"
+
+     .Curve "curve1"
+
+     .LawX "r * cos(t)"
+
+     .LawY "r * sin(t)"
+
+     .LawZ "t"
+
+     .ParameterRange "-r*pi", "r*pi"
+
+     .Create
+
+End With

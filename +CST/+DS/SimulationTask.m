@@ -1,9 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Co-Author: Cyrus Tirband                                            %%%
-%%%                                                                     %%%
-%%% File Author: Alexander van Katwijk                                  %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %  
@@ -327,6 +324,10 @@ classdef SimulationTask < handle
             string = obj.hSimulationTask.invoke('GetPortSourceType', portname);
         end
         function GetGaussProperties(obj, portname, amplitude, fmin, fmax)
+            % This function was not implemented due to the double_ref
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetGaussProperties''.');
+            return;
             % Retrieves the settings for a gaussian excitation signal at the given port.
             obj.hSimulationTask.invoke('GetGaussProperties', portname, amplitude, fmin, fmax);
         end
@@ -338,9 +339,9 @@ classdef SimulationTask < handle
             % Returns the next simulation task's name. Call StartTaskNameIteration before the first call of this method.
             name = obj.hSimulationTask.invoke('GetNextTaskName');
         end
-        function DoesExist(obj)
+        function bool = DoesExist(obj)
             % Checks if a task with the given name does already exist.
-            obj.hSimulationTask.invoke('DoesExist');
+            bool = obj.hSimulationTask.invoke('DoesExist');
         end
         function name = GetTypeForTask(obj, taskname)
             % Returns the type of the simulation task given by name.

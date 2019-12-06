@@ -1,10 +1,16 @@
 clear;
 
 % txt = clipboard('paste');
-txt = fileread('CST Interface/Txt/DS/simulationtask.txt');
+txt = fileread('CST Interface/Txt/polygon3d.txt');
 split = strsplit(txt, newline);
-split = strrep(split, split{2}, '');
+% split = strrep(split, split{2}, '');
+split = strrep(split, char(13), '');
 split([cellfun(@isempty, split)]) = [];
+
+split = strrep(split, 'Default Settings:', 'Default Settings');
+split = strrep(split, 'Example:', 'Example');
+split = strrep(split, 'Examples:', 'Example');
+split = strrep(split, 'Examples', 'Example');
 
 % Find object name (e.g. 'Brick', 'Material').
 i = 1;
@@ -191,17 +197,22 @@ while(i <= length(methodlines))
     % Enum argument descriptions.
     fprintf(hOutfile, '%s', [argdescr]);
     % MATLAB interface call.
-    if(histtype == 0 && isempty(argout))
-        fprintf(hOutfile,               '            obj.h%s.invoke(''%s''', objecttype, funcname);
-        basecalllength = length(sprintf('            obj.h%s.invoke(''%s''', objecttype, funcname));
-        invoking = 1;
-    elseif(isempty(argout))
-        fprintf(hOutfile,               '            obj.AddToHistory([''.%s', funcname);
-        basecalllength = length(sprintf('            obj.AddToHistory([''.%s', funcname));
-    else
+    if(~isempty(argout))
         fprintf(hOutfile,               '            %s = obj.h%s.invoke(''%s''', argout, objecttype, funcname);
         basecalllength = length(sprintf('            %s = obj.h%s.invoke(''%s''', argout, objecttype, funcname));
         invoking = 1;
+    else
+        if(histtype == 0)
+            fprintf(hOutfile,               '            obj.h%s.invoke(''%s''', objecttype, funcname);
+            basecalllength = length(sprintf('            obj.h%s.invoke(''%s''', objecttype, funcname));
+            invoking = 1;
+        elseif(histtype == 3)
+            fprintf(hOutfile,               '            obj.project.AddToHistory([''%s.%s', objecttype, funcname);
+            basecalllength = length(sprintf('            obj.project.AddToHistory([''%s.%s', objecttype, funcname));
+        else
+            fprintf(hOutfile,               '            obj.AddToHistory([''.%s', funcname);
+            basecalllength = length(sprintf('            obj.AddToHistory([''.%s', funcname));
+        end
     end
     % Arguments of interface call.
     if(~invoking)
@@ -225,7 +236,7 @@ while(i <= length(methodlines))
         end
         fprintf(hOutfile, ');\n');
     end
-    if(histtype ~= 0)
+    if(histtype ~= 0 && histtype ~= 3)
         % Store given value in object.
         for(argi = 2:nargs)
             if(nargs == 2)
@@ -297,11 +308,11 @@ fprintf(hOutfile, '    %% Note that these can be incorrect at times.\n');
 fprintf(hOutfile, '    properties(SetAccess = protected)\n');
 fprintf(hOutfile, '        project\n');
 fprintf(hOutfile, '        h%s\n', objecttype);
-if(histtype ~= 0)
-fprintf(hOutfile, '        history\n');
+if(histtype ~= 0 && histtype ~= 3)
+    fprintf(hOutfile, '        history\n');
 end
 if(histtype == 1)
-fprintf(hOutfile, '        bulkmode\n');
+    fprintf(hOutfile, '        bulkmode\n');
 end
 fprintf(hOutfile, '\n');
 for(i = 1:length(properties))

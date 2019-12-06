@@ -1,0 +1,71 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | 2D-Profiles to Shapes | Loft
+
+Loft Object
+
+Creates a solid that connects two surfaces.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings.
+
+ 
+
+Name ( name objectname )
+
+Sets the name of the new Object.
+
+ 
+
+Component ( name componentname )
+
+Sets the component for the new Solid. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material for the new Solid. The material must already exist.
+
+ 
+
+Tangency ( double tang )
+
+Defines the shape of the connection.
+
+ 
+
+Create
+
+Creates a new solid. All necessary settings for this element have to be made previously.
+
+Default Settings:
+
+Material ("default")
+
+Component ("default")
+
+Example:
+
+With Loft
+
+     .Reset
+
+     .Name "solid3"
+
+     .Component "component1"
+
+     .Material "Vacuum"
+
+     .Tangency "0.250000"
+
+     .CreateNew
+
+End With

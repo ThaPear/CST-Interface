@@ -11,7 +11,7 @@ fprintf(hOutfile, '%s\n', ['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf(hOutfile, '%% %s\n', objectdescr);
 fprintf(hOutfile, 'classdef %s < handle\n', objecttype);
 
-histtype = input('History Type: (0) None, (1) Bulkmode, (2) Simple: ');
+histtype = input('History Type: (0) None, (1) Bulkmode, (2) Simple, (3) Direct: ');
 
 % Create class constructor in output file.
 fprintf(hOutfile, '    %%%% CST Interface specific functions.\n');
@@ -20,11 +20,11 @@ fprintf(hOutfile, '        %% Only CST.Project can create a %s object.\n', objec
 fprintf(hOutfile, '        function obj = %s(project, hProject)\n', objecttype);
 fprintf(hOutfile, '            obj.project = project;\n');
 fprintf(hOutfile, '            obj.h%s = hProject.invoke(''%s'');\n', objecttype, objecttype);
-if(histtype ~= 0)
-fprintf(hOutfile, '            obj.history = [];\n');
+if(histtype ~= 0 && histtype ~= 3)
+    fprintf(hOutfile, '            obj.history = [];\n');
 end
 if(histtype == 1)
-fprintf(hOutfile, '            obj.bulkmode = 0;\n');
+    fprintf(hOutfile, '            obj.bulkmode = 0;\n');
 end
 fprintf(hOutfile, '        end\n');
 fprintf(hOutfile, '    end\n');
@@ -63,6 +63,7 @@ switch(histtype)
         fprintf(hOutfile, '            obj.history = [obj.history, ''     '', command, newline];\n');
         fprintf(hOutfile, '        end\n');
         fprintf(hOutfile, '    end\n');
+    case 3
 end
 
 if(histtype == 2)

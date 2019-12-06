@@ -1,0 +1,153 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Cylinder
+
+Cylinder Object
+
+This object is used to create a new cylinder shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name cylindername )
+
+Sets the name of the cylinder.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new cylinder. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new cylinder. The material must already exist.
+
+ 
+
+Axis ( enum{"x", "y", "z"} direction )
+
+Sets the axis of the cylinder. According to this setting, either Xrange, Yrange or Zrange need to be set for the extension of the cylinder along the axis.
+
+ 
+
+Outerradius ( double radius )
+
+Sets the outer radius of the cylinder.
+
+ 
+
+Innerradius ( double radius )
+
+Sets the inner radius of the cylinder. This setting may be set to zero to define a solid cylinder.
+
+ 
+
+Xcenter ( double centercoordinate )
+
+Sets the x- or u-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
+
+ 
+
+Ycenter ( double centercoordinate )
+
+Sets the y- or v-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
+
+ 
+
+Zcenter ( double centercoordinate )
+
+Sets the z- or w-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
+
+ 
+
+Xrange ( double xmin, double xmax )
+
+Sets the bounds for the x- or u-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "x".
+
+ 
+
+Yrange ( double ymin, double ymax )
+
+Sets the bounds for the y- or v-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "y".
+
+ 
+
+Zrange ( double zmin, double zmax )
+
+Sets the bounds for the z- or w-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "z".
+
+ 
+
+Segments ( int number )
+
+This setting specifies how the cylinder's geometry is modelled, either as a smooth surface of by a facetted approximation. If this value is set to "0", an analytical (smooth) representation of the cylinder will be created. If this number is set to another value greater than 2, the cylinder's face will be approximated by this number of planar facets. The higher the number of segments, the better the representation of the cylinder will be.
+
+ 
+
+Create
+
+Creates a new cylinder. All necessary settings for this cylinder have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Innerradius (0)
+
+Xcenter (0)
+
+Ycenter (0)
+
+Zcenter (0)
+
+Xrange (0, 0)
+
+Yrange (0, 0)
+
+Zrange (0, 0)
+
+Segments (0)
+
+Example
+
+With Cylinder
+
+    .Reset
+
+    .Name ("cylinder1")
+
+    .Component ("component1")
+
+    .Material ("PEC")
+
+    .Axis ("z")
+
+    .Outerradius (1.5)
+
+    .Innerradius (0.5)
+
+    .Xcenter (2)
+
+    .Ycenter (1)
+
+    .Zcenter (0)
+
+    .Zrange (0, "a+3")
+
+    .Segments (0)
+
+    .Create
+
+End With
