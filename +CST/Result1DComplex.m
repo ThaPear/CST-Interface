@@ -6,26 +6,24 @@
 % This object offers access and manipulation functions to complex 1D results. A Result1DComplex object can hold a number of points ( x, y ) where x is a real number and y is a complex number. Access to the points is possible by specifying an zero-based index.
 classdef Result1DComplex < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.DS.Project, ?CST.DS.Result1DComplex, ?CST.DS.Table, ?CST.DS.ResultTree})
-        % CST.DS.Project can create a Result1DComplex object.
-        % CST.DS.Result1DComplex.Copy can create a Result1DComplex object.
-        % CST.DS.Table.Get1DDataItem can create a Result1D object.
-        % CST.DS.ResultTree.GetResultFromTreeItem/GetImpedanceResultFromTreeItem can create a Result1D object.
-        function obj = Result1DComplex(dsproject, hDSProjectOrhResult1DComplex, resultname)
+    methods(Access = {?CST.Project, ?CST.Result1DComplex, ?CST.ResultTree})
+        % CST.Project can create a Result1DComplex object.
+        % CST.Result1DComplex.Copy can create a Result1DComplex object.
+        % CST.ResultTree.GetResultFromTreeItem can create a Result1D object.
+        function obj = Result1DComplex(project, hProjectOrhResult1DComplex, resultname)
             if(nargin == 3)
-                % Created by CST.DS.Project.
-                hDSProject = hDSProjectOrhResult1DComplex;
-                obj.dsproject = dsproject;
-                obj.hResult1DComplex = hDSProject.invoke('Result1DComplex', resultname);
+                % Created by CST.Project.
+                hProject = hProjectOrhResult1DComplex;
+                obj.project = project;
+                obj.hResult1DComplex = hProject.invoke('Result1DComplex', resultname);
             else
-                obj.dsproject = dsproject;
-                obj.hResult1DComplex = hDSProjectOrhResult1DComplex;
+                obj.project = project;
+                obj.hResult1DComplex = hProjectOrhResult1DComplex;
             end
         end
     end
     %% CST Object functions.
     methods
-        %% Initialization, File Operation
         function Initialize(obj, Size)
             % Initializes an empty Result1DComplex object with the given number of samples.
             obj.hResult1DComplex.invoke('Initialize', Size);
@@ -48,7 +46,7 @@ classdef Result1DComplex < handle
             obj.hResult1DComplex.invoke('LoadFromRealAndImaginary', RealFilename, ImaginaryFilename);
         end
         function AddToTree(obj, TreePath)
-            % Inserts the Result1DComplex object into the tree at the folder specified by TreePath. Please note that the Result1DComplex object needs to be saved before it can be added to the tree. It will be automatically added below the "Results" tree folder. See also SetReferenceImpedanceLink.
+            % Inserts the Result1DComplex object into the tree at the folder specified by TreePath. Please note that the Result1DComplex object needs to be saved before it can be added to the tree. It will be automatically added below the "1D Results" tree folder. See also SetReferenceImpedanceLink.
             obj.hResult1DComplex.invoke('AddToTree', TreePath);
         end
         function Clear(obj)
@@ -64,32 +62,32 @@ classdef Result1DComplex < handle
             % Returns a copy of the Result1D Complex object.
             newhResult1DComplex = obj.hResult1DComplex.invoke('Copy');
             
-            result1DComplex = CST.DS.Result1DComplex(obj.dsproject, newhResult1DComplex);
+            result1DComplex = CST.Result1DComplex(obj.project, newhResult1DComplex);
         end
         %% 1D Complex to 1D Operations
         function result1D = Real(obj)
             % Returns a Result1D object filled with the real part of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Real');
             
-            result1D = CST.DS.Result1D(obj.dsproject, hResult1D);
+            result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1D = Imaginary(obj)
             % Returns a Result1D object filled with the imaginary part of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Imaginary');
             
-            result1D = CST.DS.Result1D(obj.dsproject, hResult1D);
+            result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1D = Magnitude(obj)
             % Returns a Result1D object filled with the magnitude of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Magnitude');
             
-            result1D = CST.DS.Result1D(obj.dsproject, hResult1D);
+            result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1D = Phase(obj)
             % Returns a Result1D object filled with the phase in degrees of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Phase');
             
-            result1D = CST.DS.Result1D(obj.dsproject, hResult1D);
+            result1D = CST.Result1D(obj.project, hResult1D);
         end
         %% Local Operations:
         function long = GetN(obj)
@@ -97,23 +95,23 @@ classdef Result1DComplex < handle
             long = obj.hResult1DComplex.invoke('GetN');
         end
         function SetX(obj, index, dValue)
-            % Sets the x-value at the specified index in the Result1D object.
+            % Sets the x-value at the specified index in the Result1DComplex object.
             obj.hResult1DComplex.invoke('SetX', index, dValue);
         end
         function SetYRe(obj, index, dValue)
-            % Sets the y-value at the specified index in the Result1D object.
+            % Sets the y-value at the specified index in the Result1DComplex object.
             obj.hResult1DComplex.invoke('SetYRe', index, dValue);
         end
         function SetYIm(obj, index, dValue)
-            % Sets the y-value at the specified index in the Result1D object.
+            % Sets the y-value at the specified index in the Result1DComplex object.
             obj.hResult1DComplex.invoke('SetYIm', index, dValue);
         end
         function double = GetX(obj, index)
-            % Returns the x-value at the specified index in the Result1D object.
+            % Returns the x-value at the specified index in the Result1DComplex object.
             double = obj.hResult1DComplex.invoke('GetX', index);
         end
         function double = GetYRe(obj, index)
-            % Returns the y-value at the specified index in the Result1D object.
+            % Returns the y-value at the specified index in the Result1DComplex object.
             double = obj.hResult1DComplex.invoke('GetYRe', index);
         end
         function double = GetYIm(obj, index)
@@ -168,10 +166,9 @@ classdef Result1DComplex < handle
             % Divides the complex y-values of the current object by the y-values of the other object. The method returns an error if a division by zero was encountered. The number of points need to be the same in both objects. The x-values are taken from the current object.
             obj.hResult1DComplex.invoke('ComponentDiv', Object);
         end
-        function MakeCompatibleTo(obj, Object)
-            % Result1D Object/Result1DComplex Object
+        function MakeCompatibleTo(obj, result1dorresult1dcomplex)
             % Re-samples the result data of the current object to make it compatible to the sampling of the other object. The new data samples are calculated by an interpolation of the original data samples. The method returns an error if less than three data points are contained in the current object or less than two data points are contained in the other object.
-            obj.hResult1DComplex.invoke('MakeCompatibleTo', Object);
+            obj.hResult1DComplex.invoke('MakeCompatibleTo', result1dorresult1dcomplex);
         end
         function SortByX(obj)
             % Sorts the data contained in the result object to have monotonically increasing x-values.
@@ -223,7 +220,7 @@ classdef Result1DComplex < handle
             double = obj.hResult1DComplex.invoke('GetLogarithmicFactor');
         end
         function SetReferenceImpedanceLink(obj, TreePath)
-            % This command allows adding a 1D result to the Navigation Tree which can be visualized as a Smith Chart. One can specify a link to another existing 1D result in the Navigation Tree which will be interpreted as reference impedance data. The link is created when the Result1DComplex object is added to the Navigation Tree via a subsequent call of AddToTree. The reference impedance item needs to be an existing complex-valued item of the same sampling as the processed data. It also needs to be located within the same Navigation Tree folder as the reference impedance tree item, otherwise AddToTree will report an error. See also Examples.
+            % This command allows adding a 1D result to the Navigation Tree which can be visualized as a Smith Chart. One can specify a link to another existing 1D result in the Navigation Tree which will be interpreted as reference impedance data. The link is created when the Result1DComplex object is added to the Navigation Tree via a subsequent call of AddToTree. The reference impedance item needs to be an existing complex-valued item of the same sampling as the processed data. It also needs to be located within the same Navigation Tree folder as the reference impedance tree item, otherwise AddToTree will report an error. See also Example.
             obj.hResult1DComplex.invoke('SetReferenceImpedanceLink', TreePath);
         end
         function string = GetReferenceImpedanceLink(obj)
@@ -242,59 +239,57 @@ classdef Result1DComplex < handle
             % Returns the string "1DC". This method can be used to distinguish the result object from Result0D and Result1D objects in a context where the type of a result object is unknown.
             string = obj.hResult1DComplex.invoke('GetResultObjectType');
         end
+        function DeleteAt(obj, Lifetime)
+            % This setting specifies the lifetime of the Result1DComplex object. The variable Lifetime can be one of the following strings: "never", "solverstart" or "rebuild". This setting is considered if the Result1DComplex object is added to the Navigation Tree via AddToTree.
+            obj.hResult1DComplex.invoke('DeleteAt', Lifetime);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
     properties(SetAccess = protected)
-        dsproject                       CST.DS.Project
+        project
         hResult1DComplex
 
     end
 end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
-% % An Result1DComplex object can be created as follows:
-% 
+% Construction
+% An Result1DComplex object can be created as follows:
 % Dim result As Object
 % Set result = Result1DComplex('');
 % 
-% This will create an empty object. Alternatively, a filename of a complex .sig-file can be given as a parameter, then the object loads the data from the .sig-file(see Examples).
-% % This example creates an empty object, fills it with data and adds it to the ResultTree.
-% 
-% NOTE: The behavior of the('Result1DComplex'); object depends on the context it is used. If you use it in CST DESIGN ENVIRONMENT, the .AddToTree command will place the curves into the result tree of CST DESIGN STUDIO. However, if for example used from within CST MICROWAVE STUDIO, the curves will be placed into the result tree of CST MICROWAVE STUDIO. To have the curves placed into CST DESIGN STUDIO you need to construct the result object as('DS.Result1DComplex('');');.
+% This will create an empty object. Alternatively, a filename of a complex .sig-file can be given as a parameter, then the object loads the data from the .sig-file(see Example).
+% This example creates an empty object, fills it with data and adds it to the ResultTree.
 % 
 % Dim result As Object
 % Set result = Result1DComplex('');
-% result1dcomplex = dsproject.Result1DComplex();
+% result1dcomplex = project.Result1DComplex();
 %     result1dcomplex.AppendXY(1,1,1)
 %     result1dcomplex.AppendXY(2,2,1)
 %     result1dcomplex.AppendXY(3,2,2)
 %     result1dcomplex.Title('A complex curve');
 %     result1dcomplex.Save('a_file_name');
-%     result1dcomplex.AddToTree('Results\Test\complex_curve');
+%     result1dcomplex.AddToTree('1D Results\Test\complex_curve');
 % 
-% % This example loads a S-Parameter and adds it to the ResultTree.
-% 
-% Dim TreeItem As String, FileName As String
-% TreeItem =('Tasks\SPara1\S-Parameters\S1,1');
-% FileName = DSResultTree.GetFileFromTreeItem(TreeItem)
+% This example loads the data of a complex  S-Parameter and adds it to the ResultTree.
+% Dim sFile As String
+% sFile = Resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');
 % Dim result As Object
-% Set result = DS.Result1DComplex('');
-%     result1dcomplex.Load(FileName)
-%     result1dcomplex.Save('my_file_name');
-%     result1dcomplex.AddToTree('Results\S-Parameter\S1,1');
+% Set result = Result1DComplex(sFile)
+% result.Save('copied_s11');
+% result.AddToTree('1D Results\Copied Data\S1,1');
 % 
-% % This example links two objects via the command SetReferenceImpedanceLink.
-% 
+% This example links two objects via the command SetReferenceImpedanceLink.
 % Dim refImp As Object
 % Set refImp = Result1DComplex('');
 % refImp.Appendxy(1,50,0)
 % refImp.Save('refimp_name.sig');
-% refImp.AddToTree('Results\Data\result-ref-imp');
+% refImp.AddToTree('1D Results\Data\result-ref-imp');
 % 
 % Dim result As Object
 % Set result = Result1DComplex('');
 % result.Appendxy(1,0.4,0.6)
 % result.Save('result_name.sig');
-% result.SetReferenceImpedanceLink('Results\Data\result-ref-imp');
-% result.AddToTree('Results\Data\result');
+% result.SetReferenceImpedanceLink('1D Results\Data\result-ref-imp');
+% result.AddToTree('1D Results\Data\result');

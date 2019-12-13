@@ -49,5 +49,10 @@ classdef Application < handle
             hDSProject  = cst.invoke('ActiveDS');
             dsproject = CST.DS.Project(hDSProject);
         end
+        
+        function Quit()
+            cst = CST.Application.GetHandle();
+            cst.invoke('Quit');
+        end
     end
 end

@@ -209,8 +209,8 @@ classdef Boundary < handle
             boundarytype = obj.hBoundary.invoke('GetZmax');
         end
         function Xsymmetry(obj, symmetrytype)
-            % Defines if the structure is electrically or magnetically
-            % symmetric regarding the origin of the x-axis.
+            % Defines if the structure is electrically or magnetically symmetric regarding the
+            % origin of the x-axis.
             %
             % symmetrytype: 'electric' - All tangential E-fields are considered zero at the symmetry plane.
             %               'magnetic' - All tangential H-fields are considered zero at the symmetry plane.
@@ -219,8 +219,8 @@ classdef Boundary < handle
             obj.xsymmetry = symmetrytype;
         end
         function Ysymmetry(obj, symmetrytype)
-            % Defines if the structure is electrically or magnetically
-            % symmetric regarding the origin of the y-axis.
+            % Defines if the structure is electrically or magnetically symmetric regarding the
+            % origin of the y-axis.
             %
             % symmetrytype: 'electric' - All tangential E-fields are considered zero at the symmetry plane.
             %               'magnetic' - All tangential H-fields are considered zero at the symmetry plane.
@@ -229,8 +229,8 @@ classdef Boundary < handle
             obj.ysymmetry = symmetrytype;
         end
         function Zsymmetry(obj, symmetrytype)
-            % Defines if the structure is electrically or magnetically
-            % symmetric regarding the origin of the z-axis.
+            % Defines if the structure is electrically or magnetically symmetric regarding the
+            % origin of the z-axis.
             %
             % symmetrytype: 'electric' - All tangential E-fields are considered zero at the symmetry plane.
             %               'magnetic' - All tangential H-fields are considered zero at the symmetry plane.
@@ -251,8 +251,8 @@ classdef Boundary < handle
             symmetrytype = obj.hBoundary.invoke('GetZSymmetry');
         end
         function ApplyInAllDirections(obj, boolean)
-            % Is used by the background dialog to identify if the Xmin
-            % value should be applied in all the other directions.
+            % Is used by the background dialog to identify if the Xmin value should be applied in
+            % all the other directions.
             obj.AddToHistory(['.ApplyInAllDirections "', num2str(boolean), '"']);
         end
         % TODO: 
@@ -263,17 +263,23 @@ classdef Boundary < handle
         % TemperatureType
         % Temperature
         function [xmin, xmax, ymin, ymax, zmin, zmax] = GetCalculationBox(obj)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetCalculationBox''.');
-            xmin = nan; xmax = nan;
-            ymin = nan; ymax = nan;
-            zmin = nan; zmax = nan;
-            
-            % Returns the bounding box the calculation domain. The minimum
-            % and maximum values of the bounding box of the calculation
-            % domain regarding the x, y and z direction.
-%             [xmin, xmax, ymin, ymax, zmin, zmax] = obj.hBoundary.invoke('GetCalculationBox');
+            % Returns the bounding box the calculation domain. The minimum and maximum values of the
+            % bounding box of the calculation domain regarding the x, y and z direction.
+            functionString = [...
+                'Dim xmin As Double, xmax As Double', newline, ...
+                'Dim ymin As Double, ymax As Double', newline, ...
+                'Dim zmin As Double, zmax As Double', newline, ...
+                'Boundary.GetCalculationBox(xmin, xmax, ymin, ymax, zmin, zmax)', newline, ...
+            ];
+            returnvalues = {'xmin', 'xmax', 'ymin', 'ymax', 'zmin', 'zmax'};
+            [xmin, xmax, ymin, ymax, zmin, zmax] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            xmin = str2double(xmin);
+            xmax = str2double(xmax);
+            ymin = str2double(ymin);
+            ymax = str2double(ymax);
+            zmin = str2double(zmin);
+            zmax = str2double(zmax);
         end
         function Layer(obj, numlayers)
             % Specifies the number of PML layers. Usually 4 layers are sufficient.
@@ -281,134 +287,115 @@ classdef Boundary < handle
             obj.layer = numlayers;
         end
         function MinimumLinesDistance(obj, minimumlinesdistance)
-            % Specifies the minimum distance from the PML boundary to the
-            % structure to be modeled. The distance is determined by the
-            % absolute number of grid lines.
+            % Specifies the minimum distance from the PML boundary to the structure to be modeled.
+            % The distance is determined by the absolute number of grid lines.
             obj.MinimumLinesDistance(['.MinimumLinesDistance "', num2str(minimumlinesdistance), '"']);
             obj.minimumlinesdistance = minimumlinesdistance;
         end
         function MinimumDistanceType(obj, type)
-            % Selecting the Fraction option activates the geometrical
-            % domain enlargement computed as a fraction of the wavelength.
-            % With the Absolute option the distance is directly given in
-            % geometrical user units. To this purpose use the
-            % SetAbsoluteDistance command.
+            % Selecting the Fraction option activates the geometrical domain enlargement computed as
+            % a fraction of the wavelength. With the Absolute option the distance is directly given
+            % in geometrical user units. To this purpose use the SetAbsoluteDistance command.
             %
             % type: 'Fraction', 'Absolute'
             obj.AddToHistory(['.MinimumDistanceType "', type, '"']);
             obj.minimumdistancetype = type;
         end
         function SetAbsoluteDistance(obj, distance)
-            % Specifies the absolute distance to enlarge the simulation
-            % domain. To be used selecting the Absolute option with the
-            % command MinimumDistanceType.
+            % Specifies the absolute distance to enlarge the simulation domain. To be used selecting
+            % the Absolute option with the command MinimumDistanceType.
             %
             % Requires MinimumDistanceType 'Absolute'.
             obj.AddToHistory(['.SetAbsoluteDistance "', num2str(distance), '"']);
             obj.absolutedistance = distance;
         end
         function MinimumDistanceReferenceFrequencyType(obj, type)
-            % The command determines the reference frequency where the
-            % wavelength has to be computed. The command should be used
-            % jointly with the MinimumDistanceType command activating the
-            % Fraction option.
+            % The command determines the reference frequency where the wavelength has to be
+            % computed. The command should be used jointly with the MinimumDistanceType command
+            % activating the Fraction option.
             %
-            % Center means that the reference frequency is the mid
-            % simulation frequency, in formula (FMin+FMax)/2.
+            % Center means that the reference frequency is the mid simulation frequency, in formula
+            % (FMin+FMax)/2.
             %
-            % The second choice Centernmonitors computes the reference
-            % frequency as the minimum non zero frequency selected among
-            % the center frequency and the user defined relevant  monitor
-            % frequencies.
+            % The second choice Centernmonitors computes the reference frequency as the minimum non
+            % zero frequency selected among the center frequency and the user defined relevant
+            % monitor frequencies.
             %
-            % The third possibility is User, which enables to specify
-            % directly the frequency with the companion
-            % FrequencyForMinimumDistance command.
+            % The third possibility is User, which enables to specify directly the frequency with
+            % the companion FrequencyForMinimumDistance command.
             %
             % type: 'Center', 'Centernmonitors', 'User'
             obj.AddToHistory(['.MinimumDistanceReferenceFrequencyType "', type, '"']);
             obj.minimumdistancereferencefrequencytype = type;
         end
         function MinimumDistancePerWavelength(obj, distance)
-            % Specifies the minimum distance from the PML boundary to the
-            % structure to be modeled. The distance is determined
-            % relatively to the wavelength, either in respect to the center
-            % frequency, center and monitor frequencies or to a user
-            % defined frequency value. See also the
-            % MinimumDistanceReferenceFrequencyType command.
+            % Specifies the minimum distance from the PML boundary to the structure to be modeled.
+            % The distance is determined relatively to the wavelength, either in respect to the
+            % center frequency, center and monitor frequencies or to a user defined frequency value.
+            % See also the MinimumDistanceReferenceFrequencyType command.
             %
             % Requires MinimumDistanceType 'Fraction'
             obj.AddToHistory(['.MinimumDistancePerWavelength "', num2str(distance), '"']);
             obj.minimumdistanceperwavelength = distance;
         end
         function MinimumDistancePerWavelengthNewMeshEngine(obj, distance)
-            % Was found in the CST-generated history list, seems to replace
-            % the MinimumDistancePerWavelength function.
+            % Was found in the CST-generated history list, seems to replace the
+            % MinimumDistancePerWavelength function.
             %
             % Requires MinimumDistanceType 'Fraction'
             obj.AddToHistory(['.MinimumDistancePerWavelengthNewMeshEngine "', num2str(distance), '"']);
             obj.minimumdistanceperwavelengthnewmeshengine = distance;
         end
         function FrequencyForMinimumDistance(obj, freq)
-            % Specifies the frequency which represents the reference value
-            % for the MinimumDistancePerWavelength method.
+            % Specifies the frequency which represents the reference value for the
+            % MinimumDistancePerWavelength method.
             %
             % Requires MinimumDistanceType 'Fraction'
             % Requires MinimumDistanceReferenceFrequencyType 'User'
             obj.AddToHistory(['.FrequencyForMinimumDistance "', num2str(freq), '"']);
             obj.frequencyforminimumdistance = freq;
         end
-        
         function XPeriodicShift(obj, shift)
-            % Enables to define a phase shift value for a periodic boundary
-            % condition. Please note that the phase shift only applies to
-            % the frequency domain solver and the eigenmode solver. The
-            % settings are ignored by the transient solver.
+            % Enables to define a phase shift value for a periodic boundary condition. Please note
+            % that the phase shift only applies to the frequency domain solver and the eigenmode
+            % solver. The settings are ignored by the transient solver.
             obj.AddToHistory(['.XPeriodicShift "', num2str(shift), '"']);
             obj.xperiodicshift = shift;
         end
         function YPeriodicShift(obj, shift)
-            % Enables to define a phase shift value for a periodic boundary
-            % condition. Please note that the phase shift only applies to
-            % the frequency domain solver and the eigenmode solver. The
-            % settings are ignored by the transient solver.
+            % Enables to define a phase shift value for a periodic boundary condition. Please note
+            % that the phase shift only applies to the frequency domain solver and the eigenmode
+            % solver. The settings are ignored by the transient solver.
             obj.AddToHistory(['.YPeriodicShift "', num2str(shift), '"']);
             obj.yperiodicshift = shift;
         end
         function ZPeriodicShift(obj, shift)
-            % Enables to define a phase shift value for a periodic boundary
-            % condition. Please note that the phase shift only applies to
-            % the frequency domain solver and the eigenmode solver. The
-            % settings are ignored by the transient solver.
+            % Enables to define a phase shift value for a periodic boundary condition. Please note
+            % that the phase shift only applies to the frequency domain solver and the eigenmode
+            % solver. The settings are ignored by the transient solver.
             obj.AddToHistory(['.ZPeriodicShift "', num2str(shift), '"']);
             obj.zperiodicshift = shift;
         end
         function PeriodicUseConstantAngles(obj, boolean)
-            % In contrast to the definition of a constant phase shift
-            % between two opposite periodic boundaries (using the
-            % XPeriodicShift, YPeriodicShift or ZPeriodicShift methods) it
-            % is also possible to define an incident angle value of the
-            % normal propagation direction of a virtual plane wave entering
-            % the calculation domain. The angle can be defined in a
-            % spherical coordinate system using the
-            % SetPeriodicBoundaryAngles method. In fact this procedure also
-            % realizes a phase shift between the periodic boundaries,
-            % however, this time it depends on the current frequency
-            % sample. You can activate (bFlag = True) or deactivate (bFlag
-            % = False) this option using the present method.
+            % In contrast to the definition of a constant phase shift between two opposite periodic
+            % boundaries (using the XPeriodicShift, YPeriodicShift or ZPeriodicShift methods) it is
+            % also possible to define an incident angle value of the normal propagation direction of
+            % a virtual plane wave entering the calculation domain. The angle can be defined in a
+            % spherical coordinate system using the SetPeriodicBoundaryAngles method. In fact this
+            % procedure also realizes a phase shift between the periodic boundaries, however, this
+            % time it depends on the current frequency sample. You can activate (bFlag = True) or
+            % deactivate (bFlag = False) this option using the present method.
             obj.AddToHistory(['.PeriodicUseConstantAngles "', num2str(boolean), '"']);
             obj.periodicuseconstantangles = boolean;
         end
         function SetPeriodicBoundaryAngles(obj, theta, phi)
-            % Defines the angle in a spherical coordinate system using
-            % theta and phi values for the calculation of phase shifts
-            % between periodic boundaries. The z-axis corresponds to that
-            % of the global coordinate system.
+            % Defines the angle in a spherical coordinate system using theta and phi values for the
+            % calculation of phase shifts between periodic boundaries. The z-axis corresponds to
+            % that of the global coordinate system.
             %
-            % Please note that this method is only relevant for the
-            % frequency domain solver and in case that the
-            % PeriodicUseConstantAngles method is activated or unit cell
-            % boundaries are used.
+            % Please note that this method is only relevant for the frequency domain solver and in
+            % case that the PeriodicUseConstantAngles method is activated or unit cell boundaries
+            % are used.
             obj.AddToHistory(['.SetPeriodicBoundaryAngles "', num2str(theta), '", '...
                                                          '"', num2str(phi), '"']);
             obj.periodicboundaryanglesth = theta;
@@ -426,14 +413,28 @@ classdef Boundary < handle
             obj.AddToHistory(['.SetPeriodicBoundaryAnglesDirection "', direction, '"']);
             obj.periodicboundaryanglesdirection = direction;
         end
-        function [theta, phi, direction, valid] = GetUnitCellScanAngle(obj)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetUnitCellScanAngle''.');
-            theta = nan;
-            phi = nan;
-            direction = nan;
-            valid = nan;
+        function [valid, theta, phi, direction] = GetUnitCellScanAngle(obj)
+            % The scan angle defined with SetPeriodicBoundaryAngles and its orientation as defined
+            % by calling SetPeriodicBoundaryAnglesDirection can be accessed using this function. All
+            % arguments of this function are output values, which are set by the function. Its
+            % return value is True if the unit cell is active and the expressions for the scan angle
+            % are valid. If direction is +1, then it refers to the ”outward” direction, and to the
+            % ”inward” direction if direction is -1.
+            %
+            % NOTE: valid is -1 when true.
+            functionString = [...
+                'Dim valid As Boolean', newline, ...
+                'Dim theta As Double, phi As Double', newline, ...
+                'Dim direction As Long', newline, ...
+                'valid = Boundary.GetUnitCellScanAngle(theta, phi, direction)', newline, ...
+            ];
+            returnvalues = {'valid', 'theta', 'phi', 'direction'};
+            [valid, theta, phi, direction] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            valid = str2double(valid);
+            theta = str2double(theta);
+            phi = str2double(phi);
+            direction = str2double(direction);
         end
         function UnitCellDs1(obj, ds1)
             % These two methods [UnitCellDs1 and UnitCellDs2] specify the

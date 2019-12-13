@@ -268,11 +268,9 @@ classdef SimulationTask < handle
             % "Voltage"
             % "Current"
             %  "Signal"
-            obj.hSimulationTask.invoke('SetPortSourceType', portname, type);
-        end
-        function value = The(obj)
+            % The value "None" deletes the excitation signal of this port. The port will therefore be considered as impedance.
             % The task needs to exist and "SetComplexPortExcitation" ("SetRealPortExcitation") has to be called before this function can be executed.
-            value = obj.hSimulationTask.invoke('The');
+            obj.hSimulationTask.invoke('SetPortSourceType', portname, type);
         end
         function SetPortSignalName(obj, portname, signalname)
             % Sets a user defined name for an already existing excitation signal of port no. portname.
@@ -323,13 +321,18 @@ classdef SimulationTask < handle
             % Returns the source type associated with the given port for the selected simulation task. Possible return values are "None" (if no signal is assigned to the specified port, i.e. the port will be considered as impedance), "Voltage", "Current" and "Signal".
             string = obj.hSimulationTask.invoke('GetPortSourceType', portname);
         end
-        function GetGaussProperties(obj, portname, amplitude, fmin, fmax)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetGaussProperties''.');
-            return;
+        function [amplitude, fmin, fmax] = GetGaussProperties(obj, portname)
             % Retrieves the settings for a gaussian excitation signal at the given port.
-            obj.hSimulationTask.invoke('GetGaussProperties', portname, amplitude, fmin, fmax);
+            functionString = [...
+                'Dim amplitude As Double, fmin As Double, fmax As Double', newline, ...
+                'SimulationTask.GetGaussProperties(', portname, ', amplitude, fmin, fmax)', newline, ...
+            ];
+            returnvalues = {'amplitude', 'fmin', 'fmax'};
+            [amplitude, fmin, fmax] = obj.dsproject.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            amplitude = str2double(amplitude);
+            fmin = str2double(fmin);
+            fmax = str2double(fmax);
         end
         function int = StartTaskNameIteration(obj)
             % Resets the iterator for the simulation tasks and returns the number of simulation tasks.

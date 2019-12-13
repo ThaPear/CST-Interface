@@ -6,11 +6,12 @@
 % This object offers access and manipulation functions to 1D results.
 classdef Result1D < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.DS.Project, ?CST.DS.Result1D, ?CST.DS.Result1DComplex, ?CST.DS.Table})
+    methods(Access = {?CST.DS.Project, ?CST.DS.Result1D, ?CST.DS.Result1DComplex, ?CST.DS.Table, ?CST.DS.ResultTree})
         % CST.DS.Project can create a Result1D object.
         % CST.DS.Result1D.Copy can create a Result1D object.
         % CST.DS.Result1DComplex.Real/Imaginary/Magnitude/Phase can create a Result1D object.
         % CST.DS.Table.Get1DDataItem can create a Result1D object.
+        % CST.DS.ResultTree.GetResultFromTreeItem/GetImpedanceResultFromTreeItem can create a Result1D object.
         function obj = Result1D(dsproject, hDSProjectOrhResult1D, resultname)
             if(nargin == 3)
                 % Created by CST.DS.Project.
@@ -187,14 +188,24 @@ classdef Result1D < handle
             % Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
             obj.hResult1D.invoke('SetXYDouble', index, xValue, yValue);
         end
-        function GetXYDouble(obj, index, xValue, yValue)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
+        function [xValue, yValue] = GetXYDouble(obj, index)
+            % This function was not implemented due to the Result1D object being seemingly
+            % impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetXYDouble''.');
+            xValue = nan;
+            yValue = nan;
             return;
             % Returns the x- and  y-value at the specified index in the Result1D object.
             % Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
-            obj.hResult1D.invoke('GetXYDouble', index, xValue, yValue);
+            functionString = [...
+                'Dim xValue As Double, yValue As Double', newline, ...
+                'DS.Result1D.GetXYDouble(', num2str(index), ', xValue, yValue)', newline, ...
+            ];
+            returnvalues = {'xValue', 'yValue'};
+            [xValue, yValue] = obj.dsproject.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            xValue = str2double(xValue);
+            yValue = str2double(yValue);
         end
         function AppendXY(obj, xValue, yValue)
             % Appends a new pair of values to the end of the result object.

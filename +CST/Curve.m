@@ -65,19 +65,20 @@ classdef Curve < handle
             % Returns the next curve name. Use StartCurveNameIteration to start the iteration.
             name = obj.hCurve.invoke(['GetNextCurveName']);
         end
-        function bool = GetPointCoordinates(obj, curveitemname, pid, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPointCoordinates''.');
-            bool = nan;
-            return;
-            
+        function [bool, x, y, z] = GetPointCoordinates(obj, curveitemname, pid)
             % Retrieves the coordinates of the point with the given pid. Returns false if there is no such point.
-            bool = obj.hCurve.invoke(['GetPointCoordinates "', num2str(curveitemname, '%.15g'), '", '...
-                                                          '"', num2str(pid, '%.15g'), '", '...
-                                                          '"', num2str(x, '%.15g'), '", '...
-                                                          '"', num2str(y, '%.15g'), '", '...
-                                                          '"', num2str(z, '%.15g'), '"']);
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'bool = Curve.GetPointCoordinates(', curveitemname, ', ', pid, ', x, y, z)', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z'};
+            [bool, x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
         function int = GetNumberOfPoints(obj, curveitemname)
             % Returns the maximum number of points.

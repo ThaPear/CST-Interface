@@ -71,6 +71,14 @@ classdef ExtrudeCurve < handle
             obj.project.AddToHistory(['define extrudecurve: ', obj.name], obj.history);
             obj.history = [];
         end
+        
+        
+        %% Undocumented functions.
+        % Implemented from History List.
+        function DeleteProfile(obj, boolean)
+            % Should CST delete the curve after extruding it?
+            obj.AddToHistory(['.DeleteProfile "', num2str(boolean, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

@@ -49,14 +49,10 @@ classdef Table < handle
         end
         function string = GetResultTypeOfDataItem(obj, index)
             % This method returns a string containing the type of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1. The type can be any one of the following strings:
-            % "0d real"
-            % The data item represents a single real value.
-            % "0d complex"
-            % The data item represents a single complex value.
-            % "1d"
-            % The data item represents an entire xy curve.
-            % "1d complex"
-            % The data item represents an entire complex curve.
+            % "0d real"    - The data item represents a single real value.
+            % "0d complex" - The data item represents a single complex value.
+            % "1d"         - The data item represents an entire xy curve.
+            % "1d complex" - The data item represents an entire complex curve.
             string = obj.hTable.invoke('GetResultTypeOfDataItem', index);
         end
         function double = GetParameterValueOfDataItem(obj, dataindex, parameterindex)

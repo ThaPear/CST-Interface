@@ -66,8 +66,8 @@ classdef Project < handle
             if(nargin == 2)
                 contents = caption;
             end
-            ret = obj.hProject.invoke('AddToHistory', caption, contents);
-            if(~ret)
+            bool = obj.hProject.invoke('AddToHistory', caption, contents);
+            if(~bool)
                 breakpoint;
                 error(['Could not execute command ', newline, '''', caption, ''', ', newline, '''', contents, '''']);
             end
@@ -605,27 +605,28 @@ classdef Project < handle
             obj.hProject.invoke('CalculateFourierComplex', Input, InputUnit, Output, OutputUnit, isign, normalization, vMin, vMax, vSamples);
         end
         function CalculateCONV(obj, a, b, conv)
+            % This function was not implemented due to the Result1D arguments being seemingly
+            % impossible to pass from MATLAB.
+            warning('Used unimplemented function ''CalculateCONV''.');
+            return;
             % This method calculates the convolution of two sequences. All signals are given as Result1D objects.
-            % a
-            % First sequence to be convoluted.
-            % b
-            % Second sequence to be convoluted.
-            % conv
-            % Convolution of sequence_a and sequence_b
+            % a - First sequence to be convoluted.
+            % b - Second sequence to be convoluted.
+            % conv - Convolution of sequence_a and sequence_b
             obj.hProject.invoke('CalculateCONV', a, b, conv);
         end
         function CalculateCROSSCOR(obj, a, b, corr, bNorm)
+            % This function was not implemented due to the Result1D arguments being seemingly
+            % impossible to pass from MATLAB.
+            warning('Used unimplemented function ''CalculateCROSSCOR''.');
+            return;
             % This method calculates the cross correlation sequence of two sequences. All signals are given as Result1D objects. If "bNorm" is "False"  then the standard cross correlation sequence is calculated by the following equation.
             % For "bNorm = True" a normed correlation sequence is determined. The resulting sequence will have values in the interval [-1,1] and will be independent to scalar multiplication of the sequences "a" and "b".  This normed sequence is derived from the term below.
             % Please note that "corr" may have a different sampling than "a" and "b". An internal resampling is done to assure compatibility of the x-values of the processed sequences.
-            % a
-            % First sequence to be correlated.
-            % b
-            % Second sequence to be correlated.
-            % corr
-            % Sequence of correlation coefficients of the sequences above.
-            % bNorm
-            % Flag if normed or standard correlation is calculated.
+            % a - First sequence to be correlated.
+            % b - Second sequence to be correlated.
+            % corr - Sequence of correlation coefficients of the sequences above.
+            % bNorm - Flag if normed or standard correlation is calculated.
             obj.hProject.invoke('CalculateCROSSCOR', a, b, corr, bNorm);
         end
         function DeleteResults(obj)
@@ -636,50 +637,71 @@ classdef Project < handle
             % Returns the frequency of the currently plotted field. If no field is plotted, zero will be returned.
             double = obj.hProject.invoke('GetFieldFrequency');
         end
-        function double = GetFieldPlotMaximumPos(obj, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetFieldPlotMaximumPos''.');
-            double = nan;
-            return;
-            % Returns the maximum / minimum of the color scale and its global position of a plot without considering the manual setting of the borders. 'x', 'y', 'z' are the absolute coordinate of the maximum / minimum as return values.
-            double = obj.hProject.invoke('GetFieldPlotMaximumPos', x, y, z);
+        function [value, x, y, z] = GetFieldPlotMaximumPos(obj)
+            % Returns the maximum of the color scale and its global position of a plot without
+            % considering the manual setting of the borders. 'x', 'y', 'z' are the absolute
+            % coordinate of the maximum as return values.
+            functionString = [...
+                'Dim value As Double, x As Double, y As Double, z As Double', newline, ...
+                'value = GetFieldPlotMaximumPos(x, y, z)', newline, ...
+            ];
+            returnvalues = {'value', 'x', 'y', 'z'};
+            [value, x, y, z] = obj.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            value = str2double(value);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
-        function double = GetFieldPlotMinimumPos(obj, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetFieldPlotMinimumPos''.');
-            double = nan;
-            return;
-            % Returns the maximum / minimum of the color scale and its global position of a plot without considering the manual setting of the borders. 'x', 'y', 'z' are the absolute coordinate of the maximum / minimum as return values.
-            double = obj.hProject.invoke('GetFieldPlotMinimumPos', x, y, z);
+        function [value, x, y, z] = GetFieldPlotMinimumPos(obj)
+            % Returns the minimum of the color scale and its global position of a plot without
+            % considering the manual setting of the borders. 'x', 'y', 'z' are the absolute
+            % coordinate of the minimum as return values.
+            functionString = [...
+                'Dim value As Double, x As Double, y As Double, z As Double', newline, ...
+                'value = GetFieldPlotMinimumPos(x, y, z)', newline, ...
+            ];
+            returnvalues = {'value', 'x', 'y', 'z'};
+            [value, x, y, z] = obj.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            value = str2double(value);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
-        function bool = GetFieldVector(obj, x, y, z, vxre, vyre, vzre, vxim, vyim, vzim)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetFieldVector''.');
-            bool = nan;
-            return;
+        function [bool, x, y, z, vxre, vyre, vzre, vxim, vyim, vzim] = GetFieldVector(obj)
             % Returns the complex vector field value of the currently active field plot at the given position. If the field is scalar, only the vxre component has non-zero values. If no field plot is active or the given position is out of range the function returns false.
-            % x
-            % X - value of the position of the desired field value.
-            % y
-            % Y - value of the position of the desired field value.
-            % z
-            % Z - value of the position of the desired field value.
-            % vxre
-            % Real part of the x-component of the field value.
-            % vyre
-            % Real part of the y-component of the field value.
-            % vzre
-            % Real part of the z-component of the field value.
-            % vxim
-            % Imaginary part of the x-component of the field value.
-            % vyim
-            % Imaginary part of the y-component of the field value.
-            % vzim
-            % Imaginary part of the z-component of the field value.
-            bool = obj.hProject.invoke('GetFieldVector', x, y, z, vxre, vyre, vzre, vxim, vyim, vzim);
+            % x    - X - value of the position of the desired field value.
+            % y    - Y - value of the position of the desired field value.
+            % z    - Z - value of the position of the desired field value.
+            % vxre - Real part of the x-component of the field value.
+            % vyre - Real part of the y-component of the field value.
+            % vzre - Real part of the z-component of the field value.
+            % vxim - Imaginary part of the x-component of the field value.
+            % vyim - Imaginary part of the y-component of the field value.
+            % vzim - Imaginary part of the z-component of the field value.
+            %
+            % NOTE: valid is -1 when true.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'Dim vxre As Double, vyre As Double, vzre As Double', newline, ...
+                'Dim vxim As Double, vyim As Double, vzim As Double', newline, ...
+                'bool = GetFieldVector(x, y, z, vxre, vyre, vzre, vxim, vyim, vzim)', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z', 'vxre', 'vyre', 'vzre', 'vxim', 'vyim', 'vzim'};
+            [bool, x, y, z, vxre, vyre, vzre, vxim, vyim, vzim] = obj.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
+            vxre = str2double(vxre);
+            vyre = str2double(vyre);
+            vzre = str2double(vzre);
+            vxim = str2double(vxim);
+            vyim = str2double(vyim);
+            vzim = str2double(vzim);
         end
         function ClearGeometryDataCache(obj)
             % Deletes the geometry data cache that has been built up by GetFieldVector.
@@ -864,6 +886,34 @@ classdef Project < handle
             % ASCIIExport.FileName([exportfilename, '.txt']);
             % ASCIIExport.Execute();
             obj.hProject.invoke('ExportPlotData', filename);
+        end
+        
+        %% Utility functions.
+        function varargout = RunVBACode(obj, functionstring, returnvalues)
+            % functionstring specifies the VBA code to be run.
+            % returnvalues specifies the VBA names of the values to be returned to MATLAB.
+            %     This must match the number of output arguments nargout.
+            if(nargout ~= 0 || nargin >= 3)
+                if(nargout ~= length(returnvalues))
+                    error('Invalid number of return values specified.');
+                end
+
+                % Append the code to return the values to MATLAB.
+                for(i = 1:length(returnvalues))
+                    functionstring = [functionstring, newline, ...
+                    'StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
+                end
+            end
+            
+            % Run the code in CST.
+            obj.StoreGlobalDataValue('matlabfcn', functionstring);
+            obj.RunScript(GetFullPath('CST Interface\Bas\RunVBACode.bas'));
+            
+            % Retrieve return arguments.
+            varargout = cell(1, nargout);
+            for(i = 1:nargout)
+                varargout{i} = obj.RestoreGlobalDataValue(['matlab', num2str(i)]);
+            end
         end
     end
     %% MATLAB-side stored settings of CST state.

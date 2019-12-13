@@ -164,9 +164,9 @@ classdef Plot1D < handle
             % Adds a thick background line to a cartesian plot going from (x0, y0) to (x1, y1). The points are given in data coordinates with respect to current plot. This method is available only for cartesian plots.
             obj.hPlot1D.invoke('AddThickBackGroundLine', x0, y0, x1, y1);
         end
-        function AddThinBackGgroundLine(obj, x0, y0, x1, y1)
+        function AddThinBackGroundLine(obj, x0, y0, x1, y1)
             % Adds a thin background line to a cartesian plot going from (x0, y0) to (x1, y1). The points are given in data coordinates with respect to current plot. This method is available only for cartesian plots.
-            obj.hPlot1D.invoke('AddThinBackGgroundLine', x0, y0, x1, y1);
+            obj.hPlot1D.invoke('AddThinBackGroundLine', x0, y0, x1, y1);
         end
         function DeleteAllBackGroundShapes(obj)
             % Deletes all previously set background lines. This method is available only for cartesian plots.
@@ -228,13 +228,23 @@ classdef Plot1D < handle
             % Returns the current plot settings as a string. The parameter 'options' is expected to be an empty string. The string returned by this method contains VBA commands that can be used to restore the current plot state.
             string = obj.hPlot1D.invoke('GetCurrentPlotSettings', options);
         end
-        function GetCurveLimit(obj, enabled, curvelimit)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetCurveLimit''.');
-            return;
-            % This method allows querying the settings that correspond to the "No. of curves" option shown in the 1D Plot Ribbon. The variable enabled will be set to True if a global limit for the number of plotted curves is enabled, otherwise to False. The variable curvelimit will be set to the stored global limit for the number of plotted curves. Please note that these settings are global and independent of the project. The settings can be modified with the SetCurveLimit command.
-            obj.hPlot1D.invoke('GetCurveLimit', enabled, curvelimit);
+        function [enabled, curvelimit] = GetCurveLimit(obj)
+            % This method allows querying the settings that correspond to the "No. of curves" option
+            % shown in the 1D Plot Ribbon. The variable enabled will be set to True if a global
+            % limit for the number of plotted curves is enabled, otherwise to False. The variable
+            % curvelimit will be set to the stored global limit for the number of plotted curves.
+            % Please note that these settings are global and independent of the project. The
+            % settings can be modified with the SetCurveLimit command.
+            functionString = [...
+                'Dim enabled As Boolean', newline, ...
+                'Dim curvelimit As Long', newline, ...
+                'Plot1D.GetCurveLimit(enabled, curvelimit)', newline, ...
+            ];
+            returnvalues = {'enabled', 'curvelimit'};
+            [enabled, curvelimit] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            enabled = str2double(enabled);
+            curvelimit = str2double(curvelimit);
         end
         function ExportBitmap(obj, width, height, filename)
             % Creates a bitmap file of the current plot with the specified size. The string filename is expected to be an absolute file path.

@@ -55,6 +55,13 @@ classdef Polygon3D < handle
             obj.project.AddToHistory(['define polygon3d: ', obj.name], obj.history);
             obj.history = [];
         end
+        
+        %% Undocumented functions.
+        % Implemented from History List.
+        function Version(obj, version)
+            % Is set to 10 in the history list.
+            obj.AddToHistory(['.Version "', num2str(version, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

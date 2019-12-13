@@ -111,92 +111,77 @@ classdef Force < handle
             obj.history = [];
         end
         % Functions
-        function double = GetForceX(obj, name, calctype, frequency, force_dc, force_re, force_im)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetForceX''.');
-            double = nan;
-            return;
-            % Get the x/y/z  force-component value of a solid. The paradigm for the name is:
-            % name (name) :
-            % meaning
-            % For solids
-            % layername:solidname
-            % For coils
-            %  coilname
-            % For current pathes
-            %  wire:pathname
+        function [value, force_dc, force_re, force_im] = GetForceX(obj, name, calctype, frequency)
+            % Get the x force-component value of a solid. The paradigm for the name is:
+            % name (name)               meaning
+            % For solids                layername:solidname
+            % For coils                 coilname
+            % For current pathes        wire:pathname
             % The enum-type of the field under study is defined in the CalcType command.
-            double = obj.hForce.invoke('GetForceX', name, calctype, frequency, force_dc, force_re, force_im);
-            obj.getforcex.name = name;
-            obj.getforcex.calctype = calctype;
-            obj.getforcex.frequency = frequency;
-            obj.getforcex.force_dc = force_dc;
-            obj.getforcex.force_re = force_re;
-            obj.getforcex.force_im = force_im;
+            functionString = [...
+                'Dim value As Double, force_dc As Double, force_re As Double, force_im As Double', newline, ...
+                'value = Force.GetForceX(', name, ', ', calctype, ', ', num2str(frequency, '%.15g'), ', force_dc, force_re, force_im)', newline, ...
+            ];
+            returnvalues = {'value', 'force_dc', 'force_re', 'force_im'};
+            [value, force_dc, force_re, force_im] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            value = str2double(value);
+            force_dc = str2double(force_dc);
+            force_re = str2double(force_re);
+            force_im = str2double(force_im);
         end
-        function double = GetForceY(obj, name, calctype, frequency, force_dc, force_re, force_im)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetForceY''.');
-            double = nan;
-            return;
-            % Get the x/y/z  force-component value of a solid. The paradigm for the name is:
-            % name (name) :
-            % meaning
-            % For solids
-            % layername:solidname
-            % For coils
-            %  coilname
-            % For current pathes
-            %  wire:pathname
+        function [value, force_dc, force_re, force_im] = GetForceY(obj, name, calctype, frequency)
+            % Get the y force-component value of a solid. The paradigm for the name is:
+            % name (name)               meaning
+            % For solids                layername:solidname
+            % For coils                 coilname
+            % For current pathes        wire:pathname
             % The enum-type of the field under study is defined in the CalcType command.
-            double = obj.hForce.invoke('GetForceY', name, calctype, frequency, force_dc, force_re, force_im);
-            obj.getforcey.name = name;
-            obj.getforcey.calctype = calctype;
-            obj.getforcey.frequency = frequency;
-            obj.getforcey.force_dc = force_dc;
-            obj.getforcey.force_re = force_re;
-            obj.getforcey.force_im = force_im;
+            functionString = [...
+                'Dim value As Double, force_dc As Double, force_re As Double, force_im As Double', newline, ...
+                'value = Force.GetForceY(', name, ', ', calctype, ', ', num2str(frequency, '%.15g'), ', force_dc, force_re, force_im)', newline, ...
+            ];
+            returnvalues = {'value', 'force_dc', 'force_re', 'force_im'};
+            [value, force_dc, force_re, force_im] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            value = str2double(value);
+            force_dc = str2double(force_dc);
+            force_re = str2double(force_re);
+            force_im = str2double(force_im);
         end
-        function double = GetForceZ(obj, name, calctype, frequency, force_dc, force_re, force_im)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetForceZ''.');
-            double = nan;
-            return;
-            % Get the x/y/z  force-component value of a solid. The paradigm for the name is:
-            % name (name) :
-            % meaning
-            % For solids
-            % layername:solidname
-            % For coils
-            %  coilname
-            % For current pathes
-            %  wire:pathname
+        function [value, force_dc, force_re, force_im] = GetForceZ(obj, name, calctype, frequency)
+            % Get the z force-component value of a solid. The paradigm for the name is:
+            % name (name)               meaning
+            % For solids                layername:solidname
+            % For coils                 coilname
+            % For current pathes        wire:pathname
             % The enum-type of the field under study is defined in the CalcType command.
-            double = obj.hForce.invoke('GetForceZ', name, calctype, frequency, force_dc, force_re, force_im);
-            obj.getforcez.name = name;
-            obj.getforcez.calctype = calctype;
-            obj.getforcez.frequency = frequency;
-            obj.getforcez.force_dc = force_dc;
-            obj.getforcez.force_re = force_re;
-            obj.getforcez.force_im = force_im;
+            functionString = [...
+                'Dim value As Double, force_dc As Double, force_re As Double, force_im As Double', newline, ...
+                'value = Force.GetForceZ(', name, ', ', calctype, ', ', num2str(frequency, '%.15g'), ', force_dc, force_re, force_im)', newline, ...
+            ];
+            returnvalues = {'value', 'force_dc', 'force_re', 'force_im'};
+            [value, force_dc, force_re, force_im] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            value = str2double(value);
+            force_dc = str2double(force_dc);
+            force_re = str2double(force_re);
+            force_im = str2double(force_im);
         end
         function double = GetNormalX(obj, calctype, frequency)
-            % Get the x/y/z-component of the axis used for the torque calculation.. The enum-type of the field under study is defined in the CalcType command.
+            % Get the x/y/z-component of the axis used for the torque calculation. The enum-type of the field under study is defined in the CalcType command.
             double = obj.hForce.invoke('GetNormalX', calctype, frequency);
             obj.getnormalx.calctype = calctype;
             obj.getnormalx.frequency = frequency;
         end
         function double = GetNormalY(obj, calctype, frequency)
-            % Get the x/y/z-component of the axis used for the torque calculation.. The enum-type of the field under study is defined in the CalcType command.
+            % Get the x/y/z-component of the axis used for the torque calculation. The enum-type of the field under study is defined in the CalcType command.
             double = obj.hForce.invoke('GetNormalY', calctype, frequency);
             obj.getnormaly.calctype = calctype;
             obj.getnormaly.frequency = frequency;
         end
         function double = GetNormalZ(obj, calctype, frequency)
-            % Get the x/y/z-component of the axis used for the torque calculation.. The enum-type of the field under study is defined in the CalcType command.
+            % Get the x/y/z-component of the axis used for the torque calculation. The enum-type of the field under study is defined in the CalcType command.
             double = obj.hForce.invoke('GetNormalZ', calctype, frequency);
             obj.getnormalz.calctype = calctype;
             obj.getnormalz.frequency = frequency;
@@ -219,20 +204,19 @@ classdef Force < handle
             obj.getoriginz.calctype = calctype;
             obj.getoriginz.frequency = frequency;
         end
-        function double = GetTorque(obj, name, calctype, frequency, force_dc, force_re, force_im)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetTorque''.');
-            double = nan;
-            return;
+        function [value, force_dc, force_re, force_im] = GetTorque(obj, name, calctype, frequency)
             % Get the torque value for a solid. The paradigm for the solid's name is described in the GetForce command. The return value is the absolute torque value. In case of low frequency fields the reference value force_dc returns the DC part and torque_re / torque_im the complex part of the torque.
-            double = obj.hForce.invoke('GetTorque', name, calctype, frequency, force_dc, force_re, force_im);
-            obj.gettorque.name = name;
-            obj.gettorque.calctype = calctype;
-            obj.gettorque.frequency = frequency;
-            obj.gettorque.force_dc = force_dc;
-            obj.gettorque.force_re = force_re;
-            obj.gettorque.force_im = force_im;
+            functionString = [...
+                'Dim value As Double, force_dc As Double, force_re As Double, force_im As Double', newline, ...
+                'value = Force.GetTorque(', name, ', ', calctype, ', ', num2str(frequency, '%.15g'), ', force_dc, force_re, force_im)', newline, ...
+            ];
+            returnvalues = {'value', 'force_dc', 'force_re', 'force_im'};
+            [value, force_dc, force_re, force_im] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            value = str2double(value);
+            force_dc = str2double(force_dc);
+            force_re = str2double(force_re);
+            force_im = str2double(force_im);
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -254,16 +238,12 @@ classdef Force < handle
         extend2touchingshapes
         forceobject
         computeforcedensity
-        getforcex
-        getforcey
-        getforcez
         getnormalx
         getnormaly
         getnormalz
         getoriginx
         getoriginy
         getoriginz
-        gettorque
     end
 end
 

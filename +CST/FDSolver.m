@@ -1046,29 +1046,36 @@ classdef FDSolver < handle
             obj.mrcssweepproperties.eincphi = eincphi;
         end
         function [phistart, phiend, nphisteps, thetastart, thetaend, nthetasteps, einctheta, eincphi, activation] = GetRCSSweepProperties(obj)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetRCSSweepProperties''.');
-            phistart = nan; phiend = nan; nphisteps = nan;
-            thetastart = nan; thetaend = nan; nthetasteps = nan;
-            einctheta = nan; eincphi = nan;
-            activation = nan;
-            
-            % Supported by integral equation solver. Returns the settings
-            % set by SetRCSSweepProperties and UseFastRCSSweepIntEq.
+            % Supported by integral equation solver. Returns the settings set by
+            % SetRCSSweepProperties and UseFastRCSSweepIntEq.
+            functionString = [...
+                'Dim phistart As Double, phiend As Double, thetastart As Double, thetaend As Double, einctheta As Double, eincphi As Double', newline, ...
+                'Dim nphisteps As Integer, nthetasteps As Integer', newline, ...
+                'Dim activation As Boolean', newline, ...
+                'FDSolver.GetRCSSweepProperties(phistart, phiend, nphisteps, thetastart, thetaend, nthetasteps, einctheta, eincphi, activation)', newline, ...
+            ];
+            returnvalues = {'phistart', 'phiend', 'nphisteps', 'thetastart', 'thetaend', 'nthetasteps', 'einctheta', 'eincphi', 'activation'};
+            [phistart, phiend, nphisteps, thetastart, thetaend, nthetasteps, einctheta, eincphi, activation] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            phistart = str2double(phistart);
+            phiend = str2double(phiend);
+            nphisteps = str2double(nphisteps);
+            thetastart = str2double(thetastart);
+            thetaend = str2double(thetaend);
+            nthetasteps = str2double(nthetasteps);
+            einctheta = str2double(einctheta);
+            eincphi = str2double(eincphi);
+            activation = str2double(activation);
         end
         function SetCalcBlockExcitationsInParallel(obj, enable, useblock, maxparallel)
-            % This method toggles whether or not and how excitations will
-            % be solved in parallel if the iterative solver is used. Only
-            % applies to the Frequency Domain solver with tetrahedral mesh.
-            % The legacy version is available by setting useblock to false.
-            % It is however recommended to leave the default useblock=True
-            % as the block version usually provides better performance for
-            % simulations with a large number of tetrahedrons or many
-            % excitations. Leave maxparallel blank (pass "") to let the
-            % solver decide how many excitations to calculate in parallel.
-            % Note that hardware and license restrictions may apply and
-            % overwrite some of those settings.
+            % This method toggles whether or not and how excitations will be solved in parallel if
+            % the iterative solver is used. Only applies to the Frequency Domain solver with
+            % tetrahedral mesh. The legacy version is available by setting useblock to false. It is
+            % however recommended to leave the default useblock=True as the block version usually
+            % provides better performance for simulations with a large number of tetrahedrons or
+            % many excitations. Leave maxparallel blank (pass "") to let the solver decide how many
+            % excitations to calculate in parallel. Note that hardware and license restrictions may
+            % apply and overwrite some of those settings.
             obj.AddToHistory(['.SetCalcBlockExcitationsInParallel "', num2str(enable), '", '...
                                                                  '"', num2str(useblock), '", '...
                                                                  '"', num2str(maxparallel), '"']);

@@ -68,19 +68,26 @@ classdef Project < handle
             obj.hDSProject.invoke('DeleteSelectedComponents', keepconnectors);
         end
         function GetBBoxAllComponents(obj, opMode, nXMin, nXMax, nYMin, nYMax)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetBBoxAllComponents''.');
-            return;
-            % Gets the bounding box of all existing components on a schematic. You may restrict the bounding box calculation to specific component types by specifying first argument opMode:
-            % %
-            % "all"
-            % All component types are considered
-            % "no labels"
-            % Only components but labels are considered
-            % %
+            % Gets the bounding box of all existing components on a schematic. You may restrict the
+            % bounding box calculation to specific component types by specifying first argument
+            % opMode:
+            % "all" - All component types are considered
+            % "no labels" - Only components but labels are considered
+            % 
             % NOTE: The positive coordinate directions of the schematic go like this: from Left to Right and from Top to Bottom. However, nYmin specifies the bottom of the bounding box and nYmax specifies the top of the bounding box.
             obj.hDSProject.invoke('GetBBoxAllComponents', opMode, nXMin, nXMax, nYMin, nYMax);
+            
+            functionString = [...
+                'Dim nXMin As Double, nXMax As Double, nYMin As Double, nYMax As Double', newline, ...
+                'DS.GetBBoxAllComponents(', opMode, ', nXMin, nXMax, nYMin, nYMax)', newline, ...
+            ];
+            returnvalues = {'nXMin', 'nXMax', 'nYMin', 'nYMax'};
+            [nXMin, nXMax, nYMin, nYMax] = obj.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            nXMin = str2double(nXMin);
+            nXMax = str2double(nXMax);
+            nYMin = str2double(nYMin);
+            nYMax = str2double(nYMax);
         end
         function EnableSchematicBlockPins(obj, enable)
             % Enables or disables the creation of pins for the automatically created schematic block. This can only be called for 3D projects, since no schematic block exists in pure CST DS projects. Disabling the pins can improve performance for projects with many sources in the 3D part, but this should only be done if the schematic part is not needed.
@@ -338,100 +345,179 @@ classdef Project < handle
         end
         %% Result Templates
         function ActivateScriptSettings(obj, boolean)
-            % This method activates (switch = "True") or deactivates (switch = "False")  the script settings of a customized result item.
+            % This method activates (switch = "True") or deactivates (switch = "False")  the script
+            % settings of a customized result item.
             obj.hDSProject.invoke('ActivateScriptSettings', boolean);
         end
         function ClearScriptSettings(obj)
             % This method clears the internal settings of a previously customized result item.
             obj.hDSProject.invoke('ClearScriptSettings');
         end
-        function double = GetLast0DResult(obj, name)
-            % This method returns the last 0D result of the selected result template. 'name' is the name of a previously defined result template.
-            double = obj.hDSProject.invoke('GetLast0DResult', name);
+        function result0D = GetLast0DResult(obj, name)
+            % This method returns the last 0D result of the selected result template. 'name' is the
+            % name of a previously defined result template.
+            hResult0D = obj.hDSProject.invoke('GetLast0DResult', name);
+            
+            result0D = CST.DS.Result0D(obj, hResult0D);
         end
-        function Result1D = GetLast1DResult(obj, name)
-            % This method returns the last 1D result of the selected result template. 'name' is the name of a previously defined result template.
-            Result1D = obj.hDSProject.invoke('GetLast1DResult', name);
+        function result1D = GetLast1DResult(obj, name)
+            % This method returns the last 1D result of the selected result template. 'name' is the
+            % name of a previously defined result template.
+            hResult1D = obj.hDSProject.invoke('GetLast1DResult', name);
+            
+            result1D = CST.DS.Result1D(obj, hResult1D);
         end
-        function Result1DComplex = GetLast1DComplexResult(obj, name)
-            % This method returns the last complex 1D result of the selected result template. 'name' is the name of a previously defined result template.
-            Result1DComplex = obj.hDSProject.invoke('GetLast1DComplexResult', name);
+        function result1DComplex = GetLast1DComplexResult(obj, name)
+            % This method returns the last complex 1D result of the selected result template. 'name'
+            % is the name of a previously defined result template.
+            hResult1DComplex = obj.hDSProject.invoke('GetLast1DComplexResult', name);
+            
+            result1DComplex = CST.DS.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetLastResultID(obj)
-            % This method returns the Result ID which identifies the last result. It allows access to the last 1D or 0D result via DSResulttree.GetResultFromTreeItem, e.g.:
-            % Dim o As Object
-            % Set o = DSResultTree.GetResultFromTreeItem("Tasks\SPara1\S-Parameters\S1,1", DS.GetLastResultID())
-            % DS.ReportInformationToWindow("Last 1D/0D result object type: " + o.GetResultObjectType())
+            % This method returns the Result ID which identifies the last result. It allows access
+            % to the last 1D or 0D result via DSResulttree.GetResultFromTreeItem, e.g.:
+                % Dim o As Object
+                % Set o = DSResultTree.GetResultFromTreeItem("Tasks\SPara1\S-Parameters\S1,1", DS.GetLastResultID())
+                % DS.ReportInformationToWindow("Last 1D/0D result object type: " + o.GetResultObjectType())
             string = obj.hDSProject.invoke('GetLastResultID');
         end
         function string = GetScriptSetting(obj, name, default_value)
-            % This function is only active if a result template is currently in process. It returns the internal settings of the previously customized result item using the StoreScriptSetting method. In case that no settings has been stored, the default value will be returned.
+            % This function is only active if a result template is currently in process. It returns
+            % the internal settings of the previously customized result item using the
+            % StoreScriptSetting method. In case that no settings has been stored, the default value
+            % will be returned.
             string = obj.hDSProject.invoke('GetScriptSetting', name, default_value);
         end
         function StoreScriptSetting(obj, name, value)
-            % This function is only active if a result template is currently in process. It offers the possibility to customize the corresponding result item with help of internal settings, which can be recalled using the GetScriptSetting function. 'name' is the name defining the internal setting. 'value' is the value of the setting.
+            % This function is only active if a result template is currently in process. It offers
+            % the possibility to customize the corresponding result item with help of internal
+            % settings, which can be recalled using the GetScriptSetting function. 'name' is the
+            % name defining the internal setting. 'value' is the value of the setting.
             obj.hDSProject.invoke('StoreScriptSetting', name, value);
         end
         function string = GetTreeNameScriptSetting(obj, name, default_value)
-            % This function is only active if a result template is currently in process. It returns the internal settings of the previously customized result item using the StoreTreeNameScriptSetting method. In case that no settings has been stored, the default value will be returned. This function should be used instead of GetScriptSetting for all settings that correspond to tree items. It should recieve a full tree path, e.g. "Tasks\S-Parameters1". Settings stored with this method will be automatically adjusted if the corresponding tree item is renamed or moved, so that they still refer to the same object. This also includes the case when a template using this setting is part of a task hierarchy that is moved. If a template using this setting is part of a task hierarchy that is copied, and the referenced object is copied as well, then the template setting will also be adjusted to point to the copied object. It will not be adjusted if the referenced object is not copied. The following items will be automatically adjusted: Blocks, tasks, external ports and probes.
+            % This function is only active if a result template is currently in process. It returns
+            % the internal settings of the previously customized result item using the
+            % StoreTreeNameScriptSetting method. In case that no settings has been stored, the
+            % default value will be returned. This function should be used instead of
+            % GetScriptSetting for all settings that correspond to tree items. It should recieve a
+            % full tree path, e.g. "Tasks\S-Parameters1". Settings stored with this method will be
+            % automatically adjusted if the corresponding tree item is renamed or moved, so that
+            % they still refer to the same object. This also includes the case when a template using
+            % this setting is part of a task hierarchy that is moved. If a template using this
+            % setting is part of a task hierarchy that is copied, and the referenced object is
+            % copied as well, then the template setting will also be adjusted to point to the copied
+            % object. It will not be adjusted if the referenced object is not copied. The following
+            % items will be automatically adjusted: Blocks, tasks, external ports and probes.
             string = obj.hDSProject.invoke('GetTreeNameScriptSetting', name, default_value);
         end
         function StoreTreeNameScriptSetting(obj, setting, value)
-            % This function is only active if a result template is currently in process. It offers the possibility to customize the corresponding result item with help of internal settings, which can be recalled using the GetTreeNameScriptSetting function. 'name' is the name defining the internal setting. 'value' is the value of the setting. See the description of GetTreeNameScriptSetting for details about the differences to StoreScriptSetting.
+            % This function is only active if a result template is currently in process. It offers
+            % the possibility to customize the corresponding result item with help of internal
+            % settings, which can be recalled using the GetTreeNameScriptSetting function. 'name' is
+            % the name defining the internal setting. 'value' is the value of the setting. See the
+            % description of GetTreeNameScriptSetting for details about the differences to
+            % StoreScriptSetting.
             obj.hDSProject.invoke('StoreTreeNameScriptSetting', setting, value);
         end
         function StoreTemplateSetting(obj, setting, value)
-            % This function is only active if a result template is processed. It defines the type of the template and needs to be set in the define method of every result template. The variable 'setting' has to be the string "TemplateType". The variable 'value' can be"0D", "1D", "1DC", "M0D", "M1D" or "M1DC". The choice of the template type determines which evaluation method of the template is called when being processed and what return type is expected. More details can be found on the Post-Processing Template Layout help page.
+            % This function is only active if a result template is processed. It defines the type of
+            % the template and needs to be set in the define method of every result template. The
+            % variable 'setting' has to be the string "TemplateType". The variable 'value' can
+            % be"0D", "1D", "1DC", "M0D", "M1D" or "M1DC". The choice of the template type
+            % determines which evaluation method of the template is called when being processed and
+            % what return type is expected. More details can be found on the Post-Processing
+            % Template Layout help page.
             obj.hDSProject.invoke('StoreTemplateSetting', setting, value);
         end
         function SetApplicationName(obj, name)
-            % Sets the application name ("EMS", "PS", "MWS", "MS",  "DS for MWS", "DS for PCBS", "DS for CS", "DS for MS", "DS"). Use this function for developing a result template.
+            % Sets the application name ("EMS", "PS", "MWS", "MS",  "DS for MWS", "DS for PCBS", "DS
+            % for CS", "DS for MS", "DS"). Use this function for developing a result template.
             obj.hDSProject.invoke('SetApplicationName', name);
         end
         function ResetApplicationName(obj)
-            % Reset the application name to the default name. Use this function for developing a result template.
+            % Reset the application name to the default name. Use this function for developing a
+            % result template.
             obj.hDSProject.invoke('ResetApplicationName');
         end
         function ResetTemplateIterator(obj)
-            % Resets the template iterator to the beginning of the list of defined result templates and clears all template filters.
+            % Resets the template iterator to the beginning of the list of defined result templates
+            % and clears all template filters.
             obj.hDSProject.invoke('ResetTemplateIterator');
         end
         function SetTemplateFilter(obj, filtername, value)
-            % Sets a filter for the template iterator which iterates over the list of defined result templates. Allowed values for 'filtername' are "resultname", "type", "templatename" and "folder". If 'filtername' is set to 'type' , then 'value'  can be "0D", "1D", "1DC", "M0D", "M1D", or "M1DC". For all other filternames, 'value' can be an arbitrary string.
+            % Sets a filter for the template iterator which iterates over the list of defined result
+            % templates. Allowed values for 'filtername' are "resultname", "type", "templatename"
+            % and "folder". If 'filtername' is set to 'type' , then 'value'  can be "0D", "1D",
+            % "1DC", "M0D", "M1D", or "M1DC". For all other filternames, 'value' can be an arbitrary
+            % string.
             obj.hDSProject.invoke('SetTemplateFilter', filtername, value);
         end
-        function bool = GetNextTemplate(obj, resultname, type, templatename, folder)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetNextTemplate''.');
-            bool = nan;
-            return;
-            % Fills the parameter variables with the data of the next template of the list of defined result templates. The variable "resultname" will be filled with the result name of the defined template, e.g. "S11". The variable "type" will be filled with the type of the current result template and can be "0D", "1D", "1DC", "M0D", "M1D" or "M1DC". The variable "templatename" will be filled with the name of the template definition file, e.g. "S-Parameter (1D)". The variable "folder" will be filled with the relative folder where the template definition file is located (e.g. "Farfield and Antenna Properties"). If a filter was defined (see SetTemplateFilter) the method only returns the data of templates that match the filter. If the end of the template list is reached or no more templates are present that meet the defined filter, the method returns false. The method requires ResetTemplateIterator to be called in advance.
+        function [bool, resultname, type, templatename, folder] = GetNextTemplate(obj)
+            % Fills the parameter variables with the data of the next template of the list of
+            % defined result templates. The variable "resultname" will be filled with the result
+            % name of the defined template, e.g. "S11". The variable "type" will be filled with the
+            % type of the current result template and can be "0D", "1D", "1DC", "M0D", "M1D" or
+            % "M1DC". The variable "templatename" will be filled with the name of the template
+            % definition file, e.g. "S-Parameter (1D)". The variable "folder" will be filled with
+            % the relative folder where the template definition file is located (e.g. "Farfield and
+            % Antenna Properties"). If a filter was defined (see SetTemplateFilter) the method only
+            % returns the data of templates that match the filter. If the end of the template list
+            % is reached or no more templates are present that meet the defined filter, the method
+            % returns false. The method requires ResetTemplateIterator to be called in advance.
+            % 
             % The following example shows all defined 0D Templates:
-            % Dim Resultname As String, Templatetype As String, Templatename As String, Folder As String
-            % ResetTemplateIterator
-            % SetTemplateFilter("type","0D")
-            % While (GetNextTemplate( Resultname, Templatetype, Templatename, Folder) = True)
-            % MsgBox(Resultname & vbNewLine & Templatetype & vbNewLine & Templatename & vbNewLine & Folder)
-            % Wend
-            % GetFileType( string filename) string
-            % Checks the file type of the file with absolute path specified in the variable 'filename'. If the file is a complex signal file, the string "complex" will be returned. If the file is a real-valued signal file, the string "real" will be returned. If the file is a real-valued 0D file, the string "real0D" will be returned. If the file is a complex-valued 0D file, the string "complex0D" will be returned. If the file type is unknown or the file can not be found, "unknown" will be returned.
-            bool = obj.hDSProject.invoke('GetNextTemplate', resultname, type, templatename, folder);
+                % Dim Resultname As String, Templatetype As String, Templatename As String, Folder As String
+                % ResetTemplateIterator
+                % SetTemplateFilter("type","0D")
+                % While (GetNextTemplate( Resultname, Templatetype, Templatename, Folder) = True)
+                %     MsgBox(Resultname & vbNewLine & Templatetype & vbNewLine & Templatename & vbNewLine & Folder)
+                % Wend
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim resultname As String, type As String, templatename As String, folder As String', newline, ...
+                'bool = DS.GetNextTemplate(resultname, type, templatename, folder)', newline, ...
+            ];
+            returnvalues = {'bool', 'resultname', 'type', 'templatename', 'folder'};
+            [bool, resultname, type, templatename, folder] = obj.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
         end
-        function Result1DComplex = GetImpedanceFromTreeItem(obj, treename)
-            % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this method returns a Result1DComplex object filled with the corresponding impedance data. If no impedance data is available, this method returns an empty Result1DComplex object.
-            Result1DComplex = obj.hDSProject.invoke('GetImpedanceFromTreeItem', treename);
+        function string = GetFileType(obj, filename)
+            % Checks the file type of the file with absolute path specified in the variable
+            % 'filename'. If the file is a complex signal file, the string "complex" will be
+            % returned. If the file is a real-valued signal file, the string "real" will be
+            % returned. If the file is a real-valued 0D file, the string "real0D" will be returned.
+            % If the file is a complex-valued 0D file, the string "complex0D" will be returned. If
+            % the file type is unknown or the file can not be found, "unknown" will be returned.
+            string = obj.hDSProject.invoke('GetFileType', filename);
+        end
+        function result1DComplex = GetImpedanceFromTreeItem(obj, treename)
+            % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this
+            % method returns a Result1DComplex object filled with the corresponding impedance data.
+            % If no impedance data is available, this method returns an empty Result1DComplex
+            % object.
+            hResult1DComplex = obj.hDSProject.invoke('GetImpedanceFromTreeItem', treename);
+            
+            result1DComplex = CST.DS.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetFirstTableResult(obj, resultname)
-            % Returns the name of the table that was created on evaluation of the template with the name 'resultname' or an empty string.
+            % Returns the name of the table that was created on evaluation of the template with the
+            % name 'resultname' or an empty string.
             string = obj.hDSProject.invoke('GetFirstTableResult', resultname);
         end
         function string = GetNextTableResult(obj, resultname)
-            % If the template created more than one table on evaluation, this method returns the names of next table that was created on evaluation of the template with the name 'resultname'. If no more table names are available, this method returns an empty string. Please note that GetFirstTableName needs to be called before and that this method needs to be called with the same value for parameter 'resultname'.
+            % If the template created more than one table on evaluation, this method returns the
+            % names of next table that was created on evaluation of the template with the name
+            % 'resultname'. If no more table names are available, this method returns an empty
+            % string. Please note that GetFirstTableName needs to be called before and that this
+            % method needs to be called with the same value for parameter 'resultname'.
             string = obj.hDSProject.invoke('GetNextTableResult', resultname);
         end
         function bool = GetTemplateAborted(obj)
-            % Returns true if the user aborted the template based post-processing evaluation, otherwise false.
+            % Returns true if the user aborted the template based post-processing evaluation,
+            % otherwise false.
             bool = obj.hDSProject.invoke('GetTemplateAborted');
         end
         function string = GetActivePostprocessingTask(obj)
@@ -629,6 +715,32 @@ classdef Project < handle
             % Stores the contents of the main window to the clipboard as a bitmap.
             obj.hDSProject.invoke('StoreViewInClipboard');
         end
+        
+        %% Utility functions.
+        function varargout = RunVBACode(obj, functionstring, returnvalues)
+            % functionstring specifies the VBA code to be run.
+            % returnvalues specifies the VBA names of the values to be returned to MATLAB.
+            %     This must match the number of output arguments nargout.
+            if(nargout ~= length(returnvalues))
+                error('Invalid number of return values specified.');
+            end
+            
+            % Append the code to return the values to MATLAB.
+            for(i = 1:length(returnvalues))
+                functionstring = [functionstring, newline, ...
+                'DS.StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
+            end
+            
+            % Run the code in CST.
+            obj.StoreGlobalDataValue('matlabfcn', functionstring);
+            obj.RunScript(GetFullPath('CST Interface\Bas\RunVBACode_DS.bas'));
+            
+            % Retrieve return arguments.
+            varargout = cell(1, nargout);
+            for(i = 1:nargout)
+                varargout{i} = obj.RestoreGlobalDataValue(['matlab', num2str(i)]);
+            end
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -726,7 +838,7 @@ classdef Project < handle
 
             % Each result0d can be different depending on resultname.
             % So don't store it.
-            result0d = CST.Result0D(obj, obj.hDSProject, resultname);
+            result0d = CST.DS.Result0D(obj, obj.hDSProject, resultname);
         end
         
         function result1d = Result1D(obj, resultname)
@@ -737,7 +849,7 @@ classdef Project < handle
 
             % Each result1d can be different depending on resultname.
             % So don't store it.
-            result1d = CST.Result1D(obj, obj.hDSProject, resultname);
+            result1d = CST.DS.Result1D(obj, obj.hDSProject, resultname);
         end
         
         function result1dcomplex = Result1DComplex(obj, resultname)
@@ -748,7 +860,7 @@ classdef Project < handle
 
             % Each result1d can be different depending on resultname.
             % So don't store it.
-            result1dcomplex = CST.Result1DComplex(obj, obj.hDSProject, resultname);
+            result1dcomplex = CST.DS.Result1DComplex(obj, obj.hDSProject, resultname);
         end
         
         function resulttree = ResultTree(obj)

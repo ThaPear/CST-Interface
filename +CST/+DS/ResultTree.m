@@ -35,13 +35,35 @@ classdef ResultTree < handle
             % Returns an array of Result IDs, which are strings are of the format "Schematic:RunID:1" and correspond to the existing Run IDs for the parametric data of the specified tree item. A Result ID can be resolved to a parameter combination with the command GetParameterCombination of the Project object.
             variant = obj.hResultTree.invoke('GetResultIDsFromTreeItem', treeItemName);
         end
-        function object = GetResultFromTreeItem(obj, treeItemName, resultID)
+        function resultObject = GetResultFromTreeItem(obj, treeItemName, resultID)
             % Returns a result object containing the data specified by 'treeItemName' and 'resultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object.  In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method returns an error, if the tree item does not exist or the Result ID is invalid.
-            object = obj.hResultTree.invoke('GetResultFromTreeItem', treeItemName, resultID);
+            hResult = obj.hResultTree.invoke('GetResultFromTreeItem', treeItemName, resultID);
+            type = hResult.invoke('GetResultObjectType');
+            switch(type)
+                case {'0D', '0DC'}
+                    resultObject = CST.DS.Result0D(obj.dsproject, hResult);
+                case '1D'
+                    resultObject = CST.DS.Result1D(obj.dsproject, hResult);
+                case '1DC'
+                    resultObject = CST.DS.Result1DComplex(obj.dsproject, hResult);
+                otherwise
+                    error('Unknown result type %s.\n', type);
+            end
         end
-        function object = GetImpedanceResultFromTreeItem(obj, treeItemName, resultID)
+        function resultObject = GetImpedanceResultFromTreeItem(obj, treeItemName, resultID)
             % Returns a result object containing the reference impedance data of the tree item specified by 'treeItemName' and 'resultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object. In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method also returns an error, if the tree item does not exist or the Result ID is invalid.
-            object = obj.hResultTree.invoke('GetImpedanceResultFromTreeItem', treeItemName, resultID);
+            hResult = obj.hResultTree.invoke('GetImpedanceResultFromTreeItem', treeItemName, resultID);
+            type = hResult.invoke('GetResultObjectType');
+            switch(type)
+                case {'0D', '0DC'}
+                    resultObject = CST.DS.Result0D(obj.dsproject, hResult);
+                case '1D'
+                    resultObject = CST.DS.Result1D(obj.dsproject, hResult);
+                case '1DC'
+                    resultObject = CST.DS.Result1DComplex(obj.dsproject, hResult);
+                otherwise
+                    error('Unknown result type %s.\n', type);
+            end
         end
         function bool = TreeItemHasImpedance(obj, treeItemName, resultID)
             % Returns whether the data specified by 'treeItemName' and 'resultID'  has reference impedances attached to it. This data can be accessed with GetImpedanceResultFromTreeItem. The method returns an error, if the tree item does not exist or if the Result ID is invalid.

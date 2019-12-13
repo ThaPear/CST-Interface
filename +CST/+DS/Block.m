@@ -179,13 +179,14 @@ classdef Block < handle
             % Resets the iterator for the properties of a block.
             obj.hBlock.invoke('StartPropertyIteration');
         end
-        function GetNextProperty(obj, propertyname, type, value)
-            % This function was not implemented due to the by-reference
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetNextProperty''.');
-            return;
+        function [propertyname, type, value] = GetNextProperty(obj)
             % Returns the name, type and value of the next property. Call StartPropertyIteration before the first call of this method. An empty name is returned if the property iterator is positioned at the end.
-            obj.hBlock.invoke('GetNextProperty', propertyname, type, value);
+            functionString = [...
+                'Dim propertyname As String, var_type As String, value As String', newline, ...
+                'Block.GetNextProperty(propertyname, var_type, value)', newline, ...
+            ];
+            returnvalues = {'propertyname', 'var_type', 'value'};
+            [propertyname, type, value] = obj.dsproject.RunVBACode(functionString, returnvalues);
         end
         %% Positioning
         function FlipHorizontal(obj)

@@ -365,32 +365,48 @@ classdef Pick < handle
             % Returns the total number of picked faces.
             int = obj.hPick.invoke('GetNumberOfPickedFaces');
         end
-        function bool = GetPickpointCoordinatesByIndex(obj, index, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPickpointCoordinatesByIndex''.');
-            bool = nan;
-            return;
-            % Returns the coordinates of a picked point through the argument list. The picked point is specified by index starting with 0.
-            bool = obj.hPick.invoke('GetPickpointCoordinatesByIndex', index, x, y, z);
+        function [bool, x, y, z] = GetPickpointCoordinatesByIndex(obj, index)
+            % Returns the coordinates of a picked point through the argument list. The picked point
+            % is specified by index starting with 0.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'bool = Pick.GetPickpointCoordinatesByIndex(', num2str(index), ', x, y, z)', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z'};
+            [bool, x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
-        function string = GetPickedEdgeByIndex(obj, index, edgeid, vertexid)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPickedEdgeByIndex''.');
-            string = nan;
-            return;
-            % Returns the shapename of a picked edge. The edge id  and the vertex id is returned through the argument list. The picked edge is specified by index starting with 0.
-            string = obj.hPick.invoke('GetPickedEdgeByIndex', index, edgeid, vertexid);
+        function [shapename, edgeid, vertexid] = GetPickedEdgeByIndex(obj, index)
+            % Returns the shapename of a picked edge. The edge id  and the vertex id is returned
+            % through the argument list. The picked edge is specified by index starting with 0.
+            functionString = [...
+                'Dim shapename As String', newline, ...
+                'Dim edgeid As Long, vertexid As Long', newline, ...
+                'shapename = Pick.GetPickedEdgeByIndex(', num2str(index), ', edgeid, vertexid)', newline, ...
+            ];
+            returnvalues = {'shapename', 'edgeid', 'vertexid'};
+            [shapename, edgeid, vertexid] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            edgeid = str2double(edgeid);
+            vertexid = str2double(vertexid);
         end
-        function string = GetPickedFaceByIndex(obj, index, faceid)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPickedFaceByIndex''.');
-            string = nan;
-            return;
-            % Returns the shapename of a picked face. The face id is returned through the argument list. The picked face is specified by index starting with 0.
-            string = obj.hPick.invoke('GetPickedFaceByIndex', index, faceid);
+        function [shapename, faceid] = GetPickedFaceByIndex(obj, index, faceid)
+            % Returns the shapename of a picked face. The face id is returned through the argument
+            % list. The picked face is specified by index starting with 0.
+            functionString = [...
+                'Dim shapename As String', newline, ...
+                'Dim faceid As Long', newline, ...
+                'shapename = Pick.GetPickedFaceByIndex(', num2str(index), ', faceid)', newline, ...
+            ];
+            returnvalues = {'shapename', 'faceid'};
+            [shapename, faceid] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            faceid = str2double(faceid);
         end
         function double = GetPickedFaceAreaByIndex(obj, index)
             % Returns the surface area of a picked face. The picked face is specified by index starting with 0.

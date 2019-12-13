@@ -42,27 +42,23 @@ classdef EvaluateFieldOnFace < handle
     end
     %% CST Object functions.
     methods
-        function IntegrateField(obj, sFaceName, component, dIntReal, dIntImag, dArea)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''IntegrateField''.');
-            return;
+        function [dIntReal, dIntImag, dArea] = IntegrateField(obj, facename, component)
             % Integrates the real and imaginary part of the selected field component / absolute value over the face named by sFaceName. The integrals and the area of the face are returned in the double variables dIntReal, dIntImag and dArea.
             % component,: 'x'
             %             'y'
             %             'z'
             %             'abs'
             %             'normal'
-            obj.AddToHistory(['.IntegrateField "', num2str(sFaceName, '%.15g'), '", '...
-                                              '"', num2str(component, '%.15g'), '", '...
-                                              '"', num2str(dIntReal, '%.15g'), '", '...
-                                              '"', num2str(dIntImag, '%.15g'), '", '...
-                                              '"', num2str(dArea, '%.15g'), '"']);
-            obj.integratefield.sFaceName = sFaceName;
-            obj.integratefield.component = component;
-            obj.integratefield.dIntReal = dIntReal;
-            obj.integratefield.dIntImag = dIntImag;
-            obj.integratefield.dArea = dArea;
+            functionString = [...
+                'Dim dIntReal As Double, dIntImag As Double, dArea As Double', newline, ...
+                'EvaluateFieldAlongCurve.IntegrateField(', facename, ', ', component, ', dIntReal, dIntImag, dArea)', newline, ...
+            ];
+            returnvalues = {'dIntReal', 'dIntImag', 'area'};
+            [dIntReal, dIntImag, dArea] = obj.dsproject.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            dIntReal = str2double(dIntReal);
+            dIntImag = str2double(dIntImag);
+            dArea = str2double(dArea);
         end
         function double = GetValue(obj, key)
             % Returns the double value of max/min and their position depending on the key "max", "min", "max x", "max y", "max z", "min x", "min y", "min z".
@@ -88,7 +84,6 @@ classdef EvaluateFieldOnFace < handle
         history
         bulkmode
 
-        integratefield
         getvalue
         evaluateonsurface
         fittogrid
@@ -96,6 +91,7 @@ classdef EvaluateFieldOnFace < handle
 end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
+% % NOTE: This example does not work due to the fact that IntegrateField is not implemented.
 % Dim dIntReal as Double, dIntImag as Double
 % Dim dArea, dMax As Double
 % evaluatefieldonface = project.EvaluateFieldOnFace();

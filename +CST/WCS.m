@@ -199,115 +199,142 @@ classdef WCS < handle
             bool = obj.hWCS.invoke('DoesExist', WCSName);
             obj.doesexist = WCSName;
         end
-        function bool = GetOrigin(obj, WCSName, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetOrigin''.');
-            bool = nan;
-            return;
-            % Stores the origin of the specified* working coordinate system in x, y and z, returns True if successful.
-            bool = obj.hWCS.invoke('GetOrigin', WCSName, x, y, z);
-            obj.getorigin.WCSName = WCSName;
-            obj.getorigin.x = x;
-            obj.getorigin.y = y;
-            obj.getorigin.z = z;
+        function [bool, x, y, z] = GetOrigin(obj, WCSName)
+            % Stores the origin of the specified* working coordinate system in x, y and z, returns
+            % True if successful.
+            % 
+            % *If you don't specify a WCSName for the commands above (use an empty string instead),
+            % the current local coordinates system is queried instead.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'bool = WCS.GetOrigin(', WCSName, ', x, y, z)', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z'};
+            [bool, x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
-        function bool = GetNormal(obj, WCSName, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetNormal''.');
-            bool = nan;
-            return;
-            % Stores the normal of the specified* working coordinate system in x, y and z, returns True if successful.
-            bool = obj.hWCS.invoke('GetNormal', WCSName, x, y, z);
-            obj.getnormal.WCSName = WCSName;
-            obj.getnormal.x = x;
-            obj.getnormal.y = y;
-            obj.getnormal.z = z;
+        function [bool, x, y, z] = GetNormal(obj, WCSName)
+            % Stores the normal of the specified* working coordinate system in x, y and z, returns
+            % True if successful.
+            % 
+            % *If you don't specify a WCSName for the commands above (use an empty string instead),
+            % the current local coordinates system is queried instead.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'bool = WCS.GetNormal(', WCSName, ', x, y, z)', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z'};
+            [bool, x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
-        function bool = GetUVector(obj, WCSName, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetUVector''.');
-            bool = nan;
-            return;
-            % Stores the u-vector of the specified* working coordinate system in x, y and z, returns True if successful.
-            % *If you don't specify a WCSName for the commands above (use an empty string instead), the current local coordinates system is queried instead.
-            bool = obj.hWCS.invoke('GetUVector', WCSName, x, y, z);
-            obj.getuvector.WCSName = WCSName;
-            obj.getuvector.x = x;
-            obj.getuvector.y = y;
-            obj.getuvector.z = z;
+        function [bool, x, y, z] = GetUVector(obj, WCSName)
+            % Stores the u-vector of the specified* working coordinate system in x, y and z, returns
+            % True if successful.
+            % 
+            % *If you don't specify a WCSName for the commands above (use an empty string instead),
+            % the current local coordinates system is queried instead.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'bool = WCS.GetUVector(', WCSName, ', x, y, z)', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z'};
+            [bool, x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
-        function bool = GetAffineMatrixUVW2XYZ(obj, WCSName, ux, uy, uz, vx, vy, vz, wx, wy, wz)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetAffineMatrixUVW2XYZ''.');
-            bool = nan;
-            return;
-            % Returns True if succeeded and fills the 9 parameters with the affine transformation matrix from the specified working coordinate system to the global coordinate system.
-            bool = obj.hWCS.invoke('GetAffineMatrixUVW2XYZ', WCSName, ux, uy, uz, vx, vy, vz, wx, wy, wz);
-            obj.getaffinematrixuvw2xyz.WCSName = WCSName;
-            obj.getaffinematrixuvw2xyz.ux = ux;
-            obj.getaffinematrixuvw2xyz.uy = uy;
-            obj.getaffinematrixuvw2xyz.uz = uz;
-            obj.getaffinematrixuvw2xyz.vx = vx;
-            obj.getaffinematrixuvw2xyz.vy = vy;
-            obj.getaffinematrixuvw2xyz.vz = vz;
-            obj.getaffinematrixuvw2xyz.wx = wx;
-            obj.getaffinematrixuvw2xyz.wy = wy;
-            obj.getaffinematrixuvw2xyz.wz = wz;
+        function [bool, ux, uy, uz, vx, vy, vz, wx, wy, wz] = GetAffineMatrixUVW2XYZ(obj, WCSName)
+            % Returns True if succeeded and fills the 9 parameters with the affine transformation
+            % matrix from the specified working coordinate system to the global coordinate system.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim ux As Double, uy As Double, uz As Double', newline, ...
+                'Dim vx As Double, vy As Double, vz As Double', newline, ...
+                'Dim wx As Double, wy As Double, wz As Double', newline, ...
+                'bool = WCS.GetAffineMatrixUVW2XYZ(', WCSName, ', ux, uy, uz, vx, vy, vz, wx, wy, wz)', newline, ...
+            ];
+            returnvalues = {'bool', 'ux', 'uy', 'uz', 'vx', 'vy', 'vz', 'wx', 'wy', 'wz'};
+            [bool, ux, uy, uz, vx, vy, vz, wx, wy, wz] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            ux = str2double(ux);
+            uy = str2double(uy);
+            uz = str2double(uz);
+            vx = str2double(vx);
+            vy = str2double(vy);
+            vz = str2double(vz);
+            wx = str2double(wx);
+            wy = str2double(wy);
+            wz = str2double(wz);
         end
-        function bool = GetAffineMatrixXYZ2UVW(obj, WCSName, ux, vx, wx, uy, vy, wy, uz, vz, wz)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetAffineMatrixXYZ2UVW''.');
-            bool = nan;
-            return;
-            % Returns True if succeeded and fills the 9 parameters with the affine transformation matrix from the global coordinate system to the specified working coordinate system.
-            bool = obj.hWCS.invoke('GetAffineMatrixXYZ2UVW', WCSName, ux, vx, wx, uy, vy, wy, uz, vz, wz);
-            obj.getaffinematrixxyz2uvw.WCSName = WCSName;
-            obj.getaffinematrixxyz2uvw.ux = ux;
-            obj.getaffinematrixxyz2uvw.vx = vx;
-            obj.getaffinematrixxyz2uvw.wx = wx;
-            obj.getaffinematrixxyz2uvw.uy = uy;
-            obj.getaffinematrixxyz2uvw.vy = vy;
-            obj.getaffinematrixxyz2uvw.wy = wy;
-            obj.getaffinematrixxyz2uvw.uz = uz;
-            obj.getaffinematrixxyz2uvw.vz = vz;
-            obj.getaffinematrixxyz2uvw.wz = wz;
+        function [bool, ux, vx, wx, uy, vy, wy, uz, vz, wz] = GetAffineMatrixXYZ2UVW(obj, WCSName)
+            % Returns True if succeeded and fills the 9 parameters with the affine transformation
+            % matrix from the global coordinate system to the specified working coordinate system.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim ux As Double, uy As Double, uz As Double', newline, ...
+                'Dim vx As Double, vy As Double, vz As Double', newline, ...
+                'Dim wx As Double, wy As Double, wz As Double', newline, ...
+                'bool = WCS.GetAffineMatrixXYZ2UVW(', WCSName, ', ux, uy, uz, vx, vy, vz, wx, wy, wz)', newline, ...
+            ];
+            returnvalues = {'bool', 'ux', 'uy', 'uz', 'vx', 'vy', 'vz', 'wx', 'wy', 'wz'};
+            [bool, ux, uy, uz, vx, vy, vz, wx, wy, wz] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            ux = str2double(ux);
+            uy = str2double(uy);
+            uz = str2double(uz);
+            vx = str2double(vx);
+            vy = str2double(vy);
+            vz = str2double(vz);
+            wx = str2double(wx);
+            wy = str2double(wy);
+            wz = str2double(wz);
         end
-        function bool = GetWCSPointFromGlobal(obj, WCSName, u, v, w, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetWCSPointFromGlobal''.');
-            bool = nan;
-            return;
-            % Fills u, v and w with the coordinates in the WCS of a point specified by the global coordinates, returns True if successful.
-            bool = obj.hWCS.invoke('GetWCSPointFromGlobal', WCSName, u, v, w, x, y, z);
-            obj.getwcspointfromglobal.WCSName = WCSName;
-            obj.getwcspointfromglobal.u = u;
-            obj.getwcspointfromglobal.v = v;
-            obj.getwcspointfromglobal.w = w;
-            obj.getwcspointfromglobal.x = x;
-            obj.getwcspointfromglobal.y = y;
-            obj.getwcspointfromglobal.z = z;
+        function [bool, u, v, w] = GetWCSPointFromGlobal(obj, WCSName, x, y, z)
+            % Fills u, v and w with the coordinates in the WCS of a point specified by the global
+            % coordinates, returns True if successful.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim u As Double, v As Double, w As Double', newline, ...
+                'bool = WCS.GetWCSPointFromGlobal(', WCSName, ', u, v, w, ', num2str(x, '%.15g'), ', ', num2str(y, '%.15g'), ', ', num2str(z, '%.15g'), ')', newline, ...
+            ];
+            returnvalues = {'bool', 'u', 'v', 'w'};
+            [bool, u, v, w] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            u = str2double(u);
+            v = str2double(v);
+            w = str2double(w);
         end
-        function bool = GetGlobalPointFromWCS(obj, WCSName, x, y, z, u, v, w)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetGlobalPointFromWCS''.');
-            bool = nan;
-            return;
-            % Fills x, y and z with the global coordinates of a point specified by the local coordinates of the working coordinate system, returns True if successful.
-            bool = obj.hWCS.invoke('GetGlobalPointFromWCS', WCSName, x, y, z, u, v, w);
-            obj.getglobalpointfromwcs.WCSName = WCSName;
-            obj.getglobalpointfromwcs.x = x;
-            obj.getglobalpointfromwcs.y = y;
-            obj.getglobalpointfromwcs.z = z;
-            obj.getglobalpointfromwcs.u = u;
-            obj.getglobalpointfromwcs.v = v;
-            obj.getglobalpointfromwcs.w = w;
+        function [bool, x, y, z] = GetGlobalPointFromWCS(obj, WCSName, u, v, w)
+            % Fills x, y and z with the global coordinates of a point specified by the local
+            % coordinates of the working coordinate system, returns True if successful.
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'bool = WCS.GetGlobalPointFromWCS(', WCSName, ', x, y, z, ', num2str(u, '%.15g'), ', ', num2str(v, '%.15g'), ', ', num2str(w, '%.15g'), ')', newline, ...
+            ];
+            returnvalues = {'bool', 'x', 'y', 'z'};
+            [bool, x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            bool = str2double(bool);
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
     end
     %% MATLAB-side stored settings of CST state.

@@ -465,122 +465,86 @@ classdef Port < handle
             int = obj.hPort.invoke('GetNumberOfModes', portnumber);
             obj.getnumberofmodes = portnumber;
         end
-        function GetPortMeshLocation(obj, portnumber, orientation, ixmin, ixmax, iymin, iymax, izmin, izmax)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPortMeshLocation''.');
-            return;
+        function [orientation, xmin, xmax, ymin, ymax, zmin, zmax] = GetPortMeshLocation(obj, portnumber)
             % This function returns the mesh line location of an existing port, specified by its portnumber.
             %    
             % The reference values have the following meaning:
-            % orientation
-            % 0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
-            % ixmin / ixmax
-            % The min / max  meshline number in x-direction.
-            % iymin / iymax
-            % The min / max  meshline number in y-direction.
-            % izmin / izmax
-            % The min / max  meshline number in z-direction.
-            obj.AddToHistory(['.GetPortMeshLocation "', num2str(portnumber, '%.15g'), '", '...
-                                                   '"', num2str(orientation, '%.15g'), '", '...
-                                                   '"', num2str(ixmin, '%.15g'), '", '...
-                                                   '"', num2str(ixmax, '%.15g'), '", '...
-                                                   '"', num2str(iymin, '%.15g'), '", '...
-                                                   '"', num2str(iymax, '%.15g'), '", '...
-                                                   '"', num2str(izmin, '%.15g'), '", '...
-                                                   '"', num2str(izmax, '%.15g'), '"']);
-            obj.getportmeshlocation.portnumber = portnumber;
-            obj.getportmeshlocation.orientation = orientation;
-            obj.getportmeshlocation.ixmin = ixmin;
-            obj.getportmeshlocation.ixmax = ixmax;
-            obj.getportmeshlocation.iymin = iymin;
-            obj.getportmeshlocation.iymax = iymax;
-            obj.getportmeshlocation.izmin = izmin;
-            obj.getportmeshlocation.izmax = izmax;
+            % orientation           0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
+            % ixmin / ixmax         The min / max  meshline number in x-direction.
+            % iymin / iymax         The min / max  meshline number in y-direction.
+            % izmin / izmax         The min / max  meshline number in z-direction.
+            functionString = [...
+                'Dim orientation As Long, xmin As Long, xmax As Long, ymin As Long, ymax As Long, zmin As Long, zmax As Long', newline, ...
+                'Port.GetPortMeshLocation(', num2str(portnumber), ', orientation, xmin, xmax, ymin, ymax, zmin, zmax)', newline, ...
+            ];
+            returnvalues = {'orientation', 'xmin', 'xmax', 'ymin', 'ymax', 'zmin', 'zmax'};
+            [orientation, xmin, xmax, ymin, ymax, zmin, zmax] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            orientation = str2double(orientation);
+            xmin = str2double(xmin);
+            xmax = str2double(xmax);
+            ymin = str2double(ymin);
+            ymax = str2double(ymax);
+            zmin = str2double(zmin);
+            zmax = str2double(zmax);
         end
-        function GetPortMeshCoordinates(obj, portnumber, orientation, dxmin, dxmax, dymin, dymax, dzmin, dzmax)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPortMeshCoordinates''.');
-            return;
+        function [orientation, xmin, xmax, ymin, ymax, zmin, zmax] = GetPortMeshCoordinates(obj, portnumber)
             % This function returns the mesh line coordinates in local units of an existing port, specified by its portnumber.
             %    
             % The reference values have the following meaning:
-            % orientation
-            % 0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
-            % dxmin / dxmax
-            % The min / max mesh location in x-direction.
-            % dymin / dymax
-            % The min / max mesh location in y-direction.
-            % dzmin / dzmax
-            % The min / max mesh location in z-direction.
-            obj.AddToHistory(['.GetPortMeshCoordinates "', num2str(portnumber, '%.15g'), '", '...
-                                                      '"', num2str(orientation, '%.15g'), '", '...
-                                                      '"', num2str(dxmin, '%.15g'), '", '...
-                                                      '"', num2str(dxmax, '%.15g'), '", '...
-                                                      '"', num2str(dymin, '%.15g'), '", '...
-                                                      '"', num2str(dymax, '%.15g'), '", '...
-                                                      '"', num2str(dzmin, '%.15g'), '", '...
-                                                      '"', num2str(dzmax, '%.15g'), '"']);
-            obj.getportmeshcoordinates.portnumber = portnumber;
-            obj.getportmeshcoordinates.orientation = orientation;
-            obj.getportmeshcoordinates.dxmin = dxmin;
-            obj.getportmeshcoordinates.dxmax = dxmax;
-            obj.getportmeshcoordinates.dymin = dymin;
-            obj.getportmeshcoordinates.dymax = dymax;
-            obj.getportmeshcoordinates.dzmin = dzmin;
-            obj.getportmeshcoordinates.dzmax = dzmax;
+            % orientation           0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
+            % dxmin / dxmax         The min / max mesh location in x-direction.
+            % dymin / dymax         The min / max mesh location in y-direction.
+            % dzmin / dzmax         The min / max mesh location in z-direction.
+            functionString = [...
+                'Dim orientation As Long', newline, ...
+                'Dim xmin As Double, xmax As Double, ymin As Double, ymax As Double, zmin As Double, zmax As Double', newline, ...
+                'Port.GetPortMeshCoordinates(', num2str(portnumber), ', orientation, xmin, xmax, ymin, ymax, zmin, zmax)', newline, ...
+            ];
+            returnvalues = {'orientation', 'xmin', 'xmax', 'ymin', 'ymax', 'zmin', 'zmax'};
+            [orientation, xmin, xmax, ymin, ymax, zmin, zmax] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            orientation = str2double(orientation);
+            xmin = str2double(xmin);
+            xmax = str2double(xmax);
+            ymin = str2double(ymin);
+            ymax = str2double(ymax);
+            zmin = str2double(zmin);
+            zmax = str2double(zmax);
         end
-        function GetPortCenterCoordinates(obj, portnumber, dxcenter, dycenter, dzcenter)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetPortCenterCoordinates''.');
-            return;
+        function [xcenter, ycenter, zcenter] = GetPortCenterCoordinates(obj, portnumber)
             % This function returns the center point of a waveguide or discrete port, specified by its portnumber.
-            obj.AddToHistory(['.GetPortCenterCoordinates "', num2str(portnumber, '%.15g'), '", '...
-                                                        '"', num2str(dxcenter, '%.15g'), '", '...
-                                                        '"', num2str(dycenter, '%.15g'), '", '...
-                                                        '"', num2str(dzcenter, '%.15g'), '"']);
-            obj.getportcentercoordinates.portnumber = portnumber;
-            obj.getportcentercoordinates.dxcenter = dxcenter;
-            obj.getportcentercoordinates.dycenter = dycenter;
-            obj.getportcentercoordinates.dzcenter = dzcenter;
+            functionString = [...
+                'Dim xcenter As Double, ycenter As Double, zcenter As Double', newline, ...
+                'Port.GetPortCenterCoordinates(', num2str(portnumber), ', xcenter, ycenter, zcenter)', newline, ...
+            ];
+            returnvalues = {'xcenter', 'ycenter', 'zcenter'};
+            [xcenter, ycenter, zcenter] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            xcenter = str2double(xcenter);
+            ycenter = str2double(ycenter);
+            zcenter = str2double(zcenter);
         end
-        function GetFacePortTypeAndSize(obj, portnumber, faceporttype, dsizevalue1, dsizevalue2)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetFacePortTypeAndSize''.');
-            return;
-            % This function returns characteristic values of the discrete face port of a special geometry type (enumerated by faceporttype).
+        function [faceporttype, sizevalue1, sizevalue2] = GetFacePortTypeAndSize(obj, portnumber)
+            % This function returns characteristic values of the discrete face port of a special
+            % geometry type (enumerated by faceporttype).
             % The size value parameters  have the following meaning:
-            % faceporttype
-            % type
-            % dsizevalue1
-            % dsizevalue2
-            % 0
-            % unknown
-            % ---
-            % ---
-            % 1
-            % rectangular
-            % width
-            % length
-            % 2
-            % barrel shaped / cylindrical
-            % radius
-            % length
-            % 3
-            % coaxial
-            % radius of excited edge
-            % radius of ground edge
-            obj.AddToHistory(['.GetFacePortTypeAndSize "', num2str(portnumber, '%.15g'), '", '...
-                                                      '"', num2str(faceporttype, '%.15g'), '", '...
-                                                      '"', num2str(dsizevalue1, '%.15g'), '", '...
-                                                      '"', num2str(dsizevalue2, '%.15g'), '"']);
-            obj.getfaceporttypeandsize.portnumber = portnumber;
-            obj.getfaceporttypeandsize.faceporttype = faceporttype;
-            obj.getfaceporttypeandsize.dsizevalue1 = dsizevalue1;
-            obj.getfaceporttypeandsize.dsizevalue2 = dsizevalue2;
+            % faceporttype      type                            sizevalue1                  sizevalue2 
+            % 0                 unknown                         ---                         ---
+            % 1                 rectangular                     width                       length
+            % 2                 barrel shaped / cylindrical     radius                      length
+            % 3                 coaxial                         radius of excited edge      radius of ground edge
+            functionString = [...
+                'Dim faceporttype As Long', newline, ...
+                'Dim sizevalue1 As Double, sizevalue2 As Double', newline, ...
+                'Port.GetFacePortTypeAndSize(', num2str(portnumber), ', faceporttype, sizevalue1, sizevalue2)', newline, ...
+            ];
+            returnvalues = {'faceporttype', 'sizevalue1', 'sizevalue2'};
+            [faceporttype, sizevalue1, sizevalue2] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            faceporttype = str2double(faceporttype);
+            sizevalue1 = str2double(sizevalue1);
+            sizevalue2 = str2double(sizevalue2);
         end
         function string = GetLabel(obj, portnumber)
             % This function returns the label of the port.

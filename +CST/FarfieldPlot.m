@@ -529,13 +529,18 @@ classdef FarfieldPlot < handle
             % Returns the main lobe direction of the farfield in degrees. This method only applies to "polar" plots.
             double = obj.hFarfieldPlot.invoke('GetMainLobeDirection');
         end
-        function GetMainLobeVector(obj, x, y, z)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetMainLobeVector''.');
-            return;
+        function [x, y, z] = GetMainLobeVector(obj)
             % Returns the direction of the 3D farfield main lobe.
-            obj.hFarfieldPlot.invoke('GetMainLobeVector', x, y, z);
+            functionString = [...
+                'Dim x As Double, y As Double, z As Double', newline, ...
+                'FarfieldPlot.GetMainLobeVector(x, y, z)', newline, ...
+            ];
+            returnvalues = {'x', 'y', 'z'};
+            [x, y, z] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            x = str2double(x);
+            y = str2double(y);
+            z = str2double(z);
         end
         function double = GetAngularWidthXdB(obj)
             % Returns the angular width of the farfield in degrees according to the currently active main lobe threshold. This method only applies to "polar" plots.
