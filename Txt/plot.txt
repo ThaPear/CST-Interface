@@ -1,0 +1,286 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | Plot
+
+Plot Object
+Controls the output of the main plot window.
+
+Cutplane
+
+Cross Section
+
+General Methods
+
+Views and Zoom
+
+Export image
+
+View Options
+
+Cutplane
+
+Methods
+
+ 
+%% Cutplane
+
+ 
+
+AbovePlaneMode ( enum {"hide", "wireframe", "transparent","solid"} type )
+
+Sets the view above the cutplane.
+
+ 
+
+DefinePlane( string nx, string ny, string nz, string px, string py, string pz )
+
+Defines the cutplane by the normal direction and point on the plane.
+
+ 
+
+CutPlaneNormal ( string {"x", "y", "z"} key )
+
+Defines the normal direction of the cutplane.
+
+ 
+
+CutPlaneRatio ( double ratio )
+
+Defines where the cutplane will be located. A value of 0.0 for Ratio will position the cut plane at the lowest dimension of the structure in direction of CutPlaneNormal. A value of 1.0 will move the plane to the highest dimension.
+
+ 
+
+ShowCutplane ( bool switch )
+
+A cutplane can be defined to look inside a structure. This cutplane divides the structure into two parts, while only one of them will be plotted. The cutplane can be defined by the methods CutPlaneNormal and CutPlaneRatio.
+
+ 
+
+DrawSolidCutPlane( bool switch )
+
+If this flag is set to true, the cutplane will be displayed as solid, otherwise it will not be drawn.
+
+ 
+
+DrawSolidCutPlaneMark( bool switch )
+
+If this flag is set to true, the cutplane will be displayed as solid with a stipple pattern.
+
+ 
+
+Draw2DWithCutPlane( bool switch )
+
+Display the structure in a flat and true 2D style if the cutplane is active (Unavailable for field plot mode).
+
+ 
+
+%% Cross Section
+
+ 
+
+DefineCrossSection ( string {0, 1, 2, 3} id, string nx, string ny, string nz, string px, string py, string pz )
+
+Defines position and orientation for one of four available Cross Sections by the normal direction and point on the plane.
+
+ 
+
+ActivateCrossSection ( string {0, 1, 2, 3} id, bool switch )
+
+Activates or deactivates one of four available Cross Sections. After activation, the given Cross Section will automatically be selected for manipulation.
+
+ 
+
+SelectCrossSection ( string {0, 1, 2, 3} id )
+
+Selects one of four available Cross Sections for manipulation.
+
+ 
+
+%% General Methods
+
+ 
+
+RotationAngle ( double angle )
+
+Sets the angle of rotation.
+
+ 
+
+Rotate ( string direction )
+
+Rotates the plot in the main view. This method has no effect if 2D-Values are plotted.
+
+direction can have one of the following values:
+
+”left” - Rotates the figure to the left
+
+”right” - Rotates the figure to the right
+
+”up” - Rotates the figure upward
+
+”down” - Rotates the figure downward
+
+”clockwise” - Rotates the figure clockwise
+
+”counterclockwise” - Rotates the figure counterclockwise
+
+ 
+
+Update
+
+Updates the plot.
+
+ 
+
+%% Views and Zoom
+
+ 
+
+DeleteAllViews
+
+For deletion of all stored views.
+
+ 
+
+DeleteView ( string  name )
+
+Deletes a predefined view.
+
+ 
+
+RestoreView ( string name )
+
+Restores a previously stored view. If one of the reserved view names "Left", "Right", "Front", "Back", "Top", "Bottom" or  "Perspective" or "Nearest Axis" is used, that particular predefined view is set.
+
+ 
+
+StoreView ( string name, string parameters )
+
+Stores the view with the specified name and all its settings. 'parameters' contains several parameters that define the view. These parameters represent the internally used transformation and projection matrices. Therefore it is strongly recommended to use this command only by storing the view by using the graphical user interface and then copying this command from the resulting history list item.
+
+ 
+
+StoreView2 ( string name, string parameters )
+
+Stores additional settings for the view. The parameters string is a list of options separated by spaces: int drawplane, int axis, int cutplaneState, int cutPlaneNormal, double cutplaneCoord, int bBox, int wireframe, int abovePlaneMode.
+
+ 
+
+ZoomToStructure
+
+The camera zoom is adjusted to have the complete structure nicely fill the screen, as if the user would have pressed the Spacebar or selected View->Change View->Reset View.
+
+ 
+
+ResetZoom
+
+The camera zoom is reset. The structure, bounding box and the complete working plane (if enabled) is visible.
+
+ 
+
+%% Export image
+
+ 
+
+StoreImage( string name,  int width,  int height)
+
+Stores the contents of the main view into an image file defined by 'name'. Supported types are bmp, jpeg and png.
+
+ 
+
+%% View Options
+
+ 
+
+DrawBox ( bool switch )
+
+Shows or hides the bounding box of the whole structure.
+
+ 
+
+DrawWorkplane (  enum {"TRUE", "FALSE"} switch )
+
+Shows or hides the working plane.
+
+ 
+
+InnerSurfaces ( bool switch )
+
+This setting affects the scene only if a cutplane is defined such that the inside of the structure can be seen. If switch is True then the inner surfaces will be plotted in the same color as the solid. Otherwise they will be plotted in black.
+
+ 
+
+SurfaceMesh ( bool switch )
+
+Displays the surface facets' outline of the plotted structure. This method only takes effect if the main view shows the structure. If a tetrahedral mesh is used the surface triangles of this mesh are displayed.
+
+ 
+
+WireFrame ( bool switch )
+
+Toggles between two kinds of structure presentations. If switch is True the structure is plotted only by characteristic lines. Otherwise it is plotted as solid.
+
+ 
+
+SetGradientBackground ( bool switch )
+
+Activates the gradient background in the main view.
+
+ 
+
+GetGradientBackground bool
+
+Queries whether the gradient background in the main view is active.
+
+ 
+
+SetGradientBackground ( bool switch )
+
+Activates the gradient background mode in the main view.
+
+ 
+
+SetBackgroundcolor( string r, string g, string b)
+
+Set the background color in the main view.
+
+ 
+
+GetBackgroundcolorR string
+
+Returns the red component of the background color in the main view.
+
+ 
+
+GetBackgroundcolorG string
+
+Returns the green component of the background color in the main view.
+
+ 
+
+GetBackgroundcolorB string
+
+Returns the blue component of the background color in the main view.
+
+Default Settings
+
+CutPlaneRatio (0.5)
+
+DrawBox (False)
+
+InnerSurfaces (True)
+
+RotationAngle (10.0)
+
+ShowCutplane (False)
+
+SurfaceMesh (False)
+
+WireFrame (False)
+
+Examples:
+
+Plot.StoreImage ("D:\image.bmp", 1024, 768)
+
+Plot.StoreImage ("D:\image.png", 1024, 768)
+
+Plot.StoreImage ("D:\image.jpeg", 800, 600)
+ 

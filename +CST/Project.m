@@ -119,6 +119,7 @@ classdef Project < handle
             % This function performs a subproject import and adds the command into the history. filename is the name of the project which will be imported. And with do_wcs_alignment it can be specified if the sub project will be imported into the currently active WCS. If an error occurs during the import, the error message will be returned.
             string = obj.hProject.invoke('ImportSubProject', filename, do_wcs_alignment);
         end
+        %% File Handling
         function Backup(obj, filename)
             % Creates a copy of the actual project and its results. The current project is not affected. 'filename' is the name of the copy.
             obj.hProject.invoke('Backup', filename);
@@ -153,6 +154,7 @@ classdef Project < handle
             % none of the result/data files are included.
             obj.hProject.invoke('StoreInArchive', filename, keepAllResults, keep1DResults, keepFarfieldData, deleteProjFolder);
         end
+        %% Parameter Handling
         function DeleteParameter(obj, name)
             % Deletes an existing parameter with the specified name.
             obj.hProject.invoke('DeleteParameter', name);
@@ -229,20 +231,67 @@ classdef Project < handle
             % Returns the description of a given parameter, which is specified by its name.
             string = obj.hProject.invoke('GetParameterDescription', name);
         end
-        function bool = GetParameterCombination(obj, resultID, parameterNames, parameterValues)
-            % Fills the variant 'parameterValues'  with an array of double values that correspond to the parameter combination 'resultID' . The variant 'parameterNames' is filled with an array containing the parameter names. In case the parameter combination does not exist, the variants will not be modified and the method will return false. The string 'resultID'  corresponds to an existing Run ID and is of the format "3D:RunID:1". Existing Result IDs can be queried using the command GetResultIDsFromTreeItem of the ResultTree-object. The method returns an error for Result IDs of invalid format. The following example prints parameter names and parameter values to the message window:
+        function [bool, parameters] = GetParameterCombination(obj, resultID)
+            % Fills the variant 'parameterValues'  with an array of double values that correspond to
+            % the parameter combination 'resultID' . The variant 'parameterNames' is filled with an
+            % array containing the parameter names. In case the parameter combination does not
+            % exist, the variants will not be modified and the method will return false. The string
+            % 'resultID'  corresponds to an existing Run ID and is of the format "3D:RunID:1".
+            % Existing Result IDs can be queried using the command GetResultIDsFromTreeItem of the
+            % ResultTree-object. The method returns an error for Result IDs of invalid format. The
+            % following example prints parameter names and parameter values to the message window:
             % Dim names As Variant, values As Variant, exists As Boolean
             % exists = GetParameterCombination( "3D:RunID:1", names, values )
             % If Not exists Then
-            % ReportInformationToWindow( "Parameter combination does not exist."  )
+            %     ReportInformationToWindow( "Parameter combination does not exist."  )
             % Else
-            % Dim N As Long
-            % For N = 0 To UBound( values )
-            % ReportInformationToWindow( names( N )  + ": " + CStr( values( N ) ) )
-            % Next
+            %     Dim N As Long
+            %     For N = 0 To UBound( values )
+            %         ReportInformationToWindow( names( N )  + ": " + CStr( values( N ) ) )
+            %     Next
             % End If
-            bool = obj.hProject.invoke('GetParameterCombination', resultID, parameterNames, parameterValues);
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim parameterNames As Variant, parameterValues As Variant', newline, ...
+                'bool = GetParameterCombination(', resultID, ', parameterNames, parameterValues)', newline, ...
+                'StoreGlobalDataValue("matlab1", bool)', newline, ...
+                ... % If the resultID was valid, then bool will be true.
+                'If bool Then', newline, ...
+                    ... % Store the number of parameters.
+                    'StoreGlobalDataValue("matlab2", UBound(parameterValues))', newline, ...
+                    ... % Store parameter names & values.
+                    'Dim i As Long', newline, ...
+                    'For i = 0 To UBound(parameterValues)', newline, ...
+                        'StoreGlobalDataValue("matlab" + CStr(3+2*i  ), parameterNames(i))', newline, ...
+                        'StoreGlobalDataValue("matlab" + CStr(3+2*i+1), CStr(parameterValues(i)))', newline, ...
+                    'Next', newline, ...
+                'End If', newline, ...
+            ];
+            returnvalues = {}; % Handle returns ourselves.
+            obj.RunVBACode(functionString, returnvalues);
+            
+            % Extract returns.
+            bool = obj.RestoreGlobalDataValue('matlab1');
+            bool = str2double(bool);
+            if(bool)
+                % Number of parameters.
+                nparams = str2double(obj.RestoreGlobalDataValue('matlab2'));
+                % Extract parameter names & values.
+                for(i = 0:nparams)
+                    parameterName  = obj.RestoreGlobalDataValue(['matlab', num2str(3+2*i  )]);
+                    parameterValue = obj.RestoreGlobalDataValue(['matlab', num2str(3+2*i+1)]);
+                    % Convert to numerical if possible.
+                    if(~isnan(str2double(parameterValue)))
+                        parameterValue = str2double(parameterValue);
+                    end
+                    % Store in return struct.
+                    parameters.(parameterName) = parameterValue;
+                end
+            else
+                parameters = [];
+            end
         end
+        %% Global Data Cache
         function ClearGlobalDataValues(obj)
             % Clear all global data values.
             obj.hProject.invoke('ClearGlobalDataValues');
@@ -259,6 +308,7 @@ classdef Project < handle
             % Creates a new global data value with a given name and value or changes an existing one.
             obj.hProject.invoke('StoreGlobalDataValue', name, value);
         end
+        %% Mathematical Functions / Constants
         function double = ACos(obj, value)
             % Returns the arc cosine of the input parameter as a radian value.
             double = obj.hProject.invoke('ACos', value);
@@ -339,6 +389,7 @@ classdef Project < handle
             % Returns the floating point remainder of value1 divided by value2.
             double = obj.hProject.invoke('FMod', value1, value2);
         end
+        %% Result Templates
         function ActivateScriptSettings(obj, boolean)
             % This method activates (switch = "True") or deactivates
             % (switch = "False")  the script settings of a customized
@@ -351,22 +402,23 @@ classdef Project < handle
             obj.hProject.invoke('ClearScriptSettings');
         end
         function double = GetLast0DResult(obj, name)
-            % This method returns the last 0D result of the selected result
-            % template. 'name' is the name of a previously defined result
-            % template.
+            % This method returns the last 0D result of the selected result template. 'name' is the
+            % name of a previously defined result template.
             double = obj.hProject.invoke('GetLast0DResult', name);
         end
-        function Result1D = GetLast1DResult(obj, name)
-            % This method returns the last 1D result of the selected result
-            % template. 'name' is the name of a previously defined result
-            % template.
-            Result1D = obj.hProject.invoke('GetLast1DResult', name);
+        function result1D = GetLast1DResult(obj, name)
+            % This method returns the last 1D result of the selected result template. 'name' is the
+            % name of a previously defined result template.
+            hResult1D = obj.hProject.invoke('GetLast1DResult', name);
+            
+            result1D = CST.Result1D(obj, hResult1D);
         end
-        function Result1DComplex = GetLast1DComplexResult(obj, name)
-            % This method returns the last complex 1D result of the
-            % selected result template. 'name' is the name of a previously
-            % defined result template.
-            Result1DComplex = obj.hProject.invoke('GetLast1DComplexResult', name);
+        function result1DComplex = GetLast1DComplexResult(obj, name)
+            % This method returns the last complex 1D result of the selected result template. 'name'
+            % is the name of a previously defined result template.
+            hResult1DComplex = obj.hProject.invoke('GetLast1DComplexResult', name);
+            
+            result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetLastResultID(obj)
             % This method returns the Result ID which identifies the last
@@ -450,9 +502,11 @@ classdef Project < handle
             % Checks the file type of the file with absolute path specified in the variable 'filename'. If the file is a complex signal file, the string "complex" will be returned. If the file is a real-valued signal file, the string "real" will be returned. If the file is a real-valued 0D file, the string "real0D" will be returned. If the file is a complex-valued 0D file, the string "complex0D" will be returned. If the file type is unknown or the file can not be found, "unknown" will be returned.
             string = obj.hProject.invoke('GetFileType', filename);
         end
-        function Result1DComplex = GetImpedanceFromTreeItem(obj, treename)
+        function result1DComplex = GetImpedanceFromTreeItem(obj, treename)
             % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this method returns a Result1DComplex object filled with the corresponding impedance data. If no impedance data is available, this method returns an empty Result1DComplex object.
-            Result1DComplex = obj.hProject.invoke('GetImpedanceFromTreeItem', treename);
+            hResult1DComplex = obj.hProject.invoke('GetImpedanceFromTreeItem', treename);
+            
+            result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetFirstTableResult(obj, resultname)
             % Returns the name of the table that was created on evaluation of the template with the name 'resultname' or an empty string.
@@ -466,6 +520,7 @@ classdef Project < handle
             % Returns true if the user aborted the template based post-processing evaluation, otherwise false.
             bool = obj.hProject.invoke('GetTemplateAborted');
         end
+        %% Macros
         function string = GetMacroPath(obj)
             % Returns the first directory, that has been set as location for globally defined macros. This function is the same as "GetMacroPathFromIndex(0)"
             string = obj.hProject.invoke('GetMacroPath');
@@ -510,6 +565,7 @@ classdef Project < handle
             % Reports the error text message to the user. The text will be written into a message dialog box. The currently active VBA command evaluation will be stopped immediately. An On Error Goto statement will be able to catch this error.
             obj.hProject.invoke('ReportError', message);
         end
+        %% MPI Cluster Setup
         function SetCommonMPIClusterConfig(obj, install_folder, temp_folder, architecture)
             % Set global and common information relative to all machines in MPI cluster. It is necessary to specify, in order:
             % - the CST MICROWAVE STUDIO installation folder. This can be a local or network path.
@@ -556,6 +612,7 @@ classdef Project < handle
             % Solver.MPIParallelization(true)
             obj.hProject.invoke('AddMPIClusterNodeConfig', host_name, install_folder, temp_folder, architecture, active);
         end
+        %% Result Curve Handling
         function ImportXYCurveFromASCIIFile(obj, folder_name, file_name)
             % Imports the data of the file "fileName" to the folder "folderName"
             obj.hProject.invoke('ImportXYCurveFromASCIIFile', folder_name, file_name);
@@ -580,6 +637,7 @@ classdef Project < handle
             % Stores the selected 1D or 2D plot in the clipboard.
             obj.hProject.invoke('StoreCurvesInClipboard');
         end
+        %% Result Data Access
         function CalculateFourierComplex(obj, Input, InputUnit, Output, OutputUnit, isign, normalization, vMin, vMax, vSamples)
             % This VBA command computes the integral:
             % f(u) represents an arbitrarily sampled input signal Input. The meaning of u and v abscissas depends on the values specified via InputUnit and OutputUnit. Allowed values and the corresponding project units are:
@@ -715,6 +773,7 @@ classdef Project < handle
             % Returns the maximum / minimum absolute value of a three dimensional vector. 'vxre', 'vxim', 'very', 'vyim', 'vzre', 'vzim' are the real and imaginary part the vector's components.
             double = obj.hProject.invoke('GetMinVectorLength', vxre, vxim, vyre, vyim, vzre, vzim);
         end
+        %% Queries
         function string = GetApplicationName(obj)
             % Returns the application name.
             string = obj.hProject.invoke('GetApplicationName');
@@ -761,6 +820,7 @@ classdef Project < handle
             % Gets the current customer number from the license. This information may be useful for support purposes.
             string = obj.hProject.invoke('GetLicenseCustomerNumber');
         end
+        %% Parametric Modelling
         function Assign(obj, variable_name)
             % This function can be used only in connection with the BeginHide/EndHide Functions. 'variable_name' is a variable, defined within a BeginHide/EndHide block, that has to be valid outside of this block.
             obj.hProject.invoke('Assign', variable_name);
@@ -832,6 +892,7 @@ classdef Project < handle
             % Returns the x / y / z-coordinate of a specified pickpoint defined by it's number in the pickpoint list.
             double = obj.hProject.invoke('zp', id);
         end
+        %% Result Plotting
         function Plot3DPlotsOn2DPlane(obj, boolean)
             % Plots a 3D field on a 2D plane if 'switch' is True.
             obj.hProject.invoke('Plot3DPlotsOn2DPlane', boolean);
@@ -857,6 +918,7 @@ classdef Project < handle
             end
             str = obj.hProject.invoke('ResultNavigatorRequest', request, parameter);
         end
+        %% Distributed Computing Setup
         function UseDistributedComputingForParameters(obj, flag)
             % Enables distributed computing for parameter sweep or optimizer runs.
             % Example: UseDistributedComputingForParameters ("True")
@@ -893,7 +955,8 @@ classdef Project < handle
             % functionstring specifies the VBA code to be run.
             % returnvalues specifies the VBA names of the values to be returned to MATLAB.
             %     This must match the number of output arguments nargout.
-            if(nargout ~= 0 || nargin >= 3)
+            %     An empty array causes returns to be ignored.
+            if(~isempty(returnvalues) && (nargout ~= 0 || nargin >= 3))
                 if(nargout ~= length(returnvalues))
                     error('Invalid number of return values specified.');
                 end
@@ -909,10 +972,12 @@ classdef Project < handle
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
             obj.RunScript(GetFullPath('CST Interface\Bas\RunVBACode.bas'));
             
-            % Retrieve return arguments.
-            varargout = cell(1, nargout);
-            for(i = 1:nargout)
-                varargout{i} = obj.RestoreGlobalDataValue(['matlab', num2str(i)]);
+            if(~isempty(returnvalues))
+                % Retrieve return arguments.
+                varargout = cell(1, nargout);
+                for(i = 1:nargout)
+                    varargout{i} = obj.RestoreGlobalDataValue(['matlab', num2str(i)]);
+                end
             end
         end
     end

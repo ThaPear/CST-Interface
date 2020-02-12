@@ -1,7 +1,7 @@
 clear;
 
 % txt = clipboard('paste');
-txt = fileread('CST Interface/Txt/result0d.txt');
+txt = fileread('CST Interface/Txt/plot.txt');
 split = strsplit(txt, newline);
 % split = strrep(split, split{2}, '');
 split = strrep(split, char(13), '');

@@ -11,7 +11,7 @@ fprintf(hOutfile, '%s\n', ['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf(hOutfile, '%% %s\n', objectdescr);
 fprintf(hOutfile, 'classdef %s < handle\n', objecttype);
 
-histtype = input('History Type: (0) None, (1) Bulkmode, (2) Simple, (3) Direct: ');
+histtype = input('History Type: (0) None, (1) Bulkmode, (2) Simple');
 
 % Create class constructor in output file.
 fprintf(hOutfile, '    %%%% CST Interface specific functions.\n');

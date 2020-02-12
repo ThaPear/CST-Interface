@@ -52,7 +52,13 @@ classdef Project < handle
             obj.hDSProject.invoke('PositionWindow', location, handle);
         end
         function bool = TouchstoneExport(obj, itemname, filename, impedance)
-            % Performs a Touchstone export of S-, Y-, or Z-Parameter results. 'itemname'  is a tree item specified by name.  It must contain S-, Y-, or Z-Parameters for the Touchstone export to be successfull. 'filename' is the name of the Touchstone file to be generated without extension. An appropriate extension, .s*p, .y*p, or .z*p, will be automatically appended.   'impedance'  is the reference impedance, to which the N-Port parameters will be normalised. It is applied to all ports. The return type indicates whether the Touchstone export was successful.
+            % Performs a Touchstone export of S-, Y-, or Z-Parameter results. 'itemname'  is a tree
+            % item specified by name.  It must contain S-, Y-, or Z-Parameters for the Touchstone
+            % export to be successfull. 'filename' is the name of the Touchstone file to be
+            % generated without extension. An appropriate extension, .s*p, .y*p, or .z*p, will be
+            % automatically appended.   'impedance'  is the reference impedance, to which the N-Port
+            % parameters will be normalised. It is applied to all ports. The return type indicates
+            % whether the Touchstone export was successful.
             bool = obj.hDSProject.invoke('TouchstoneExport', itemname, filename, impedance);
         end
         function CopySelectionToClipboard(obj)
@@ -67,7 +73,7 @@ classdef Project < handle
             % Deletes all selected components. If keepconnectors is false, all connectors which are connected to one of the deleted components are deleted as well. Otherwise they are kept.
             obj.hDSProject.invoke('DeleteSelectedComponents', keepconnectors);
         end
-        function GetBBoxAllComponents(obj, opMode, nXMin, nXMax, nYMin, nYMax)
+        function [nXMin, nXMax, nYMin, nYMax] = GetBBoxAllComponents(obj, opMode)
             % Gets the bounding box of all existing components on a schematic. You may restrict the
             % bounding box calculation to specific component types by specifying first argument
             % opMode:
@@ -75,8 +81,6 @@ classdef Project < handle
             % "no labels" - Only components but labels are considered
             % 
             % NOTE: The positive coordinate directions of the schematic go like this: from Left to Right and from Top to Bottom. However, nYmin specifies the bottom of the bounding box and nYmax specifies the top of the bounding box.
-            obj.hDSProject.invoke('GetBBoxAllComponents', opMode, nXMin, nXMax, nYMin, nYMax);
-            
             functionString = [...
                 'Dim nXMin As Double, nXMax As Double, nYMin As Double, nYMax As Double', newline, ...
                 'DS.GetBBoxAllComponents(', opMode, ', nXMin, nXMax, nYMin, nYMax)', newline, ...
@@ -184,19 +188,66 @@ classdef Project < handle
             % Example: StoreDoubleParameter ( "test", 100.22 )
             obj.hDSProject.invoke('StoreDoubleParameter', name, value);
         end
-        function bool = GetParameterCombination(obj, resultID, parameterNames, parameterValues)
-            % Fills the variant 'parameterValues'  with an array of double values that correspond to the parameter combination 'resultID' . The variant 'parameterNames'  is filled with an array containing the parameter names. In case the parameter combination does not exist, the variants will not be modified and the method returns false. The string 'resultID'  corresponds to an existing Run ID and is of the format "Schematic:RunID:1." Existing Result IDs can be queried using the command GetResultIDsFromTreeItem of the ResultTree Object. The method returns an error for Result IDs of invalid format. The following example prints parameter names and parameter values to the message window:
+        function [bool, parameters] = GetParameterCombination(obj, resultID)
+            % Fills the variant 'parameterValues'  with an array of double values that correspond to
+            % the parameter combination 'resultID' . The variant 'parameterNames'  is filled with an
+            % array containing the parameter names. In case the parameter combination does not
+            % exist, the variants will not be modified and the method returns false. The string
+            % 'resultID'  corresponds to an existing Run ID and is of the format
+            % "Schematic:RunID:1." Existing Result IDs can be queried using the command
+            % GetResultIDsFromTreeItem of the ResultTree Object. The method returns an error for
+            % Result IDs of invalid format.
+            % 
+            % The following example prints parameter names and parameter values to the message
+            % window:
+            % 
             % Dim names As Variant, values As Variant, exists As Boolean
             % exists = DS.GetParameterCombination( "Schematic:RunID:1", names, values )
             % If Not exists Then
-            % DS.ReportInformationToWindow( "Parameter combination does not exist."  )
+            %     DS.ReportInformationToWindow( "Parameter combination does not exist."  )
             % Else
-            % Dim N As Long
-            % For N = 0 To UBound( values )
-            % DS.ReportInformationToWindow( names( N )  + ": " + CStr( values( N ) ) )
-            % Next
+            %     Dim N As Long
+            %     For N = 0 To UBound( values )
+            %         DS.ReportInformationToWindow( names( N )  + ": " + CStr( values( N ) ) )
+            %     Next
             % End If
-            bool = obj.hDSProject.invoke('GetParameterCombination', resultID, parameterNames, parameterValues);
+            functionString = [...
+                'Dim bool As Boolean', newline, ...
+                'Dim parameterNames As Variant, parameterValues As Variant', newline, ...
+                'bool = DS.GetParameterCombination(', resultID, ', parameterNames, parameterValues)', newline, ...
+                'DS.StoreGlobalDataValue("matlab1", bool)', newline, ...
+                ... % If the resultID was valid, then bool will be true.
+                'If bool Then', newline, ...
+                    ... % Store the number of parameters.
+                    'DS.StoreGlobalDataValue("matlab2", UBound(parameterValues))', newline, ...
+                    ... % Store parameter names & values.
+                    'Dim i As Long', newline, ...
+                    'For i = 0 To UBound(parameterValues)', newline, ...
+                        'DS.StoreGlobalDataValue("matlab" + CStr(3+2*i  ), parameterNames(i))', newline, ...
+                        'DS.StoreGlobalDataValue("matlab" + CStr(3+2*i+1), CStr(parameterValues(i)))', newline, ...
+                    'Next', newline, ...
+                'End If', newline, ...
+            ];
+            returnvalues = {}; % Handle returns ourselves.
+            obj.RunVBACode(functionString, returnvalues);
+            
+            % Extract returns.
+            bool = obj.RestoreGlobalDataValue('matlab1');
+            if(str2double(bool))
+                % Number of parameters.
+                nparams = str2double(obj.RestoreGlobalDataValue('matlab2'));
+                % Extract parameter names & values.
+                for(i = 0:nparams)
+                    parameterName  = obj.RestoreGlobalDataValue(['matlab', num2str(3+2*i  )]);
+                    parameterValue = obj.RestoreGlobalDataValue(['matlab', num2str(3+2*i+1)]);
+                    % Convert to numerical if possible.
+                    if(~isnan(str2double(parameterValue)))
+                        parameterValue = str2double(parameterValue);
+                    end
+                    % Store in return struct.
+                    parameters.(parameterName) = parameterValue;
+                end
+            end
         end
         %% Simulation
         function UpdateResults(obj)
@@ -353,12 +404,10 @@ classdef Project < handle
             % This method clears the internal settings of a previously customized result item.
             obj.hDSProject.invoke('ClearScriptSettings');
         end
-        function result0D = GetLast0DResult(obj, name)
+        function double = GetLast0DResult(obj, name)
             % This method returns the last 0D result of the selected result template. 'name' is the
             % name of a previously defined result template.
-            hResult0D = obj.hDSProject.invoke('GetLast0DResult', name);
-            
-            result0D = CST.DS.Result0D(obj, hResult0D);
+            double = obj.hDSProject.invoke('GetLast0DResult', name);
         end
         function result1D = GetLast1DResult(obj, name)
             % This method returns the last 1D result of the selected result template. 'name' is the
