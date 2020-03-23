@@ -68,7 +68,6 @@ classdef Project < handle
             end
             bool = obj.hProject.invoke('AddToHistory', caption, contents);
             if(~bool)
-                breakpoint;
                 error(['Could not execute command ', newline, '''', caption, ''', ', newline, '''', contents, '''']);
             end
         end

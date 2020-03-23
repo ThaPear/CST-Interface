@@ -94,6 +94,8 @@ Depending on mode does the following:
 
 "EdgeAndFace": If the selected edge is not directly connected to the selected face, this will do the same as AlignWCSWithSelected "EdgeCenter". Else, this will place the WCS origin onto the middle of the selected edge; The u axis will be aligned to the direction of the selected edge in the given point. The w axis will be set to the normal of the selected face in the given point.
 
+ 
+
 RotateWCS ( enum{ "u", "v", "w" } axis,   double angle )
 
 Rotates the axis of the Working Coordinate System clockwise of about the angle degree.

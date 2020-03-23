@@ -35,6 +35,9 @@ classdef Application < handle
         function project = OpenFile(filename)
             cst = CST.Application.GetHandle();
             hProject = cst.invoke('OpenFile', filename);
+            if(isempty(hProject))
+                error('File not found or file is already open.');
+            end
             project = CST.Project(hProject);
         end
         

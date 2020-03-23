@@ -122,16 +122,25 @@ classdef WCS < handle
             % "RotationEdge": This mode is used for defining the rotation axis of Rotate Objects. It does the same as the "Edge" mode but additionally moves the WCS to the start point of the picked edge.
             % "Face": For selected planar faces, the WCS will be moved to the face center. For all other faces it will be moved to the closest point on the face, relative to the current WCS. After moving, the w axis of the WCS (w axis) will be aligned to the normal of the face in the given point.
             % "EdgeAndFace": If the selected edge is not directly connected to the selected face, this will do the same as AlignWCSWithSelected "EdgeCenter". Else, this will place the WCS origin onto the middle of the selected edge; The u axis will be aligned to the direction of the selected edge in the given point. The w axis will be set to the normal of the selected face in the given point.
-            % RotateWCS ( enum{ "u", "v", "w" } axis,   double angle )
-            % Rotates the axis of the Working Coordinate System clockwise of about the angle degree.
             % mode: 'Point'
             %       '3Points'
             %       'Edge'
             %       'EdgeCenter'
             %       'RotationEdge'
             %       'Face'
+
             obj.AddToHistory(['.AlignWCSWithSelected "', num2str(mode, '%.15g'), '"']);
             obj.alignwcswithselected = mode;
+        end
+        function RotateWCS(obj, axis, angle)
+            % Rotates the axis of the Working Coordinate System clockwise of about the angle degree.
+            % axis: 'u'
+            %       'v'
+            %       'w'
+            obj.AddToHistory(['.RotateWCS "', num2str(axis, '%.15g'), '", '...
+                                         '"', num2str(angle, '%.15g'), '"']);
+            obj.rotatewcs.axis = axis;
+            obj.rotatewcs.angle = angle;
         end
         function MoveWCS(obj, axis, du, dv, dw)
             % Shifts the Working Coordinate System (WCS). With the key option ”local” you can move the WCS about (du, dv, dw) in local coordinates. To move the WCS in global coordinates use the key setting ”global”.
@@ -354,6 +363,7 @@ classdef WCS < handle
         setorigin
         setuvector
         alignwcswithselected
+        rotatewcs
         movewcs
         setworkplanesize
         setworkplaneraster
