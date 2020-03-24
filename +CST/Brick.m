@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % This object is used to create a new brick shape.
 classdef Brick < handle
     %% CST Interface specific functions.

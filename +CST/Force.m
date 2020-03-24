@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % The force object calculates forces and torques by the maxwell stress tensor for solids, current wires or coils. Please note that the same VBA functions are used for both, local and global coordinates. If the working coordinate system is activated all settings are made in local  coordinates, with the following assignment:
 classdef Force < handle
     %% CST Interface specific functions.

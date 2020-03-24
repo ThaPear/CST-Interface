@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % The layerstacking object can be used to define one or more background items to the project. The specified layers differ in thickness and material and are aligned at the borders of the bounding box.
 classdef LayerStacking < handle
     %% CST Interface specific functions.

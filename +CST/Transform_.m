@@ -4,8 +4,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Suppress warnings:
-% "Use of backets [] is unnecessary. Use parentheses to group, if needed."
-%#ok<*NBRAK>
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+     
 classdef Transform_ < handle
     properties(SetAccess = protected)
         project

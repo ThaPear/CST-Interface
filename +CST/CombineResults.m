@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Combine calculation results of field monitors for arbitrary excitations.
 classdef CombineResults < handle
     %% CST Interface specific functions.

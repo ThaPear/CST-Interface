@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % In addition to its tight integration into the CST DESIGN ENVIRONMENT, CST MICROWAVE STUDIO also features strong interfaces to Keysight ADS�. Besides the �static� link option offering the possibility to use pre-computed S-parameter data in ADS circuit simulations, the �co-simulation� alternative enables ADS to launch CST MICROWAVE STUDIO in order to automatically calculate required data. All information is then stored together with the CST MICROWAVE STUDIO model in order to avoid unnecessary repetitions of lengthy EM simulations.
 classdef ADSCosimulation < handle
     %% CST Interface specific functions.

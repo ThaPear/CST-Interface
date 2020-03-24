@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Defines a working coordinate system which will be the base for the next new solids.
 classdef WCS < handle
     %% CST Interface specific functions.

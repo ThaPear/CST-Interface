@@ -3,6 +3,8 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Still requires autogeneration.
+
 classdef Solver < handle
     properties(SetAccess = protected)
         project

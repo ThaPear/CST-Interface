@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % This object enables an extrude operation on a curve item, which has to be closed and planar. The curve plane will be filled up as a solid with a specified thickness associated to a determined component and material. After that operation the curve item will not exist any longer. As soon as the new shape is created it will appear in the main plot window and on the Navigation Tree.
 classdef ExtrudeCurve < handle
     %% CST Interface specific functions.

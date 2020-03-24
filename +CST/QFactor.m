@@ -1,8 +1,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CST Interface                                                       %%%
 %%% Author: Alexander van Katwijk                                       %%%
-%%% Warning: Untested                                                   %%% 
+%%% Warning: Untested                                                   %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
 
 % This object offers the possibility to calculate losses and as a result the Q-factor. It uses an H-field from a surface-loss-free solver run for calculation of surface losses. Dielectric losses are taken into account by either using the losses from a lossy solver run or applying the perturbation method in case of loss-free solver run. In both cases, lossy dielectric material properties have to be set before the solver run. For the surface losses, each material which was PEC in the surface-loss-free calculation can be set to a finite conductivity. Applying the calculation method, the losses and Q�s will be calculated for all solids. The losses are summed up for each material and for the total model.
 classdef QFactor < handle

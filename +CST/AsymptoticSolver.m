@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % This object controls the asymptotic high frequency solver. Use the 'Start' command to run the solver.
 classdef AsymptoticSolver < handle
     %% CST Interface specific functions.

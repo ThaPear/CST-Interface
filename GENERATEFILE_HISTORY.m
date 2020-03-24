@@ -11,12 +11,12 @@ fprintf(hOutfile, '%s\n', ['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf(hOutfile, '%% %s\n', objectdescr);
 fprintf(hOutfile, 'classdef %s < handle\n', objecttype);
 
-histtype = input('History Type: (0) None, (1) Bulkmode, (2) Simple');
+histtype = input('History Type: (0) None, (1) Bulkmode, (2) Simple ');
 
 % Create class constructor in output file.
 fprintf(hOutfile, '    %%%% CST Interface specific functions.\n');
 fprintf(hOutfile, '    methods(Access = ?CST.Project)\n');
-fprintf(hOutfile, '        %% Only CST.Project can create a %s object.\n', objecttype);
+fprintf(hOutfile, '        %% Only CST.Project can create a CST.%s object.\n', objecttype);
 fprintf(hOutfile, '        function obj = %s(project, hProject)\n', objecttype);
 fprintf(hOutfile, '            obj.project = project;\n');
 fprintf(hOutfile, '            obj.h%s = hProject.invoke(''%s'');\n', objecttype, objecttype);

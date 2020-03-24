@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Determine an equivalent SPICE circuit which has the same behavior at the ports as the simulation model. This command represents the "Spice Extraction" in the "Signal Post-Processing" ribbon. Two different methods exist for this task. The "transmission line model" (TL) is based on a fixed topology of a network of parallel and coupled transmission lines. The other more general method is based on a "model order reduction" (MOR) and does not assume any fixed topology. The drawback of the latter approach, however, is that the derived SPICE circuit elements do not allow any physical interpretation.
 classdef NetworkParameterExtraction < handle
     %% CST Interface specific functions.

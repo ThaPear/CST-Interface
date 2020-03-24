@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Use this object to configure the Floquet ports of an infinite array's unit cell. Whenever unit cell boundaries are combined with open boundaries at Zmin or Zmax, the open boundary is realized by a Floquet mode waveguide port (this allows for instance to excite plane waves, which are the fundamental Floquet modes TE(0,0) and TM(0,0)). The FloquetPort object collects methods to manipulate the modes of all Floquet ports. The following information applies to the general purpose Frequency Domain solvers.
 classdef FloquetPort < handle
     %% CST Interface specific functions.

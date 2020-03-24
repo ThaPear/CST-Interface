@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Defines a waveguide port object. Waveguide ports are used to feed the calculation domain with power and to absorb the returning power. For each waveguide port, time signals and S-Parameters will be recorded during a solver run. In practice the port can be substituted by a longitudinal homogeneous waveguide connected to the structure. You will need at least one port (either waveguide port or discrete port) or a plane wave excitation source to feed the structure, before starting a solver run.
 classdef Port < handle
     %% CST Interface specific functions.

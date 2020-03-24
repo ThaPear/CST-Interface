@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Use this to change the color order for the color-by-value field plots.
 classdef ColorRamp < handle
     %% CST Interface specific functions.

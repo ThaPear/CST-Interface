@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % The background object defines the kind of material that surrounds your structure. And defines its volume. By default the volume is defined by the maximum distances of your structure.
 classdef Background < handle
     %% CST Interface specific functions.
@@ -121,6 +125,17 @@ classdef Background < handle
             obj.AddToHistory(['.ApplyInAllDirections "', num2str(flag, '%.15g'), '"']);
             obj.applyinalldirections = flag;
         end
+        %% Undocumented functions.
+        % Found in template: 'Planar Coupler & Divider.cfg'
+        function HeatCapacity(obj, heatcapacity)
+            obj.AddToHistory(['.HeatCapacity "', num2str(heatcapacity, '%.15g'), '"']);
+            obj.heatcapacity = heatcapacity;
+        end
+        % Found in template: 'Planar Coupler & Divider.cfg'
+        function Rho(obj, rho)
+            obj.AddToHistory(['.Rho "', num2str(rho, '%.15g'), '"']);
+            obj.rho = rho;
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -143,6 +158,9 @@ classdef Background < handle
         thermaltype
         thermalconductivity
         applyinalldirections
+        
+        heatcapacity
+        rho
     end
 end
 

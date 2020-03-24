@@ -3,6 +3,10 @@
 %%% Author: Alexander van Katwijk                                       %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Offers a set of tools to find or set specific points, edges or areas.
 classdef Pick < handle
     %% CST Interface specific functions.
@@ -395,7 +399,7 @@ classdef Pick < handle
             edgeid = str2double(edgeid);
             vertexid = str2double(vertexid);
         end
-        function [shapename, faceid] = GetPickedFaceByIndex(obj, index, faceid)
+        function [shapename, faceid] = GetPickedFaceByIndex(obj, index)
             % Returns the shapename of a picked face. The face id is returned through the argument
             % list. The picked face is specified by index starting with 0.
             functionString = [...

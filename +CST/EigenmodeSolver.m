@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % This is the object that controls some of the eigenmode solver settings and provides access to basic eigenmode solver results. Currently most VBA settings for the eigenmode solvers are controled by the Solver Object.
 classdef EigenmodeSolver < handle
     %% CST Interface specific functions.

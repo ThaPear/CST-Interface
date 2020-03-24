@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % With the optimizer object you may start an optimization run. For the optimization you have to define a set of parameters that will be changed by the optimizer and at least one goal function that is tried to be optimized.  The kind of goal function depends on the chosen solver type.
 classdef Optimizer < handle
     %% CST Interface specific functions.

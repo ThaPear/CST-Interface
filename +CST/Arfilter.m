@@ -4,6 +4,10 @@
 %%% Warning: Untested                                                   %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % Defines the settings for the Ar-filter. Ar-filters may be applied to time signals at the ports, probe signals or current and voltage monitor signals. You may define different settings for port, probe and monitor signals. An Ar-filter run can be started by using the PostProcess1D object.
 classdef Arfilter < handle
     %% CST Interface specific functions.

@@ -1,7 +1,11 @@
 clear;
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK> 
+
 % txt = clipboard('paste');
-txt = fileread('CST Interface/Txt/plot.txt');
+txt = fileread('CST-Interface/Txt/material.txt');
 split = strsplit(txt, newline);
 % split = strrep(split, split{2}, '');
 split = strrep(split, char(13), '');
@@ -21,7 +25,7 @@ objecttype = strrep(split{i}, ' Object', '');
 objectdescr = split{i+1};
 
 % Open output file.
-hOutfile = fopen(['CST Interface/', objecttype, '.m'], 'wt');
+hOutfile = fopen(['CST-Interface/', objecttype, '.m'], 'wt');
 if(hOutfile == -1)
     warning('Error opening file %s', ['', objecttype, '.m']);
     return;
@@ -79,6 +83,7 @@ while(i <= length(methodlines))
     bropen = strfind(line, '(');
     brclose = strfind(line, ')');
     if(~isempty(bropen))
+        % If it errors here, then the txt is missing a closing bracket on the current line.
         args = line(bropen(1)+1:brclose(end)-1);
         if(~isempty(args))
             % Detect enums that use brackets.
@@ -421,7 +426,7 @@ if(examplesstartI <= length(split))
 end
 fclose(hOutfile);
 
-open(['CST Interface/', objecttype, '.m']);
+open(['CST-Interface/', objecttype, '.m']);
 
 
 

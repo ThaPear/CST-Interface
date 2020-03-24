@@ -1,0 +1,2714 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Material | Material
+
+Material Object
+
+The Material Object lets you define or change materials. Each material defines the material constants of the associated solids.
+
+General
+
+Appearance
+
+Basic Material Parameters
+
+Surface Impedance / Thin Panel Materials
+
+Conductivity
+
+Electric Conductivity
+
+Magnetic Conductivity
+
+Dispersion
+
+Tensor Formulas
+
+Spatially Varying Materials
+
+Space Map Based Materials
+
+Raytracing Specific Materials
+
+Temperature Dependent Materials
+
+Nonlinear Materials
+
+Nonlinear Stacking Properties
+
+Particle-material Interactions
+
+Thermal Material Properties
+
+Mechanics Material Properties
+
+Flow Resistance Material Properties
+
+Queries
+
+Default Settings
+
+General Methods
+
+%% General
+
+Reset
+
+Sets all internal settings to their defaults.
+
+ 
+
+Create
+
+Creates a new material. All necessary settings have to be made previously.
+
+ 
+
+Name ( name name )
+
+Sets the name for the new material to be created using .Create.
+
+ 
+
+Folder ( name foldername )
+
+Sets the name for the new material folder to be created using .Create. If the name is empty, then the material does not belong to a folder.
+
+ 
+
+Type ( enum{"PEC", "Normal", "Anisotropic", "Lossy Metal", "Corrugated wall", "Ohmic sheet", "Tensor formula", "Nonlinear"} key )
+
+Sets the type for the material to be defined.  
+
+ 
+
+MaterialUnit ( enum Key, enum Unit )
+
+Sets frequency, time and length units for the material to be defined.
+
+All relevant units for the frequency, like for the reference tangent delta (electric or magnetic), for the dispersion, tangent delta or surface impedance list will be displayed and interpreted accordingly to this frequency scale unit.
+
+In similar way all (possibly) corrugation properties or coating of the material will be will be displayed and interpreted accordingly to the given length scale unit.
+
+Similar considerations apply to the time dependent material properties which will be displayed and interpreted accordingly to the given time scale unit.
+
+The available combination of Key and Unit are as follows:
+
+if the Key is "Frequency", the available enum values for the Unit  field are { "Hz", "KHz", "MHz", "GHz", "THz", "PHz" };
+
+if the Key is "Geometry", the available enum values for the Unit  field are { "m", "cm", "mm", "um", "nm", "ft", "mil", "in" };
+
+if the Key is "Time", the available enum values for the Unit  field are { "fs", "ps", "ns", "us", "ms", "s" }.
+
+if the Key is "Temperature", the available enum values for the Unit  field are { "Kelvin", "Celsius" or "Fahrenheit" }.
+
+Once that frequency, time, length and temperature units are defined by means of  MaterialUnit command, successive project changes in terms of global unit scale will not affect the material properties.
+
+ 
+
+Delete ( name name )
+
+Deletes an existing material with the specified name and all shapes the material is assigned to.
+
+ 
+
+Rename ( name sOldName, name sNewName )
+
+Renames the object specified by sOldName to sNewName.
+
+ 
+
+NewFolder ( name foldername )
+
+Creates a new folder with the given name.
+
+ 
+
+DeleteFolder ( name foldername )
+
+Deletes an existing folder and all the containing elements.
+
+ 
+
+RenameFolder ( name oldFoldername, name newFoldername )
+
+Changes the name of an existing folder.
+
+ 
+
+%% Appearance
+
+ 
+
+Colour ( double red, double green, double blue )
+
+Sets the color for a new material by double values ranging from 0 to 1.
+
+ 
+
+Transparency ( double dValue )
+
+Allows to changes the appearance from opaque (dValue = 0) to a transparency value up to 100. Setting will be ignored if .Wireframe is set.
+
+ 
+
+Wireframe ( bool switch )
+
+If switch is True, all solids associated with this material will be displayed as a wireframe.
+
+ 
+
+Reflection( bool switch )
+
+If switch is True, all solids associated with this material are displayed using reflective surfaces (usually applied to metallic surfaces).
+
+ 
+
+Allowoutline( bool switch )
+
+Determine whether outlines are allowed to be drawn for solids belonging to this material. The actual visibility of outlines also depends on the setting of the global outline state as well as the current selection. If switch is False, outlines will never be drawn for the corresponding solids.
+
+ 
+
+Transparentoutline( bool switch )
+
+If switch is True, outlines are also displayed when the corresponding solids are drawn transparently.
+
+ 
+
+ChangeColour
+
+Changes the appearance for an existing material specified by the .Name method to the settings given by the .Colour, .Transparency or .Wireframe method. Changes to other parameters will not be taken. The execution of this method will - in contrast to .Create - not be regarded as a structural change and though not require the deletion of results.
+
+ 
+
+%% Basic Material Parameters
+
+ 
+
+Epsilon ( double dValue )
+
+Defines the relative electric permittivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal electric permittivity tensor can be set with the respective methods.
+
+ 
+
+EpsilonX ( double dValue )
+
+Defines the relative electric permittivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal electric permittivity tensor can be set with the respective methods.
+
+ 
+
+EpsilonY ( double dValue )
+
+Defines the relative electric permittivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal electric permittivity tensor can be set with the respective methods.
+
+ 
+
+EpsilonZ ( double dValue )
+
+Defines the relative electric permittivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal electric permittivity tensor can be set with the respective methods.
+
+ 
+
+Mu ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+MuX ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+MuY ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+MuZ ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+Rho ( double dValue )
+
+(*) property shared among all available material sets property shared among all available material sets
+
+Sets the material density value of the material in kg/m³, i.e. used for SAR calculations.
+
+This setting is important for transient thermal simulations.
+
+ 
+
+AddCoatedMaterial ( double materialname, double thickness )
+
+Used for the coated materials feature. This function defines one layer. Materialname is the name of the material which is used for the coat and thickness defines the thickness of this material.
+
+ 
+
+ReferenceCoordSystem ( enum{"Global", "Solid"} key )
+
+Specifies whether the given material settings are to be interpreted in global coordinates or relative to local solid coordinates. By default, global coordinate settings are considered. The advantage of local solid coordinates is that if the material is applied to multiple solids the material orientation does not change when single solids are transformed. This is useful, in particular, for anisotropic materials. This setting will be ignored for other material types.
+
+Please note that local solid coordinate settings are considered only by tetrahedral solvers.
+
+ 
+
+CoordSystemType ( enum{"Cartesian", "Cylindrical", "Spherical"} key )
+
+Defines the type of the coordinate system in which the material settings are given. This is meaningful, in particular, for anisotropic materials. This setting will be ignored for other material types. By default, all material settings are interpreted in Cartesian coordinates (x/y/z or u/v/w depending on the reference coordinate system specified under ReferenceCoordSystem). It is also possible to prescribe settings (like permeability, permittivity or conductivity) in cylindrical or spherical coordinates. To this end, the same commands are used (e.g. EpsilonX/EpsilonY/EpsilonZ), but they are interpreted as (R/phi/z) or (r/theta/phi), respectively.
+
+For cylindrical coordinates (R,phi,z), the first component means the radial direction, where the radius R is the distance to the z/w axis. The second component prescribes the angular direction, where the azimuth phi is the angle to the x-z-plane (u-w-plane). The third component is the longitudinal direction and coincides with the Cartesian z/w component.
+
+For spherical coordinates (r,theta,phi), the radius r specifies the distance to the origin, theta is the inclination (zenith angle) measured from the z-axis, and phi is the azimuth (angle to the x-z-plane/u-w-plane).
+
+Please note that non-Cartesian coordinate settings are considered only by tetrahedral solvers.
+
+ 
+
+%% Surface Impedance / Thin Panel Materials
+
+ 
+
+Corrugation  ( double depth, double gapwidth, double toothwidth )
+
+Sets the parameter for the Corrugated wall material type, which is a planar surface with a periodically repeated rectangular corrugation with a certain depth, gapwidth, and a small toothwidth. The corrugation depth must be much larger than the corrugation width for the model to be valid. The number of corrugations per wavelength should be large, with ten per wavelength being the lowest limit. There is a resonance in the effective material behavior when the corrugation depth is close to a quarter wavelength and its odd multiples.
+
+When truly modeling these surfaces the mesh would end up with a very high number of mesh cells in order to represent all details. However, in many cases such as S-Parameter calculations  the exact field solution inside the corrugation is not of interest. Then it is sufficient to replace the real corrugation by a appropriate material with the same macroscopic properties. Much like the lossy metal, a surface impedance model is used to relate fields on the corrugated wall surface.
+
+The theoretical formula for corrugated wall surface impedance may be directly computed by the frequency domain solvers but due to its high non-linear frequency dependence is not straightforward applicable to the transient solver. To this purpose a specific fitting and representation of the impedance, based on a proprietary resonance expansion mode algorithm, will be automatically computed. This model leads to an accurate representation and results within the simulation frequency bandwidth.
+
+Please note that this type of material is available only for the transient solver and the tetrahedral frequency domain solver.
+
+ 
+
+OhmicSheetImpedance ( double resistance, double reactance )
+
+Defines the impedance value (resistance and reactance) of an Ohmic sheet material type. A surface impedance model is used to relate fields on the ohmic sheet surface. The complex impedance will be assumed defined or measured in correspondence of the reference frequency provided by the command OhmicSheetFreq.
+
+Frequency domain solvers may assume and compute a constant (i.e. frequency independent) complex impedance for the Ohmic sheet. This constant model may be generally "non-physical" (due to the so called Kramers-Kronig relations) and may lead to "non-causal" effects. Therefore, for the transient solver, a first order (Debye) model of the impedance will be assumed which exactly interpolates the user given impedance in correspondence of the reference frequency.
+
+Please note that this type of material is available only for the transient solver and the tetrahedral frequency domain solver.
+
+To define a frequency-dependent ohmic sheet, please use the command .SetTabulatedSurfaceImpedanceModel with a "Transparent" surface impedance model.
+
+ 
+
+OhmicSheetFreq ( double frequency )
+
+Defines the reference frequency value of an Ohmic sheet material type where the corresponding impedance will be defined or measured. This value will be used to compute the first order (Debye) model and to exactly interpolate the user given impedance value (resistance and reactance).
+
+In case the reference frequency will not be provided the center value of the frequency simulation range will be automatically assumed.
+
+Please note that this type of material is available only for the transient solver and the tetrahedral frequency domain solver.
+
+ 
+
+SetTabulatedSurfaceImpedanceModel ( enum{"Opaque", "Transparent"} model )
+
+Enables an isotropic Tabulated surface impedance (resistance and reactance versus frequency), where model defines the way fields on opposite sides of infinitely thin sheets couple. With an "Opaque" model, there is no coupling between front and back side of surface impedance sheets, while "Transparent" means that the electric field on both sides of a sheet is the same. The actual material data is defined by calling .AddTabulatedSurfaceImpedanceValue.
+
+Please note that this type of material is available only for the transient solver and the tetrahedral frequency domain solver.
+
+ 
+
+AddTabulatedSurfaceImpedanceFittingValue ( double frequency, double resistance, double reactance, double weight)
+
+Defines an entry of the frequency-dependent, tabulated impedance values by means of resistance and reactance of a Tabulated surface impedance material type. The frequency is given in the currently active unit for frequencies. See also .SetTabulatedSurfaceImpedanceModel.
+
+Moreover a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+Please note that this type of material is available only for the transient solver and the tetrahedral frequency domain solver.
+
+ 
+
+AddTabulatedSurfaceImpedanceValue ( double frequency, double resistance, double reactance )
+
+Defines an entry of the frequency-dependent, tabulated impedance values by means of resistance and reactance of a Tabulated surface impedance material type. The frequency is given in the currently active unit for frequencies. See also .SetTabulatedSurfaceImpedanceModel.
+
+Moreover a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+Please note that this type of material is available only for the transient solver and the tetrahedral frequency domain solver.
+
+ 
+
+DispersiveFittingSchemeTabSI ( enum {"Nth Order"} key )
+
+Sets the required fitting scheme for the tabulated surface impedance. Actually only Nth Order general fitting is allowed, due to its generality and wide application range.
+
+ 
+
+MaximalOrderNthModelFitTabSI ( int iValue )
+
+Set the maximum allowed order for the nth fit interpolation scheme ("Nth Order"), for the tabulated surface impedance. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+UseOnlyDataInSimFreqRangeNthModelTabSI ( bool switch )
+
+Allow the nth order fit interpolation scheme ("Nth Order"), for the tabulated surface impedance, to use only the frequency data points that lie within the "frequency range settings" defined by the user. Activating this switch enables an accurate data fitting of the material resonances which occur in the simulation bandwidth of interest using possibly a reduced number of poles and zeroes with respect to the complete data fitting. And this, in turn, translates into benefits for the simulation complexity in terms of memory and computational time.
+
+ 
+
+ErrorLimitNthModelFitTabSI ( double limit )
+
+Defines the error limit goal (threshold) for the nth fit interpolation scheme ("Nth Order"), for the tabulated surface impedance. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+TabulatedCompactModel ( bool switch )
+
+Set the current material as tabulated compact model. The complete material parameters will be specified by means of the following commands.
+
+ 
+
+ResetTabulatedCompactModelList
+
+Remove any previously defined tabulated compact model item.
+
+ 
+
+SetTabulatedCompactModelImpedance ( double impedance_p1, double impedance_p2 )
+
+Specify the port reference impedance for the compact model S parameter. In case of symmetric model (i.e. the two ports are completely equivalent and they could be exchanged without altering the model) only one impedance is required. The command SetSymmTabulatedCompactModelImpedance allows this simplified description assuming impedance_p1 = impedance_p2.
+
+ 
+
+SetSymmTabulatedCompactModelImpedance ( double impedance_p )
+
+Specify the port reference impedance for the compact model S parameter. In case of symmetric model (i.e. the two ports are completely equivalent and they could be exchanged without altering the model) only one impedance is required. The command SetSymmTabulatedCompactModelImpedance allows this simplified description assuming impedance_p1 = impedance_p2.
+
+ 
+
+AddTabulatedCompactModelItem ( double frequency, double S11_r, double S11_i, double S21_r, double S21_i, double S12_r, double S12_i, double S22_r, double S22_i, double weight )
+
+Defines an entry of the frequency-dependent tabulated compact model values by means of the real and imaginary part of the S parameter. The frequency is given in the currently active unit for frequencies. Moreover a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+In case of symmetric compact model (i.e. the two sides are completely equivalent and they could be exchanged without altering the model) only the S11 and S21 parameter needs to be specified. The remaining parameters will be computed by symmetry assuming S22 = S11 and S12 = S21.
+
+ 
+
+
+AddSymmTabulatedCompactModelItem ( double frequency, double S11_r, double S11_i, double S21_r, double S21_i, double weight )
+
+Defines an entry of the frequency-dependent tabulated compact model values by means of the real and imaginary part of the S parameter. The frequency is given in the currently active unit for frequencies. Moreover a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+In case of symmetric compact model (i.e. the two sides are completely equivalent and they could be exchanged without altering the model) only the S11 and S21 parameter needs to be specified. The remaining parameters will be computed by symmetry assuming S22 = S11 and S12 = S21.
+
+ 
+
+TabulatedCompactModelAnisotropic ( bool switch )
+
+Set the current material as tabulated compact model with anisotropic model. For further information see the Material Overview (HF) - Thin Panel section.
+
+In case of isotropic material the tangential field components (denoted as "u" and "v") at the ports are completely equivalent and interchangeable. The material is therefore characterized by the four S11, S21, S12 and S22 parameters.
+
+In case of anisotropic material the "u" and "v" field components possibly behave differently and the material has to be treated as a 4 port system. The model can be described by a S block matrix where each block is a 2x2 S parameter matrix for the selected pair of field components (uu, uv, vu and vv) leading to 16 parameters in a total.
+
+ 
+
+AddAnisoTabulatedCompactModelItem ( enum entry_block, double frequency, double S11_r, double S11_i, double S21_r, double S21_i, double S12_r, double S12_i, double S22_r, double S22_i, double weight )
+
+The two commands are a generalization of the previous ones and allow the specification of a general anisotropic compact model (see the TabulatedCompactModelAnisotropic command). In this case the S parameters need to be specified separately for the four field component combinations. Denoting as "u" and "v" the tangential field components leads to the specification of the "uu", "vu", "uv", "vv" blocks - 16 S parameters in a total. For further information see the Material Overview (HF) - Thin Panel section.
+
+The entry_block key (belonging to the set "uu", "vu", "uv", "vv") selects the corresponding matrix block (i.e. the tangential components).
+
+The frequency is given in the currently active unit for frequencies and to each frequency the real and imaginary part of the S parameter is specified.
+
+Moreover a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+In case of symmetric compact model (i.e. the two sides of the thin panel are completely equivalent and they could be exchanged without altering the model) only the S11 and S21 parameter needs to be specified for each entry_block key ("uu", "vu", "uv", "vv"). The remaining parameters will be computed by symmetry assuming S22 = S11 and S12 = S21. The AddAnisoSymmTabulatedCompactModelItem allows this more compact representation.
+
+ 
+
+AddAnisoSymmTabulatedCompactModelItem ( enum entry_block, double frequency, double S11_r, double S11_i, double S21_r, double S21_i, double weight )
+
+The two commands are a generalization of the previous ones and allow the specification of a general anisotropic compact model (see the TabulatedCompactModelAnisotropic command). In this case the S parameters need to be specified separately for the four field component combinations. Denoting as "u" and "v" the tangential field components leads to the specification of the "uu", "vu", "uv", "vv" blocks - 16 S parameters in a total. For further information see the Material Overview (HF) - Thin Panel section.
+
+The entry_block key (belonging to the set "uu", "vu", "uv", "vv") selects the corresponding matrix block (i.e. the tangential components).
+
+The frequency is given in the currently active unit for frequencies and to each frequency the real and imaginary part of the S parameter is specified.
+
+Moreover a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+In case of symmetric compact model (i.e. the two sides of the thin panel are completely equivalent and they could be exchanged without altering the model) only the S11 and S21 parameter needs to be specified for each entry_block key ("uu", "vu", "uv", "vv"). The remaining parameters will be computed by symmetry assuming S22 = S11 and S12 = S21. The AddAnisoSymmTabulatedCompactModelItem allows this more compact representation.
+
+ 
+
+MaximalOrderFitTabulatedCompactModel( int iValue )
+
+Set the maximum allowed order for the fit interpolation scheme for the tabulated compact model. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+UseOnlyDataInSimFreqRangeTabulatedCompactModel ( bool switch )
+
+Allow the fit interpolation scheme for the tabulated compact model, to use only the frequency data points that lie within the "frequency range settings" defined by the user. Activating this switch enables an accurate data fitting of the material resonances which occur in the simulation bandwidth of interest using possibly a reduced number of poles and zeroes with respect to the complete data fitting. And this, in turn, translates into benefits for the simulation complexity in terms of memory and computational time.
+
+ 
+
+ErrorLimitFitTabulatedCompactModel ( double limit )
+
+Defines the error limit goal (threshold) for the fit interpolation scheme for the tabulated compact model. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+LossyMetalSIRoughness ( double roughness)
+
+Defines the roughness value for the lossy metal surface impedance model. The surface profile may be assumed as random and the surface heights are modelled according to a normal distribution. The roughness value corresponds to the surface height variance (root mean square Rq - standard DIN EN ISO 4287). The length unit is selected with the method MaterialUnit.
+
+The roughness effect is predicted from this only one single parameter using the Gradient Model. According to this physical and Maxwell´s equation based formulation an equivalent frequency dependent impedance is computed accounting for the increased total loss due to surface roughness. See the Gradient Model description in the Material Overview (HF) - Lossy metal section for more information.
+
+ 
+
+%% Conductivity
+
+ 
+
+%% Electric Conductivity
+
+ 
+
+Sigma ( double dValue )
+
+Set the electric conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDGiven is set to True.
+
+ 
+
+SigmaX ( double dValue )
+
+Set the electric conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDGiven is set to True.
+
+ 
+
+SigmaY ( double dValue )
+
+Set the electric conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDGiven is set to True.
+
+ 
+
+SigmaZ ( double dValue )
+
+Set the electric conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDGiven is set to True.
+
+ 
+
+SetElParametricConductivity ( bool switch )
+
+Enables or disables the parametric electric conductivity property. This allows to specify special conductivity dependencies on the time as in case of the time dependent conductivity, or on the electric field as in case of the nonlinear J-E curve. To guarantee a consistent material definition the material has to be defined as a conductive one (therefore it has no effect if TanDGiven is set to True) and the conductivity provided with the Sigma command (or SigmaX / SigmaY / SigmaZ in case of anisotropic material) should be greater than zero.
+
+ 
+
+AddJEValue ( double dJValue, double dEValue)
+
+This method enables you to define a specific nonlinear J-E curve by adding point by point. Based on this curve, the dependency of electric conductivity on E-field is computed. Has no effect if TanDGiven is set to True. Please note that not all solvers can currently support the nonlinear electric conductivity.
+
+ 
+
+ResetJEList
+
+Deletes the nonlinear J-E curve.
+
+ 
+
+ResetElTimeDepCond
+
+Deletes the time dependent conductivity curve.
+
+ 
+
+AddElTimeDepCondValue( double dTime, double dCondValue)
+
+This method enables you to define a specific time dependent conductivity curve by adding point by point. This function should be used for normal (isotropic) material.
+
+The dCondValue will be identically assigned to the three (x, y, z) components in correspondence of the given dTime value. The dTime unit will be assumed accordingly to the selected time unit (see the MaterialUnit command) whereas the conductivity unit is S/m.
+
+Based on this curve the dependency of the electric conductivity on time is computed. Please note that at the moment only the transient solver supports this material property.
+
+ 
+
+AddElTimeDepCondAnisoValue( double dTime, double dCondValueX, double dCondValueY, double dCondValueZ )
+
+This method is the counterpart of the AddElTimeDepCondValue method for anisotropic material. The dCondValueX, dCondValueY and dCondValueZ will be assigned to the three (x, y, z) components respectively, in correspondence of the given dTime value. The dTime  unit will be assumed accordingly to the selected time unit (see the MaterialUnit command) whereas the conductivity unit is S/m.
+
+Based on this curve, the dependency of the electric conductivity on time is computed. Please note that at the moment only the transient solver supports this material property.
+
+ 
+
+LoadElTimeDepConductivity ( name Filename,  enum tUnit )
+
+Specifies the file which describes the electric time dependent conductivity. The file name could be provided as absolute path or as a path relative to the project folder and the file must be available at the VBA command execution time.
+
+In case of normal material the file name has a two column format, the first one specifying the time and the second one the electrical conductivity.
+
+The time unit reading the file is specified by the tUnit parameter, belonging to the set { "fs", "ps", "ns", "us", "ms" or "s" }. The conductivity unit is assumed in any case as S/m.
+
+In case of anisotropic material the file has 4 columns, the first one specifying the time and the other three the conductivity for the x, y and z direction.
+
+At the moment only the transient solver supports this material property.
+
+ 
+
+TanD ( double dValue )
+
+Set the electric tangent(delta). Only valid if TanDGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDX ( double dValue )
+
+Set the electric tangent(delta). Only valid if TanDGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDY ( double dValue )
+
+Set the electric tangent(delta). Only valid if TanDGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDZ ( double dValue )
+
+Set the electric tangent(delta). Only valid if TanDGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDGiven ( bool switch )
+
+There are two ways to define lossy materials. Either a value for conductivity (s) can be given, or a value for tangent(delta). The two values are correlated by: tan(delta) = s/(e * e0 * 2 * p * f). If switch is True and though tan(delta) is used to define losses,  the frequency for which tan(delta) has been determined must been given by the TanDFreq method.
+
+ 
+
+TanDFreq ( double dValue )
+
+If TanDGiven is set to True, specify the frequency at which tan(delta) has been determined.
+
+ 
+
+TanDModel ( enum {"ConstSigma", "ConstTanD"} key )
+
+Sets the model type for tan(delta) of a material.
+
+ 
+
+EnableUserConstTanDModelOrderEps ( bool switch )
+
+If set to "True" the model order for the ConstTanD model will be selected according to the ConstTanDModelOrderEps method. If set to "False" the model order will be automatically determined by the fitting algorithm, selecting the best choice between optimal approximation and smallest possible number of poles.
+
+ 
+
+ConstTanDModelOrderEps ( int iValue )
+
+Sets the order for the ConstTanD model which corresponds to the number of poles used in the internal material representation. An order=1 corresponds to a Debye model. The command will be ignored if EnableUserConstTanDModelOrderEps is set to "False", in which case the model order will be automatically determined by the fitting algorithm.
+
+ 
+
+%% Magnetic Conductivity
+
+ 
+
+SigmaM ( double dValue )
+
+Set the magnetic conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDMGiven is set to True.
+
+ 
+
+SigmaMX ( double dValue )
+
+Set the magnetic conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDMGiven is set to True.
+
+ 
+
+SigmaMY ( double dValue )
+
+Set the magnetic conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDMGiven is set to True.
+
+ 
+
+SigmaMZ ( double dValue )
+
+Set the magnetic conductivity. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. Has no effect if TanDMGiven is set to True.
+
+ 
+
+SetMagParametricConductivity ( bool switch )
+
+Enables or disables the parametric magnetic conductivity property. This allows to specify special conductivity dependencies on the time as in case of the time dependent conductivity. To guarantee a consistent material definition the material has to be defined as a conductive one (therefore it has no effect if TanDMGiven is set to True) and the conductivity provided with the SigmaM command (or SigmaMX / SigmaMY / SigmaMZ in case of anisotropic material) should be greater than zero.
+
+ 
+
+ResetMagTimeDepCond
+
+Deletes the time dependent conductivity curve.
+
+ 
+
+AddMagTimeDepCondValue( double dTime, double dCondValue)
+
+This method enables you to define a specific time dependent conductivity curve by adding point by point. This function should be used for normal (isotropic) material.
+
+The dCondValue will be identically assigned to the three (x, y, z) components in correspondence of the given dTime value. The dTime unit will be assumed accordingly to the selected time unit (see the MaterialUnit command) whereas the conductivity unit is 1/Sm.
+
+Based on this curve the dependency of the magnetic conductivity on time is computed. Please note that at the moment only the transient solver supports this material property.
+
+ 
+
+AddMagTimeDepCondAnisoValue( double dTime, double dCondValueX, double dCondValueY, double dCondValueZ )
+
+This method is the counterpart of the AddMagTimeDepCondValue method for anisotropic material. The dCondValueX, dCondValueY and dCondValueZ will be assigned to the three (x, y, z) components respectively, in correspondence of the given dTime value. The dTime  unit will be assumed accordingly to the selected time unit (see the MaterialUnit command) whereas the conductivity unit is 1/Sm.
+
+Based on this curve, the dependency of the magnetic conductivity on time is computed. Please note that at the moment only the transient solver supports this material property.
+
+ 
+
+LoadMagTimeDepConductivity ( name Filename,  enum tUnit )
+
+Specifies the file which describes the magnetic time dependent conductivity. The file name could be provided as absolute path or as a path relative to the project folder and the file must be available at the VBA command execution time.
+
+In case of normal material the file name has a two column format, the first one specifying the time and the second one the magnetic conductivity.
+
+The time unit reading the file is specified by the tUnit parameter, belonging to the set { "fs", "ps", "ns", "us", "ms" or "s" }. The conductivity unit is assumed in any case as 1/Sm.
+
+In case of anisotropic material the file has 4 columns, the first one specifying the time and the other three the conductivity for the x, y and z direction.
+
+At the moment only the transient solver supports this material property.
+
+ 
+
+TanDM ( double dValue )
+
+Set the magnetic tan(delta). Only valid if TanDMGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDMX ( double dValue )
+
+Set the magnetic tan(delta). Only valid if TanDMGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDMY ( double dValue )
+
+Set the magnetic tan(delta). Only valid if TanDMGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDMZ ( double dValue )
+
+Set the magnetic tan(delta). Only valid if TanDMGiven is set to True. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods.
+
+ 
+
+TanDMGiven ( bool switch )
+
+As for electric conductivity, there are two ways to define magnetic lossy materials. If switch is True, tan(delta) is used to define losses. Usage of the TanDMFreq method is mandatory in this case.
+
+ 
+
+TanDMFreq ( double dValue )
+
+If TanDMGiven is set to True, specify the frequency at which tan(delta) has been determined.
+
+ 
+
+TanDMModel ( enum {"ConstSigma", "ConstTanD"} key )
+
+Sets the model type for tan(delta) of a material.
+
+ 
+
+EnableUserConstTanDModelOrderMu ( bool switch )
+
+If set to "True" the model order for the ConstTanD model will be selected according to the ConstTanDModelOrderMu method. If set to "False" the model order will be automatically determined by the fitting algorithm, selecting the best choice between optimal approximation and smallest possible number of poles.
+
+ 
+
+ConstTanDModelOrderMu ( int iValue )
+
+Sets the order for the ConstTanD model which corresponds to the number of poles used in the internal material representation. An order=1 corresponds to a Debye model. The command will be ignored if EnableUserConstTanDModelOrderMu is set to "False", in which case the model order will be automatically determined by the fitting algorithm.
+
+ 
+
+%% Dispersion
+
+ 
+
+DispModelEps ( enum{"None", "Debye1st", "Debye2nd", "Drude", "Lorentz", "General1st", "General2nd, General", "NonLinear2nd", "NonLinear3rd", "NonLinearKerr", "NonLinearRaman"} key )
+
+Sets the dispersion model for dielectric / magnetic dispersion.
+
+These material dispersions are specified by several coefficients, describing the corresponding dispersive behavior. Please find the meaning of the coefficients in the following list, for epsilon and mu respectively. Note, that in case of general 1st or 2nd order models the parameters have no special physical meaning, but represent mathematical coefficients of general polynomials.
+
+The following table describes the coefficient for the linear dispersive materials.
+
+                        Coeff1              Coeff2              Coeff3                  Coeff4
+
+Debye 1st order         Static value        Relaxation time     -                       -
+
+Debye 2nd order         Static value 1      Static value  2     Relaxation time 1       Relaxation time 2
+
+Drude                   Plasma freq.        Collision freq.     -                       -
+
+Lorentz                 Static epsilon      Resonance freq.     Damping freq.           -
+
+Gyrotropic Gauss        Landé factor        Sat. magnetization  Resonance line width    Magnetic field vector
+
+Gyrotropic SI           Larmor freq.        Gyrotropic freq.    Damping factor          Biasing direction
+
+General 1st order       Alpha0              Beta0               -                       -
+
+General 2nd order       Alpha0              Alpha1              Beta0                   Beta1
+
+General                 Higher order dispersion model is specified with a summation of first and second order poles using the AddDispEpsPole1stOrder or AddDispEpsPole2ndOrder methods for the dielectric dispersion or AddDispMuPole1stOrder or AddDispMuPole2ndOrder methods for the magnetic dispersion, respectively.
+
+In case of the nonlinear dispersive material the parameter correspondence is described by the following table.
+
+                        Coeff0              Coeff1              Coeff2                  Coeff3      Coeff4
+
+Nonlinear 2nd order     Chi2 value          -                   -                       -           -
+
+Nonlinear 3rd order     Chi3 value          -                   -                       -           -
+
+Nonlinear Kerr          Chi3 infinity value Chi3 static value   Relaxation time         -           -
+
+Nonlinear Raman         Chi3 infinity value Chi3 static value   Plasma freq.        Collision freq. -
+
+ 
+
+DispModelMu ( enum{"None", "Debye1st", "Debye2nd", "Drude", "Lorentz", "Gyrotropic", "General1st", "General2nd", "NonLinear2nd", "NonLinear3rd", "NonLinearKerr", "NonLinearRaman"} key )
+
+See DispModelEps for details.
+
+ 
+
+EpsInfinity ( double dValue )
+
+Define the permittivity high frequency limit for one of the dispersion models specified with the DispModelEps method.
+
+ 
+
+EpsInfinityX ( double dValue )
+
+Define the permittivity high frequency limit for one of the dispersion models specified with the DispModelEps method.
+
+ 
+
+EpsInfinityY ( double dValue )
+
+Define the permittivity high frequency limit for one of the dispersion models specified with the DispModelEps method.
+
+ 
+
+EpsInfinityZ ( double dValue )
+
+Define the permittivity high frequency limit for one of the dispersion models specified with the DispModelEps method.
+
+ 
+
+DispCoeff0Eps ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0EpsX ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0EpsY ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0EpsZ ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1Eps ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1EpsX ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1EpsY ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1EpsZ ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2Eps ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2EpsX ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2EpsY ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2EpsZ ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3Eps ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3EpsX ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3EpsY ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3EpsZ ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4Eps ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4EpsX ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4EpsY ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4EpsZ ( double dValue )
+
+Define specific dielectric dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelEps method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the EpsInfinity method whereas the DispCoeff0Eps method is used in correspondence of the nonlinear material.
+
+ 
+
+AddDispEpsPole1stOrder ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole1stOrderX ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole1stOrderY ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole1stOrderZ ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole2ndOrder ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole2ndOrderX ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole2ndOrderY ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispEpsPole2ndOrderZ ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the dielectric dispersion and only work together with the "General" model defined with the DispModelEps method. The corresponding infinity value has to be defined with the EpsInfinity method.
+
+ 
+
+AddDispMuPole1stOrder ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole1stOrderX ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole1stOrderY ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole1stOrderZ ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole2ndOrder ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole2ndOrderX ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole2ndOrderY ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+AddDispMuPole2ndOrderZ ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMu method. The corresponding infinity value has to be defined with the MuInfinity method.
+
+ 
+
+MuInfinity ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+MuInfinityX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+MuInfinityY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+MuInfinityZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0Mu ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0MuX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0MuY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0MuZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1Mu ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1MuX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1MuY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1MuZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2Mu ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2MuX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2MuY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2MuZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3Mu ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3MuX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3MuY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3MuZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4Mu ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4MuX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4MuY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4MuZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMu method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MuInfinity method whereas the DispCoeff0Mu method is used in correspondence of the nonlinear material.
+
+ 
+
+UseSISystem ( bool switch )
+
+The Gauss or SI unit system can be selected for different input parameters of the gyrotropic material.
+
+ 
+
+GyroMuFreq ( double dValue )
+
+Reference frequency for the conversion of gyrotropic material parameters given in Gauss units into the SI system.
+
+ 
+
+DispersiveFittingFormatEps( enum Format )
+
+Use this method to specify the data representation of the complex material value eps/mu set with the method AddGeneralDispersionValueEps/AddGeneralDispersionValueMu for the anisotropic material or with the method AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMu for the diagonal anisotropic case.
+
+The available enum values for the Format  field are { "Real_Imag", "Real_Tand" } which enable the complex data to be represented as a (Real, Imaginary) pair or as (Real, Tangent delta) pair respectively
+
+ 
+
+DispersiveFittingFormatMu( enum Format )
+
+Use this method to specify the data representation of the complex material value eps/mu set with the method AddGeneralDispersionValueEps/AddGeneralDispersionValueMu for the anisotropic material or with the method AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMu for the diagonal anisotropic case.
+
+The available enum values for the Format  field are { "Real_Imag", "Real_Tand" } which enable the complex data to be represented as a (Real, Imaginary) pair or as (Real, Tangent delta) pair respectively
+
+ 
+
+AddDispersionFittingValueEps ( double dFrequency, double dRe, double dImordTand, double dWeight  )
+
+Use this method to add a complex material value eps/mu with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMu method to define the components of the diagonal tensor.
+
+This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function DispersiveFittingSchemeEps/DispersiveFittingSchemeMu. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMu.
+
+The provided values are interpreted according to the method DispersiveFittingFormatEps / DispersiveFittingFormatMu. If the "Real_Imag" representation is selected then the complex data are read as (Real, Imag) pair. If instead the "Real_Tand" format is selected the data are read as (Real, Tangent delta) pair and the imaginary part will be automatically computed as Imag = Real * Tangent delta.
+
+ 
+
+AddDispersionFittingValueMu ( double dFrequency, double dRe, double dImordTand, double dWeight  )
+
+Use this method to add a complex material value eps/mu with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMu method to define the components of the diagonal tensor.
+
+This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function DispersiveFittingSchemeEps/DispersiveFittingSchemeMu. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMu.
+
+The provided values are interpreted according to the method DispersiveFittingFormatEps / DispersiveFittingFormatMu. If the "Real_Imag" representation is selected then the complex data are read as (Real, Imag) pair. If instead the "Real_Tand" format is selected the data are read as (Real, Tangent delta) pair and the imaginary part will be automatically computed as Imag = Real * Tangent delta.
+
+ 
+
+AddDispersionFittingValueXYZEps ( double dFrequency, double dReX, double dImXordTandX, double dReY, double dImYordTandY, double dReZ, double dImZordTandZ, double dWeight  )
+
+Use this method to add a complex material value eps/mu with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMu method to define the components of the diagonal tensor.
+
+This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function DispersiveFittingSchemeEps/DispersiveFittingSchemeMu. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMu.
+
+The provided values are interpreted according to the method DispersiveFittingFormatEps / DispersiveFittingFormatMu. If the "Real_Imag" representation is selected then the complex data are read as (Real, Imag) pair. If instead the "Real_Tand" format is selected the data are read as (Real, Tangent delta) pair and the imaginary part will be automatically computed as Imag = Real * Tangent delta.
+
+ 
+
+AddDispersionFittingValueXYZMu ( double dFrequency, double dReX, double dImXordTandX, double dReY, double dImYordTandY, double dReZ, double dImZordTandZ, double dWeight  )
+
+Use this method to add a complex material value eps/mu with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMu method to define the components of the diagonal tensor.
+
+This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function DispersiveFittingSchemeEps/DispersiveFittingSchemeMu. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMu.
+
+The provided values are interpreted according to the method DispersiveFittingFormatEps / DispersiveFittingFormatMu. If the "Real_Imag" representation is selected then the complex data are read as (Real, Imag) pair. If instead the "Real_Tand" format is selected the data are read as (Real, Tangent delta) pair and the imaginary part will be automatically computed as Imag = Real * Tangent delta.
+
+ 
+
+DispersiveFittingSchemeEps ( enum {"Conductivity", "1st Order", "2nd Order", "Nth Order"} key )
+
+Sets the required fitting scheme.
+
+ 
+
+DispersiveFittingSchemeMu ( enum {"Conductivity", "1st Order", "2nd Order", "Nth Order"} key )
+
+Sets the required fitting scheme.
+
+ 
+
+MaximalOrderNthModelFitEps ( int iValue )
+
+Set the maximum allowed order for the nth fit interpolation scheme ("Nth Order"), for the eps or mu interpolation, respectively. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+MaximalOrderNthModelFitMu ( int iValue )
+
+Set the maximum allowed order for the nth fit interpolation scheme ("Nth Order"), for the eps or mu interpolation, respectively. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+UseOnlyDataInSimFreqRangeNthModelEps ( bool switch )
+
+Allow the nth order fit for the eps or mu interpolation scheme, respectively, ("Nth Order") to use only the frequency data points that lie within the "frequency range settings" defined by the user. Activating this switch enables an accurate data fitting of the material resonances which occur in the simulation bandwidth of interest using possibly a reduced number of poles and zeroes with respect to the complete data fitting. And this, in turn, translates into benefits for the simulation complexity in terms of memory and computational time.
+
+ 
+
+UseOnlyDataInSimFreqRangeNthModelMu ( bool switch )
+
+Allow the nth order fit for the eps or mu interpolation scheme, respectively, ("Nth Order") to use only the frequency data points that lie within the "frequency range settings" defined by the user. Activating this switch enables an accurate data fitting of the material resonances which occur in the simulation bandwidth of interest using possibly a reduced number of poles and zeroes with respect to the complete data fitting. And this, in turn, translates into benefits for the simulation complexity in terms of memory and computational time.
+
+ 
+
+UseGeneralDispersionEps ( bool switch )
+
+Use this function to activate/deactivate the user defined dispersion.
+
+ 
+
+UseGeneralDispersionMu ( bool switch )
+
+Use this function to activate/deactivate the user defined dispersion.
+
+ 
+
+%% Tensor Formulas
+
+% The following methods apply if used together with .Type("Tensor formula").
+
+ 
+
+TensorFormulaFor ( enum { "epsilon_r", "mu_r"} key )
+
+Call to begin the definition of a dispersive material, the material properties of which are described by complex tensors with each entry given by a formula. You may either define the relative permittivity or permeability, or both. If not specified otherwise, tensor values on its diagonal will be interpreted as One, and other entries as Zero. An alignment vector can be specified independently for each material property to rotate the tensor. Details are given below.
+
+ 
+
+TensorFormulaReal ( int row, int column, expression formula )
+
+Use this method to continue the definition of a dispersive material's complex tensor. Provide the formula for the real part's value at the given row and column. The character "f" is used as a placeholder for the frequency in Hz. The real part of the tensor is one on the main diagonal and zero elsewhere if not specified. Admissible values for row and column are 0, 1, and 2.
+
+ 
+
+TensorFormulaImag ( int row, int column, expression formula )
+
+Use this method to continue the definition of a dispersive material's complex tensor. Provide the formula for the negative imaginary part's value at the given row and column. Since the negative imaginary part is given, formulas on the main diagonal that evaluate to a positive value introduce losses into the structure, while a negative value for the negative imaginary part results in an active material. The character "f" is used as a placeholder for the frequency in Hz. The imaginary part of the tensor is zero if not specified. Values for the integer tensor indices are zero to two.
+
+ 
+
+TensorAlignment ( double w_x, double w_y, double w_z )
+
+Defines a rotation of the tensor. By default, the alignment vector is w_x=0, w_y=0, w_z=1, and no rotation will be applied. The tensor is then taken as-is. For other alignment vectors, the rotation transformation is defined such that it maps the alignment vector onto the z-axis. After applying the tensor, the result vector is mapped back by the inverse transformation.
+
+This allows to specify the formulas for the z-direction, and consider the actual material alignment in space later on. Please note that this approach is for tensors which have a different material behavior in one designated direction and the same properties perpendicular to that direction, as is the case for some material models for biased ferrites. If a rotation around the designated direction is required, it must be entered manually, since the TensorAlignment vector does not provide enough information to define that rotation.
+
+Also note that the alignment vector needs to be set for each material property separately. Thus call TensorAlignment after each call to TensorFormulaFor.
+
+ 
+
+TensorAlignment2 ( double u_x, double u_y, double u_z double v_x, double v_y, double v_z )
+
+Defines a rotation of the tensor. By default, the alignment vectors are u_x=1, u_y=0, u_z=0 and v_x=0, v_y=1, v_z=0 and no rotation will be applied. The tensor is then taken as-is. For other alignment vectors, the rotation transformation is defined such that it maps the local (u, v, w) coordinate system onto the global (x, z, y) coordinate system. After applying the tensor, the result vector is mapped back by the inverse transformation.
+
+This allows to specify the formulas for the z-direction, and consider the actual material alignment in space later on.
+
+Please note that the alignment vector needs to be set for each material property separately. Thus call TensorAlignment2 after each call to TensorFormulaFor.
+
+ 
+
+%% Spatially Varying Materials
+
+% The following methods define a radial spatially varying material whose properties vary according to a function of radius - in case of spherical structure - or of the distance to an axis - in case of cylindrical structure (see also Methods for Spatially Varying Material Geometry Generation in the Mesh Object page). The function domain is normalized within the [0, 1] range where 0 corresponds to the sphere center (or cylindrical axis) and 1 to the structure surface.
+
+% The following commands may be applied to specify the material permittivity or permeability and the electric or magnetic conductivity. The corresponding keys to be used in the following commands are ( enum { "eps" , "mu" , "sigma" , "sigmam" } property ).
+
+ 
+
+ResetSpatiallyVaryingMaterialParameter ( enum { "eps" , "mu" , "sigma" , "sigmam" } property )
+
+Resets the spatially varying definition for the selected material property (permittivity, permeability or electric and magnetic conductivity).
+
+ 
+
+SpatiallyVaryingMaterialModel ( enum { "eps" , "mu" , "sigma" , "sigmam" } property, enum model )
+
+Specifies the radial dependency for the selected material property. The available analytical values for model are the following:
+
+Constant - defines a constant radial dependency.
+
+Luneburg - defines a quadratic radial dependency, as normally encountered for the specification of Luneburg lenses.
+
+PowerLaw - defines a generic polynomial radial dependency.
+
+GradedIndex - defines an hyperbolic radial dependency, as normally encountered for the specification of optical fibers.
+
+ 
+
+SpatiallyVaryingMaterialModelAniso ( enum { "eps" , "mu" , "sigma" , "sigmam" } property, enum { "x" , "y" , "z" } direction, enum model )
+
+This command defines a spatially varying material model exactly as the previous one but applying the model only to a specific (x, y, z) direction. This is useful to define a spatially varying anisotropic material.
+
+ 
+
+AddSpatiallyVaryingMaterialParameter ( enum { "eps" , "mu" , "sigma" , "sigmam" } property, enum key, double value )
+
+With this command it is possible to define the analytical radial dependency. Each function model specified with the .SpatiallyVaryingMaterialModel command comes with its own set of values to be defined in order to completely specify the function. The available set of key is therefore dependent on the selected model. In the following table the complete list is given where f(r) denotes the radial function itself.
+
+Constant
+
+    f(r) = value_constant
+
+    This function  defines a constant value independent on the radius.
+
+    The only key to be provided is the function constant value value_constant.
+
+Luneburg
+
+    f(r) =  value_center + ( value_surface - value_center )  * r^2
+
+    This function defines a quadratic radial dependency, as normally encountered for the specification of Luneburg lenses.
+
+    The keys to be provided are the value at the center of the sphere value_center and the value at the surface of it value_surface.
+
+PowerLaw
+
+    f(r) =  value_axis * ( 1 - delta * r^value_profile ) where  delta = ( value_axis - value_cladding ) / value_axis
+
+    This function defines a generic polynomial radial dependency, generally used for optical fibers.
+
+    The keys to be specified are the value at the axis center value_axis and the value at the surface value_cladding of the fiber. The polynomial dependency is controlled by the value_profile value.
+
+GradedIndex
+
+    f(r) =  value_axis / cosh( arg )^2  where  arg = value_gradient  * r
+
+    This function defines an hyperbolic radial dependency, as normally encountered for the specification of optical fibers.
+
+    The keys to be specified are the value at the axis center value_axis and the slope value value_gradient.
+
+ 
+
+AddSpatiallyVaryingMaterialParameterAniso ( enum { "eps" , "mu" , "sigma" , "sigmam" } property, enum { "x" , "y" , "z" } direction, enum key, double  value )
+
+This command define a (key, value) pair to specify the analytical radial dependency material exactly as the previous one, but applying the properties only to a specific (x, y, z) direction. This is useful to define a spatially varying anisotropic material.
+
+ 
+
+%% Space Map Based Materials
+
+ 
+
+The following methods define a material whose properties vary according to a customized spatial distribution and may be applied to specify the material permittivity or permeability, the electric or magnetic conductivity and the dispersive coefficients.
+
+The corresponding keys to be used in the following commands belong to the property enumeration  ( enum { "eps" , "mu" , "sigma" , "sigmam" , "epsinfinity" , "muinfinity" , "dispcoeff0eps" , "dispcoeff0mu" , "dispcoeff1eps" , "dispcoeff1mu" , "dispcoeff2eps" , "dispcoeff2mu" , "dispcoeff3eps" , "dispcoeff3mu" , "dispcoeff4eps" , "dispcoeff4mu" } property ).
+
+The permittivity and permeability ("eps" , "mu") and electric or magnetic conductivity ("sigma" , "sigmam") are used in case of conductivity models. In case of general dispersion all coefficients required to define the model can be specified as space map. Allowed models are both the linear (Debye first and second order, Drude, Lorentz, general first or second order) and the nonlinear ones (nonlinear second and third order, Kerr and Raman). For all these cases the property dispcoeffXeps and dispcoeffXmu (with X=0...4) are used according to the parameter table of the DispModelEps / DispModelMu commands in the Dispersion section.
+
+ 
+
+ResetSpaceMapBasedMaterial ( enum  property )
+
+Resets the space map based definition for the selected material property (permittivity, permeability, electric and magnetic conductivity or dispersive coefficients).
+
+ 
+
+SpaceMapBasedOperator ( enum property, enum model )
+
+Specifies the spatial model (operator) for the selected material property. The available values for model are the following:
+
+3DConstant - defines a spatial constant dependency.
+
+3DDefault - defines a spatial constant dependency and equal to material default value.
+
+3DImport - the spatial distribution is described in a file.
+
+ 
+
+SpaceMapBasedOperatorAniso ( enum property, enum { "x" , "y" , "z" } direction, enum model )
+
+This command defines a space map based material model exactly as the previous one but applying the model only to a specific (x, y, z) direction. This is useful to define a space map based anisotropic material.
+
+ 
+
+AddSpaceMapBasedMaterialStringParameter ( enum property, enum key, name value )
+
+With this command it is possible to define the spatial distribution. Each model specified with the .SpaceMapBasedOperator command comes with its own set of values to be defined in order to completely specify the function. The available set of key is therefore dependent on the selected model. A String or Double interface is available depending on the specific of key and model. In the following table the complete list is given, where f(x,y,z) denotes the material distribution.
+
+ 
+
+AddSpaceMapBasedMaterialDoubleParameter( enum property, enum key, double value )
+
+With this command it is possible to define the spatial distribution. Each model specified with the .SpaceMapBasedOperator command comes with its own set of values to be defined in order to completely specify the function. The available set of key is therefore dependent on the selected model. A String or Double interface is available depending on the specific of key and model. In the following table the complete list is given, where f(x,y,z) denotes the material distribution.
+
+3DConstant
+
+    f(x,y,z) = value_constant
+
+    This function defines a constant value independent on the position.
+
+    The only key to be provided is the function constant value [double] value_constant.
+
+3DDefault
+
+    f(x,y,z) = value_default
+
+    This function defines a constant value independent on the position and equal to the material default.
+
+    No key is required.
+
+3DImport
+
+    f(x,y,z) is specified on a cartesian grid stored on a file. The required values are obtained interpolating the available ones.
+
+    The only key to be provided is the file name [name] map_filename. The file (with extension .m3d) should be stored in the Model/3D project subfolder.
+
+ 
+
+AddSpaceMapBasedMaterialStringParameterAniso ( enum property, enum { "x" , "y" , "z" } direction, enum key, name  value )
+
+This command defines a (key, value) pair to specify the space map based material exactly as the previous ones but applying the properties only to a specific (x, y, z) direction. This is useful to define a space map based anisotropic material.
+
+ 
+
+AddSpaceMapBasedMaterialDoubleParameterAniso( enum property, enum { "x" , "y" , "z" } direction, enum key, double  value )
+
+This command defines a (key, value) pair to specify the space map based material exactly as the previous ones but applying the properties only to a specific (x, y, z) direction. This is useful to define a space map based anisotropic material.
+
+ 
+
+ConvertMaterialField ( name filename_in, name filename_out )
+
+This is a convenience method to generate the material map file to be used together with the 3DImport operator which can be executed as control macro with the VBA macro editor.
+
+The filename_in corresponds to an ascii file describing the spatial material distribution (see later the available formats).
+
+The filename_out (with optional .m3d extension) will be generated as binary file and stored in the Model/3D project subfolder, according to the 3DImport model requirement.
+
+The import file may be of the following types, FourColumns, FixedGrid and FlexibleGrid.
+
+%
+
+In case of the FourColumns format the data should be saved in four columns each separated by a space or tabulation character.
+
+A template for the FourColumns format is the following:
+
+x [mm]     y [mm]     z [mm]     ValueLabel [ValueUnit]
+
+--------------------------------------------------------------------
+
+x(0)       y(0)       z(0)       val(0)
+
+...
+
+x(n-1)     y(n-1)     z(n-1)     val(n-1)
+
+%
+
+Notes:
+
+The header of the file (the first two lines) is optional and contains information on the geometrical scale unit for the (x,y,z) coordinate.
+
+Please note that the three units can be selected independently. In case the header is missing the user project units are used.
+
+The following lines specify the material value at a given point.
+
+The first three columns contain the (x, y, z) coordinate and are followed by the material property value.
+
+A Cartesian grid will be generated from the available sets of coordinates { x(0)...x(n-1) }, { y(0)...y(n-1) } and { z(0)...z(n-1) } respectively.
+
+If some coordinates are not found in the file and the corresponding values therefore not explicitly defined in the grid, they will be initialized with a 0 value.
+
+This format can be conveniently used together with the ASCII file export for 2D/3D results (or with the equivalent result template). For more information see the Export Plot Data (ASCII / Binary) help page.
+
+With this tool a 3D monitor can be exported (completely or specifying a sub volume) to an ASCII file compatible to the FourColumns format. The exported file can be therefore directly processed by the ConvertMaterialField command.
+
+--------------------------------------------------------------
+
+A template for the FixedGrid format is the following:
+
+# CST material field file
+
+# Format: FixedGrid
+
+# Version: 20150107
+
+# LengthUnit: mm
+
+# SamplePoint x:
+
+x(0) x(1)... x(n-1)
+
+# SamplePoint y:
+
+y(0) y(1)... y(m-1)
+
+# SamplePoint z:
+
+z(0) z(1)... z(l-1)
+
+# Symmetry x: true
+
+# Symmetry y: false
+
+# Symmetry z: true
+
+# Data section:
+
+val(0,0,0) val(1, 0, 0) ... val(n-1, 0, 0)
+
+val(0,1,0) val(1, 1, 0) ... val(n-1, 1, 0)
+
+...
+
+val(0,m-1,0) val(1, m-1, 0) ... val(n-1, m-1, 0)
+
+val(0,0,1) val(1, 0, 1) ... val(n-1, 0, 1)
+
+val(0,1,1) val(1, 1, 1) ... val(n-1, 1, 1)
+
+...
+
+val(0,m-1,0) val(1, m-1, 0) ... val(n-1, m-1, 1)
+
+...
+
+val(0,0,l-1) val(1, 0, l-1) ... val(n-1, 0, l-1)
+
+val(0,1,l-1) val(1, 1, l-1) ... val(n-1, 1, l-1)
+
+...
+
+val(0,m-1,l-1) val(1, m-1, l-1) ... val(n-1, m-1, l-1)
+
+%
+
+Notes:
+
+# LengthUnit: mm
+
+Specifies the geometrical unit for the grid and the sample points. This is an optional field, if not specified the user project unit is used.
+
+# SamplePoint x:
+
+x(0) x(1)... x(n-1)
+
+Specifies the n grid sample points for the x (y, z) axis. The point dimension is interpreted according to the # LengthUnit setting.
+
+The set of sample points in the x, y and z direction generates the complete grid.
+
+# Symmetry x: true
+
+Specifies if the grid should be symmetrized across the x axis, enabling a more compact description of the values. This is an optional field, if not specified no symmetry will be applied.
+
+# Data section:
+
+After this key the value map has to be provided. A set of l block (each with n x m size and corresponding to a given z position) has to be specified.
+
+In this way all n x m x l points of the grid are described.
+
+--------------------------------------------------------------
+
+A template for the FlexibleGrid format is the following:
+
+# CST material field file
+
+# Format: FlexibleGrid
+
+# Version: 20150107
+
+# LengthUnit: mm
+
+# Background: 1.0
+
+# SamplePoint x:
+
+x(0) x(1)... x(n-1)
+
+# SamplePoint y:
+
+y(0) y(1)... y(m-1)
+
+# SamplePoint z:
+
+z(0) z(1)... z(l-1)
+
+# Symmetry x: true
+
+# Symmetry y: false
+
+# Symmetry z: true
+
+# Data section:
+
+[i, j, k]  val(i, j, k)
+
+%
+
+Notes:
+
+# LengthUnit: mm
+
+Specifies the geometrical unit for the grid and the sample points. This is an optional field, if not specified the user project unit is used.
+
+# Background: 1.0
+
+This value is assumed as background and default value on the entire grid. This is an optional field, if not specified the background value is set as 0.0.
+
+# SamplePoint x:
+
+x(0) x(1)... x(n-1)
+
+Specifies the n grid sample points for the x (y, z) axis. The point dimension is interpreted according to the # LengthUnit setting.
+
+The set of sample points in the x, y and z direction generates the complete grid.
+
+# Symmetry x: true
+
+Specifies if the grid should be symmetrized across the x axis, enabling a more compact description of the values. This is an optional field, if not specified no symmetry will be applied.
+
+# Data section:
+
+After this key the values on the grid have to be provided. The [i, j, k] integer corresponds to the x(i), y(j), z(k) grid position and the val(i, j, k) is set to this grid position.
+
+The remaining unset grid positions assume the # Background value.
+
+ 
+
+%% Raytracing Specific Materials
+
+% The following methods define a material whose properties are relevant for solvers based on raytracing techniques. The settings describe how the rays are being transmitted and reflected as a function of frequency and incident angle.
+
+ 
+
+SetCoatingTypeDefinition ( enum { "PERFECT_ABSORBER" , "SURFACE_IMPEDANCE_TABLE" , "REFLECTION_FACTOR_TABLE" , "REFLECTION_TRANSMISSION_FACTOR_TABLE" } property )
+
+This command defines the type of the description for the material's properties:
+
+PERFECT_ABSORBER - defines a perfectly absorbing material. All rays hitting this material are perfectly absorbed (no reflection).
+
+SURFACE_IMPEDANCE_TABLE - defines an opaque material by describing the complex surface impedance as a function of frequency and incident angle. The surface impedance is specified separately for TE and TM polarizations.
+
+REFLECTION_FACTOR_TABLE - defines an opaque material by describing the complex ray reflection factor as a function of frequency and incident angle. The reflection factor is specified separately for TE and TM polarizations.
+
+REFLECTION_TRANSMISSION_FACTOR_TABLE - defines a transparent material by describing the complex ray reflection and transmission factors as functions of frequency and incident angle. The reflection and transmission factors are specified separately for TE and TM polarizations.
+
+ 
+
+AddTabulatedSurfaceImpedance( double frequency, double angle, double ZReTE, double ZImTE, double ZReTM, double ZImTM )
+
+Defines a table entry for the surface impedance for a particular frequency in Hz and angle in degrees combination. The surface impedance is specified in Ohms and is described by real and imaginary parts for the TE and TM polarizations. This setting is only valid if the coating type definition is set to SURFACE_IMPEDANCE_TABLE.
+
+ 
+
+AddTabulatedReflectionFactor( double frequency, double angle, double RReTE, double RImTE, double RReTM, double RImTM )
+
+Defines a table entry for the reflection factor for a particular frequency in Hz and angle in degrees combination. The reflection factor is described by real and imaginary parts for the TE and TM polarizations. This setting is only valid if the coating type definition is set to REFLECTION_FACTOR_TABLE.
+
+ 
+
+AddTabulatedReflectionTransmissionFactor( double frequency, double angle, double RReTE, double RImTE, double RReTM, double RImTM, double TReTE, double TImTE, double TReTM, double TImTM )
+
+Defines a table entry for the reflection and transmission factors for a particular frequency in Hz and angle in degrees combination. The reflection and transmission factors are described by real and imaginary parts for the TE and TM polarizations. This setting is only valid if the coating type definition is set to REFLECTION_TRANSMISSION_FACTOR_TABLE.
+
+ 
+
+Thickness( double thickness)
+
+Defines the thickness of the transparent material coating. This setting is only valid if the coating type definition is set to REFLECTION_TRANSMISSION_FACTOR_TABLE.
+
+ 
+
+%% Temperature Dependent Materials
+
+ 
+
+AddTemperatureDepEps ( double dTemperature, double dValue )
+
+This method enables you to define a specific temperature dependency curve for electric permittivity by adding point by point. Use with .Type set "Normal".
+
+ 
+
+ResetTemperatureDepEps
+
+Deletes the temperature dependency curve for electric permittivity.
+
+ 
+
+AddTemperatureDepMu ( double dTemperature, double dValue )
+
+With this method a new point for temperature dependency of magnetic permeability can be specified. Use with .Type set "Normal" or "Lossy Metal".
+
+ 
+
+ResetTemperatureDepMu
+
+Deletes the temperature dependency curve for magnetic permeability.
+
+ 
+
+AddTemperatureDepSigma ( double dTemperature, double dValue )
+
+With this method a new point for temperature dependency of electric conductivity can be specified. Use with .Type set "Normal" or "Lossy Metal".
+
+ 
+
+ResetTemperatureDepSigma
+
+Deletes the temperature dependency curve for electric conductivity.
+
+ 
+
+SetTemperatureDepSourceField ( name fieldName )
+
+Select the name of the imported temperature field to use with this material. If it is not specified, the temperature field imported in the current project will be used.
+
+ 
+
+%% Nonlinear Materials
+
+ 
+
+AddHBValue ( double Hvalue, double Bvalue )
+
+This method enables you to define a specific nonlinear H-B curve by adding point by point. Use with .Type set to "Nonlinear".
+
+ 
+
+ResetHBList
+
+Deletes the nonlinear H-B curve.
+
+ 
+
+%% Nonlinear Stacking Properties
+
+ 
+
+NLAnisotropy ( bool bUseAnisotropy )
+
+Specifies whether the nonlinear material is purely isotropic or not. If the flag is set True, laminated materials are considered  in this context which can be specified via a stacking factor and a stacking direction. By default, purely isotropic material is assumed (bUseAnisotropy = False), i.e. stacking settings are ignored.
+
+This setting applies only to materials of type Nonlinear.
+
+ 
+
+NLAStackingFactor ( double dFactor )
+
+Sets the fraction of the layers in the laminated material. The fraction of each layer is the ratio of the thickness of the nonlinear part to the thickness of the entire layer including the insulation. By default, this fraction is 1 (dFactor = 1), which is equivalent to isotropy.
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+ 
+
+NLADirectionX ( double dDirX )
+
+Set the stacking direction which is perpendicular to the layers (lamination direction) of the stacked material. Depending on the chosen coordinate system (NLACoordSystem), the direction is interpreted either in global coordinates or in the coordinates of the local solid coordinate system (provided there is one). By default, the direction points into X-direction (dDirX = 1.0, dDirY = dDirZ = 0.0).
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+Please note that the direction set by NLADirectionX/Y/Z is interpreted either in global or local solid coordinates, depending on the setting ReferenceCoordSystem (see Basic Material Parameters). When the type "Solid" is chosen, it is required that each solid with this material has a local solid coordinate system. When there is no local solid coordinate system available, the stacking direction will be interpreted in global coordinates. By default, the stacking direction is interpreted in global coordinates.
+
+The advantage of choosing local solid coordinates is that only one material has to be defined for solids with different orientations.
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+ 
+
+NLADirectionY ( double dDirY )
+
+Set the stacking direction which is perpendicular to the layers (lamination direction) of the stacked material. Depending on the chosen coordinate system (NLACoordSystem), the direction is interpreted either in global coordinates or in the coordinates of the local solid coordinate system (provided there is one). By default, the direction points into X-direction (dDirX = 1.0, dDirY = dDirZ = 0.0).
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+Please note that the direction set by NLADirectionX/Y/Z is interpreted either in global or local solid coordinates, depending on the setting ReferenceCoordSystem (see Basic Material Parameters). When the type "Solid" is chosen, it is required that each solid with this material has a local solid coordinate system. When there is no local solid coordinate system available, the stacking direction will be interpreted in global coordinates. By default, the stacking direction is interpreted in global coordinates.
+
+The advantage of choosing local solid coordinates is that only one material has to be defined for solids with different orientations.
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+ 
+
+NLADirectionZ ( double dDirZ )
+
+Set the stacking direction which is perpendicular to the layers (lamination direction) of the stacked material. Depending on the chosen coordinate system (NLACoordSystem), the direction is interpreted either in global coordinates or in the coordinates of the local solid coordinate system (provided there is one). By default, the direction points into X-direction (dDirX = 1.0, dDirY = dDirZ = 0.0).
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+Please note that the direction set by NLADirectionX/Y/Z is interpreted either in global or local solid coordinates, depending on the setting ReferenceCoordSystem (see Basic Material Parameters). When the type "Solid" is chosen, it is required that each solid with this material has a local solid coordinate system. When there is no local solid coordinate system available, the stacking direction will be interpreted in global coordinates. By default, the stacking direction is interpreted in global coordinates.
+
+The advantage of choosing local solid coordinates is that only one material has to be defined for solids with different orientations.
+
+This setting applies only to materials of type Nonlinear with NLAnisotropy switched on.
+
+ 
+
+%% Particle-material Interactions
+
+ 
+
+ParticleProperty ( name strValue  )
+
+Sets the property for materials that support particle-material interactions: "None", "SecondaryEmission", "SheetTransparency".
+
+ 
+
+SeModel ( name strValue  )
+
+Sets the type of  the secondary electron emission model: "None", "Furman", "Import", "Vaughan".
+
+ 
+
+SeMaxGenerations  ( int iValue  )
+
+Sets the number of secondary generations that one primary (source) electron can produce.
+
+ 
+
+SeMaxSecondaries  ( int iValue  )
+
+Sets the maximum number of electrons that a primary (source) electron can produce per hit.
+
+ 
+
+SeTsParam_T1  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_T2  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_T3  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_T4  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_SEY  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_Energy  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_S  ( double dValue  )
+
+Sets the basic model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeTsParam_PN (  int iValue, double dValue  )
+
+Sets the additional model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview. For SeTsParam_PN and SeTsParam_EpsN  10 values have to be set. The parameter iValue has to be in the range 0 to 9.
+
+ 
+
+SeTsParam_EpsN (  int iValue, double dValue  )
+
+Sets the additional model parameters for the true secondary electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview. For SeTsParam_PN and SeTsParam_EpsN  10 values have to be set. The parameter iValue has to be in the range 0 to 9.
+
+ 
+
+SeRdParam_R  ( double dValue  )
+
+Sets the model parameters for the rediffused secondary electrons.  Further information can be found inthe online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeRdParam_R1  ( double dValue  )
+
+Sets the model parameters for the rediffused secondary electrons.  Further information can be found inthe online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeRdParam_R2  ( double dValue  )
+
+Sets the model parameters for the rediffused secondary electrons.  Further information can be found inthe online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeRdParam_Q  ( double dValue  )
+
+Sets the model parameters for the rediffused secondary electrons.  Further information can be found inthe online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeRdParam_P1Inf  ( double dValue  )
+
+Sets the model parameters for the rediffused secondary electrons.  Further information can be found inthe online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeRdParam_Energy  ( double dValue  )
+
+Sets the model parameters for the rediffused secondary electrons.  Further information can be found inthe online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_Sigma  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_E1  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_E2  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_P1Hat  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_P1Inf  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_Energy  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_P  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SeBsParam_W  ( double dValue  )
+
+Sets the model parameters for the backscattered or elastic reflected electrons. Further information can be found in the online help at the topic Secondary Electron Emission Overview.
+
+ 
+
+SePlot1D ( bool bPlot, double dAngle, double dEnergy )
+
+If bPlot is true, the secondary emission yield and the probability distribution function are added to 1D Results folder Materials in the Navigation Tree. This plot is enabled per default. The incident angle and energy must be also specified.
+
+ 
+
+SeVaughan ( double dEnergyMax, double dSEYieldMax, double dEnergyThreshold, double dSmoothness,, double dTemperature  )
+
+When the type of the emission model is set to "Vaughan", this method sets the parameters of the Vaughan emission model. dEnergyMax, in units of eV, is the energy where the maximum SEY, set by dSEYieldMax, takes place. dSmoothness is a smoothness parameter that depends on the surface of the material and has the value of one. The method sets the temperature parameter of the energy distribution of the secondary electrons (gamma distributed). This is done in units of eV via the argument dTemperature.
+
+ 
+
+SeImportSettings ( name sFileName, double dTemperature )
+
+When the type of the emission model is set to "Import" (method SeModel), this method sets the name of the secondary electron yield (SEY) import file (including the parth) that is displayed in the SEY import dialog box. This setting  is to be used as a helpful display of the file name in the import dialog box and it cannot used to import SEY data from sFileName. To import SEY data, one can use either the method SeImportData or the SEY import dialog box. The method sets also the temperature parameter of the energy distribution of the secondary electrons (gamma distributed). This is done in units of eV via the argument dTemperature.
+
+ 
+
+SeImportData ( double dEnergy, double dSEY )
+
+When the type of the emission model is set to "Import", this method sets the secondary electron yield dSEY at the energy dENergy. This is equivalent to importing one pair of energy - SEY values of the SEY curve.
+
+ 
+
+ParticleTransparencySettings(  name sType, double dPercent, name sFileName  )
+
+This method can be used to adjust the input settings of the materials which are transparent to particles. These materials are characterized by a so-called transparency, which takes values between 0 and 1. The settings apply only on bodies which are sheets, i.e. which have zero length in one dimension,  and which are composed of these materials.
+
+When the particles move through a sheet with transparency T, their macro-charge Q and mass M become T*Q and T*M after crossing the sheet.  If the transparency is 1, the particles move through the sheet. A transparency of 0 means that the particles collide with the sheet.
+
+The argument sType can be used to define two possibilities for the transparency input settings. First, if the material has a homogeneous transparency, sType should be set to "Scalar". If the material has a transparency which depends on the particle incident energy, sType should be set to "Import". The dependency of the transparency on the incident particle energy can be provided either using the transparency import button in the material dialog box or using the method ParticleTransparencyImportData.
+
+The argument dPercent can be used to set the transparency in % when sType is "Scalar".
+
+The argument sFileName can be used to set the import file name (including the path). This is to be used as a helpful display of the file name in the material dialog box and not as a means to import the particle transparency data.
+
+Note for the Tracking solver:
+
+The Tracking solver does not support energy-dependent transparency, so no import is supported. Thus, the correct settings should have sType = "Scalar" and sFileName = "" (empty string).
+
+ 
+
+ParticleTransparencyImportData( double dEnergy, double dTransparency  )
+
+Note: this method applies only for the PIC solver.
+
+When the type of the the transparency input data is set to "Import" (see method ParticleTransparencySettings) , this method sets the  dTransparency at the incident particle energy dEnergy. This is equivalent to importing one point of the transparency distribution as a function of energy. To import a complete transparency distribution, this method can be applied for every point of the distribution.
+
+ 
+
+SetEnergyStepForSEYPlots( double dStep )
+
+Sets the energy step for SEY plots in units of eV.
+
+ 
+
+SpecialDispParamForPIC( double dEpsInf, double dRelaxFreq , double dResonFreq, double dResonWidth, double dLorentzWeight  )
+
+Note: this method applies only for the PIC solver.
+
+This method can be used to set the special dispersion parameters, which is typically used to mitigate the effects of the numerical Cerenkov instability.
+
+ 
+
+SpecialDispParamVisual( double MaxFreq, double PropDist)
+
+Note: this method applies only for the PIC solver.
+
+This method can be used to adjust the display of the special dispersion plots.
+
+ 
+
+IonizImportFile( name sFileName )
+
+This method can be used to set the name of the file which is used to import the ionization cross-section data. To import the data, the method IonizImportDataPair must be used.
+
+ 
+
+IonizImportDataPair( double dEnergy, double dCrossSection )
+
+This method sets the ionization collision cross-section at a given energy. This is equivalent to importing one data pair of energy the cross-section curve.
+
+ 
+
+IonizElectronEnergySpread( double dValue )
+
+This method sets the energy spread for the low-energy secondary electrons.
+
+ 
+
+IonizIonMass( double dValue )
+
+This method sets the mass of the ions created via ionization.
+
+ 
+
+IonizPressure( double dValue )
+
+This method sets the gas pressure used to calculate the ionization collision frequency.
+
+ 
+
+IonizTemperature( double dValue )
+
+This method sets the ion temperature of the ions created via ionization.
+
+ 
+
+IonizIsActive(bool bFlag )
+
+With this method, the ionization settings can be enalbed or disabled for the specific material.
+
+ 
+
+%% Thermal Material Properties
+
+ 
+
+ThermalType (enum {"PTC", "Normal", "Anisotropic"} key )
+
+(*) property shared among all available material sets
+
+Allows to set the thermal material type:
+
+ 
+
+PTC
+
+Perfect Thermal Conductor - this is the thermal equivalent to PEC. Temperature- and Heat-sources can be assigned to PTC material surfaces.
+
+Normal
+
+Isotropic material with a homogeneous material distribution
+
+Anisotropic
+
+Anisotropic material with a homogeneous material distribution
+
+ 
+
+ThermalConductivity ( double dValue )
+
+(*) property shared among all available material sets
+
+Defines the thermal conductivity of a material. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal thermal conductivity tensor can be set with the respective methods.
+
+ 
+
+ThermalConductivityX ( double dValue )
+
+(*) property shared among all available material sets
+
+Defines the thermal conductivity of a material. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal thermal conductivity tensor can be set with the respective methods.
+
+ 
+
+ThermalConductivityY ( double dValue )
+
+(*) property shared among all available material sets
+
+Defines the thermal conductivity of a material. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal thermal conductivity tensor can be set with the respective methods.
+
+ 
+
+ThermalConductivityZ ( double dValue )
+
+(*) property shared among all available material sets
+
+Defines the thermal conductivity of a material. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal thermal conductivity tensor can be set with the respective methods.
+
+ 
+
+HeatCapacity ( double dValue )
+
+(*) property shared among all available material sets
+
+This parameter defines the specific heat capacity in [kJ / (K kg)]. This setting is relevant only for transient thermal simulations.
+
+ 
+
+BloodFlow ( double dValue )
+
+(*) property shared among all available material sets
+
+The Bloodflow coefficient is a parameter of the bioheat equation. It determines the influence of blood at a certain temperature inside the tissue volume V. The reference temperature for the bloodflow (usually: 37 C) can be defined in the thermal solver specials dialog boxes of the stationary and the transient solver (ThermalSolver.BloodTemperature or ThermalTDSolver.BloodTemperature).
+
+ 
+
+MetabolicRate ( double dValue )
+
+(*) property shared among all available material sets
+
+The Basal metabolic rate is a parameter of the bioheat equation. It describes the amount of heat  which is produced by tissue per volume V.
+
+ 
+
+VoxelConvection ( double dValue )
+
+(*) property shared among all available material sets
+
+This parameter allows to consider convection processes on voxel models. In principle, a convection coefficient is prescribed. Typically this parameter is used with a material describing skin. For coarse voxel models it is advisable to use fat in addition. Only voxel-surfaces which are between the voxel material and the background material are taken into account.
+
+ 
+
+DynamicViscosity ( double dValue )
+
+(*) property shared among all available material sets
+
+This setting is relevant only for background material in a CHT simulation. The parameter dValue sets the dynamic viscosity of the background fluid in [Pa s]. Please not that this value is not taken into account by default, but only in a CHT simulation if thermal radiation if turned on (CHTSolver.Radiation). Only solids with a strictly positive emissivity value can radiate.
+
+ 
+
+Emissivity ( double dValue )
+
+(*) property shared among all available material sets
+
+The parameter dValue sets the material emissivity. Please not that this value is not taken into account by default, but only in a CHT simulation if thermal radiation if turned on (CHTSolver.Radiation). Only solids with a strictly positive emissivity value can radiate.
+
+ 
+
+ResetNLThermalCond
+
+(*) property shared among all available material sets
+
+Delete the nonlinear thermal conductivity curve.
+
+ 
+
+AddNLThermalCond ( double dTemperature, double dValue )
+
+(*) property shared among all available material sets
+
+Adds a new data point for the dependence of isotropic thermal conductivity on temperature. Parameter dTemperature must be specified in the temperature units selected in MaterialUnit "Temperature" command. If no temperature material unit has been selected, the current user unit is applied. If anisotropic thermal type has been selected, all three components of thermal conductivity are set to dValue.
+
+ 
+
+AddNLThermalCondAniso ( double dTemperature, double dValueX, double dValueY, double dValueZ )
+
+(*) property shared among all available material sets
+
+Adds a new data point for the dependence of anisotropic thermal conductivity on temperature. Parameter dTemperature must be specified in the temperature units selected in MaterialUnit "Temperature" command. If no temperature material unit has been selected, the current user unit is applied. If normal thermal type has been selected, thermal conductivity is set to dValueX.
+
+ 
+
+ResetNLHeatCap
+
+(*) property shared among all available material sets
+
+Delete the nonlinear specific heat capacity curve.
+
+ 
+
+AddNLHeatCap ( double dTemperature, double dValue )
+
+(*) property shared among all available material sets
+
+Adds a new data point for the dependence of specific heat capacity on temperature. Parameter dTemperature must be specified in the temperature units selected in MaterialUnit "Temperature" command. If no temperature material unit has been selected, the current user unit is applied.
+
+ 
+
+ResetNLBloodFlow
+
+(*) property shared among all available material sets
+
+Delete the nonlinear blood flow coefficient curve.
+
+ 
+
+SetNLBloodFlowMinTemperature ( double dTemperature )
+
+(*) property shared among all available material sets
+
+Specifies the minimal temperature value, starting from which the blood flow coefficient gets nonlinear. Parameter dTemperature must be specified in the temperature units selected in MaterialUnit "Temperature" command. If no temperature material unit has been selected, the current user unit is applied.
+
+ 
+
+SetNLBloodFlowBasalValue ( double dValue )
+
+(*) property shared among all available material sets
+
+Specifies the value of the nonlinear blood flow coefficient at minimal temperature. This value is normally equal to that specified in the BloodFlow command.
+
+ 
+
+SetNLBloodFlowLocalVasodilationParam( double dValue )
+
+(*) property shared among all available material sets
+
+Specifies the local vasodilation parameter for the nonlinear blood flow coefficient. The typical value is 1.6.
+
+ 
+
+SetNLBloodFlowMaxMultiplier ( double dValue )
+
+(*) property shared among all available material sets
+
+Specifies the ratio between the maximal and minimal blood flow coefficients. After the curve has reached the maximal blood flow value, it is considered constant for higher temperatures.
+
+ 
+
+%% Mechanics Material Properties
+
+ 
+
+MechanicsType (enum {"Unused", "Isotropic"} key )
+
+(*) property shared among all available material sets
+
+This list allows to select if the material should be used with isotropic properties for the simulation.
+
+ 
+
+YoungsModulus ( double dValue )
+
+(*) property shared among all available material sets
+
+This parameter defines the stiffness of an isotropic elastic material. It is normally measured in GPa, or kN/mm2. The typical values vary between 0.01 GPa (rubber) and over 1000 GPa (diamond). It is important to know the value of this material parameter very well, since it has a large influence on the accuracy of the solution.
+
+ 
+
+PoissonsRatio ( double dValue )
+
+(*) property shared among all available material sets
+
+This parameter defines the scale of the transverse contraction of a longitudinally stretched body. This parameter can vary between -1 and 0.5, whereas most of the materials are characterized by a positive Poisson's ratio.
+
+ 
+
+ThermalExpansionRate ( double dValue )
+
+(*) property shared among all available material sets
+
+The expansion coefficient is the strain of a body, if its temperature changes by 1 K. This value is utilized to compute strain induced by an external temperature field.
+
+ 
+
+ResetTempDepYoungsModulus
+
+(*) property shared among all available material sets
+
+Delete the temperature dependent Young's modulus curve.
+
+ 
+
+AddTempDepYoungsModulus ( double dTemperature, double dValue )
+
+(*) property shared among all available material sets
+
+Adds a new data point for the dependence of Young's modulus on temperature. Parameter dTemperature must be specified in Kelvin.
+
+ 
+
+%% Flow Resistance Material Properties
+
+% Please note that flow resistance material properties are considered only by the conjugated heat transfer (CHT) solver. Depending on the shape (solid or sheet) to which the material is assigned, only the respective material properties will be taken into account (solid properties or sheet properties), the other will be ignored for the corresponding shape.
+
+ 
+
+FlowResPressureLossTypeU (enum {"Blocked", "Coefficient", "Curve"} key )
+
+When a material with active flow resistance properties is assigned to a solid (volume), a local solid coordinate system (scs) should be attached to this solid in order to transform the material properties with the solid. With respect to this scs, the pressure loss can be prescribed for each of the main directions U, V, W. If no scs is given, the global coordinates (X, Y, Z) will be used instead. Three different pressure loss definition types are available:
+
+Blocked         Perfect wall: no pressure flow through this shape. This is the default setting.
+
+Coefficient     Direct input of the pressure loss coefficient.
+
+Curve           User defined specification of flow rate and pressure value pairs as a flow resistance curve.
+
+ 
+
+FlowResPressureLossTypeV (enum {"Blocked", "Coefficient", "Curve"} key )
+
+When a material with active flow resistance properties is assigned to a solid (volume), a local solid coordinate system (scs) should be attached to this solid in order to transform the material properties with the solid. With respect to this scs, the pressure loss can be prescribed for each of the main directions U, V, W. If no scs is given, the global coordinates (X, Y, Z) will be used instead. Three different pressure loss definition types are available:
+
+Blocked         Perfect wall: no pressure flow through this shape. This is the default setting.
+
+Coefficient     Direct input of the pressure loss coefficient.
+
+Curve           User defined specification of flow rate and pressure value pairs as a flow resistance curve.
+
+ 
+
+FlowResPressureLossTypeW (enum {"Blocked", "Coefficient", "Curve"} key )
+
+When a material with active flow resistance properties is assigned to a solid (volume), a local solid coordinate system (scs) should be attached to this solid in order to transform the material properties with the solid. With respect to this scs, the pressure loss can be prescribed for each of the main directions U, V, W. If no scs is given, the global coordinates (X, Y, Z) will be used instead. Three different pressure loss definition types are available:
+
+Blocked         Perfect wall: no pressure flow through this shape. This is the default setting.
+
+Coefficient     Direct input of the pressure loss coefficient.
+
+Curve           User defined specification of flow rate and pressure value pairs as a flow resistance curve.
+
+ 
+
+FlowResLossCoefficientU ( double dValue )
+
+This value defines the pressure loss coefficient for the specified direction and is considered only if the corresponding pressure loss type is "Coefficient". Otherwise it is ignored. A non-negative number is expected. The default value is 0.
+
+ 
+
+FlowResLossCoefficientV ( double dValue )
+
+This value defines the pressure loss coefficient for the specified direction and is considered only if the corresponding pressure loss type is "Coefficient". Otherwise it is ignored. A non-negative number is expected. The default value is 0.
+
+ 
+
+FlowResLossCoefficientW ( double dValue )
+
+This value defines the pressure loss coefficient for the specified direction and is considered only if the corresponding pressure loss type is "Coefficient". Otherwise it is ignored. A non-negative number is expected. The default value is 0.
+
+ 
+
+FlowResPressureLossTypeSheet (enum {"Blocked", "Coefficient", "Curve", "Perforation", "FreeAreaRatio"} key )
+
+For thin sheets, the pressure loss can be described by using one of the following types:
+
+Blocked         Perfect wall: no pressure flow through this shape. This is the default setting.
+
+Coefficient     Direct input of the pressure loss coefficient.
+
+Curve           User defined specification of flow rate and pressure value pairs as a flow resistance curve.
+
+Perforation     Specification of an equidistant distribution of holes in the sheet.
+
+FreeAreaRatio   Specification of the ratio "area covered by holes" / "total area".
+
+ 
+
+FlowResLossCoefficientSheet ( double dValue )
+
+This value defines the pressure loss coefficient and is considered only if the FlowResPressureLossTypeSheet is set to "Coefficient". Otherwise it is ignored. A non-negative number is expected. The default value is 0.
+
+ 
+
+FlowResFreeAreaRatio ( double dValue )
+
+This value defines the ratio of the area which is covered by holes and the total area of the sheet. It is considered only if the FlowResPressureLossTypeSheet is set to "FreeAreaRatio". Otherwise it is ignored. A positive number between 0 and 1 is expected. If this value is unset, the sheet is treated like a wall, i.e. the flow is blocked.
+
+ 
+
+FlowResShapeType ( enum {"Hexagon", "Circle", "Square"} key )
+
+These settings are taken into account only when the FlowResPressureLossTypeSheet is set to "Perforation". With FlowResShapeType the shape of the holes in the surface can be prescribed. An equidistant distribution of equal sized shapes is assumed. The following shape types are supported:.
+
+Hexagon     Size is the side length of the regular hexagon.
+
+Circle      Size is the diameter of the circle.
+
+Square      Size is the side length of the square.
+
+ 
+
+FlowResShapeSize ( double Size )
+
+These settings are taken into account only when the FlowResPressureLossTypeSheet is set to "Perforation". With FlowResShapeType the shape of the holes in the surface can be prescribed. An equidistant distribution of equal sized shapes is assumed. The following shape types are supported:.
+
+Hexagon     Size is the side length of the regular hexagon.
+
+Circle      Size is the diameter of the circle.
+
+Square      Size is the side length of the square.
+
+ 
+
+FlowResShapeUPitch ( double UPitch )
+
+These settings are taken into account only when the FlowResPressureLossTypeSheet is set to "Perforation". With FlowResShapeType the shape of the holes in the surface can be prescribed. An equidistant distribution of equal sized shapes is assumed. The following shape types are supported:.
+
+Hexagon     Size is the side length of the regular hexagon.
+
+Circle      Size is the diameter of the circle.
+
+Square      Size is the side length of the square.
+
+ 
+
+FlowResShapeVPitch ( double VPitch )
+
+These settings are taken into account only when the FlowResPressureLossTypeSheet is set to "Perforation". With FlowResShapeType the shape of the holes in the surface can be prescribed. An equidistant distribution of equal sized shapes is assumed. The following shape types are supported:.
+
+Hexagon     Size is the side length of the regular hexagon.
+
+Circle      Size is the diameter of the circle.
+
+Square      Size is the side length of the square.
+
+The size of the shape (side length or diameter according to the table above) is prescribed with a positive number for FlowResShapeSize. The distance of the center points of the holes in an imaginary U-V coordinate system on the surface is defined by two positive values UPitch and VPitch via FlowResShapeUPitch and FlowResShapeVPitch.
+
+ 
+
+%% Queries
+
+ 
+
+GetNumberOfMaterials long
+
+Returns the number of materials.
+
+ 
+
+GetNameOfMaterialFromIndex ( long index ) string
+
+Returns the material name for the material specified by the zero-based index index < .GetNumberOfMaterials - 1.
+
+ 
+
+IsBackgroundMaterial( name name) bool
+
+Returns True if this is the background material. Typically the name is air_0;
+
+ 
+
+GetTypeOfBackgroundMaterial string
+
+Returns the material type. Valid types are: "PEC", "Normal", "Anisotropic", "Lossy Metal", "Corrugated wall", "Ohmic sheet", "Tensor formula", "Nonlinear".
+
+ 
+
+GetTypeOfMaterial( name name) string
+
+Returns the material type. Valid types are: "PEC", "Normal", "Anisotropic", "Lossy Metal", "Corrugated wall", "Ohmic sheet", "Tensor formula", "Nonlinear".
+
+ 
+
+GetColour ( name name, double_ref red, double_ref green, double_ref blue )
+
+Returns the current color values of the material named name in the parameters red, green and blue. The color values vary between 0 and 1.
+
+ 
+
+GetEpsilon ( name name, double_ref EpsX, double_ref EpsY, double_ref EpsZ )
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetMu ( name name, double_ref MuX, double_ref MuY, double_ref MuZ )
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetSigma ( name name, double_ref SigmaX, double_ref SigmaY, double_ref SigmaZ )
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetSigmaM ( name name, double_ref SigmaMX, double_ref SigmaMY, double_ref SigmaMZ )
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetRho ( name name, double_ref Rho )
+
+(*) property shared among all available material sets
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetCorrugation ( name name, double_ref depth, double_ref gapwidth, double_ref toothwidth ) bool
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetOhmicSheetImpedance  ( name name, double_ref resistance, double_ref reactance ) bool
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+GetDynamicViscosity ( name name, double_ref viscosity )
+
+Returns the dynamic viscosity in [Pa s] which is set for the material specified by name. Please note that this value is taken into account only for the background material in a CHT simulation.
+
+ 
+
+GetEmissivity ( name name, double_ref emissivity )
+
+Returns the material emissivity which is set for the material specified by name. Please note that this value is not taken into account by default, but only in a CHT simulation if thermal radiation if turned on (CHTSolver.Radiation). Only solids with a strictly positive emissivity value can radiate.
+
+ 
+
+GetThermalConductivity ( name name, double_ref condX, double_ref condY, double_ref condZ )
+
+Returns the thermal conductivity of the material specified by name. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal thermal conductivity tensor can (set by ThermalConductivityX, ThermalConductivityY, ThermalConductivityZ, respectively) will be returned in condX, condY, condZ. Otherwise, each will contain the number specified by ThermalConductivity.
+
+ 
+
+GetHeatCapacity ( name name, double_ref heatcapacity )
+
+Returns the specific heat capacity in [kJ / (K kg)] of the material specified by name. Please note that this setting is taken into account only for transient thermal simulations.
+
+ 
+
+GetBloodFlow ( name name, double_ref bloodflow )
+
+Returns the blood flow coefficient of the material specified by name. Please note that this setting is taken into account only for thermal simulations.
+
+ 
+
+GetMetabolicRate ( name name, double_ref rate )
+
+Returns the Basal metabolic rate of the material specified by name. Please note that this setting is taken into account only for thermal simulations.
+
+ 
+
+GetVoxelConvection ( name name, double_ref convection )
+
+Returns the voxel convection coefficient which is set for the material specified by name. This parameter allows to consider convection processes on voxel models. Please note that this setting is taken into account only for thermal simulations and only on voxel-surfaces which are between the voxel material and the background material.
+
+ 
+
+Exists  ( name name ) bool
+
+Returns True if the material specified by name exists.
+
+
+
+%% Notes
+
+% (*) The value will be shared among all available material sets and problem types.
+
+Default Settings
+
+.Type ("Normal")
+
+.Colour ("0", "1", "1")
+
+.Wireframe ("False")
+
+.Transparency ("0")
+
+.Epsilon ("1.0")
+
+.Mu ("1.0")
+
+.Rho ("0.0")
+
+.Sigma ("0.0")
+
+.TanD ("0.0")
+
+.TanDFreq ("0.0")
+
+.TanDGiven ("False")
+
+.TanDModel ("ConstTanD")
+
+.SigmaM ("0.0")
+
+.TanDM ("0.0")
+
+.TanDMFreq ("0.0")
+
+.TanDMGiven ("False")
+
+.DispModelEps ("None")
+
+.DispModelMu ("None")
+
+.MuInfinity ("1.0")
+
+.EpsInfinity ("1.0")
+
+.DispCoeff1Eps ("0.0")
+
+.DispCoeff2Eps ("0.0")
+
+.DispCoeff3Eps ("0.0")
+
+.DispCoeff4Eps ("0.0")
+
+.DispCoeff1Mu ("0.0")
+
+.DispCoeff2Mu ("0.0")
+
+.DispCoeff3Mu ("0.0")
+
+.DispCoeff4Mu ("0.0")
+
+.AddDispEpsPole1stOrder ("0.0", "0.0")
+
+.AddDispEpsPole2ndOrder ("0.0", "0.0", "0.0", "0.0")
+
+ 
+
+ 

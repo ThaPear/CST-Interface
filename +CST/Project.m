@@ -661,7 +661,7 @@ classdef Project < handle
             % CalculateFourierComplex(Spectrum, "frequency", Signal, "time", "+1", "1.0/(2.0*Pi)", ...)
             obj.hProject.invoke('CalculateFourierComplex', Input, InputUnit, Output, OutputUnit, isign, normalization, vMin, vMax, vSamples);
         end
-        function CalculateCONV(obj, a, b, conv)
+        function CalculateCONV(obj, a, b, conv) %#ok<INUSD>
             % This function was not implemented due to the Result1D arguments being seemingly
             % impossible to pass from MATLAB.
             warning('Used unimplemented function ''CalculateCONV''.');
@@ -670,9 +670,9 @@ classdef Project < handle
             % a - First sequence to be convoluted.
             % b - Second sequence to be convoluted.
             % conv - Convolution of sequence_a and sequence_b
-            obj.hProject.invoke('CalculateCONV', a, b, conv);
+%             obj.hProject.invoke('CalculateCONV', a, b, conv);
         end
-        function CalculateCROSSCOR(obj, a, b, corr, bNorm)
+        function CalculateCROSSCOR(obj, a, b, corr, bNorm) %#ok<INUSD>
             % This function was not implemented due to the Result1D arguments being seemingly
             % impossible to pass from MATLAB.
             warning('Used unimplemented function ''CalculateCROSSCOR''.');
@@ -684,7 +684,7 @@ classdef Project < handle
             % b - Second sequence to be correlated.
             % corr - Sequence of correlation coefficients of the sequences above.
             % bNorm - Flag if normed or standard correlation is calculated.
-            obj.hProject.invoke('CalculateCROSSCOR', a, b, corr, bNorm);
+%             obj.hProject.invoke('CalculateCROSSCOR', a, b, corr, bNorm);
         end
         function DeleteResults(obj)
             % Deletes all results of the actual project.
@@ -1018,6 +1018,7 @@ classdef Project < handle
         line                        CST.Line
         loft                        CST.Material
         material                    CST.Material
+        mesh                        CST.Mesh
         meshadaption3d              CST.MeshAdaption3D
         meshsettings                CST.MeshSettings
         monitor                     CST.Monitor
@@ -1260,6 +1261,13 @@ classdef Project < handle
                 obj.material = CST.Material(obj, obj.hProject);
             end
             material = obj.material;
+        end
+        
+        function mesh = Mesh(obj)
+            if(isempty(obj.meshadaption3d))
+                obj.mesh = CST.Mesh(obj, obj.hProject);
+            end
+            mesh = obj.mesh;
         end
         
         function meshadaption3d = MeshAdaption3D(obj)

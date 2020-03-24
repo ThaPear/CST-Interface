@@ -1,0 +1,425 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Mesh | MeshAdaption3D
+
+MeshAdaption3D Object
+
+This object allows you to change the parameters used for the three dimensional adaptive mesh refinement. This procedure is an automatic scheme which uses the results of a performed calculation to estimate a mesh better suited for the given problem. With the refined mesh a new calculation pass will then be started. The whole procedure will be repeated until a convergence is met.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Errorlimit ( double value )
+
+If the relative deviation of the energy between two passes is smaller than the errorlimit the mesh adaption will terminate.
+
+    
+
+AccuracyFactor ( double value )
+
+Specifies an additional factor for the current accuracy setting made in the transient solver control dialog box. The change of the S-parameters between two subsequent passes must not differ by more than the given accuracy level multiplied with the defined accuracy factor.
+
+ 
+
+SetType ( enum type )
+
+Sets the type.
+
+type may have one of  the following values:
+
+"EStatic"
+
+"MStatic"
+
+"JStatic"
+
+"LowFrequency"
+
+"HighFrequencyHex"
+
+"HighFrequencyTet"
+
+"Time"
+
+ 
+
+ 
+
+SetAdaptionStrategy ( enum key )
+
+Specifies the type of mesh adaption strategy.
+
+key may have one of  the following values:
+
+"ExpertSystem"
+
+Refines the mesh by increasing global mesh parameters.
+
+"Energy"
+
+Refines the mesh at locations with high field energy.
+
+ 
+
+RefinementType ( enum {"Automatic", "Bisection"} type )
+
+Specifies the method used to refine the tetrahedral mesh.
+
+"Automatic" presently selects anisotropic edge refinement and is the default method for the adaptive tetrahedral mesh refinement. Edges of the tetrahedrons are split at a position in the direction of the maximum estimated error along that edge, for instance closer to the edges of the conductor. Afterwards, the quality of the refined mesh is improved. This strategy may lead to a faster convergence than the stable cell bisection which in general produces visually "nicer" meshes as it tries to keep the quality measure of the tetrahedrons above a certain threshold.
+
+ 
+
+ErrorEstimatorType ( enum {"Automatic"} type )
+
+Formally allowed to specify the error estimation method used to refine the tetrahedral mesh. "Automatic" is the default and recommended choice.
+
+ 
+
+MinPasses ( int passes )
+
+Specifies the minimum number of passes which will be performed for the adaptive mesh refinement, even if the results do not change significantly.
+
+ 
+
+MaxPasses ( int passes )
+
+Specifies the maximum number of passes to be performed for the adaptive mesh refinement, even if the results have not sufficiently converged so far. This setting is useful to limit the total calculation time to reasonable amounts.
+
+ 
+
+CellIncreaseFactor ( double factor )
+
+Determines how many new cells are introduced between two subsequent passes of the mesh refinement. A setting of 0.5 means that the number of mesh cells increases about 50 percent from pass to pass.
+
+ 
+
+WeightE ( double weight )
+
+Specifies the weight of the electric energy compared to the part of the magnetic energy. Sometimes a structure’s behavior is more critically coupled to changes of the electric field than to changes of the magnetic field so that it is advisable for the refinement control to take this fact into account.
+
+ 
+
+WeightB ( double weight )
+
+Specifies the weight of the magnetic energy compared to the part of the electric energy. Sometimes a structure’s behavior is more critically coupled to changes of the magnetic field than to changes of the electric field so that it is advisable for the refinement control to take this fact into account.
+
+ 
+
+RefineX ( bool switch )
+
+Decides whether the adaptive mesh refinement will be performed in the x-direction (switch = True) or not (switch= False). This option is useful to avoid refining a mesh along coordinate directions in which the structure’s fields have no dependency.
+
+ 
+
+RefineY ( bool switch )
+
+Decides whether the adaptive mesh refinement will be performed in the y-direction (switch = True) or not (switch= False). This option is useful to avoid refining a mesh along coordinate directions in which the structure’s fields have no dependency.
+
+ 
+
+RefineZ ( bool switch )
+
+Decides whether the adaptive mesh refinement will be performed in the z-direction (switch = True) or not (switch= False). This option is useful to avoid refining a mesh along coordinate directions in which the structure’s fields have no dependency.
+
+ 
+
+MaxDeltaS ( double value )
+
+The S-parameter error (Delta S) is determined as the maximal deviation of the absolute value of the complex difference of the S-parameters between two subsequent passes. Specify a value between 0.0 and 1.0. For the frequency domain solver with tetrahedral mesh, this criterion is used at discrete frequencies, while AddSParameterStopCriterion defines a criterion for the broadband S-parameters.
+
+ 
+
+ClearStopCriteria
+
+Deletes all broadband stopping criteria, which had been defined for instance by calling AddSParameterStopCriterion, Add0DResultStopCriterion, and Add1DResultStopCriterion.
+
+ 
+
+AddSParameterStopCriterion ( bool autofreq, double fmin, double fmax, double maxdelta, int numchecks, bool active )
+
+The S-parameter stopping criterion measures the deviation of the broadband S-parameters between two subsequent passes. Specify a value for the threshold maxdelta between 0.0 and 1.0.
+
+The time domain solver allows to restrict the check to a frequency range from fmin to fmax (given in the currently active frequency unit) if autofreq is set to False. Otherwise, the full frequency range will be used.
+
+For the frequency domain solver with tetrahedral mesh, AddSParameterStopCriterion defines a criterion for the broadband S-parameters in the full frequency range as calculated by the solver, while MaxDeltaS is used at discrete frequencies.
+
+The threshold maxdelta needs to be met for numchecks subsequent passes until the convergence criterion is considered to be met. Setting active to False allows to deactivate the criterion while keeping its definition.
+
+ 
+
+Add0DResultStopCriterion ( name result, double maxdelta, int numchecks, bool active )
+
+Provide the name of a 0D result template, which then can be used to provide a stopping criterion for the adaptive mesh refinement in the time domain solver and the frequency domain solver with tetrahedral mesh.
+
+The threshold maxdelta is relative to the 0D result template's values (relative to the average of the values from the current and the last adaptive mesh refinement pass). The remaining arguments have the same meaning as described in AddSParameterStopCriterion above.
+
+ 
+
+Add1DResultStopCriterion ( name result, double maxdelta, int numchecks, bool active, bool complex )
+
+Provide the name of a 1D result template, which then can be used to provide a stopping criterion for the adaptive mesh refinement in the frequency domain solver with tetrahedral mesh.
+
+The threshold maxdelta is global relative to the 1D result template's values (global relative to the average of the values from the current and the last adaptive mesh refinement pass). The argument complex should be True only if complex 1D result template is selected. The remaining arguments have the same meaning as described in AddSParameterStopCriterion above.
+
+ 
+
+AddStopCriterion ( name groupname, double threshold, int numchecks, bool active )
+
+Defines a stop criterion for the adaptive tetrahedral mesh refinement. The parameter groupname specifies the items to be checked within the stop criterion. Each group is declared and fully described in the Adaptive Tetrahedral Mesh Refinement (Frequency Domain) dialog. A number of predefined group names is given here:
+
+All S-Parameters - the stop criterion is based on the convergence of all available S- and F-parameters.
+
+Reflection S-Parameters - the stop criterion is based on the convergence of all available reflection S- and F-parameters.
+
+Transmission S-Parameters - the stop criterion is based on the convergence of all available transmission S- and F-parameters.
+
+Portmode kz/k0 - the stop criterion is based on the convergence of the maximum magnitude of the difference of the port modes' complex propagation constants kz divided by the free space propagation constant k0.
+
+All Probes - the stop criterion is based on the convergence of all near and far field probe frequency spectra.
+
+The threshold (in linear scale, a value between 0.0 and 1.0) needs to be met for numchecks (a value greater than 0) subsequent passes until the convergence criterion is considered to be met. Setting active to False allows to deactivate the criterion while keeping its definition.
+
+ 
+
+RemoveAllUserDefinedStopCriteria
+
+This removes all stop criteria which were defined by the user. User defined stop criteria can be added with AddStopCriterion.
+
+ 
+
+MeshIncrement ( int value )
+
+Only for Expert system based strategy. Specifies the number of mesh lines to add to the Mesh. MinimumLineNumber setting after a pass has been completed.
+
+ 
+
+SetFrequencyRange ( bool auto, double min, double max )
+
+Limits the frequency range used for the adaptive mesh refinement.
+
+ 
+
+SkipPulses ( double value )
+
+Specifies the number of pulse widths to be skipped in order to consider very narrow banded structures, where the greatest energy amount is reflected and thus would mislead the refinement procedure. This means that it is advisable to start the energy calculation not until the reflected energy parts have left the structure.
+
+ 
+
+NumberOfDeltaSChecks ( int value )
+
+Defines the number of consecutive adaptive tetrahedral mesh refinement passes during which the S-parameter deviation has to meet the threshold value defined by MaxDeltaS before the results are accepted to be converged.
+
+ 
+
+NumberOfPropConstChecks ( int value )
+
+Defines the number of consecutive adaptive tetrahedral port mesh refinement passes during which the propagation constants have to meet the threshold value defined by PropagationConstantAccuracy before the results are accepted to be converged.
+
+ 
+
+PropagationConstantAccuracy ( double value )
+
+Defines the desired accuracy of the propagation constants for the adaptive tetrahedral port mesh refinement in terms of kz/k0, where kz is the mode's propagation constant, and k0 is the freespace propagation constant of a plane wave.
+
+ 
+
+SubsequentChecksOnlyOnce ( bool flag )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh and multiple adaptation frequency samples. Usually, the S-parameter convergence of the adaptive mesh refinement is checked more than once (see NumberOfDeltaSChecks). The solver will apply this check only to the first mesh adaptation sample if the flag is set to True.
+
+ 
+
+WavelengthBasedRefinement ( bool flag )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. Each edge of an element will be refined if its length is greater than the desired fraction of a media wavelength at the adaptation frequency, as defined in the mesh properties. In most cases, the initial mesh fulfills this criterion already. If the material properties are not known in advance, as is the case for inhomogeneously biased ferrites, then this option should be enabled.
+
+ 
+
+MinimumAcceptedCellGrowth ( double value )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. It enforces an additional convergence criterion, which rejects a "small" delta S (below the desired threshold) if the number of mesh cells did grow less than value percent.
+
+ 
+
+RefThetaFactor (  double value  )
+
+Defines the refinement percentage.  The error estimator assigns a measure for the error to each edge. Edges with the highest error measures are selected for refinement until their contribution to the overall estimated error is a certain value, called refinement percentage. In addition, this setting is an approximated upper limit for the mesh cell increase.
+
+Pass an empty string "" as the value to let the solvers choose this percentage automatically, depeding on the solver order, for instance.
+
+Note: If the singular edge refinement is activated, the limit defined with the RefThetaFactor might not be preserved.
+
+ 
+
+SetMinimumMeshCellGrowth (  double value  )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. It defines a weak lower limit to the mesh growth in percent of the number of cells of the current mesh adaptation pass or some reference meshes' number of cells, whichever is higher.
+
+ 
+
+SetLinearGrowthLimitation (  double value  )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. It defines a limitation of the mesh growth in percent of the initial or some reference meshes' number of cells.
+
+Pass an empty string "" as the value to let the solvers choose this setting automatically, depeding on the solver order, for instance. See also EnableLinearGrowthLimitation below.
+
+Note: If the singular edge refinement is activated, the limit defined with the SetLinearGrowthLimitation might not be preserved.
+
+ 
+
+EnableLinearGrowthLimitation (  bool flag  )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. It defines whether the limitation of the mesh growth passed to SetLinearGrowthLimitation should apply or not.
+
+If an empty string "" was passed to SetLinearGrowthLimitation, the value of the flag is chosen automatically.
+
+Note: If the singular edge refinement is activated, the limit defined with the SetLinearGrowthLimitation might not be preserved.
+
+ 
+
+SingularEdgeRefinement ( int level )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh given that the refinement type is set to automatic (RefinementType ("Automatic")). The accuracy and the performance of the adaptive mesh refinement can be further improved by an appropriate refinement of mesh edges on conductors. Due to the potentially highly varying field strength and distribution, a special treatment for these areas during the adaptive mesh refinement passes often leads to faster over all convergence and is recommended especially for planar structures.
+
+Different levels of the aforementioned strategy are selectable. By default, the singular edge refinement is enabled at level 2. Therewith, an estimated error of the field solution along the model edges is calculated at the adaptation frequency samples and the possible singular edges, which have a certain percentage of the total estimated model edge error, are automatically detected and refined locally. When the mesh in those areas has been refined sufficiently, the singular edge refinement might stop. With the selection reduced to level 1, another threshold for the error will be considered, leading to less number of edges to be refined. Certainly, level 0 switches off the additional singular edge refinement. Level 3 does not involve any threshold for the error and consequently, all possible singular edges will be considered for refinement. The maximum level is recommended for cases when the minimum input reflection of all S-parameters at the present adaptation frequencies seems to be too high and no suitable adaptation frequency can be found.
+
+Note: As the singular edge refinement is an additional refinement, the limits defined with SetLinearGrowthLimitation or RefThetaFactor might not be preserved.
+
+ 
+
+SnapToGeometry ( bool flag )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. When selected, new nodes that are generated on model interfaces during the mesh adaptation will be projected onto the original geometry, such that the approximation of curved surfaces is improved after each adaptation step.
+
+ 
+
+EnableInnerSParameterAdaptation ( bool flag )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. It enables the S-parameter convergence criterion for the adaptive mesh refinement at discrete mesh adaptation samples.
+
+ 
+
+EnablePortPropagationConstantAdaptation ( bool flag )
+
+This setting only applies to the frequency domain solver with tetrahedral mesh. It enables the propagation constant convergence criterion for the adaptive port mesh refinement for waveguide ports.
+
+ 
+
+Default Settings
+
+ 
+
+Errorlimit (0.005)
+
+MinPasses (2)
+
+MaxPasses (6)
+
+CellIncreaseFactor (0.7)
+
+WeightE (1.0)
+
+WeightB (1.0)
+
+RefineX (True)
+
+RefineY (True)
+
+RefineZ (True)
+
+MaxDeltaS (0.02)
+
+MeshIncrement (5)
+
+SetFrequencyRange (True, 0.0, 0.0)
+
+SkipPulses (0.0)
+
+ErrorEstimatorType ("Automatic")
+
+RefinementType ("Automatic")
+
+%% Default Settings (frequency domain solver with hexahedral mesh)
+
+SetType ("HighFrequencyHex")
+
+SetAdaptionStrategy ("ExpertSystem")
+
+MinPasses (2)
+
+MaxPasses (6)
+
+MeshIncrement (5.0)
+
+%% Default Settings (frequency domain solver with tetrahedral mesh)
+
+SetType ("HighFrequencyTet")
+
+SetAdaptionStrategy ("ExpertSystem")
+
+MinPasses (3)
+
+MaxPasses (8)
+
+MaxDeltaS (0.02)
+
+NumberOfDeltaSChecks (1)
+
+EnableInnerSParameterAdaptation (True)
+
+PropagationConstantAccuracy (0.005)
+
+NumberOfPropConstChecks (2)
+
+EnablePortPropagationConstantAdaptation (True)
+
+MinimumAcceptedCellGrowth (0.5)
+
+RefThetaFactor ("")
+
+SetMinimumMeshCellGrowth (5)
+
+ErrorEstimatorType ("Automatic")
+
+RefinementType ("Automatic")
+
+SnapToGeometry (True)
+
+SubsequentChecksOnlyOnce (False)
+
+WavelengthBasedRefinement (True)
+
+EnableLinearGrowthLimitation (True)
+
+SetLinearGrowthLimitation ("")
+
+SingularEdgeRefinement (2)
+
+ 
+
+Example
+
+ 
+
+With MeshAdaption3D
+
+    .SetType ("Time")
+
+    .SetAdaptionStrategy ("ExpertSystem")
+
+    .MinPasses (2)
+
+    .MaxPasses (6)
+
+    .MeshIncrement (5)
+
+    .MaxDeltaS (0.02)
+
+    .SetFrequencyRange (True, 0.0, 0.0)
+
+End With
