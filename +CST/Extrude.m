@@ -93,6 +93,15 @@ classdef Extrude < handle
             obj.uvector.v = v;
             obj.uvector.w = w;
         end
+        function Vvector(obj, u, v, w)
+            % These settings define the plane on which the profile will be defined. u, v, w are related on the current working coordinate system.
+            obj.AddToHistory(['.Vvector "', num2str(u, '%.15g'), '", '...
+                                       '"', num2str(v, '%.15g'), '", '...
+                                       '"', num2str(w, '%.15g'), '"']);
+            obj.vvector.u = u;
+            obj.vvector.v = v;
+            obj.vvector.w = w;
+        end
         function Point(obj, uPt, vPt)
             % Sets the first point of the to be defined profile. This setting has an effect only if Mode is set to ”pointlist”.
             obj.AddToHistory(['.Point "', num2str(uPt, '%.15g'), '", '...
@@ -219,6 +228,7 @@ classdef Extrude < handle
         height
         origin
         uvector
+        vvector
         point
         lineto
         rline

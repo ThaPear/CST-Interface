@@ -29,31 +29,11 @@ classdef Material < handle
             obj.project = project;
             obj.hMaterial = hProject.invoke('Material');
             obj.history = [];
-            obj.bulkmode = 0;
         end
     end
     methods
-        function StartBulkMode(obj)
-            % Buffers all commands instead of sending them to CST
-            % immediately.
-            obj.bulkmode = 1;
-        end
-        function EndBulkMode(obj)
-            % Flushes all commands since StartBulkMode to CST.
-            obj.bulkmode = 0;
-            % Prepend With Material and append End With
-            obj.history = [ 'With Material', newline, ...
-                                obj.history, ...
-                            'End With'];
-            obj.project.AddToHistory(['define Material settings'], obj.history);
-            obj.history = [];
-        end
         function AddToHistory(obj, command)
-            if(obj.bulkmode)
-                obj.history = [obj.history, '     ', command, newline];
-            else
-                obj.project.AddToHistory(['Material', command]);
-            end
+            obj.history = [obj.history, '     ', command, newline];
         end
     end
     %% CST Object functions.
@@ -66,6 +46,13 @@ classdef Material < handle
         function Create(obj)
             % Creates a new material. All necessary settings have to be made previously.
             obj.AddToHistory(['.Create']);
+            
+            % Prepend With Material and append End With
+            obj.history = [ 'With Material', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Material: ', obj.name], obj.history);
+            obj.history = [];
         end
         function Name(obj, name)
             % Sets the name for the new material to be created using .Create.
@@ -120,18 +107,18 @@ classdef Material < handle
         end
         function NewFolder(obj, foldername)
             % Creates a new folder with the given name.
-            obj.AddToHistory(['.NewFolder "', num2str(foldername, '%.15g'), '"']);
+            obj.project.AddToHistory(['Material.NewFolder "', num2str(foldername, '%.15g'), '"']);
             obj.newfolder = foldername;
         end
         function DeleteFolder(obj, foldername)
             % Deletes an existing folder and all the containing elements.
-            obj.AddToHistory(['.DeleteFolder "', num2str(foldername, '%.15g'), '"']);
+            obj.project.AddToHistory(['Material.DeleteFolder "', num2str(foldername, '%.15g'), '"']);
             obj.deletefolder = foldername;
         end
         function RenameFolder(obj, oldFoldername, newFoldername)
             % Changes the name of an existing folder.
-            obj.AddToHistory(['.RenameFolder "', num2str(oldFoldername, '%.15g'), '", '...
-                                            '"', num2str(newFoldername, '%.15g'), '"']);
+            obj.project.AddToHistory(['Material.RenameFolder "', num2str(oldFoldername, '%.15g'), '", '...
+                                                            '"', num2str(newFoldername, '%.15g'), '"']);
             obj.renamefolder.oldFoldername = oldFoldername;
             obj.renamefolder.newFoldername = newFoldername;
         end
@@ -173,6 +160,11 @@ classdef Material < handle
         function ChangeColour(obj)
             % Changes the appearance for an existing material specified by the .Name method to the settings given by the .Colour, .Transparency or .Wireframe method. Changes to other parameters will not be taken. The execution of this method will - in contrast to .Create - not be regarded as a structural change and though not require the deletion of results.
             obj.AddToHistory(['.ChangeColour']);
+            
+            % Prepend With and append End With 
+            obj.history = ['With Material', newline, obj.history, 'End With']; 
+            obj.project.AddToHistory(['define material colour: ', obj.name], obj.history); 
+            obj.history = []; 
         end
         %% Basic Material Parameters
         function Epsilon(obj, dValue)
@@ -2438,7 +2430,7 @@ classdef Material < handle
         function [bool, depth, gapwidth, toothwidth] = GetCorrugation(obj, name)
             % Returns the specific material parameter for the material specified by name in the respective double variables.
             functionString = [...
-                'Dim bool as Boolean', newline, ...
+                'Dim bool As Boolean', newline, ...
                 'Dim depth As Double, gapwidth As Double, toothwidth As Double', newline, ...
                 'bool = Material.GetCorrugation(', name, ', depth, gapwidth, toothwidth)', newline, ...
             ];
@@ -2453,7 +2445,7 @@ classdef Material < handle
         function [bool, resistance, reactance] = GetOhmicSheetImpedance(obj, name)
             % Returns the specific material parameter for the material specified by name in the respective double variables.
             functionString = [...
-                'Dim bool as Boolean', newline, ...
+                'Dim bool As Boolean', newline, ...
                 'Dim resistance As Double, reactance As Double', newline, ...
                 'bool = Material.GetOhmicSheetImpedance(', name, ', resistance, reactance)', newline, ...
             ];
@@ -2550,6 +2542,37 @@ classdef Material < handle
         end
         %% Notes
         % (*) The value will be shared among all available material sets and problem types.
+        %% Undocumented functions.
+        % Found in history list when background material is changed.
+        function ChangeBackgroundMaterial(obj)
+            obj.AddToHistory(['.ChangeBackgroundMaterial']); 
+            
+            % Prepend With and append End With 
+            obj.history = ['With Material', newline, obj.history, 'End With']; 
+            obj.project.AddToHistory(['define background'], obj.history); 
+            obj.history = []; 
+        end
+        % Found in history list when defining a new material.
+        function FrqType(obj, frqtype)
+            % frqtype: 'all'
+            obj.AddToHistory(['.FrqType "', num2str(frqtype, '%.15g'), '"']);
+            obj.frqtype = frqtype;
+        end
+        % Found in history list when defining a new material.
+        function ErrorLimitNthModelFitEps(obj, errorlimit)
+            obj.AddToHistory(['.ErrorLimitNthModelFitEps "', num2str(errorlimit, '%.15g'), '"']);
+            obj.errorlimitnthmodelfiteps = errorlimit;
+        end
+        % Found in history list when defining a new material.
+        function ErrorLimitNthModelFitMu(obj, errorlimit)
+            obj.AddToHistory(['.ErrorLimitNthModelFitMu "', num2str(errorlimit, '%.15g'), '"']);
+            obj.errorlimitnthmodelfitmu = errorlimit;
+        end
+        % Found in history list when defining a new material.
+        function NonlinearMeasurementError(obj, error)
+            obj.AddToHistory(['.NonlinearMeasurementError "', num2str(error, '%.15g'), '"']);
+            obj.nonlinearmeasurementerror = error;
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -2557,7 +2580,6 @@ classdef Material < handle
         project
         hMaterial
         history
-        bulkmode
 
         name
         folder
@@ -2841,6 +2863,10 @@ classdef Material < handle
         isbackgroundmaterial
         gettypeofmaterial
         exists
+        frqtype
+        errorlimitnthmodelfiteps
+        errorlimitnthmodelfitmu
+        nonlinearmeasurementerror
     end
 end
 

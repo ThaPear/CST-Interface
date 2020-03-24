@@ -1,0 +1,827 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shape Operations | Solid
+
+Solid Object
+
+Changes Solids in several ways and offers tools for the reparation of imported solids.
+
+General Methods
+
+Boolean
+
+Appearance
+
+Advanced Modelling
+
+Local Modifications
+
+Mesh Settings
+
+Healing
+
+Show Problems
+
+Face Healing
+
+Advanced Repair Operations
+
+Queries
+
+Default Settings
+
+Examples
+
+General Methods
+
+Delete ( solidname SolidName )
+
+Deletes the Solid with the given name.
+
+ 
+
+Rename ( solidname oldName, name newName )
+
+Changes the name of an already named Solid.
+
+ 
+
+ChangeComponent ( solidname oldName, name newName )
+
+Changes the component of a solid. The compontent to be changed to must already exist.
+
+ 
+
+ChangeMaterial ( solidname oldName, name newName )
+
+Changes the material of a solid. The material to change to must already exist.
+
+ 
+
+SetUseIndividualColor ( solidname SolidName, bool flag  )
+
+Enables the use of the individual color for a solid. The RGB values of the material will be ignored if enabled and replaced by the one from the solid.   
+
+ 
+
+ChangeIndividualColor ( solidname SolidName, int r, int g, int b )
+
+Changes the RGB values of the individual color of the given solid. "SetUseIndividualColor" need to be set to "1" before to make sure the change will be visible.
+
+ 
+
+FastModelUpdate ( bool flag )
+
+For setting the edit behavior of project elements and parameters. If the fast model update is deactivated, editing most of the project elements will lead to a complete rebuild of the projects history. If activated, only the relevant history entries are executed to save time.
+
+ 
+
+%% Boolean
+
+ 
+
+Add ( solidname solid1, solidname solid2 )
+
+This method adds two solids. The added solid will be stored under solid1 and the second solid will be deleted.
+
+ 
+
+Insert ( solidname solid1, solidname solid2 )
+
+Performs an subtraction between the solids solid1 and solid2 (solid1 solid2) but does not delete solid2.
+
+ 
+
+Intersect ( solidname solid1, solidname solid2 )
+
+Performs an intersection on the two solids. The overlapping parts between the two solids remains while the rest will be deleted. The result will be stored in solid1 while solid2 will be deleted.
+
+ 
+
+Subtract ( solidname solid1, solidname solid2 )
+
+Performs the operation solid1 solid2. The result will be stored in solid1 while solid2 will be deleted.
+
+ 
+
+MergeMaterialsOfComponent ( name name )
+
+The parameter name can be a componentname or a solidname.
+
+If it is a componentname the function will merge all shapes from one component with the same material like the boolean operation add.
+
+If name is a solidname all shapes of a component with the same material like the solid name will be merged together. The resulting shape is called like name.
+
+ 
+
+%% Appearance
+
+ 
+
+ShapeVisualizationAccuracy ( int acc)
+
+Specifies the accuracy of the triangulation of the shapes used for visualization. This setting only changes the display information, it does not change any internal description of a solid (Modeler, mesh module, solver, etc.). The parameter acc may have values between 0 - 100.
+
+ 
+
+ShapeVisualizationOffset ( int offset)
+
+Specifies the distance between the triangulation of adjacent shapes. This setting only changes the display information, it does not change any internal description of a solid (Modeler, mesh module, solver, etc.); The parameter offset may have values between 0 - 100.
+
+ 
+
+%% Advanced Modelling
+
+ 
+
+AttachActiveWCS ( name sName )
+
+Attaches the currently active coordinate system (global or local WCS) to the solid specified by sName. This solid will then own a Local Solid Coordinate System (SCS) which transforms with solid transformation and which will be copied when the solid is copied within a transformation. The SCS feature is useful for all applications which depend on an orientation (like anisotropic materials or radial magnets). A solid coordinate system can be changed by attaching a new WCS to the solid.
+
+ 
+
+BlendEdge ( double rad )
+
+This method changes the transition between two faces. If two faces join each other at a straight edge this edge can be picked and replaced by a cylindrical shape of radius rad. This shape is inserted into the structure such that a smooth transition between the two original faces arises.
+
+If radius is chosen in a way that the structure would change significantly, the operation might not be possible.
+
+If no edge is picked this method performs no action.
+
+ 
+
+ChamferEdge ( double depth, double angle, bool switch, int faceID )
+
+This option cuts all previously picked edges to the specified depth. The parameter angle defines the angle of the chamfer in degrees (default is 45.0°). There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. The parameter switch is to apply the specified settings to the other direction. The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+
+If depth is chosen in a way that the structure would change significantly, the operation might not be possible.
+
+If no edge is picked this method performs no action.
+
+ 
+
+SliceShape ( name sName, name componentName )
+
+Cuts the solid sName of component componentName into two half while the currently active working plane defines the cutting plane.
+
+ 
+
+SplitShape ( name sName, name componentName )
+
+A solid may consist out of several parts that are not connected to each other. An example for such a solid can be created by subtracting one solid from a second one, in a way that the first one cuts the second one into two parts.
+
+This method converts the different parts of the solid sName  of component componentName into independent, new solids. The new solids will be named automatically.
+
+If the solid has only one part this method has no effect.
+
+ 
+
+ThickenSheetAdvanced ( solidname solid1, enum key,   double thickness, bool clearpicks )
+
+This method thickens an existing sheet body with the given thickness thickness. Thus, the original sheet body is transformed to a solid body.
+
+The parameter clearpicks indicates if the actual picks are deleted after the operation. This is needed for multiple solid operation, because several entries are written into the history and only the last one should delete the picks. So all clearpicks values in the history entries of the multiple solid operation should be false and the last one should be true.
+
+The parameter key may have one of the following values:
+
+"Inside"
+
+The sheet is thickened in antiparallel direction of the normal of the sheet's face.
+
+"Outside"
+
+The sheet is thickened in direction of the normal of the sheet's face.
+
+"Centered"
+
+The sheet is thickened around both sides of the original sheet.
+
+ 
+
+ShellAdvanced ( solidname solid1, enum key,   double thickness, bool clearpicks )
+
+This method hollows out the existing solid solid1. The original solid is transformed to a new solid that is made out of the surface of the old one with a defined thickness.
+
+The parameter clearpicks indicates if the actual picks are deleted after the operation. This is needed for multiple solid operation, because several entries are written into the history and only the last one should delete the picks. So all clearpicks values in the history entries of the multiple solid operation should be false and the last one should be true.
+
+The parameter key may have one of the following values:
+
+"Inside"
+
+The wall will be created from the original solids surface to its inside.
+
+"Outside"
+
+The wall will be created from the original solids surface to its outside
+
+"Centered"
+
+The wall will be created around the original solids surface.
+
+ 
+
+FillupSpaceAdvanced ( name sName, name componentName, name materialName )
+
+Creates a brick with the size of the entire calculation domain and inserts all solids that have been defined so far into it. The new solid will have the name sName of component componentName and will have the material materialName. Both the given material and the given component must already exist.
+
+ 
+
+%% Local Modifications (deprecated, use the Local Modifications Object instead)
+
+ 
+
+MoveSelectedFace (  double dx , double dy, double dz )
+
+Moves the selected face to the specified direction. Depending on the face a movement might not be possible in every directions. For planar faces MoveSelectedPlanarFace should be used.
+
+ 
+
+MoveSelectedPlanarFace (  double offset )
+
+Moves a previously picked face toward its normal direction. When a face shall be moved, the modeler tries to enlarge the adjoining faces according to their shapes such that the surface of the solid remains closed. If the solid can not be varied in this way, the operation will not be executed.
+
+In simple cases, this method can be used as a fast method to parameterize a structure. Normally a structure is parameterized by defining parameters for the basic solids the structure consists of. Then, changing parameters means rebuilding the entire structure. With this method small changes can be made only by local operations.
+
+ 
+
+OffsetSelectedFace (  double offset )
+
+This method moves the selected face in direction of its face normal. For instance if the offset method is applied to a cylindrical face of a cylinder, it simply changes its radius.
+
+All adjoining faces to the changed face will be changed as well such that the solid retains a closed surface.
+
+OffsetSelectedFaces can be very useful when parameterizing an imported structure. No information about the history of the solid creation is needed.
+
+ 
+
+RemoveSelectedFaces
+
+Tries to remove all previously picked faces. When a face has to be removed the modeler tries to enlarge the adjoining faces according to their shapes to close the structure again. If the solid can not be closed in this way, the operation will not be executed.
+
+ 
+
+SelectedFaceRadius ( double  radius )
+
+For changing the radius of a selected cylindrical face within the model. When changing the radius, all connected faces will be extended to fill up the appearing gaps in the corresponding solid.
+
+This operation is especially useful when an imported part with no further construction history information shall be parameterized for later optimization runs.
+
+The operation may fail when the topology of the model changes too much.
+
+ 
+
+%% Mesh Settings
+
+ 
+
+SetMeshStepWidth ( solidname solid1, double dx , double dy, double dz )
+
+For some structures it might be necessary to increase the mesh density for individual solids. To do this a maximum step width for all three directions can be given. The automatic mesh generator tries to realize these values for the volume of the solid specified. However, this is not an exclusive setting, it competes with other automesh settings. It might not be fulfilled exactly.
+
+If zero is specified for one coordinate direction, no further influence to the mesh generation in this direction is made.
+
+ 
+
+SetMeshExtendwidth ( solidname solid1, double dx , double dy, double dz )
+
+Extends the volume for mesh refinements defined by  SetAutomeshStepWidth for solid1.
+
+ 
+
+SetAutomeshFixpoints ( solidname solid1, bool flag )
+
+This method specifies if the specified solid should be considered by the automatic mesh generation or not. If the solid is unimportant for the mesh generation the setting flag =False makes sure that the solid does not have any influence on the mesh. No fix- or density points will be created for this solid.
+
+ 
+
+SetAutomeshPriority ( solidname solid1, double priority )
+
+This method specifies how the specified solid should be treated by the automatic mesh generation. If the solid is more important than others, a priority can be given for it. Generally the priority for all objects (apart from wires, lumped elements, discrete ports) equals to zero. In the case that two fixpoints are so close to each other that the ratiolimit prohibits a mesh line for each point, the mesh lines will be merged. However if one of the fixpoints has been created by an object of higher priority the mesh lines will be placed on this fixpoint.
+
+Because wires, lumped elements and discrete ports are very sensitive to their start and endpoints, they have a priority of 1000. Otherwise it would be possible that they get disconnected during the mesh generation.
+
+ 
+
+SetMaterialBasedRefinement ( solidname solid1,  bool flag )
+
+Use this method to activate the material based refinement to be considered by the mesh generation of the selected solid.
+
+ 
+
+SetMeshProperties ( solidname solid1, enum type, bool defaultType )
+
+Set the approximation type during the matrix calculation process of a given shape.
+
+The parameter type may have one of the following values:
+
+"PBA "
+
+Use this setting to obtain the best approximation of the structure during simulation.
+
+ "Staircase"
+
+With this setting the structure will be approximated by a staircase mesh.
+
+ 
+
+SetUseForSimulation ( solidname  solid1, bool  flag  )
+
+Indicates if a specific solid should be included in the calculation. If the solid is unimportant for the simulation the setting flag =False makes sure that it does not have any influence.
+
+ 
+
+SetUseThinSheetMeshForShape ( solidname solid1, bool flag )
+
+Activates thin sheets (TST) for the shape solid1.
+
+ 
+
+SetMeshRefinement ( solidname solid1, bool edgeRefine, double edgeRefineFact, bool volumeRefine, double volumeRefineFact )
+
+Use this method to increase the mesh density for solid1.
+
+If edgeRefine is set to True, a higher mesh density  for all edges of solid1 that run parallel to a mesh line is used (the mesh density will be increased by a factor of edgeRefineFact ). The mesh will be increased only in the perpendicular directions of the edges.
+
+If volumeRefine is set to True, the mesh within the bounding box of solid1 will be volumeRefineFact more dense as it would be if edgeRefineFact is set to False.
+
+ 
+
+SetSolidLocalMeshProperties (  solidname solid1, enum type, bool defaultType,double priority,bool flagAutomeshFixpoints,bool flagMaterialBaseRefinement,double dxStepwidth , double dyStepwidth, double dzStepwidth,double dxExtendwidth , double dyExtendwidth, double dzExtendwidth,bool edgeRefine, double edgeRefineFact, bool volumeRefine, double volumeRefineFact,bool flagThinSheetMeshForShape,bool flagUseForSimulation,bool flagUseForBoundingBox,bool flagLimitStepWidth  )
+
+This function combines the functions SetMeshProperties, SetPriority, SetAutomeshFixpoints, SetMaterialBasedRefinement, SetMeshStepwidth, SetMeshExtendwidth, SetMeshRefinement, SetUseThinSheetMeshForShape, SetUseForSimulation, SetUseForBoundingBox for a faster internal evaluation.
+
+ 
+
+AdjustSolidMeshPropertiesStart
+
+Are used for the features sub project import and copy & paste. They are wrapped around the function SetSolidLocalMeshProperties because some settings have to be adjusted to the global unit settings.
+
+ 
+
+AdjustSolidMeshPropertiesEnd
+
+Are used for the features sub project import and copy & paste. They are wrapped around the function SetSolidLocalMeshProperties because some settings have to be adjusted to the global unit settings.
+
+ 
+
+SetMeshStepwidthTet ( solidname solid1, double dmax )
+
+Sets the maximum edge length of any tetrahedral created for solid1.
+
+ 
+
+SetMeshStepwidthSrf ( solidname solid1, double dmax )
+
+Sets the maximum edge length of any surface created for solid1.
+
+ 
+
+%% Healing
+
+ 
+
+HealAllShapesAdvanced
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+HealShapeAdvanced ( solidname solid1 )
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+HealSelfIntersectingShape ( solidname solid1 )
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+HealFacesOfShape ( solidname solid1 )
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+UndoLastShapeHealing
+
+This method undoes a previously performed healing operation. However, it should only be used for repair purposes of imported structures.
+
+ 
+
+ManualShapeHealing ( solidname solid1, bool simplify, bool stitch,bool geombuild,double simplify_tol, double stitch_tol, double geombuild_tol )
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+MakeBadElementsTolerant ( solidname solid1 )
+
+If possible this method fits a tolerance range to the specified shape so that the bad elements will be associated to it properly.
+
+ 
+
+CleanShape ( solidname solid1 )
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+%% Show Problems
+
+ 
+
+CheckSoild ( solidname solid1,  int CheckLevel)
+
+Opens a window displaying all interesting information about the specified shape concerning existing bad edges, vertices or faces. A smaller value  for CheckLevel causes a faster, but less detailed check of the solid. Valid values are 20, 30, 40, 50.
+
+ 
+
+PickDanglingEdges ( solidname solid1 )
+
+Highlights all dangling edges belonging to the specified solid shape. A dangling edge is associated to a shape but has only one adjacent face.
+
+ 
+
+PickJunctionEdges ( solidname solid1 )
+
+Highlights all junction edges belonging to the specified solid shape. A junction edge is associated to a shape but has more than two adjacent faces.
+
+ 
+
+ShowBadEdges ( solidname solid1 )
+
+Highlights all bad edges belonging to the specified solid shape. A bad edge has no correct association to the shape.
+
+ 
+
+ShowBadVertices ( solidname solid1 )
+
+Highlights all bad vertices belonging to the specified solid shape. A bad vertex has no correct association to the shape.
+
+ 
+
+ShowBoundingBoxProblems ( solidname solid1 )
+
+A popup window informs if there are any bounding box problems concerning the specified shape.
+
+ 
+
+ShowDanglingEdges ( solidname solid1 )
+
+deprecated use PickDanglingEdges instead.
+
+Highlights all dangling edges belonging to the specified solid shape. A dangling edge is associated to a shape but has only one adjacent face.
+
+ 
+
+ShowMaximumTolerance ( solidname solid1 )
+
+A popup window displays the maximum tolerance if the specified shape is tolerant.
+
+ 
+
+ShowSplineEdges ( solidname solid1 )
+
+Highlights all spline edges belonging to the specified solid shape.
+
+ 
+
+ShowSplineFaces ( solidname solid1 )
+
+Highlights all spline faces belonging to the specified solid shape.
+
+ 
+
+ShowTolerantEdges ( solidname solid1 )
+
+Highlights all tolerant edges belonging to the specified solid shape. A tolerant edge indicates a tolerant region concerning the shapes dimensions.
+
+ 
+
+ShowTolerantVertices ( solidname solid1 )
+
+Highlights all tolerant vertices belonging to the specified solid shape. A tolerant vertex indicates a tolerant region concerning the shapes dimensions.
+
+ 
+
+ShowShortestEdge
+
+Shows the shortest edge of all solids in the project and also the center point of the shortest edge.
+
+ 
+
+ShowEdgeRange ( double min, double max )
+
+For all within the specified length range picks the edges and their mid-points.
+
+ 
+
+ShowEdgeLengthDistribution
+
+Creates histogram describing edge length distribution. The histogram is created in 1D Results\Model Info folder of the Navigation Tree.
+
+ 
+
+%% Face Healing
+
+ 
+
+CoverSelectedEdges
+
+Tries to create a face according to previously selected edges. If two edges are selected the face connects these two. If a closed loop of edges is selected, a minimal area face is tried to create. If the edges already belong to an existing face, the operation has no effect.
+
+Generally, this method should only be used for repair purposes of imported structures.
+
+ 
+
+DeleteFacesForSelectedEdge ( solidname solid1 )
+
+This method deletes all faces adjacent to the picked edges of the specified solid shape.
+
+ 
+
+DeleteZeroFaces ( solidname solid1 )
+
+This method deletes all zero faces belonging to the specified solid shape. A zero face is not associated properly to the shape.
+
+ 
+
+ReverseSelectedFaces
+
+Reverses the orientation of a selected face. This method should only be used for repair purposes of imported structures.
+
+ 
+
+ReverseShape ( solidname solid1 )
+
+Reverses the orientation of all faces of a selected solid.
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+UnhookSelectedFace
+
+Physically deletes a face. If a face of an existing solid will be deleted, the remaining solid will be converted into a surface. The information of inside and outside will be lost.
+
+This method should only be used for repair purposes of imported structures.
+
+ 
+
+AddLinearCurveFromPoints ( solidname solid1 )
+
+Adds a straight line (a linear curve) to the solid between two previously picked points. However, this method should only be used for repair purposes of imported structures.
+
+ 
+
+AddTangentCurveFromPoints ( solidname solid1, enum key1, enum key2, bool flag1, bool flag2 )
+
+This method should only be used for repair purposes of imported structures.
+
+key1, key2  =  { none, tangent, normalface, normalboth }
+
+flag1, flag2 = Inverted or not.
+
+ 
+
+LoftSelectedEdges ( string  constraint1, double  strength1, bool  invert1, string  constraint2, double  strength2, bool  invert2 )
+
+This method should be used only for repair purposes of imported structures. You may create a face by lofting two edges. Note: The face is only non-ambiguous in case of a dangling edge (an edge belonging to only one face). '1' marked the settings for the first selected edge and '2' for the second one.
+
+'constraint1 / constraint2' can have one of  the following values:
+
+"none"
+
+Creates a connecting face without any restriction.
+
+"tangent"
+
+Creates a face which is tangential to the face belonging to the selected edge.
+
+"perpendicular"
+
+Creates a face which is normal to the face belonging to the selected edge.
+
+'strength1 / strength2' defines the strength of constraint considering the selected face orientation described above.
+
+'invert1 / invert2' can have one of  the following values:
+
+False
+
+Creates a face with a normal starting direction.
+
+True
+
+Creates a face with an inverse starting direction.
+
+ 
+
+SkinSelectedEdges
+
+This method should only be used for repair purposes of imported structures. A solid face will be created between two selected edges in order to fill a gap.
+
+ 
+
+SweepSelectedConnectedEdges
+
+This method should only be used for repair purposes of imported structures. The first selected edge will be swept along the second selected edge. Constraint: The two edges must be connected.
+
+ 
+
+SplitSelectedEdgeAtPickedPoint ( solidname solid1 )
+
+This method should only be used for repair purposes of imported structures. The selected edge will be split at the selected point. The selected point have to be positioned on the selected edge.
+
+ 
+
+RenameCurve ( curvename curve1, curvename curve2 )
+
+Renames a single curve belonging to a solid shape. The curve is specified by the name of the component, the solid and the curve itself.
+
+ 
+
+DeleteCurve ( curvename curve1 )
+
+Deletes curve1. However, this method should only be used for repair purposes of imported structures.
+
+ 
+
+CreateShapeFromFaces ( name sName, name componentName, name materialName )
+
+Creates a new shape form one or more picked faces.
+
+ 
+
+%% Advanced Repair Operations
+
+ 
+
+FacettedRepresentationOfShape ( solidname solid1, double surftol, double normaltol, double maxEdlen, double minPtDist )
+
+Converts the analytical description of a shape into an approximated one. After this operation the shape consists out of several planar faces. However, this method should only be used for repair purposes of imported structures.
+
+ 
+
+SimplifyFigureOfRotation ( solidname solid1, double value, enum key )
+
+A method for performing some special kind of rotation to create a desired figure.
+
+key  =  { None, Inside, Outside }
+
+ 
+
+%% Queries
+
+ 
+
+DoesExist name
+
+Returns whether a solid with the given name does exist. This can be useful if your script tries to find a new telling name that does not exist yet - try your name first with this method.
+
+ 
+
+GetNextFreeName name
+
+Returns an unused solid name.
+
+ 
+
+GetNumberOfShapes int
+
+Returns the total number of currently defined shapes.
+
+ 
+
+GetNameOfShapeFromIndex ( int index ) name
+
+Returns the name of the shape that is identified by index. If there is no shape of index, an empty string is returned.
+
+ 
+
+GetMaterialNameForShape ( solidname solid1 ) name
+
+Returns the name of the material for solid1.
+
+ 
+
+IsPointInsideShape ( double x , double y, double z, solidname solid1 ) bool
+
+Returns True, if the point of given coordinates is inside shape solid1, otherwise False.
+
+ 
+
+IsPointOnAnyEdgeOfShape( double x , double y, double z, solidname solid1 ) bool
+
+Returns True, if the point of given coordinates is on any edge of shape solid1, otherwise False.
+
+ 
+
+GetVolume ( solidname solid1 ) double
+
+Returns the volume of the given shape.
+
+ 
+
+GetMass ( solidname solid1 ) double
+
+Returns the mass of the given shape.
+
+ 
+
+GetArea ( solidname solid1 ) double
+
+Returns the surface area of the given shape.
+
+ 
+
+GetPointCoordinates (solidname solid1,  string pid, double_ref x,double_ref y,double_ref z ) bool
+
+Returns the coordinates of the point with the given pid.
+
+ 
+
+GetNumberOfPoints (solidname solid1 ) int
+
+Returns the maximum number of points.
+
+ 
+
+GetAnyFaceIdFromSolid (solidname solid1 ) int
+
+Returns the id of the first face found for the specified solid. Returns -1 if the solid identification failed (e.g. does not exist) or if no faces were found.
+
+ 
+
+GetLooseBoundingBoxOfShape(solidname solid1, double_ref xmin, double_ref xmax, double_ref ymin, double_ref ymax, double_ref zmin, double_ref zmax)  bool
+
+Returns false, if the solid does not exist, throws error, if a solid without geometry was given. This returns a non-tight bounding box of solid1 in global coordinates. It is only guaranteed, that the complete volume of the solid is inside of the bounding box defined by the two extreme vertices. This query cannot be executed during history rebuilds or structural macro execution. Designed for post-processing.
+
+The solidname can also be given in global name format, but so far, only real solids are allowed anyway.
+
+ 
+
+Default Settings
+
+SetAutomeshExtendwidth (0.0, 0.0, 0.0)
+
+SetAutomeshStepwidth (0.0, 0.0, 0.0)
+
+ShapeVisualiziationAccuracy(30)
+
+ShapeVisualiziationOffset (25)
+
+Examples
+
+' performs the boolean operation solid1 = solid1 - solid2
+
+Solid.Subtract "component1:solid1", "component1:solid2"
+
+ 
+
+' Renames solid1 to struct1
+
+Solid.Rename "component1:solid1", "struct1"
+
+ 
+
+' Creates the new component "part1"
+
+Component.New "part1"
+
+ 
+
+' Moves struct1 into part1
+
+Solid.ChangeComponent "component1:struct1", "part1"
+
+ 
+
+' Creates a new material of name "diel"
+
+With Material
+
+     .Reset
+
+     .Name "diel"
+
+     .FrqType "hf"
+
+     .Type "Normal"
+
+     .Epsilon "2.7"
+
+     .Mu "1.0"
+
+     .Colour "0", "0.501961", "0.501961"
+
+     .Create
+
+End With
+
+ 
+
+' Changes the material for struct1
+
+Solid.ChangeMaterial "part1:struct1", "diel"

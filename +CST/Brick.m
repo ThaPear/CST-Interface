@@ -78,6 +78,18 @@ classdef Brick < handle
             obj.zrange.zmin = zmin;
             obj.zrange.zmax = zmax;
         end
+        function XRange(obj, ymin, ymax)
+            % Sets the bounds for the x- or u-coordinate for the new brick, depending if a local coordinate system is active or not.
+            obj.Xrange(ymin, ymax);
+        end
+        function YRange(obj, ymin, ymax)
+            % Sets the bounds for the y- or v-coordinate for the new brick, depending if a local coordinate system is active or not.
+            obj.Yrange(ymin, ymax);
+        end
+        function ZRange(obj, zmin, zmax)
+            % Sets the bounds for the z- or w-coordinate for the new brick, depending if a local coordinate system is active or not.
+            obj.Zrange(zmin, zmax);
+        end
         function Create(obj)
             % Creates a new brick. All necessary settings for this brick have to be made previously.
             obj.AddToHistory(['.Create']);

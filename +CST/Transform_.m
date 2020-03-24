@@ -60,7 +60,7 @@ classdef Transform_ < handle
         end
         function obj = Transform(obj, objecttype, transform)
             % objecttype: Curve, Shape, FFS, Port, CurrentDistribution,
-            %             Part
+            %             Part, LumpedElement
             % transform: Translate, Rotate, Scale, Mirror
             % Executes the given transform.
             % Should be called last.

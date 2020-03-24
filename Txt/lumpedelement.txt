@@ -1,0 +1,292 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Discrete Elements | LumpedElement
+
+LumpedElement Object
+Lumped elements can be used to include electronic components such as resistors, inductances, capacitances and diodes into the simulation.
+
+Methods
+
+Defaults
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Create
+
+Creates a new element. All necessary settings for this element have to be made previously.
+
+ 
+
+Modify
+
+Modifies an existing element. Only none geometrical settings which were made previously are changed.
+
+ 
+
+SetType ( enum key )
+
+Sets the type of the discrete element.
+
+enum key
+
+meaning
+
+”rlcparallel”
+
+The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance. (default)
+
+”rlcserial”
+
+The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance.
+
+”diode”
+
+The discrete element is a diode.
+
+”generalcircuit”
+
+The discrete element is defined by circuit file.
+
+ 
+
+SetName ( name name )
+
+Sets the name of the lumped element.
+
+ 
+
+Folder ( name foldername )
+
+Sets the name of the folder for the new lumped element. If the name is empty, then the lumped element does not belong to a folder.
+
+ 
+
+SetR ( double dValue )
+
+Defines the value of resistance / inductance / capacitance of the lumped element.
+
+ 
+
+SetL ( double dValue )
+
+Defines the value of resistance / inductance / capacitance of the lumped element.
+
+ 
+
+SetC ( double dValue )
+
+Defines the value of resistance / inductance / capacitance of the lumped element.
+
+ 
+
+SetGs ( double dValue )
+
+Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ”diode”.
+
+ 
+
+SetI0 ( double dValue )
+
+Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ”diode”.
+
+ 
+
+SetT ( double dValue )
+
+Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ”diode”.
+
+ 
+
+SetP1 ( bool picked, double x, double y, double z )
+
+Define the starting / end point of the discrete element. If picked is True, two previously picked points will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
+
+ 
+
+SetP2 ( bool picked, double x, double y, double z )
+
+Define the starting / end point of the discrete element. If picked is True, two previously picked points will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
+
+ 
+
+GetCoordinates ( name name, double x0, double y0, double z0, double x1, double y1, double z1  )
+
+Queries the start and end point coordinates of a discrete element specified by name.
+
+ 
+
+GetProperties ( name name, string  type, double R, double L, double C, double Gs, double I0, double T, double radius  )
+
+Queries the basic values of the Lumped Element with the given name. All other parameters are out-values. Returns false if name do not exists, true otherwise.
+
+ 
+
+CircuitFileName ( name filename )
+
+Sets the name of the external Spice file to be imported.
+
+ 
+
+UseRelativePath ( bool flag )
+
+Defines if the CircuitFileName is given with a relative or absolute path. In the former case CircuitFileName must specify a location relative to the current project file.
+
+ 
+
+CircuitId ( int Id)
+
+Set a unique id to identify the local copy of the circuit file.
+
+ 
+
+UseCopyOnly ( bool flag )
+
+Only the initially copied circuit file in the project folder is used. Any later changes in the external file are ignored.
+
+ 
+
+StartLumpedElementNameIteration ()
+
+Initialize an iterator over all Lumped Elements and place it before the first element. Returns the current number of elements in the list.
+
+ 
+
+GetNextLumpedElementName ( string  name )
+
+Returns the name of the next available Lumped Element. Returns false if there are no other elements, true otherwise. Use GetNextLumpedElementName to initialize the iteration. Example of usage:
+
+Dim itemName As String
+
+Dim lType As String  Dim valueR As Double
+
+Dim valueL As Double
+
+Dim valueC As Double
+
+Dim valueGs As Double
+
+Dim valueIO As Double
+
+Dim valueT As Double
+
+Dim valueRadius As Double
+
+LumpedElement.StartLumpedElementNameIteration()
+
+Do While LumpedElement.GetNextLumpedElementName(itemName)
+
+If LumpedElement.GetProperties(itemName, lType, valueR, valueL, valueC, valueGs, valueIO, valueT, valueRadius) Then
+
+MsgBox ("Test: " & lType & " " & valueR & " " & valueL & " " & valueC & " " & valueGs & " " & valueIO & " " & valueT & " " & valueRadius )
+
+Else
+
+MsgBox ("Element do not exist")
+
+End If
+
+Loop
+
+ 
+
+SetInvert ( bool switch )
+
+Set switch to True to reverse the orientation of the lumped element. This might be important, if the lumped element is a diode.
+
+ 
+
+SetMonitor ( bool switch )
+
+If switch is True, current and voltage between start and end point of the lumped element will be monitored.
+
+ 
+
+SetRadius ( double value )
+
+Specifies a radius for the lumped element.
+
+ 
+
+UseProjection ( bool flag )
+
+When this flag is activated then one edge is projected onto the other edge and the face lumped element is created in between the edge and its projection.
+
+ 
+
+ReverseProjection ( bool flag )
+
+When this flag is activated then the second picked edge will be projected onto the first picked edge. This flag is only considered when UseProjection is active.
+
+ 
+
+Wire ( string  wirename )
+
+Defines the name of the wire, on which the lumped element is attached to.
+
+ 
+
+Position ( string  name )
+
+Defines the end of the wire, on which the lumped element is attached to. Possible values are 'end1' or 'end2'.
+
+ 
+
+Rename ( name sOldName, name sNewName )
+
+Changes the name of an existing object.
+
+ 
+
+Delete ( name name )
+
+Deletes an existing object.
+
+ 
+
+NewFolder ( name foldername )
+
+Creates a new folder with the given name.
+
+ 
+
+DeleteFolder ( name foldername )
+
+Deletes an existing folder and all the containing elements.
+
+ 
+
+RenameFolder ( name oldFoldername, name newFoldername )
+
+Changes the name of an existing folder.
+
+ 
+
+Defaults
+
+SetType ("rlcparallel")
+
+SetR (0)
+
+SetL (0)
+
+SetC (0)
+
+SetGs (0)
+
+SetT (0)
+
+SetP1 (False, 0, 0, 0)
+
+SetP2 (False, 0, 0, 0)
+
+SetInvert (False)
+
+SetMonitor (False)
+
+SetRadius (0.0)
+
+ 

@@ -149,6 +149,11 @@ classdef Background < handle
             obj.AddToHistory(['.Rho "', num2str(rho, '%.15g'), '"']);
             obj.rho = rho;
         end
+        % Found in history list when defining background
+        function ResetBackground(obj)
+            obj.AddToHistory(['.ResetBackground']);
+        end
+        
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

@@ -777,10 +777,16 @@ classdef Mesh < handle
             obj.getmaxparallelmesherthreads = type;
         end
         %% Undocumented functions:
-        % Found in history list
+        % Found in template: 'Planar Coupler & Divider.cfg'
         function FPBAAvoidNonRegUnite(obj, bool)
             obj.AddToHistory(['.FPBAAvoidNonRegUnite "', num2str(bool, '%.15g'), '"']);
             obj.fpbaavoidnonregunite = bool;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function SetCreator(obj, creator)
+            % creator: 'High Frequency
+            obj.AddToHistory(['.SetCreator "', num2str(creator, '%.15g'), '"']);
+            obj.setcreator = creator;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -882,6 +888,7 @@ classdef Mesh < handle
         getparallelmeshermode
         getmaxparallelmesherthreads
         fpbaavoidnonregunite
+        setcreator
     end
 end
 

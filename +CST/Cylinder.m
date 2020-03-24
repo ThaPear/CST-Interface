@@ -70,10 +70,18 @@ classdef Cylinder < handle
             obj.AddToHistory(['.Outerradius "', num2str(radius, '%.15g'), '"']);
             obj.outerradius = radius;
         end
+        function OuterRadius(obj, radius)
+            % Sets the outer radius of the cylinder.
+            obj.Outerradius(radius);
+        end
         function Innerradius(obj, radius)
             % Sets the inner radius of the cylinder. This setting may be set to zero to define a solid cylinder.
             obj.AddToHistory(['.Innerradius "', num2str(radius, '%.15g'), '"']);
             obj.innerradius = radius;
+        end
+        function InnerRadius(obj, radius)
+            % Sets the inner radius of the cylinder. This setting may be set to zero to define a solid cylinder.
+            obj.Innerradius(radius);
         end
         function Xcenter(obj, centercoordinate)
             % Sets the x- or u-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
@@ -89,6 +97,18 @@ classdef Cylinder < handle
             % Sets the z- or w-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
             obj.AddToHistory(['.Zcenter "', num2str(centercoordinate, '%.15g'), '"']);
             obj.zcenter = centercoordinate;
+        end
+        function XCenter(obj, centercoordinate)
+            % Sets the x- or u-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
+            obj.Xcenter(centercoordinate);
+        end
+        function YCenter(obj, centercoordinate)
+            % Sets the y- or v-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
+            obj.Ycenter(centercoordinate);
+        end
+        function ZCenter(obj, centercoordinate)
+            % Sets the z- or w-coordinate of the center point of the bottom face of the cylinder, depending on whether a local coordinate system is active or not.
+            obj.Zcenter(centercoordinate);
         end
         function Xrange(obj, xmin, xmax)
             % Sets the bounds for the x- or u-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "x".
@@ -110,6 +130,18 @@ classdef Cylinder < handle
                                       '"', num2str(zmax, '%.15g'), '"']);
             obj.zrange.zmin = zmin;
             obj.zrange.zmax = zmax;
+        end
+        function XRange(obj, ymin, ymax)
+            % Sets the bounds for the x- or u-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "x".
+            obj.Xrange(ymin, ymax);
+        end
+        function YRange(obj, ymin, ymax)
+            % Sets the bounds for the y- or v-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "y".
+            obj.Yrange(ymin, ymax);
+        end
+        function ZRange(obj, zmin, zmax)
+            % Sets the bounds for the z- or w-coordinate extensions of the new cylinder depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "z".
+            obj.Zrange(zmin, zmax);
         end
         function Segments(obj, number)
             % This setting specifies how the cylinder's geometry is modelled, either as a smooth surface of by a facetted approximation. If this value is set to "0", an analytical (smooth) representation of the cylinder will be created. If this number is set to another value greater than 2, the cylinder's face will be approximated by this number of planar facets. The higher the number of segments, the better the representation of the cylinder will be.

@@ -201,6 +201,23 @@ classdef ParameterSweep < handle
             % That function might be related.
             obj.hParameterSweep.invoke('AddUserdefinedWatch');
         end
+        % Found in history list.
+        function AddParameter_Linear(obj, sequencename, parametername, from, to, steps)
+            % Adds a parameter to a sequence.
+            % from: Specify the lower bound of the parameter variation.
+            % to: Specify  the upper bound of the parameter variation.
+            % steps: Specify the number of steps.
+            obj.AddToHistory(['.AddParameter_Linear "', num2str(sequencename, '%.15g'), '", '...
+                                                      '"', num2str(parametername, '%.15g'), '", '...
+                                                      '"', num2str(from, '%.15g'), '", '...
+                                                      '"', num2str(to, '%.15g'), '", '...
+                                                      '"', num2str(steps, '%.15g'), '"']);
+            obj.addparameter_linear.sequencename = sequencename;
+            obj.addparameter_linear.parametername = parametername;
+            obj.addparameter_linear.from = from;
+            obj.addparameter_linear.to = to;
+            obj.addparameter_linear.steps = steps;
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -221,6 +238,7 @@ classdef ParameterSweep < handle
         usedistributedcomputing
         
         enabletreeupdate
+        addparameter_linear
     end
 end
 

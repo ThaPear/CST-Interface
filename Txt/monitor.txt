@@ -1,0 +1,548 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Monitor
+
+Monitor Object
+
+Defines 3D or 2D field monitors. Each monitor stores the field values either for a specified frequency or for a set of time samples. There are different kinds of monitors: magnetic and electric field or energy monitors as well as farfield, power flow and current monitors.
+
+Methods
+
+Queries
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+Rename ( name oldName, name newName )
+
+Renames the monitor named oldName to newName.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+FieldType ( enum fType )
+
+Sets what field is to be monitored.
+
+fType can have one of the following values:
+
+”Efield”
+
+The electric field will be monitored.
+
+”Hfield”
+
+The magnetic field and the surface current will be monitored.
+
+”Powerflow”
+
+The Pointing vector will be monitored.
+
+”Current”
+
+The current density will be monitored.
+
+”Powerloss”
+
+The power loss density will be monitored.
+
+”Eenergy”
+
+The electric energy density will be monitored.
+
+”Henergy”
+
+The magnetic energy density will be monitored.
+
+”Farfield”
+
+A monitor for the farfield will be created.
+
+”Fieldsource”
+
+A monitor for the field source will be created.
+
+"Spacecharge"
+
+The space charge density, e.g. due to charged particles, will be monitored.
+
+"Particlecurrentdensity"
+
+The particle current density will be monitored.
+
+ 
+
+Dimension ( enum{"plane", "volume"} monitorType )
+
+This option decides to monitor the fields only on a cutting plane or for the entire calculation volume.
+
+ 
+
+PlaneNormal ( enum{"x", "y", "z"} plane )
+
+Defines the normal direction of the monitor plane. This method only applies if the fields are to be monitored on a two dimensional plane. Otherwise this setting has no effect.
+
+ 
+
+PlanePosition ( double pos )
+
+Defines the position of the two dimensional monitor. This method only applies if the fields are to be monitored on a two dimensional plane. Otherwise this setting has no effect.
+
+ 
+
+Domain ( enum{"frequency", "time"} monitorDomain )
+
+Defines whether the monitor stores time-domain or frequency-domain information. In case of a farfield monitor type, the setting "time" refers to a broadband farfield monitor offering both frequency and transient farfield information.
+
+ 
+
+Frequency ( double freq )
+
+Sets the frequency for frequency domain monitor to freq.
+
+ 
+
+Tstart ( double startTime )
+
+Sets starting time for a time domain monitor to startTime.
+
+In case of transient solver the command is also available for frequency domain monitors. The frequency monitor recording will be started at startTime.
+
+ 
+
+Tstep ( double timeStep )
+
+Sets the time increment for a time domain monitor to timeStep.
+
+ 
+
+Tend ( double stopTime )
+
+Sets the end time for a time domain monitor to stopTime.
+
+ 
+
+UseTend ( bool bFlag )
+
+If bFlag is True the time domain monitor stops storing the results when the end time set with Tend is reached. Otherwise the monitor will continue until the simulation stops.
+
+ 
+
+TimeAverage ( bool bFlag )
+
+Setting bFlag to True allows the calculation of averaged values over time for a powerloss time domain monitor (Domain "time" and FieldType "Powerloss"). By default the monitor is integrated over time and averaged by its number of sample steps. The duration and sample step of the integration is defined by setting the values Tstart, Tstep, Tend and UseTend. However, with the command RepetitionPeriod it is possible to define a specific time interval to normalize the monitor result.
+
+Please note that this averaged powerloss time monitor can be further used for an averaged SAR calculation as well as an imported source field for the thermal solver of CST MPHYSICS STUDIO.
+
+ 
+
+RepetitionPeriod ( double timeperiod )
+
+The value timeperiod defines the time interval which is used for normalization of the averaged powerloss monitor (activated by the flag TimeAverage). In case this value is set to zero, the time interval of the monitor (defined by  Tstart, Tstep, Tend and UseTend) is used instead.
+
+ 
+
+AutomaticOrder ( bool bFlag )
+
+Setting for broadband farfield monitors: The solver automatically determines the necessary degree of polynomials used to represent the farfield in terms of spherical waves. If bFlag is set "False" this automatic determination is disabled and a reduced maximum order can be set by applying the method MaxOrder below.
+
+ 
+
+MaxOrder ( int nOrder )
+
+Setting for broadband farfield monitors: If the automatic order detection is disabled by calling the method AutomaticOrder with "False" the solver will reduce the calculated maximum order to nOrder to save memory and computation time.
+
+ 
+
+FrequencySamples ( int nSamples )
+
+Setting for broadband farfield monitors: Choose a number of equidistant frequency samples between Fmin and Fmax where frequency domain farfields are calculated. Results for any frequencies in between are interpolated to obtain broadband farfield information. For a more accurate interpolation over the frequency band increase this value e.g. to "31". An odd number assures that the result at mid frequency is not interpolated.
+
+ 
+
+TransientFarfield (  bool bFlag  )
+
+Setting for broadband farfield monitors: This method activates the additional calculation of transient farfield information which can be displayed afterwards in the post-processing. Note that in order to accurately obtain time domain farfields the computational effort is higher than for broadband farfields only.
+
+ 
+
+Accuracy ( enum{"1e-3", "1e-4", "1e-5"} accuracy )
+
+Setting for broadband farfield monitors: Defines the desired accuracy of the farfield. Together with the Fmax and the size of the structure it determines the number of modes required to represent the farfield. Note that leaving out higher order terms by choosing a lower accuracy is equivalent to low pass filtering the farfield solution. This saves memory and computation time. However, the farfield result has usually less detail.
+
+ 
+
+Origin ( enum originType )
+
+The broadband farfield monitor is based on an expansion of the farfield in terms of spherical waves. By default the origin of the spherical wave expansion is the center of the bounding box.
+
+originType can have one of the following values:
+
+bbox
+
+The center of the bounding box of the structure.
+
+zero
+
+Origin of coordinate system.
+
+free
+
+Any desired point defined by UserOrigin
+
+ 
+
+UserOrigin (double x, double y, double z )
+
+Setting for broadband farfield monitors: Sets origin of the spherical wave expansion if the origin type is set to free.
+
+Please note: x, y, and z must be double values here. Any expression is not allowed.
+
+ 
+
+FrequencyRange ( double fmin,  double fmax )
+
+Sets the frequency range for field source monitors.
+
+ 
+
+UseSubvolume ( bool bFlag )
+
+If bFlag is true, then the field monitor uses the subvolume which has to be defined in SetSubvolume. Otherwise the bounding box is used.
+
+Please note that this method is only available for field source monitors, single frequency farfield/RCS monitors and electric or magnetic field monitors. Furthermore, this subvolume specification is currently not supported by frequency domain solvers.
+
+ 
+
+SetSubvolume ( double xmin,  double xmax, double ymin, double ymax,  double zmin, double zmax )
+
+Sets the subvolume of the field monitor. Please note that this method is only available for field source monitors, single frequency farfield/RCS monitors and electric or magnetic field monitors.
+
+ 
+
+InvertOrientation ( bool bFlag )
+
+Inverts orientation for field source monitors.
+
+ 
+
+ExportFarfieldSource ( bool bFlag )
+
+Activates the automatic generation of a farfield source from the corresponding farfield monitor after a solver run. All farfield source exports from the same excitation are collected into a single broadband farfield source file.
+
+ 
+
+%% Queries
+
+ 
+
+GetNumberOfMonitors long
+
+Returns the total number of defined monitors in the current project.
+
+ 
+
+GetMonitorNameFromIndex ( long index ) name
+
+Returns the name of the monitor with regard to the index in the internal monitor list .
+
+ 
+
+GetMonitorTypeFromIndex ( long index ) monType
+
+Returns the type of the monitor with regard to the index in the internal monitor list.
+
+monType can have one of the following values; depending on 2D or 3D monitors a suffix is added to the string in format of  " 2D" or " 3D", respectively:
+
+”E-Field 3D”, ”E-Field 2D”
+
+The electric field has been monitored.
+
+”H-Field 3D”, ”H-Field 2D”
+
+The magnetic field and the surface current has been monitored.
+
+”Powerflow 3D”
+
+The Pointing vector has been monitored.
+
+”Current 3D”
+
+The current density has been monitored.
+
+”Loss density 3D”
+
+The power loss density has been monitored.
+
+”E-Energy 3D”
+
+The electric energy density has been monitored.
+
+”H-Energy 3D”
+
+The magnetic energy density has been monitored.
+
+”SAR 3D”
+
+A monitor for the SAR calculation has been created.
+
+”Farfield”
+
+A farfield monitor has been created.
+
+”Fieldsource”
+
+A field source monitor has been created.
+
+”Adaption 3D”
+
+A monitor for the grid adaption has been created.
+
+"Spcace charge density 3D"
+
+A monitor for the space charge density has been created.
+
+”Particle current density 3D”
+
+A monitor for the particle current density has been created.
+
+ 
+
+GetMonitorDomainFromIndex ( long index ) domain
+
+Returns the monitor domain with regard to the index in the internal monitor list.
+
+domain: 'frequency'
+
+        'time'
+
+        'static'
+
+ 
+
+GetMonitorFrequencyFromIndex ( long index ) double
+
+Returns the frequency value of a frequency domain monitor with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTstartFromIndex ( long index ) double
+
+Returns the start time of a time domain monitor with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTstepFromIndex ( long index ) double
+
+Returns the time increment value of a time domain monitor with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTendFromIndex ( long index ) double
+
+Returns the end time of a time domain monitor with regard to the index in the internal monitor list.
+
+ 
+
+Export ( enum{"nfs"} exportType, name excitationName, name filePath,  bool bFlag )
+
+Exports or converts field source monitor files in other formats. More details and examples can be found here.
+
+ 
+
+SetSubVolumeSampling( double x,  double y, double z)
+
+Sets the subvolume sampling of the field monitor. Please note that this method only affects subvolume monitors for I-, A- and M-Solver. Can be used during definition of a monitor. This command is only written to the history if any sampling setting has been applied.
+
+ 
+
+GetSubVolumeSampling( name monitorName ) V
+
+Returns a three dimensional vector of subvolume setting (x, y, z) set by the command SetSubVolumeSampling(...). See also Example.
+
+ 
+
+ChangeSubVolumeSampling(  name monitorName, double x,  double y, double z)
+
+Sets the subvolume sampling of the field monitor specified by the name. Please note that this method is only available for subvolume monitors for I-, A- and M-Solver. Can be used after definition of a monitor. No history item will be created.
+
+ 
+
+ChangeSubVolumeSamplingToHistory(  name monitorName, double x,  double y, double z)
+
+Enters the command ChangeSubVolumeSampling(  name monitorName, double x,  double y, double z) to the history. Can be used after definition of a monitor.
+
+ 
+
+Default Settings
+
+FieldType ("Efield")
+
+Dimension ("Volume")
+
+PlaneNormal ("x")
+
+PlanePosition (0.0)
+
+Domain ("frequency")
+
+Tstart (0.0)
+
+Tstep (0.0)
+
+Tend (0.0)
+
+RepetitionPeriod (0.0)
+
+UseTend (False)
+
+TimeAverage (False)
+
+MaxOrder (1)
+
+FrequencySamples (21)
+
+AutomaticOrder (True)
+
+TransientFarfield (False)
+
+UseSubvolume (False)
+
+ExportFarfieldSource (False)
+
+SetSubVolumeSampling("", "", "")
+
+Examples
+
+' creates a frequency domain electric field monitor for the entire calculation domain
+
+With Monitor
+
+     .Reset
+
+     .Name ("e-field (f=2.5)")
+
+     .Dimension ("Volume")
+
+     .Domain ("Frequency")
+
+     .FieldType ("Efield")
+
+     .Frequency (2.5)
+
+     .Create
+
+End With
+
+ 
+
+' creates a time domain magnetic field monitor for the plane y=37.3
+
+With Monitor
+
+     .Reset
+
+     .Name ("My magnetic field monitor")
+
+     .Dimension ("Plane")
+
+     .Domain ("Time")
+
+     .FieldType ("Hfield")
+
+     .Tstart (1.0)
+
+     .Tstep (0.015)
+
+     .Tend (1.7)
+
+     .UseTend (True)
+
+     .PlaneNormal ("y")
+
+     .PlanePosition ("37.3")
+
+     .Create
+
+End With
+
+ 
+
+' creates a 2D subvolume frequency domain electric field monitor (with sub sampling for I-, A- and M-Solver)
+
+With Monitor
+
+     .Reset
+
+     .Name "e-field (f=0.80;z=30)"
+
+     .Dimension "Volume"
+
+     .Domain "Frequency"
+
+     .FieldType "Efield"
+
+     .Frequency "0.8"
+
+     .UseSubvolume "True"
+
+     .Coordinates "Calculation"
+
+     .SetSubvolume "-140", "140", "-100", "100", "-90", "90"
+
+     .SetSubvolumeOffset "0.0", "0.0", "0.0", "0.0", "0.0", "0.0"
+
+     .PlaneNormal "x"
+
+     .PlanePosition "0"
+
+     .SetSubVolumeSampling  "10", "6", "6"
+
+     .Create
+
+End With
+
+ 
+
+
+'Example for getting the sub volume sampling rate
+
+Dim V As Variant
+
+V = Monitor.GetSubVolumeSampling("e-field (f=0.80;z=30)")
+
+ 
+
+Debug.Print V(0)
+
+Debug.Print V(1)
+
+Debug.Print V(2)
+
+ 
+
+ 

@@ -1,0 +1,219 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | High Frequency | DiscretePort
+
+DiscretePort Object
+
+Use this object to define discrete ports. Beside waveguide ports or plane waves the discrete ports offers another possibility to feed the calculation domain with power. Three different types of discrete ports are available, considering the excitation as a voltage or current source or as an impedance element which also absorb some power and enables S-parameter calculation.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Create
+
+Creates a new discrete port. All necessary settings have to be made previously.
+
+ 
+
+Modify
+
+Modifies an existing discrete port. Only none geometrical settings which were made previously are changed.
+
+ 
+
+PortNumber ( int portnumber )
+
+Chooses the discrete port by its number.
+
+ 
+
+Label ( string  label )
+
+Sets the label of the discrete port.
+
+ 
+
+Type ( enum {"Sparameter", "Voltage", "Current"} porttype )
+
+Defines the type of the discrete port.
+
+ 
+
+Impedance ( double value )
+
+Specifies the input impedance of the discrete port, if it is of type "Sparameter".
+
+ 
+
+VoltagePortImpedance ( double value )
+
+Specifies the input impedance of the discrete port, if it is of type "Voltage".
+
+ 
+
+Voltage ( double value )
+
+Specifies the voltage amplitude of the discrete port, if it is of type "Voltage".
+
+ 
+
+Current ( double value )
+
+Specifies the current amplitude of the discrete port, if it is of type "Current".
+
+ 
+
+Radius ( double value )
+
+Specifies a radius for the discrete edge port.
+
+ 
+
+SetP1 ( bool picked, double x, double y, double z )
+
+Define the starting / end point of the discrete port. If picked is True, the last or second-to-last picked point will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
+
+ 
+
+SetP2 ( bool picked, double x, double y, double z )
+
+Define the starting / end point of the discrete port. If picked is True, the last or second-to-last picked point will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
+
+ 
+
+InvertDirection ( bool switch )
+
+Set switch to True to reverse the orientation of the discrete port. This swaps the definitions of SetP1 and SetP2.
+
+ 
+
+LocalCoordinates ( bool flag )
+
+This method decides whether local (flag = True) or global (flag = False) coordinates will be used for determining the location of the discrete port.
+
+ 
+
+Monitor ( bool flag )
+
+This method decides whether voltage and current of the discrete port should be monitored or not.
+
+ 
+
+Wire ( string  wirename )
+
+Defines the name of the wire, on which the discrete port is attached to.
+
+ 
+
+Position ( string  name )
+
+Defines the end of the wire, on which the discrete port is attached to. Possible values are 'end1' or 'end2'.
+
+ 
+
+GetElementDirIndex ( int portnumber, long_ref dir, long_ref index )
+
+Gets the orientation and mesh index of a discrete port, specified by its portnumber. Please note, that in case that the discrete port is not located inside the mesh e.g. due to a defined symmetry plane, then the return values are given as -1.
+
+ 
+
+GetElement2ndIndex ( int portnumber, long_ref index )
+
+A discrete port is defined between two mesh points. This function returns the index of the second mesh point of the discrete port portnumber. Please note, that in case that the discrete port is not located inside the mesh e.g. due to a defined symmetry plane, then the return value is given as -1.
+
+ 
+
+GetLength ( int portnumber ) double
+
+Returns the exact length of the discrete port, specified by its portnumber.
+
+ 
+
+GetGridLength ( int portnumber ) double
+
+Returns the length in mesh representation of the discrete port, specified by its portnumber.
+
+ 
+
+GetCoordinates ( int portnumber, double x0, double y0, double z0, double x1, double y1, double z1  )
+
+Queries the start and end point coordinates of a discrete port specified by its portnumber.
+
+ 
+
+Default Settings
+
+PortNumber (1)
+
+Label ("")
+
+Type ("SParameter")
+
+Impedance (50.0)
+
+Voltage (1.0)
+
+Current (1.0)
+
+SetP1 (False, 0.0, 0.0, 0.0)
+
+SetP2 (False, 0.0, 0.0, 0.0)
+
+InverDirection (False)
+
+LocalCoordinates (False)
+
+Monitor (False)
+
+Radius(0.0)
+
+Example
+
+' Define a discrete port
+
+With DiscretePort
+
+     .Reset
+
+     .PortNumber "6"
+
+     .Type "Current"
+
+     .Impedance "50.0"
+
+     .Voltage "1.0"
+
+     .Current "2.0"
+
+     .SetP1 "True", "4.7", "-0.7", "0"
+
+     .SetP2 "True", "-3.9", "-1.8", "0"
+
+     .InvertDirection "False"
+
+     .LocalCoordinates "False"
+
+     .Monitor "True"
+
+     .Radius "0.01"
+
+     .Create
+
+End With
+
+ 
+
+'Delete the discrete port
+
+Port.Delete (1)

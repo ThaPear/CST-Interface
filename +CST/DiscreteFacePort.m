@@ -15,6 +15,7 @@
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Warning: This entire class is only documented in the old (2013) documentation.
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
@@ -53,6 +54,7 @@ classdef DiscreteFacePort < handle
         reverseprojection
         monitor
         allowfullsize
+        currentamplitude
     end
     
     methods(Access = ?CST.Project)
@@ -86,7 +88,7 @@ classdef DiscreteFacePort < handle
             
             % Prepend With and append End With
             obj.history = ['With DiscreteFacePort', newline, obj.history, 'End With'];
-            obj.project.AddToHistory(['Create DiscreteFacePort "', num2str(obj.portnumber), '"'], obj.history);
+            obj.project.AddToHistory(['Modify DiscreteFacePort "', num2str(obj.portnumber), '"'], obj.history);
             obj.history = [];
         end
         
@@ -226,6 +228,11 @@ classdef DiscreteFacePort < handle
             % with Tetrahedral mesh.
             obj.AddToHistory(['.AllowFullSize "', num2str(boolean), '"']);
             obj.allowfullsize = boolean;
+        end
+        %% Undocumented functions
+        function CurrentAmplitude(obj, amplitude)
+            obj.AddToHistory(['.CurrentAmplitude "', num2str(amplitude), '"']);
+            obj.currentamplitude = amplitude;
         end
     end
 end

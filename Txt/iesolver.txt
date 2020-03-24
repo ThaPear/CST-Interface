@@ -48,6 +48,8 @@ Double precision,
 MLFMM Accuracy: High,
 Minimum Box size: 0.50 lambda,
 
+ 
+
 UseFastFrequencySweep  ( bool flag )
 
 Activates (flag = True) or deactivates (flag = False) the broadband frequency sweep for the solver.

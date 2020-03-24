@@ -121,7 +121,7 @@ classdef Project < handle
         end
         function ChangeSolverType(obj, type)
             % Switch to another solver. Valid solver types are: "HF Time Domain", "HF Eigenmode", "HF Frequency Domain", "HF IntegralEq", "HF Multilayer", "HF Asymptotic", "LF EStatic", "LF MStatic", "LF Stationary Current", "LF Frequency Domain", "LF Time Domain (MQS)", "PT Tracking", "PT Wakefields", "PT PIC", "Thermal Steady State", "Thermal Transient",  "Mechanics".
-            obj.hProject.invoke('ChangeSolverType', type);
+            obj.AddToHistory(['ChangeSolverType "', type, '"']);
         end
         function string = GetSolverType(obj)
             % Returns the currently active solver.
@@ -992,6 +992,14 @@ classdef Project < handle
                 end
             end
         end
+        function parameters = GetAllParameters(obj)
+            nparams = obj.GetNumberOfParameters();
+            parameters = struct();
+            for(i = 0:nparams-1)
+                parametername = obj.GetParameterName(i);
+                parameters.(parametername) = obj.RestoreParameter(parametername);
+            end
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -1015,6 +1023,7 @@ classdef Project < handle
         curve                       CST.Curve
         cylinder                    CST.Cylinder
         discretefaceport            CST.DiscreteFacePort
+        discreteport                CST.DiscretePort
         eigenmodesolver             CST.EigenmodeSolver
         evaluatefieldalongcurve     CST.EvaluateFieldAlongCurve
         evaluatefieldonface         CST.EvaluateFieldOnFace
@@ -1029,7 +1038,9 @@ classdef Project < handle
         iesolver                    CST.IESolver
         layerstacking               CST.LayerStacking
         line                        CST.Line
-        loft                        CST.Material
+        loft                        CST.Loft
+        lumpedelement               CST.LumpedElement
+        lumpedfaceelement           CST.LumpedFaceElement
         material                    CST.Material
         mesh                        CST.Mesh
         meshadaption3d              CST.MeshAdaption3D
@@ -1047,7 +1058,9 @@ classdef Project < handle
         postprocess1d               CST.PostProcess1D
         qfactor                     CST.QFactor
         rectangle                   CST.Rectangle
-        result1d                    CST.Result1D
+%         result0d                    CST.Result0D
+%         result1d                    CST.Result1D
+%         result1dcomplex             CST.Result1DComplex
         resulttree                  CST.ResultTree
         solid                       CST.Solid
         solver                      CST.Solver
@@ -1164,6 +1177,13 @@ classdef Project < handle
             discretefaceport = obj.discretefaceport;
         end
         
+        function discreteport = DiscretePort(obj)
+            if(isempty(obj.discreteport))
+                obj.discreteport = CST.DiscretePort(obj, obj.hProject);
+            end
+            discreteport = obj.discreteport;
+        end
+        
         function eigenmodesolver = EigenmodeSolver(obj)
             if(isempty(obj.eigenmodesolver))
                 obj.eigenmodesolver = CST.EigenmodeSolver(obj, obj.hProject);
@@ -1267,6 +1287,20 @@ classdef Project < handle
                 obj.loft = CST.Loft(obj, obj.hProject);
             end
             loft = obj.loft;
+        end
+        
+        function lumpedelement = LumpedElement(obj)
+            if(isempty(obj.lumpedelement))
+                obj.lumpedelement = CST.LumpedElement(obj, obj.hProject);
+            end
+            lumpedelement = obj.lumpedelement;
+        end
+        
+        function lumpedfaceelement = LumpedFaceElement(obj)
+            if(isempty(obj.lumpedfaceelement))
+                obj.lumpedfaceelement = CST.LumpedFaceElement(obj, obj.hProject);
+            end
+            lumpedfaceelement = obj.lumpedfaceelement;
         end
         
         function material = Material(obj)
@@ -1388,6 +1422,17 @@ classdef Project < handle
             rectangle = obj.rectangle;
         end
         
+        function result0d = Result0D(obj, resultname)
+%             if(isempty(obj.result0d))
+%                 obj.result0d = CST.Result0D(obj, obj.hProject, resultname);
+%             end
+%             result0d = obj.result0d;
+
+            % Each result1d can be different depending on resultname.
+            % So don't store it.
+            result0d = CST.Result0D(obj, obj.hProject, resultname);
+        end
+        
         function result1d = Result1D(obj, resultname)
 %             if(isempty(obj.result1d))
 %                 obj.result1d = CST.Result1D(obj, obj.hProject, resultname);
@@ -1397,6 +1442,17 @@ classdef Project < handle
             % Each result1d can be different depending on resultname.
             % So don't store it.
             result1d = CST.Result1D(obj, obj.hProject, resultname);
+        end
+        
+        function result1d = Result1DComplex(obj, resultname)
+%             if(isempty(obj.result1dcomplex))
+%                 obj.result1dcomplex = CST.Result1DComplex(obj, obj.hProject, resultname);
+%             end
+%             result1dcomplex = obj.result1dcomplex;
+
+            % Each result1dcomplex can be different depending on resultname.
+            % So don't store it.
+            result1d = CST.Result1DComplex(obj, obj.hProject, resultname);
         end
         
         function resulttree = ResultTree(obj)

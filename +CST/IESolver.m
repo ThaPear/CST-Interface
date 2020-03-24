@@ -85,14 +85,17 @@ classdef IESolver < handle
             % Double precision,
             % MLFMM Accuracy: High,
             % Minimum Box size: 0.50 lambda,
-            % UseFastFrequencySweep  ( bool flag )
-            % Activates (flag = True) or deactivates (flag = False) the broadband frequency sweep for the solver.
             % key: 'Custom'
             %      'Low'
             %      'Medium'
             %      'High'
             obj.AddToHistory(['.SetAccuracySetting "', num2str(key, '%.15g'), '"']);
             obj.setaccuracysetting = key;
+        end
+        function UseFastFrequencySweep(obj, flag)
+            % Activates (flag = True) or deactivates (flag = False) the broadband frequency sweep for the solver.
+            obj.AddToHistory(['.UseFastFrequencySweep "', num2str(flag, '%.15g'), '"']);
+            obj.usefastfrequencysweep = flag;
         end
         function UseIEGroundPlane(obj, flag)
             % Activates (flag = True) or deactivates (flag = False) the infinite ground plane formulation for an electric boundary condition at ZMin.
@@ -209,6 +212,47 @@ classdef IESolver < handle
             obj.AddToHistory(['.SetMemSettingCMA "', num2str(key, '%.15g'), '"']);
             obj.setmemsettingcma = key;
         end
+        %% Undocumented functions
+        % Found in history list when setting frequency domain solver settings.
+        function ExtendThinWireModelByWireNubs(obj, bool)
+            obj.AddToHistory(['.ExtendThinWireModelByWireNubs "', num2str(bool, '%.15g'), '"']);
+            obj.extendthinwiremodelbywirenubs = bool;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function SetFMMFFCalcStopLevel(obj, level)
+            obj.AddToHistory(['.SetFMMFFCalcStopLevel "', num2str(level, '%.15g'), '"']);
+            obj.setfmmffcalcstoplevel = level;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function SetFMMFFCalcNumInterpPoints(obj, numpoints)
+            obj.AddToHistory(['.SetFMMFFCalcNumInterpPoints "', num2str(numpoints, '%.15g'), '"']);
+            obj.setfmmffcalcnuminterppoints = numpoints;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function UseFMMFarfieldCalc(obj, bool)
+            obj.AddToHistory(['.UseFMMFarfieldCalc "', num2str(bool, '%.15g'), '"']);
+            obj.usefmmfarfieldcalc = bool;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function SetOpenBC_XY(obj, bool)
+            obj.AddToHistory(['.SetOpenBC_XY "', num2str(bool, '%.15g'), '"']);
+            obj.setopenbc_xy = bool;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function OldRCSSweepDefintion(obj, bool)
+            obj.AddToHistory(['.OldRCSSweepDefintion "', num2str(bool, '%.15g'), '"']);
+            obj.oldrcssweepdefintion = bool;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function CalculateSParaforFieldsources(obj, bool)
+            obj.AddToHistory(['.CalculateSParaforFieldsources "', num2str(bool, '%.15g'), '"']);
+            obj.calculatesparaforfieldsources = bool;
+        end
+        % Found in history list when setting frequency domain solver settings.
+        function FrequencySamplesCMA(obj, samples)
+            obj.AddToHistory(['.FrequencySamplesCMA "', num2str(samples, '%.15g'), '"']);
+            obj.frequencysamplescma = samples;
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -219,6 +263,7 @@ classdef IESolver < handle
         bulkmode
 
         setaccuracysetting
+        usefastfrequencysweep
         useiegroundplane
         setrealgroundmaterialname
         calcfarfieldinrealground
@@ -237,6 +282,14 @@ classdef IESolver < handle
         startfrequencycma
         setaccuracysettingcma
         setmemsettingcma
+        extendthinwiremodelbywirenubs
+        setfmmffcalcstoplevel
+        setfmmffcalcnuminterppoints
+        usefmmfarfieldcalc
+        setopenbc_xy
+        oldrcssweepdefintion
+        calculatesparaforfieldsources
+        frequencysamplescma
     end
 end
 
