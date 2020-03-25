@@ -21,7 +21,7 @@ clear;
      %#ok<*NBRAK> 
 
 % txt = clipboard('paste');
-txt = fileread('CST-Interface/Txt/material.txt');
+txt = fileread('CST-Interface/Txt/curve.txt');
 split = strsplit(txt, newline);
 % split = strrep(split, split{2}, '');
 split = strrep(split, char(13), '');
@@ -67,9 +67,6 @@ if(isempty(examplesstartI))
         examplesstartI = length(split)+1;
     end
 end
-
-% Store properties for class.
-properties = {};
 
 GENERATEFILE_HISTORY;
 
@@ -257,19 +254,6 @@ while(i <= length(methodlines))
         end
         fprintf(hOutfile, ');\n');
     end
-    if(histtype ~= 0 && histtype ~= 3)
-        % Store given value in object.
-        for(argi = 2:nargs)
-            if(nargs == 2)
-                fprintf(hOutfile, '            obj.%s = %s;\n', lower(funcname), funcargs{argi});
-            else
-                fprintf(hOutfile, '            obj.%s.%s = %s;\n', lower(funcname), funcargs{argi}, funcargs{argi});
-            end
-        end
-        if(nargs > 1)
-            properties = [properties, {lower(funcname)}];
-        end
-    end
     
     % If this function should be the one to send history to CST, do so.
     % (e.g. Brick.Create)
@@ -336,9 +320,6 @@ if(histtype == 1)
     fprintf(hOutfile, '        bulkmode\n');
 end
 fprintf(hOutfile, '\n');
-for(i = 1:length(properties))
-    fprintf(hOutfile, '        %s\n', properties{i});
-end
 fprintf(hOutfile, '    end\n');
 
 % End classdef
