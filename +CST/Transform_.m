@@ -287,9 +287,9 @@ classdef Transform_ < handle
                                 obj.history, ...
                             'End With'];
             if(length(obj.names) == 1)
-                obj.project.AddToHistory(['transform: ', transform, ' ', obj.names{1}], obj.history);
+                obj.project.AddToHistory(['transform: ', how, ' ', obj.names{1}], obj.history);
             else
-                obj.project.AddToHistory(['transform: ', transform, ' ', obj.names{1}, ' and ', num2str(length(obj.names)-1), ' others'], obj.history);
+                obj.project.AddToHistory(['transform: ', how, ' ', obj.names{1}, ' and ', num2str(length(obj.names)-1), ' others'], obj.history);
             end
             obj.history = [];
         end
@@ -297,9 +297,9 @@ classdef Transform_ < handle
             % This method is valid for the translation of a selected shape and decides if a translation vector is defined by the two recently picked points (switch = True) or if the vector is given numerically (switch = False).
             obj.AddToHistory(['.UsePickedPoints "', num2str(boolean, '%.15g'), '"']);
         end
-        function InvertPickedPoints(obj)
+        function InvertPickedPoints(obj, boolean)
             % This method is valid for the translation of a selected shape by use of picked points. The resulting translation vector will be inverted (switch = True) or remains unchanged (switch = False).
-            obj.AddToHistory(['.InvertPickedPoints']);
+            obj.AddToHistory(['.InvertPickedPoints "', num2str(boolean, '%.15g'), '"']);
         end
         function MultipleObjects(obj, copy)
             % If switch is True, the new solid will be copied and the original will remain untouched. Else (copy = False), the original object will be deleted. In case of repeated execution by usage of the .Repetitions method, copy = True will result in number new objects plus the original object.
@@ -373,6 +373,11 @@ classdef Transform_ < handle
         function MultipleSelection(obj, boolean)
             % This setting specifies whether the transformation should be performed only to one solid or to multiple selected objects. If you transform multiple objects history entries are created for every shape and if you transform by selected points the pickpoints will be deleted after an operation. This flag prevents the pickpoints from being deleted. If there are still solids to transform the flag is 'true' and in the last transform block it is 'false' so the pickpoints will be deleted.
             obj.AddToHistory(['.MultipleSelection "', num2str(boolean, '%.15g'), '"']);
+        end
+        %% Undocumented functions.
+        % Found in history list.
+        function Destination(obj, destinationname)
+            obj.AddToHistory(['.Destination "', destinationname, '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

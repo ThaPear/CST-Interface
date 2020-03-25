@@ -42,8 +42,8 @@ classdef LumpedElement < handle
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.folder = '';
+            obj.name = [];
+            obj.folder = [];
         end
         function Create(obj)
             % Creates a new element. All necessary settings for this element have to be made previously.

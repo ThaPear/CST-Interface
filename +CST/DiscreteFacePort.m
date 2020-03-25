@@ -108,6 +108,9 @@ classdef DiscreteFacePort < handle
             % picked has to be True however, hence the coordinates are only
             % used as a reference.
             if(nargin < 3)
+                x = 0;
+                y = 0;
+                z = 0;
             end
             obj.AddToHistory(['.SetP1 "', num2str(picked), '", '...
                                      '"', num2str(x), '", '...
@@ -119,12 +122,14 @@ classdef DiscreteFacePort < handle
             % picked has to be True however, hence the coordinates are only
             % used as a reference.
             if(nargin < 3)
+                x = 0;
+                y = 0;
+                z = 0;
             end
             obj.AddToHistory(['.SetP2 "', num2str(picked), '", '...
                                      '"', num2str(x), '", '...
                                      '"', num2str(y), '", '...
                                      '"', num2str(z), '"']);
-
         end
         function InvertDirection(obj, boolean)
             % Set switch to True to reverse the orientation of the discrete
@@ -146,14 +151,12 @@ classdef DiscreteFacePort < handle
             % the other edge and the discrete face port is created in
             % between the edge and its projection.
             obj.AddToHistory(['.UseProjection "', num2str(boolean), '"']);
-            obj.useprojection = boolean;
         end
         function ReverseProjection(obj, boolean)
             % When this flag is activated then the second picked edge will
             % be projected onto the first picked edge. This flag is only
             % considered when UseProjection is active.
             obj.AddToHistory(['.ReverseProjection "', num2str(boolean), '"']);
-            obj.reverseprojection = boolean;
         end
         function Monitor(obj, boolean)
             % This method decides whether voltage and current of the

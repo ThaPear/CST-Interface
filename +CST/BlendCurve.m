@@ -81,10 +81,10 @@ classdef BlendCurve < handle
             obj.history = [];
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.curve = '';
-            obj.curveitem1 = '';
-            obj.curveitem2 = '';
+            obj.name = [];
+            obj.curve = [];
+            obj.curveitem1 = [];
+            obj.curveitem2 = [];
         end
         function Name(obj, name)
             % Sets the name of the new blend item.

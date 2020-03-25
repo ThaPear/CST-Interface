@@ -41,6 +41,8 @@ classdef AnalyticalCurve < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = [];
         end
         function Name(obj, analyticalcurvename)
             % Sets the name of the analytical curve.

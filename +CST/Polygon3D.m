@@ -42,8 +42,8 @@ classdef Polygon3D < handle
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.curve = '';
+            obj.name = [];
+            obj.curve = [];
         end
         function Name(obj, polygon3Dname)
             % Sets the name of the polygon3D.

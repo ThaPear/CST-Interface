@@ -43,8 +43,8 @@ classdef Material < handle
             % Sets all internal settings to their defaults.
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.folder = '';
+            obj.name = [];
+            obj.folder = [];
         end
         function Create(obj)
             % Creates a new material. All necessary settings have to be made previously.

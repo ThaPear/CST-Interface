@@ -42,8 +42,8 @@ classdef ExtrudeCurve < handle
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.component = '';
+            obj.name = [];
+            obj.component = [];
         end
         function Name(obj, solidname)
             % Sets the name of the new solid.

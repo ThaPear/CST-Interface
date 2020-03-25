@@ -282,7 +282,6 @@ classdef FDSolver < handle
         function NormingImpedance(obj, value) 
             % Specifies the impedance to be used as reference impedance for the scattering parameters. This setting will only be considered if AutoNormImpedance is set to True.
             obj.AddToHistory(['.NormingImpedance "', num2str(value, '%.15g'), '"']); 
-            obj.normingimpedance = value; 
         end 
         function Stimulation(obj, port, mode)
             % Selects the source type to be used for excitation, such as port and mode for waveguide ports.

@@ -42,8 +42,8 @@ classdef Rectangle < handle
             obj.history = [];
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.curve = '';
+            obj.name = [];
+            obj.curve = [];
         end
         function Name(obj, name)
             % Sets the name of the rectangle.

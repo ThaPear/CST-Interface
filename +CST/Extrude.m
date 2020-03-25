@@ -42,8 +42,8 @@ classdef Extrude < handle
             % Resets all internal settings.
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.component = '';
+            obj.name = [];
+            obj.component = [];
         end
         function Name(obj, objectname)
             % Sets the name of the extrude Object.

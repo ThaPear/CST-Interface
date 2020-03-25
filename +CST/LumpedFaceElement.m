@@ -43,8 +43,8 @@ classdef LumpedFaceElement < handle
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
             
-            obj.name = '';
-            obj.folder = '';
+            obj.name = [];
+            obj.folder = [];
         end
         function Create(obj)
             % Creates a new element. All necessary settings for this element have to be made previously.
@@ -232,12 +232,10 @@ classdef LumpedFaceElement < handle
         function UseProjection(obj, flag)
             % When this flag is activated then one edge is projected onto the other edge and the face Lumped Face Element is created in between the edge and its projection.
             obj.AddToHistory(['.UseProjection "', num2str(flag, '%.15g'), '"']);
-            obj.useprojection = flag;
         end
         function ReverseProjection(obj, flag)
             % When this flag is activated then the second picked edge will be projected onto the first picked edge. This flag is only considered when UseProjection is active.
             obj.AddToHistory(['.ReverseProjection "', num2str(flag, '%.15g'), '"']);
-            obj.reverseprojection = flag;
         end
         function Wire(obj, wirename)
             % Defines the name of the wire, on which the Lumped Face Element is attached to.
