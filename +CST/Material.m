@@ -42,6 +42,8 @@ classdef Material < handle
         function Reset(obj)
             % Sets all internal settings to their defaults.
             obj.AddToHistory(['.Reset']);
+            obj.folder = '';
+            obj.name = '';
         end
         function Create(obj)
             % Creates a new material. All necessary settings have to be made previously.
@@ -2572,6 +2574,26 @@ classdef Material < handle
         function NonlinearMeasurementError(obj, error)
             obj.AddToHistory(['.NonlinearMeasurementError "', num2str(error, '%.15g'), '"']);
             obj.nonlinearmeasurementerror = error;
+        end
+        %% Utility Functions.
+        function CreateConditional(obj, condition)
+            % Creates a new material. All necessary settings for this material have to be made previously.
+            % 
+            % condition: A string of a VBA expression that evaluates to True or False
+            obj.AddToHistory(['.Create']);
+            
+            % Prepend With and append End With
+            obj.history = [ 'If ', condition, ' Then', newline, ...
+                                'With Material', newline, ...
+                                    obj.history, ...
+                                'End With', newline, ...
+                            'End If'];
+            if(~isempty(obj.folder))
+                obj.project.AddToHistory(['define conditional material: ', obj.folder, '/', obj.name, ''], obj.history);
+            else
+                obj.project.AddToHistory(['define conditional material: ', obj.name], obj.history);
+            end
+            obj.history = [];
         end
     end
     %% MATLAB-side stored settings of CST state.

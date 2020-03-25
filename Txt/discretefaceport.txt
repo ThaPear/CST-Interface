@@ -1,0 +1,185 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | High Frequency | DiscreteFacePort
+
+DiscreteFacePort Object
+
+Use this object to define discrete face ports. Beside waveguide ports or plane waves the discrete face ports offers another possibility to feed the calculation domain with power. The discrete face port is a special kind of discrete port. It is supported by the integral equation solver, the transient solvers, as well as the frequency domain solver with tetrahedral mesh. The discrete face port is replaced by a Discrete Edge Port if any other solver is chosen. Two different types of discrete face ports are available, considering the excitation as a voltage or as an impedance element which also absorbs some power and enables S-parameter calculation.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Create
+
+Creates a new discrete face port. All necessary settings have to be made previously.
+
+ 
+
+Modify
+
+Modifies an existing face port. Only none geometrical settings which were made previously are changed.
+
+ 
+
+PortNumber ( int portnumber )
+
+Chooses the discrete face port by its number.
+
+ 
+
+Label ( string  label )
+
+Sets the label of the discrete port.
+
+ 
+
+Type ( enum {"Sparameter", "Voltage"} porttype )
+
+Defines the type of the discrete port.
+
+ 
+
+Impedance ( double value )
+
+Specifies the input impedance of the discrete face port, if it is of type "Sparameter".
+
+ 
+
+VoltagePortImpedance ( double value )
+
+Specifies the input impedance of the discrete face port, if it is of type "Voltage".
+
+ 
+
+VoltageAmplitude ( double value )
+
+Specifies the voltage amplitude of the discrete port, if it is of type "Voltage".
+
+ 
+
+SetP1 ( bool picked, double x, double y, double z )
+
+Define the starting / end point of the discrete face port. picked has to be True however, hence the coordinates are only used as a reference.
+
+ 
+
+SetP2 ( bool picked, double x, double y, double z )
+
+Define the starting / end point of the discrete face port. picked has to be True however, hence the coordinates are only used as a reference.
+
+ 
+
+InvertDirection ( bool switch )
+
+Set switch to True to reverse the orientation of the discrete face port.
+
+ 
+
+LocalCoordinates ( bool flag )
+
+This method decides whether local (flag = True) or global (flag = False) coordinates will be used for determining the location of the discrete face port.
+
+ 
+
+CenterEdge ( bool flag )
+
+The excitation takes place at the center edge of the port.
+
+ 
+
+UseProjection ( bool flag )
+
+When this flag is activated then one edge is projected onto the other edge and the discrete face port is created in between the edge and its projection.
+
+ 
+
+ReverseProjection ( bool flag )
+
+When this flag is activated then the second picked edge will be projected onto the first picked edge. This flag is only considered when UseProjection is active.
+
+ 
+
+Monitor ( bool flag )
+
+This method decides whether voltage and current of the discrete face port should be monitored or not.
+
+ 
+
+AllowFullSize ( bool flag )
+
+This flag tells the solvers whether they are allowed to let the active area of the face port extend over the complete port face, rather than adding metallic sheets at both ends of the port. Currently only influences rectangular or cylinder-barrel face ports in the Frequency Domain solver with Tetrahedral mesh.
+
+Default Settings
+
+PortNumber (1)
+
+Label ("")
+
+Type (SParameter)
+
+Impedance (50.0)
+
+VoltageAmplitude (1.0)
+
+VoltagePhase (0.0)
+
+SetP1 (True, 0.0, 0.0, 0.0)
+
+SetP2 (True, 0.0, 0.0, 0.0)
+
+LocalCoordinates (False)
+
+InvertDirection (False)
+
+CenterEdge (False)
+
+Monitor (False)
+
+AllowFullSize (True)
+
+Example
+
+' Define a discrete port
+
+With DiscreteFacePort
+
+     .Reset
+
+     .PortNumber "1"
+
+     .Type "SParameter"
+
+     .Impedance "50.0"
+
+     .VoltageAmplitude "1.0"
+
+     .SetP1 "True", "-3.9", "-0.5", "0.2"
+
+     .SetP2 "True", "4.7", "0.15", "2.1"
+
+     .LocalCoordinates "False"
+
+     .InvertDirection "True"
+
+     .CenterEdge "True"
+
+     .Monitor "False"
+
+     .Create
+
+End With
+
+ 
+
+'Delete the discrete port
+
+Port.Delete (1)

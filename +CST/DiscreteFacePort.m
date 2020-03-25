@@ -15,7 +15,6 @@
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Warning: This entire class is only documented in the old (2013) documentation.
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
