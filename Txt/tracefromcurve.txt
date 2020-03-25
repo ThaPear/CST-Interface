@@ -1,0 +1,121 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | 2D-Profiles to Shapes | TraceFromCurve
+
+TraceFromCurve Object
+
+This object is used to create a new shape from a curve item. You can cover a previously defined curve item (closed or open) with arbitrary thickness and width. After that operation the curve item will not exist any longer.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name solidname )
+
+Sets the name of the new solid.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new solid. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new solid. The material must already exist.
+
+ 
+
+Curve ( name curvename )
+
+The name of the curve item the new solid should be created. The correct format for the name should be 'curvename:curveitemname' (see the example below). If the curve item (e.g. a line) is connected with an other curve item (e.g. a polygon) both curve items will be transformed into the new solid.
+
+ 
+
+Thickness ( double thicknessvalue )
+
+Sets the thickness of the trace. The thickness is along the z-axis in the global coordinate system and along the w-axis in the local coordinate system. Negative thickness settings will result in an extrusion into the opposite direction.
+
+ 
+
+Width ( double widthvalue )
+
+Sets the width of the trace. The width is perpendicular to the thickness.
+
+ 
+
+RoundStart ( bool makestartround )
+
+Specifies if the first end of the new solid should be drawn rounded or not. Constraint: the curve must be open, otherwise this flag will be ignored.
+
+ 
+
+RoundEnd ( bool makeendround )
+
+Specifies if the second end of the new solid should be drawn rounded or not. Constraint: the curve must be open, otherwise this flag will be ignored.
+
+ 
+
+GapType ( int type )
+
+Specifies the behavior of the creating solid on inflexion points of the curve. Possible values: 0 = rounded like arcs, 1 = extended like lines and 2 = natural like curve extensions.
+
+ 
+
+Create
+
+Creates a new solid. All necessary settings for this solid have to be made previously.
+
+ 
+
+Default Settings
+
+Material ("Vacuum")
+
+Thickness (0.0)
+
+Width (0.0)
+
+RoundStart (False)
+
+RoundEnd (False)
+
+GapType(2)
+
+Example
+
+With TraceFromCurve
+
+     .Reset
+
+     .Name "solid1"
+
+     .Component "component1"
+
+     .Material "Vacuum"
+
+     .Curve "curve1:polygon1"
+
+     .Thickness "1.5"
+
+     .Width "4"
+
+     .RoundStart "True"
+
+     .RoundEnd "False"
+
+     .GapType "2"
+
+     .Create
+
+End With

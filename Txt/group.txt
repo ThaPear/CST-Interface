@@ -1,0 +1,99 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Group | Group
+
+Group Object
+
+The Group Object lets you define or change the groups. Solids can be assigned to groups in order to facilitate changing the properties of multiple solids.
+
+Methods
+
+Example
+
+Methods
+
+Add( name groupname, enum {"normal", "mesh"} type)
+
+Creates a new group of a give type with the given name.
+
+ 
+
+Delete ( name groupname)
+
+Deletes a group. The solids assigned to this group will lose their assignment.
+
+ 
+
+Rename ( name oldname, name newname )
+
+Changes the name of an existing group.
+
+ 
+
+AddItem ( global name itemname, name groupname)
+
+Adds an item to an existing group.
+
+ 
+
+RemoveItem( global name itemname, name groupname)
+
+Removes an item from an existing group.
+
+ 
+
+NewFolder ( name folder)
+
+Creates a new group folder
+
+ 
+
+RenameFolder ( name oldname, name newname )
+
+Changes the name of an existing group folder.
+
+ 
+
+DeleteFolder ( name folder)
+
+Deletes a group folder
+
+ 
+
+Reset
+
+Removes all items from groups and then all groups are deleted.
+
+Example
+
+' Create a new group
+
+Group.Add "group1", "mesh"
+
+ 
+
+' Rename an existing group
+
+Group.Rename "group1", "MyGroup"
+
+ 
+
+' Add a solid to a group
+
+Group.AddItem "solid$component1:solid1", "MyGroup"
+
+ 
+
+' Add a port to a group
+
+Group.AddItem "port$port1", "MyGroup"
+
+ 
+
+' Remove a solid from group
+
+Group.RemoveItem "solid$component1:solid1", "MyGroup"
+
+ 
+
+' Delete group
+
+Group.Delete "MyGroup"

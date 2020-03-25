@@ -1,0 +1,135 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | PostProcess1D
+
+PostProcess1D Object
+
+This object offers the possibility to apply  post-processing on 1D results.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+ApplyTo ( enum{"S-parameter", "Probes", "Monitors"} applyTarget )
+
+Set the target data the post-processing should be applied to.
+
+ 
+
+AddOperation (enum{"Time Window", "AR-Filter", "Phase Deembedding", "Renormalization", "VSWR", "YZ-matrices", "Exclude Port Modes"} operationType )
+
+Add a post-processing operation to the PostProcess1D object. All added operations will be performed when calling the Run method.
+
+ 
+
+SetDeembedDistance ( int portName, double distance )
+
+Specify distance for phase deembedding for the port with port number portName.
+
+ 
+
+SetRenormImpedance ( int portName, int modeName, double impedance )
+
+Set the renormalization impedance for the specified port mode to impedance.
+
+ 
+
+SetRenormImpedanceOnAllPorts ( double impedance )
+
+Set the renormalization impedance for all port modes to impedance.
+
+ 
+
+SetUnnormImpedanceOnAllPorts
+
+Reset the renormalization impedance for all ports to its' original values.
+
+ 
+
+SetConsiderPortMode( int portName, int modeName, bool flag)
+
+Set the flag if the specified port mode should be considered for post-processing or otherwise if it should be excluded. Please note, that if the specified port has the single-ended option switched on then all modes for this port are set to flag.
+
+ 
+
+Run
+
+Applies the desired 1D post-processing operations on the selected target data.
+
+Note: a full set of operations can be applied only to S-parameters. For other types of data, only the AR-filter is useful.
+
+ 
+
+ActivateOperation (enum {"VSWR", "YZ-matrices"} operationType, bool flag)
+
+Activates a post-processing operation for later processing. All activated operations will be performed after a solver run. Please note, that currently only VSWR and YZ-matrices are supported with this command.
+
+Default Settings
+
+SetUnnormImpedanceOnAllPorts
+
+Example
+
+With PostProcess1D
+
+    Rem *** S-parameter post-processing ***
+
+.Reset
+
+.ApplyTo ("S-parameter")
+
+.SetDeembedDistance (1, 5.0)
+
+.SetDeembedDistance (2, 10.0)
+
+.SetDeembedDistance (3, 10.0)
+
+.SetDeembedDistance (4, 5.0)
+
+.AddOperation ("Phase Deembedding")
+
+.SetRenormImpedance (1, 1, 7500.0)
+
+.SetRenormImpedance (2, 1, 5000.0)
+
+.SetRenormImpedance (3, 1, 5000.0)
+
+.SetRenormImpedance (4, 1, 7500.0)
+
+.AddOperation ("Renormalization")
+
+.SetConsiderPortMode(1, 1, True)
+
+.SetConsiderPortMode(2, 1, True)
+
+.SetConsiderPortMode(3, 1, False)
+
+.SetConsiderPortMode(4, 1, False)
+
+.AddOperation ("Exclude Port Modes")
+
+.AddOperation ("VSWR")
+
+.Run
+
+    Rem *** Probe signal post-processing ***
+
+.Reset
+
+.ApplyTo ("Probes")
+
+.AddOperation ("AR-filter")
+
+.Run
+
+End With
+
+ 
