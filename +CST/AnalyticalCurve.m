@@ -50,29 +50,23 @@ classdef AnalyticalCurve < handle
         function Curve(obj, curvename)
             % Sets the name of the curve for the new analytical curve item. The curve must already exist.
             obj.AddToHistory(['.Curve "', num2str(curvename, '%.15g'), '"']);
-            obj.curve = curvename;
         end
         function LawX(obj, xlaw)
             % Sets the analytical function defining the x-coordinates for the analytical curve dependent on the parameter t.
             obj.AddToHistory(['.LawX "', num2str(xlaw, '%.15g'), '"']);
-            obj.lawx = xlaw;
         end
         function LawY(obj, ylaw)
             % Sets the analytical function defining the y-coordinates for the analytical curve dependent on the parameter t.
             obj.AddToHistory(['.LawY "', num2str(ylaw, '%.15g'), '"']);
-            obj.lawy = ylaw;
         end
         function LawZ(obj, zlaw)
             % Sets the analytical function defining the z-coordinates for the analytical curve dependent on the parameter t.
             obj.AddToHistory(['.LawZ "', num2str(zlaw, '%.15g'), '"']);
-            obj.lawz = zlaw;
         end
         function ParameterRange(obj, tmin, tmax)
             % Sets the bounds for the parameter t.
             obj.AddToHistory(['.ParameterRange "', num2str(tmin, '%.15g'), '", '...
                                               '"', num2str(tmax, '%.15g'), '"']);
-            obj.parameterrange.tmin = tmin;
-            obj.parameterrange.tmax = tmax;
         end
         function Create(obj)
             % Creates a new analytical curve item. All necessary settings for this analytical curve have to be made previously.
@@ -82,7 +76,7 @@ classdef AnalyticalCurve < handle
             obj.history = [ 'With AnalyticalCurve', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define AnalyticalCurve'], obj.history);
+            obj.project.AddToHistory(['define AnalyticalCurve: ', obj.curve, ':', obj.name], obj.history);
             obj.history = [];
         end
     end
@@ -95,10 +89,6 @@ classdef AnalyticalCurve < handle
 
         name
         curve
-        lawx
-        lawy
-        lawz
-        parameterrange
     end
 end
 

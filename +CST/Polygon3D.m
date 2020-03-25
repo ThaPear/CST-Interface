@@ -41,6 +41,9 @@ classdef Polygon3D < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = '';
+            obj.curve = '';
         end
         function Name(obj, polygon3Dname)
             % Sets the name of the polygon3D.
@@ -57,9 +60,6 @@ classdef Polygon3D < handle
             obj.AddToHistory(['.Point "', num2str(xCoord, '%.15g'), '", '...
                                      '"', num2str(yCoord, '%.15g'), '", '...
                                      '"', num2str(zCoord, '%.15g'), '"']);
-            obj.point.xCoord = xCoord;
-            obj.point.yCoord = yCoord;
-            obj.point.zCoord = zCoord;
         end
         function Create(obj)
             % Creates a new polygon3D curve item. All necessary settings for this polygon3D have to be made previously.
@@ -69,7 +69,7 @@ classdef Polygon3D < handle
             obj.history = [ 'With Polygon3D', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define polygon3d: ', obj.name], obj.history);
+            obj.project.AddToHistory(['define polygon3d: ', obj.curve, ':', obj.name], obj.history);
             obj.history = [];
         end
         
@@ -89,7 +89,6 @@ classdef Polygon3D < handle
 
         name
         curve
-        point
     end
 end
 

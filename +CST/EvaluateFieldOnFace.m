@@ -80,17 +80,14 @@ classdef EvaluateFieldOnFace < handle
         function double = GetValue(obj, key)
             % Returns the double value of max/min and their position depending on the key "max", "min", "max x", "max y", "max z", "min x", "min y", "min z".
             double = obj.hEvaluateFieldOnFace.invoke('GetValue', key);
-            obj.getvalue = key;
         end
         function EvaluateOnSurface(obj, boolean)
             % If switch is set to True, the field is evaluated on the nearest surface to the curve path, disregarding volume results. This can be used to avoid zero result values, if the curve path is defined on a surface bordering a volume without field results (e.g. PEC).
             obj.AddToHistory(['.EvaluateOnSurface "', num2str(boolean, '%.15g'), '"']);
-            obj.evaluateonsurface = boolean;
         end
         function FitToGrid(obj, boolean)
             % If switch is set to True, the face is mapped on the underlying grid. All field components on this staircase surface are taken into account then. Be aware that this also might increase the area returned. This feature is only available for hexahedral meshes, but is active by default then.
             obj.AddToHistory(['.FitToGrid "', num2str(boolean, '%.15g'), '"']);
-            obj.fittogrid = boolean;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -101,9 +98,6 @@ classdef EvaluateFieldOnFace < handle
         history
         bulkmode
 
-        getvalue
-        evaluateonsurface
-        fittogrid
     end
 end
 

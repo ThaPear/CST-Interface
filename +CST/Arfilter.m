@@ -65,32 +65,26 @@ classdef Arfilter < handle
             %       'probe'
             %       'monitor'
             obj.AddToHistory(['.SetType "', num2str(type, '%.15g'), '"']);
-            obj.settype = type;
         end
         function SetFirstTime(obj, time)
             % The first time step (in seconds) from which filter determination starts.
             obj.AddToHistory(['.SetFirstTime "', num2str(time, '%.15g'), '"']);
-            obj.setfirsttime = time;
         end
         function SetSkip(obj, skip)
             % The number of time steps which will be skipped after an AR-filter has been found and before the next filter will be determined.
             obj.AddToHistory(['.SetSkip "', num2str(skip, '%.15g'), '"']);
-            obj.setskip = skip;
         end
         function SetMaxFrq(obj, fMax)
             % Because the time signals will be low pass filtered within the AR calculation process, the maximum frequency of the low pass filter need to be specified here (usually : 1,2 * fmax (from the Frequency dialog box)).
             obj.AddToHistory(['.SetMaxFrq "', num2str(fMax, '%.15g'), '"']);
-            obj.setmaxfrq = fMax;
         end
         function SetMaxOrder(obj, order)
             % Sets the number of recursive filter elements. Higher order filters usually deliver more accurate results, but the calculation time increases parabolically with the number of filter elements (max. 100 elements).
             obj.AddToHistory(['.SetMaxOrder "', num2str(order, '%.15g'), '"']);
-            obj.setmaxorder = order;
         end
         function SetWindowLength(obj, length)
             % This method sets the length of the analyzed time interval relative to the maximum number of elements. E.g. with maximum order of filter 40 and a window length of 2.0 the number of analyzed time samples is 40 * 2.0 = 80.
             obj.AddToHistory(['.SetWindowLength "', num2str(length, '%.15g'), '"']);
-            obj.setwindowlength = length;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -101,12 +95,6 @@ classdef Arfilter < handle
         history
         bulkmode
 
-        settype
-        setfirsttime
-        setskip
-        setmaxfrq
-        setmaxorder
-        setwindowlength
     end
 end
 

@@ -16,10 +16,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Suppress warnings:
-% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
-
 % This object is used to apply operations on curves and curve items.
 classdef Curve < handle
     %% CST Interface specific functions.
@@ -28,43 +24,49 @@ classdef Curve < handle
         function obj = Curve(project, hProject)
             obj.project = project;
             obj.hCurve = hProject.invoke('Curve');
+            obj.history = [];
+        end
+    end
+    methods
+        function AddToHistory(obj, command)
+            obj.project.AddToHistory(['Curve', command]);
         end
     end
     %% CST Object functions.
     methods
         function NewCurve(obj, curvename)
             % Defines and names a new curve object.
-            obj.hCurve.invoke(['NewCurve "', num2str(curvename, '%.15g'), '"']);
+            obj.AddToHistory(['.NewCurve "', num2str(curvename, '%.15g'), '"']);
         end
         function DeleteCurve(obj, curvename)
             % Deletes a specified curve object.
-            obj.hCurve.invoke(['DeleteCurve "', num2str(curvename, '%.15g'), '"']);
+            obj.AddToHistory(['.DeleteCurve "', num2str(curvename, '%.15g'), '"']);
         end
         function RenameCurve(obj, oldname, newname)
             % Renames a specified curve object.
-            obj.hCurve.invoke(['RenameCurve "', num2str(oldname, '%.15g'), '", '...
+            obj.AddToHistory(['.RenameCurve "', num2str(oldname, '%.15g'), '", '...
                                            '"', num2str(newname, '%.15g'), '"']);
         end
         function DeleteCurveItem(obj, curvename, curveitemname)
             % Deletes a specified item object associated to a curve object.
-            obj.hCurve.invoke(['DeleteCurveItem "', num2str(curvename, '%.15g'), '", '...
+            obj.AddToHistory(['.DeleteCurveItem "', num2str(curvename, '%.15g'), '", '...
                                                '"', num2str(curveitemname, '%.15g'), '"']);
         end
         function RenameCurveItem(obj, curvename, oldcurveitemname, newcurveitemname)
             % Renames a specified item object associated to a curve object.
-            obj.hCurve.invoke(['RenameCurveItem "', num2str(curvename, '%.15g'), '", '...
+            obj.AddToHistory(['.RenameCurveItem "', num2str(curvename, '%.15g'), '", '...
                                                '"', num2str(oldcurveitemname, '%.15g'), '", '...
                                                '"', num2str(newcurveitemname, '%.15g'), '"']);
         end
         function DeleteCurveItemSegment(obj, curvename, curveitemname, edgeid)
             % Deletes a segment of an item object associated to a curve object. The segment is specified by the name of the curve and the item that it belongs as well as an identity number.
-            obj.hCurve.invoke(['DeleteCurveItemSegment "', num2str(curvename, '%.15g'), '", '...
+            obj.AddToHistory(['.DeleteCurveItemSegment "', num2str(curvename, '%.15g'), '", '...
                                                       '"', num2str(curveitemname, '%.15g'), '", '...
                                                       '"', num2str(edgeid, '%.15g'), '"']);
         end
         function MoveCurveItem(obj, curveitemname, oldcurvename, newcurvename)
             % Moves a specified item from the curve it belongs to another curve object.
-            obj.hCurve.invoke(['MoveCurveItem "', num2str(curveitemname, '%.15g'), '", '...
+            obj.AddToHistory(['.MoveCurveItem "', num2str(curveitemname, '%.15g'), '", '...
                                              '"', num2str(oldcurvename, '%.15g'), '", '...
                                              '"', num2str(newcurvename, '%.15g'), '"']);
         end
@@ -76,11 +78,11 @@ classdef Curve < handle
             % Only the open curves
             % "closed"
             % Only the closed curves
-            long = obj.hCurve.invoke(['StartCurveNameIteration "', num2str(type, '%.15g'), '"']);
+            long = obj.hCurve.invoke('StartCurveNameIteration', type);
         end
         function name = GetNextCurveName(obj)
             % Returns the next curve name. Use StartCurveNameIteration to start the iteration.
-            name = obj.hCurve.invoke(['GetNextCurveName']);
+            name = obj.hCurve.invoke('GetNextCurveName');
         end
         function [bool, x, y, z] = GetPointCoordinates(obj, curveitemname, pid)
             % Retrieves the coordinates of the point with the given pid. Returns false if there is no such point.
@@ -99,11 +101,11 @@ classdef Curve < handle
         end
         function int = GetNumberOfPoints(obj, curveitemname)
             % Returns the maximum number of points.
-            int = obj.hCurve.invoke(['GetNumberOfPoints "', num2str(curveitemname, '%.15g'), '"']);
+            int = obj.hCurve.invoke('GetNumberOfPoints', curveitemname);
         end
         function bool = IsClosed(obj, curveitemname)
             % Returns whether it is a closed curve or not.
-            bool = obj.hCurve.invoke(['IsClosed "', num2str(curveitemname, '%.15g'), '"']);
+            bool = obj.hCurve.invoke('IsClosed', curveitemname);
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -117,6 +119,6 @@ classdef Curve < handle
 end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
-% curve = project.Curve()
+% curve = project.Curve();
 %     curve.RenameCurve('curve1', 'MyCurves');
 %     curve.DeleteCurveItemSegment('curve1', 'rectangle1', '1');

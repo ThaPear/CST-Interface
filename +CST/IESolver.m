@@ -90,27 +90,22 @@ classdef IESolver < handle
             %      'Medium'
             %      'High'
             obj.AddToHistory(['.SetAccuracySetting "', num2str(key, '%.15g'), '"']);
-            obj.setaccuracysetting = key;
         end
         function UseFastFrequencySweep(obj, flag)
             % Activates (flag = True) or deactivates (flag = False) the broadband frequency sweep for the solver.
             obj.AddToHistory(['.UseFastFrequencySweep "', num2str(flag, '%.15g'), '"']);
-            obj.usefastfrequencysweep = flag;
         end
         function UseIEGroundPlane(obj, flag)
             % Activates (flag = True) or deactivates (flag = False) the infinite ground plane formulation for an electric boundary condition at ZMin.
             obj.AddToHistory(['.UseIEGroundPlane "', num2str(flag, '%.15g'), '"']);
-            obj.useiegroundplane = flag;
         end
         function SetRealGroundMaterialName(obj, name)
             % Specifies the material of the real ground for an open boundary condition at ZMin. If no material is specified (name = ""), real ground plane calculation is deactivated.
             obj.AddToHistory(['.SetRealGroundMaterialName "', num2str(name, '%.15g'), '"']);
-            obj.setrealgroundmaterialname = name;
         end
         function CalcFarFieldInRealGround(obj, flag)
             % Activates (flag = True) or deactivates (flag = False) calculation of the far field in the real ground.
             obj.AddToHistory(['.CalcFarFieldInRealGround "', num2str(flag, '%.15g'), '"']);
-            obj.calcfarfieldinrealground = flag;
         end
         function RealGroundModelType(obj, key)
             % Sets the model type for real ground (only relevant in the presence of objects touching the real ground plane).
@@ -124,7 +119,6 @@ classdef IESolver < handle
             %      'Type 1'
             %      'Type 2'
             obj.AddToHistory(['.RealGroundModelType "', num2str(key, '%.15g'), '"']);
-            obj.realgroundmodeltype = key;
         end
         function PreconditionerType(obj, key)
             % Sets the preconditioner type.
@@ -133,62 +127,50 @@ classdef IESolver < handle
             %      'Type 2'
             %      'Type 3'
             obj.AddToHistory(['.PreconditionerType "', num2str(key, '%.15g'), '"']);
-            obj.preconditionertype = key;
         end
         function LowFrequencyStabilization(obj, flag)
             % This option controls the low frequency stabilization for the iterative and direct MoM solver. If enabled the accuracy for electrically small models or models with small triangles compared to the wavelength will increase.
             obj.AddToHistory(['.LowFrequencyStabilization "', num2str(flag, '%.15g'), '"']);
-            obj.lowfrequencystabilization = flag;
         end
         function LowFrequencyStabilizationML(obj, flag)
             % This Multilayer solver option controls the low frequency stabilization for the iterative and direct MoM solver. If enabled the accuracy for electrically small models or models with small triangles compared to the wavelength will increase.
             obj.AddToHistory(['.LowFrequencyStabilizationML "', num2str(flag, '%.15g'), '"']);
-            obj.lowfrequencystabilizationml = flag;
         end
         function Multilayer(obj, flag)
             % Activates (flag = True) or deactivates (flag = False) the multilayer solver.
             obj.AddToHistory(['.Multilayer "', num2str(flag, '%.15g'), '"']);
-            obj.multilayer = flag;
         end
         function SetiMoMACC_I(obj, value)
             % This accuracy determines the accuracy of the Iterative MoM system matrix for the Integral equation solver. A lower accuracy leads to lower memory requirement but also to a lower accuracy.
             obj.AddToHistory(['.SetiMoMACC_I "', num2str(value, '%.15g'), '"']);
-            obj.setimomacc_i = value;
         end
         function SetiMoMACC_M(obj, value)
             % This accuracy determines the accuracy of the Iterative MoM system matrix for the Multilayer solver. A lower accuracy leads to lower memory requirement but also to a lower accuracy.
             obj.AddToHistory(['.SetiMoMACC_M "', num2str(value, '%.15g'), '"']);
-            obj.setimomacc_m = value;
         end
         function SetCFIEAlpha(obj, value)
             % If the option UseCFIEForCPECIntEq is enabled and the CFIE alpha is set to 1 the Electric Field Integral Equation will be used. This is an option if you are sure there will be no spurious resonances inside the PEC solids e.g. for electrically small PEC solids. The default value is 0.5.
             obj.AddToHistory(['.SetCFIEAlpha "', num2str(value, '%.15g'), '"']);
-            obj.setcfiealpha = value;
         end
         function DeembedExternalPorts(obj, flag)
             % Activates the automatic deembedding of external ports as multipin ports.
             obj.AddToHistory(['.DeembedExternalPorts "', num2str(flag, '%.15g'), '"']);
-            obj.deembedexternalports = flag;
         end
         function IgnoreBC_XY_And_Set_To_Open(obj, flag)
             % This command is used to control the handling of boundary conditions in x- and y-direction for the Multilayer Solver.  If flag is set to "True" the boundary conditions in x- and y-directions will be set to open. If flag is set to "False" the boundary conditions in x- and y-directions will be set as defined with the methods of the Boundary Object.
             obj.AddToHistory(['.IgnoreBC_XY_And_Set_To_Open "', num2str(flag, '%.15g'), '"']);
-            obj.ignorebc_xy_and_set_to_open = flag;
         end
         function ModeTrackingCMA(obj, flag)
             % Activates automatic mode tracking for the characteristic mode analysis.
             obj.AddToHistory(['.ModeTrackingCMA "', num2str(flag, '%.15g'), '"']);
-            obj.modetrackingcma = flag;
         end
         function NumberOfModesCMA(obj, nModes)
             % Specifies the number of modes for the characteristic mode analysis.
             obj.AddToHistory(['.NumberOfModesCMA "', num2str(nModes, '%.15g'), '"']);
-            obj.numberofmodescma = nModes;
         end
         function StartFrequencyCMA(obj, value)
             % Specifies the frequency for sorting of the modes according to their modal significance for the characteristic mode analysis. If this value has not been specified before (value = "-1.0"), the minimal frequency of the simulation frequency range is chosen.
             obj.AddToHistory(['.StartFrequencyCMA "', num2str(value, '%.15g'), '"']);
-            obj.startfrequencycma = value;
         end
         function SetAccuracySettingCMA(obj, key)
             % Specifies the accuracy settings for the characteristic mode analysis. Please see below a description of the sets.
@@ -201,7 +183,6 @@ classdef IESolver < handle
             % key: 'Default'
             %      'Custom'
             obj.AddToHistory(['.SetAccuracySettingCMA "', num2str(key, '%.15g'), '"']);
-            obj.setaccuracysettingcma = key;
         end
         function SetMemSettingCMA(obj, key)
             % Sets the memory setting for the characteristic mode analysis with mode tracking. By default ("Auto") the memory setting is determined automatically taking into account the available main memory.
@@ -210,48 +191,39 @@ classdef IESolver < handle
             %      'Medium'
             %      'High'
             obj.AddToHistory(['.SetMemSettingCMA "', num2str(key, '%.15g'), '"']);
-            obj.setmemsettingcma = key;
         end
         %% Undocumented functions
         % Found in history list when setting frequency domain solver settings.
         function ExtendThinWireModelByWireNubs(obj, bool)
             obj.AddToHistory(['.ExtendThinWireModelByWireNubs "', num2str(bool, '%.15g'), '"']);
-            obj.extendthinwiremodelbywirenubs = bool;
         end
         % Found in history list when setting frequency domain solver settings.
         function SetFMMFFCalcStopLevel(obj, level)
             obj.AddToHistory(['.SetFMMFFCalcStopLevel "', num2str(level, '%.15g'), '"']);
-            obj.setfmmffcalcstoplevel = level;
         end
         % Found in history list when setting frequency domain solver settings.
         function SetFMMFFCalcNumInterpPoints(obj, numpoints)
             obj.AddToHistory(['.SetFMMFFCalcNumInterpPoints "', num2str(numpoints, '%.15g'), '"']);
-            obj.setfmmffcalcnuminterppoints = numpoints;
         end
         % Found in history list when setting frequency domain solver settings.
         function UseFMMFarfieldCalc(obj, bool)
             obj.AddToHistory(['.UseFMMFarfieldCalc "', num2str(bool, '%.15g'), '"']);
-            obj.usefmmfarfieldcalc = bool;
         end
         % Found in history list when setting frequency domain solver settings.
         function SetOpenBC_XY(obj, bool)
             obj.AddToHistory(['.SetOpenBC_XY "', num2str(bool, '%.15g'), '"']);
-            obj.setopenbc_xy = bool;
         end
         % Found in history list when setting frequency domain solver settings.
         function OldRCSSweepDefintion(obj, bool)
             obj.AddToHistory(['.OldRCSSweepDefintion "', num2str(bool, '%.15g'), '"']);
-            obj.oldrcssweepdefintion = bool;
         end
         % Found in history list when setting frequency domain solver settings.
         function CalculateSParaforFieldsources(obj, bool)
             obj.AddToHistory(['.CalculateSParaforFieldsources "', num2str(bool, '%.15g'), '"']);
-            obj.calculatesparaforfieldsources = bool;
         end
         % Found in history list when setting frequency domain solver settings.
         function FrequencySamplesCMA(obj, samples)
             obj.AddToHistory(['.FrequencySamplesCMA "', num2str(samples, '%.15g'), '"']);
-            obj.frequencysamplescma = samples;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -262,34 +234,6 @@ classdef IESolver < handle
         history
         bulkmode
 
-        setaccuracysetting
-        usefastfrequencysweep
-        useiegroundplane
-        setrealgroundmaterialname
-        calcfarfieldinrealground
-        realgroundmodeltype
-        preconditionertype
-        lowfrequencystabilization
-        lowfrequencystabilizationml
-        multilayer
-        setimomacc_i
-        setimomacc_m
-        setcfiealpha
-        deembedexternalports
-        ignorebc_xy_and_set_to_open
-        modetrackingcma
-        numberofmodescma
-        startfrequencycma
-        setaccuracysettingcma
-        setmemsettingcma
-        extendthinwiremodelbywirenubs
-        setfmmffcalcstoplevel
-        setfmmffcalcnuminterppoints
-        usefmmfarfieldcalc
-        setopenbc_xy
-        oldrcssweepdefintion
-        calculatesparaforfieldsources
-        frequencysamplescma
     end
 end
 

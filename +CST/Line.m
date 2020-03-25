@@ -41,6 +41,9 @@ classdef Line < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = '';
+            obj.curve = '';
         end
         function Name(obj, linename)
             % Sets the name of the line.
@@ -55,22 +58,18 @@ classdef Line < handle
         function X1(obj, x1)
             % Sets the x-coordinate from the first point of the line.
             obj.AddToHistory(['.X1 "', num2str(x1, '%.15g'), '"']);
-            obj.x1 = x1;
         end
         function Y1(obj, y1)
             % Sets the y-coordinate from the first point of the line.
             obj.AddToHistory(['.Y1 "', num2str(y1, '%.15g'), '"']);
-            obj.y1 = y1;
         end
         function X2(obj, x2)
             % Sets the x-coordinate from the second point of the line.
             obj.AddToHistory(['.X2 "', num2str(x2, '%.15g'), '"']);
-            obj.x2 = x2;
         end
         function Y2(obj, y2)
             % Sets the y-coordinate from the second point of the line.
             obj.AddToHistory(['.Y2 "', num2str(y2, '%.15g'), '"']);
-            obj.y2 = y2;
         end
         function Create(obj)
             % Creates a new line curve item. All necessary settings for this line have to be made previously.
@@ -80,7 +79,7 @@ classdef Line < handle
             obj.history = [ 'With Line', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define Line'], obj.history);
+            obj.project.AddToHistory(['define Line: ', obj.curve, ':', obj.name], obj.history);
             obj.history = [];
         end
     end
@@ -93,10 +92,6 @@ classdef Line < handle
 
         name
         curve
-        x1
-        y1
-        x2
-        y2
     end
 end
 

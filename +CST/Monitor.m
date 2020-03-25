@@ -41,6 +41,14 @@ classdef Monitor < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = [];
+            obj.fieldtype = [];
+            obj.domain = [];
+            obj.frequency = [];
+            obj.tstart = [];
+            obj.tstep = [];
+            obj.tend = [];
         end
         function Name(obj, monitorName)
             % Sets the name of the monitor.
@@ -49,15 +57,12 @@ classdef Monitor < handle
         end
         function Rename(obj, oldName, newName)
             % Renames the monitor named oldName to newName.
-            obj.AddToHistory(['.Rename "', num2str(oldName, '%.15g'), '", '...
-                                      '"', num2str(newName, '%.15g'), '"']);
-            obj.rename.oldName = oldName;
-            obj.rename.newName = newName;
+            obj.project.AddToHistory(['Monitor.Rename "', num2str(oldName, '%.15g'), '", '...
+                                                     '"', num2str(newName, '%.15g'), '"']);
         end
         function Delete(obj, monitorName)
             % Deletes the monitor named monitorName.
-            obj.AddToHistory(['.Delete "', num2str(monitorName, '%.15g'), '"']);
-            obj.delete = monitorName;
+            obj.project.AddToHistory(['Monitor.Delete "', num2str(monitorName, '%.15g'), '"']);
         end
         function Create(obj)
             % Creates the monitor with the previously applied settings.
@@ -85,23 +90,23 @@ classdef Monitor < handle
         function FieldType(obj, fType)
             % Sets what field is to be monitored.
             % fType can have one of the following values:
-            % ”Efield”
+            % ï¿½Efieldï¿½
             % The electric field will be monitored.
-            % ”Hfield”
+            % ï¿½Hfieldï¿½
             % The magnetic field and the surface current will be monitored.
-            % ”Powerflow”
+            % ï¿½Powerflowï¿½
             % The Pointing vector will be monitored.
-            % ”Current”
+            % ï¿½Currentï¿½
             % The current density will be monitored.
-            % ”Powerloss”
+            % ï¿½Powerlossï¿½
             % The power loss density will be monitored.
-            % ”Eenergy”
+            % ï¿½Eenergyï¿½
             % The electric energy density will be monitored.
-            % ”Henergy”
+            % ï¿½Henergyï¿½
             % The magnetic energy density will be monitored.
-            % ”Farfield”
+            % ï¿½Farfieldï¿½
             % A monitor for the farfield will be created.
-            % ”Fieldsource”
+            % ï¿½Fieldsourceï¿½
             % A monitor for the field source will be created.
             % "Spacecharge"
             % The space charge density, e.g. due to charged particles, will be monitored.
@@ -115,7 +120,6 @@ classdef Monitor < handle
             % monitorType: 'plane'
             %              'volume'
             obj.AddToHistory(['.Dimension "', num2str(monitorType, '%.15g'), '"']);
-            obj.dimension = monitorType;
         end
         function PlaneNormal(obj, plane)
             % Defines the normal direction of the monitor plane. This method only applies if the fields are to be monitored on a two dimensional plane. Otherwise this setting has no effect.
@@ -123,12 +127,10 @@ classdef Monitor < handle
             %        'y'
             %        'z'
             obj.AddToHistory(['.PlaneNormal "', num2str(plane, '%.15g'), '"']);
-            obj.planenormal = plane;
         end
         function PlanePosition(obj, pos)
             % Defines the position of the two dimensional monitor. This method only applies if the fields are to be monitored on a two dimensional plane. Otherwise this setting has no effect.
             obj.AddToHistory(['.PlanePosition "', num2str(pos, '%.15g'), '"']);
-            obj.planeposition = pos;
         end
         function Domain(obj, monitorDomain)
             % Defines whether the monitor stores time-domain or frequency-domain information. In case of a farfield monitor type, the setting "time" refers to a broadband farfield monitor offering both frequency and transient farfield information.
@@ -161,38 +163,31 @@ classdef Monitor < handle
         function UseTend(obj, bFlag)
             % If bFlag is True the time domain monitor stops storing the results when the end time set with Tend is reached. Otherwise the monitor will continue until the simulation stops.
             obj.AddToHistory(['.UseTend "', num2str(bFlag, '%.15g'), '"']);
-            obj.usetend = bFlag;
         end
         function TimeAverage(obj, bFlag)
             % Setting bFlag to True allows the calculation of averaged values over time for a powerloss time domain monitor (Domain "time" and FieldType "Powerloss"). By default the monitor is integrated over time and averaged by its number of sample steps. The duration and sample step of the integration is defined by setting the values Tstart, Tstep, Tend and UseTend. However, with the command RepetitionPeriod it is possible to define a specific time interval to normalize the monitor result.
             % Please note that this averaged powerloss time monitor can be further used for an averaged SAR calculation as well as an imported source field for the thermal solver of CST MPHYSICS STUDIO.
             obj.AddToHistory(['.TimeAverage "', num2str(bFlag, '%.15g'), '"']);
-            obj.timeaverage = bFlag;
         end
         function RepetitionPeriod(obj, timeperiod)
             % The value timeperiod defines the time interval which is used for normalization of the averaged powerloss monitor (activated by the flag TimeAverage). In case this value is set to zero, the time interval of the monitor (defined by  Tstart, Tstep, Tend and UseTend) is used instead.
             obj.AddToHistory(['.RepetitionPeriod "', num2str(timeperiod, '%.15g'), '"']);
-            obj.repetitionperiod = timeperiod;
         end
         function AutomaticOrder(obj, bFlag)
             % Setting for broadband farfield monitors: The solver automatically determines the necessary degree of polynomials used to represent the farfield in terms of spherical waves. If bFlag is set "False" this automatic determination is disabled and a reduced maximum order can be set by applying the method MaxOrder below.
             obj.AddToHistory(['.AutomaticOrder "', num2str(bFlag, '%.15g'), '"']);
-            obj.automaticorder = bFlag;
         end
         function MaxOrder(obj, nOrder)
             % Setting for broadband farfield monitors: If the automatic order detection is disabled by calling the method AutomaticOrder with "False" the solver will reduce the calculated maximum order to nOrder to save memory and computation time.
             obj.AddToHistory(['.MaxOrder "', num2str(nOrder, '%.15g'), '"']);
-            obj.maxorder = nOrder;
         end
         function FrequencySamples(obj, nSamples)
             % Setting for broadband farfield monitors: Choose a number of equidistant frequency samples between Fmin and Fmax where frequency domain farfields are calculated. Results for any frequencies in between are interpolated to obtain broadband farfield information. For a more accurate interpolation over the frequency band increase this value e.g. to "31". An odd number assures that the result at mid frequency is not interpolated.
             obj.AddToHistory(['.FrequencySamples "', num2str(nSamples, '%.15g'), '"']);
-            obj.frequencysamples = nSamples;
         end
         function TransientFarfield(obj, bFlag)
             % Setting for broadband farfield monitors: This method activates the additional calculation of transient farfield information which can be displayed afterwards in the post-processing. Note that in order to accurately obtain time domain farfields the computational effort is higher than for broadband farfields only.
             obj.AddToHistory(['.TransientFarfield "', num2str(bFlag, '%.15g'), '"']);
-            obj.transientfarfield = bFlag;
         end
         function Accuracy(obj, accuracy)
             % Setting for broadband farfield monitors: Defines the desired accuracy of the farfield. Together with the Fmax and the size of the structure it determines the number of modes required to represent the farfield. Note that leaving out higher order terms by choosing a lower accuracy is equivalent to low pass filtering the farfield solution. This saves memory and computation time. However, the farfield result has usually less detail.
@@ -200,7 +195,6 @@ classdef Monitor < handle
             %           '1e-4'
             %           '1e-5'
             obj.AddToHistory(['.Accuracy "', num2str(accuracy, '%.15g'), '"']);
-            obj.accuracy = accuracy;
         end
         function Origin(obj, originType)
             % The broadband farfield monitor is based on an expansion of the farfield in terms of spherical waves. By default the origin of the spherical wave expansion is the center of the bounding box.
@@ -212,7 +206,6 @@ classdef Monitor < handle
             % free
             % Any desired point defined by UserOrigin
             obj.AddToHistory(['.Origin "', num2str(originType, '%.15g'), '"']);
-            obj.origin = originType;
         end
         function UserOrigin(obj, x, y, z)
             % Setting for broadband farfield monitors: Sets origin of the spherical wave expansion if the origin type is set to free.
@@ -220,22 +213,16 @@ classdef Monitor < handle
             obj.AddToHistory(['.UserOrigin "', num2str(x, '%.15g'), '", '...
                                           '"', num2str(y, '%.15g'), '", '...
                                           '"', num2str(z, '%.15g'), '"']);
-            obj.userorigin.x = x;
-            obj.userorigin.y = y;
-            obj.userorigin.z = z;
         end
         function FrequencyRange(obj, fmin, fmax)
             % Sets the frequency range for field source monitors.
             obj.AddToHistory(['.FrequencyRange "', num2str(fmin, '%.15g'), '", '...
                                               '"', num2str(fmax, '%.15g'), '"']);
-            obj.frequencyrange.fmin = fmin;
-            obj.frequencyrange.fmax = fmax;
         end
         function UseSubvolume(obj, bFlag)
             % If bFlag is true, then the field monitor uses the subvolume which has to be defined in SetSubvolume. Otherwise the bounding box is used.
             % Please note that this method is only available for field source monitors, single frequency farfield/RCS monitors and electric or magnetic field monitors. Furthermore, this subvolume specification is currently not supported by frequency domain solvers.
             obj.AddToHistory(['.UseSubvolume "', num2str(bFlag, '%.15g'), '"']);
-            obj.usesubvolume = bFlag;
         end
         function SetSubvolume(obj, xmin, xmax, ymin, ymax, zmin, zmax)
             % Sets the subvolume of the field monitor. Please note that this method is only available for field source monitors, single frequency farfield/RCS monitors and electric or magnetic field monitors.
@@ -245,22 +232,14 @@ classdef Monitor < handle
                                             '"', num2str(ymax, '%.15g'), '", '...
                                             '"', num2str(zmin, '%.15g'), '", '...
                                             '"', num2str(zmax, '%.15g'), '"']);
-            obj.setsubvolume.xmin = xmin;
-            obj.setsubvolume.xmax = xmax;
-            obj.setsubvolume.ymin = ymin;
-            obj.setsubvolume.ymax = ymax;
-            obj.setsubvolume.zmin = zmin;
-            obj.setsubvolume.zmax = zmax;
         end
         function InvertOrientation(obj, bFlag)
             % Inverts orientation for field source monitors.
             obj.AddToHistory(['.InvertOrientation "', num2str(bFlag, '%.15g'), '"']);
-            obj.invertorientation = bFlag;
         end
         function ExportFarfieldSource(obj, bFlag)
             % Activates the automatic generation of a farfield source from the corresponding farfield monitor after a solver run. All farfield source exports from the same excitation are collected into a single broadband farfield source file.
             obj.AddToHistory(['.ExportFarfieldSource "', num2str(bFlag, '%.15g'), '"']);
-            obj.exportfarfieldsource = bFlag;
         end
         %% Queries
         function long = GetNumberOfMonitors(obj)
@@ -270,39 +249,37 @@ classdef Monitor < handle
         function name = GetMonitorNameFromIndex(obj, index)
             % Returns the name of the monitor with regard to the index in the internal monitor list .
             name = obj.hMonitor.invoke('GetMonitorNameFromIndex', index);
-            obj.getmonitornamefromindex = index;
         end
         function monType = GetMonitorTypeFromIndex(obj, index)
             % Returns the type of the monitor with regard to the index in the internal monitor list.
             % monType can have one of the following values; depending on 2D or 3D monitors a suffix is added to the string in format of  " 2D" or " 3D", respectively:
-            % ”E-Field 3D”, ”E-Field 2D”
+            % ï¿½E-Field 3Dï¿½, ï¿½E-Field 2Dï¿½
             % The electric field has been monitored.
-            % ”H-Field 3D”, ”H-Field 2D”
+            % ï¿½H-Field 3Dï¿½, ï¿½H-Field 2Dï¿½
             % The magnetic field and the surface current has been monitored.
-            % ”Powerflow 3D”
+            % ï¿½Powerflow 3Dï¿½
             % The Pointing vector has been monitored.
-            % ”Current 3D”
+            % ï¿½Current 3Dï¿½
             % The current density has been monitored.
-            % ”Loss density 3D”
+            % ï¿½Loss density 3Dï¿½
             % The power loss density has been monitored.
-            % ”E-Energy 3D”
+            % ï¿½E-Energy 3Dï¿½
             % The electric energy density has been monitored.
-            % ”H-Energy 3D”
+            % ï¿½H-Energy 3Dï¿½
             % The magnetic energy density has been monitored.
-            % ”SAR 3D”
+            % ï¿½SAR 3Dï¿½
             % A monitor for the SAR calculation has been created.
-            % ”Farfield”
+            % ï¿½Farfieldï¿½
             % A farfield monitor has been created.
-            % ”Fieldsource”
+            % ï¿½Fieldsourceï¿½
             % A field source monitor has been created.
-            % ”Adaption 3D”
+            % ï¿½Adaption 3Dï¿½
             % A monitor for the grid adaption has been created.
             % "Spcace charge density 3D"
             % A monitor for the space charge density has been created.
-            % ”Particle current density 3D”
+            % ï¿½Particle current density 3Dï¿½
             % A monitor for the particle current density has been created.
             monType = obj.hMonitor.invoke('GetMonitorTypeFromIndex', index);
-            obj.getmonitortypefromindex = index;
         end
         function domain = GetMonitorDomainFromIndex(obj, index)
             % Returns the monitor domain with regard to the index in the internal monitor list.
@@ -310,27 +287,22 @@ classdef Monitor < handle
             %         'time'
             %         'static'
             domain = obj.hMonitor.invoke('GetMonitorDomainFromIndex', index);
-            obj.getmonitordomainfromindex = index;
         end
         function double = GetMonitorFrequencyFromIndex(obj, index)
             % Returns the frequency value of a frequency domain monitor with regard to the index in the internal monitor list.
             double = obj.hMonitor.invoke('GetMonitorFrequencyFromIndex', index);
-            obj.getmonitorfrequencyfromindex = index;
         end
         function double = GetMonitorTstartFromIndex(obj, index)
             % Returns the start time of a time domain monitor with regard to the index in the internal monitor list.
             double = obj.hMonitor.invoke('GetMonitorTstartFromIndex', index);
-            obj.getmonitortstartfromindex = index;
         end
         function double = GetMonitorTstepFromIndex(obj, index)
             % Returns the time increment value of a time domain monitor with regard to the index in the internal monitor list.
             double = obj.hMonitor.invoke('GetMonitorTstepFromIndex', index);
-            obj.getmonitortstepfromindex = index;
         end
         function double = GetMonitorTendFromIndex(obj, index)
             % Returns the end time of a time domain monitor with regard to the index in the internal monitor list.
             double = obj.hMonitor.invoke('GetMonitorTendFromIndex', index);
-            obj.getmonitortendfromindex = index;
         end
         function Export(obj, exportType, excitationName, filePath, bFlag)
             % Exports or converts field source monitor files in other formats. More details and examples can be found here.
@@ -339,24 +311,16 @@ classdef Monitor < handle
                                       '"', num2str(excitationName, '%.15g'), '", '...
                                       '"', num2str(filePath, '%.15g'), '", '...
                                       '"', num2str(bFlag, '%.15g'), '"']);
-            obj.export.exportType = exportType;
-            obj.export.excitationName = excitationName;
-            obj.export.filePath = filePath;
-            obj.export.bFlag = bFlag;
         end
         function SetSubVolumeSampling(obj, x, y, z)
             % Sets the subvolume sampling of the field monitor. Please note that this method only affects subvolume monitors for I-, A- and M-Solver. Can be used during definition of a monitor. This command is only written to the history if any sampling setting has been applied.
             obj.AddToHistory(['.SetSubVolumeSampling "', num2str(x, '%.15g'), '", '...
                                                     '"', num2str(y, '%.15g'), '", '...
                                                     '"', num2str(z, '%.15g'), '"']);
-            obj.setsubvolumesampling.x = x;
-            obj.setsubvolumesampling.y = y;
-            obj.setsubvolumesampling.z = z;
         end
         function V = GetSubVolumeSampling(obj, monitorName)
             % Returns a three dimensional vector of subvolume setting (x, y, z) set by the command SetSubVolumeSampling(...). See also Example.
             V = obj.hMonitor.invoke('GetSubVolumeSampling', monitorName);
-            obj.getsubvolumesampling = monitorName;
         end
         function ChangeSubVolumeSampling(obj, monitorName, x, y, z)
             % Sets the subvolume sampling of the field monitor specified by the name. Please note that this method is only available for subvolume monitors for I-, A- and M-Solver. Can be used after definition of a monitor. No history item will be created.
@@ -364,10 +328,6 @@ classdef Monitor < handle
                                                        '"', num2str(x, '%.15g'), '", '...
                                                        '"', num2str(y, '%.15g'), '", '...
                                                        '"', num2str(z, '%.15g'), '"']);
-            obj.changesubvolumesampling.monitorName = monitorName;
-            obj.changesubvolumesampling.x = x;
-            obj.changesubvolumesampling.y = y;
-            obj.changesubvolumesampling.z = z;
         end
         function ChangeSubVolumeSamplingToHistory(obj, monitorName, x, y, z)
             % Enters the command ChangeSubVolumeSampling(  name monitorName, double x,  double y, double z) to the history. Can be used after definition of a monitor.
@@ -375,10 +335,6 @@ classdef Monitor < handle
                                                                 '"', num2str(x, '%.15g'), '", '...
                                                                 '"', num2str(y, '%.15g'), '", '...
                                                                 '"', num2str(z, '%.15g'), '"']);
-            obj.changesubvolumesamplingtohistory.monitorName = monitorName;
-            obj.changesubvolumesamplingtohistory.x = x;
-            obj.changesubvolumesamplingtohistory.y = y;
-            obj.changesubvolumesamplingtohistory.z = z;
         end
         %% Undocumented functions
         % Found in history list.
@@ -418,13 +374,11 @@ classdef Monitor < handle
         function Coordinates(obj, coordinates) 
             % coordinates: structure, calculation, ???
             obj.AddToHistory(['.Coordinates "', num2str(coordinates, '%.15g'), '"']);
-            obj.coordinates = coordinates;
         end
         % Found in history list.
         function MonitorValue(obj, monitorvalue) 
             % Is used to set frequency when creating a single-frequency monitor.
             obj.AddToHistory(['.MonitorValue "', num2str(monitorvalue, '%.15g'), '"']);
-            obj.monitorvalue = monitorvalue;
         end
         % Found in history list.
         function SetSubvolumeOffset(obj, x0, y0, z0, x1, y1, z1)
@@ -434,18 +388,11 @@ classdef Monitor < handle
                                                   '"', num2str(x1, '%.15g'), '", '...
                                                   '"', num2str(y1, '%.15g'), '", '...
                                                   '"', num2str(z1, '%.15g'), '"']);
-            obj.setvolumeoffset.x0 = x0;
-            obj.setvolumeoffset.y0 = y0;
-            obj.setvolumeoffset.z0 = z0;
-            obj.setvolumeoffset.x1 = x1;
-            obj.setvolumeoffset.y1 = y1;
-            obj.setvolumeoffset.z1 = z1;
         end
         % Found in history list.
         function SetSubvolumeOffsetType(obj, type)
             % type: 'FractionOfWavelength'
             obj.AddToHistory(['.SetSubvolumeOffsetType "', num2str(type, '%.15g'), '"']);
-            obj.setvolumeoffsettype = type;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -456,48 +403,12 @@ classdef Monitor < handle
         history
 
         name
-        rename
-        delete
         fieldtype
-        dimension
-        planenormal
-        planeposition
         domain
         frequency
         tstart
         tstep
         tend
-        usetend
-        timeaverage
-        repetitionperiod
-        automaticorder
-        maxorder
-        frequencysamples
-        transientfarfield
-        accuracy
-        origin
-        userorigin
-        frequencyrange
-        usesubvolume
-        setsubvolume
-        invertorientation
-        exportfarfieldsource
-        getmonitornamefromindex
-        getmonitortypefromindex
-        getmonitordomainfromindex
-        getmonitorfrequencyfromindex
-        getmonitortstartfromindex
-        getmonitortstepfromindex
-        getmonitortendfromindex
-        export
-        setsubvolumesampling
-        getsubvolumesampling
-        changesubvolumesampling
-        changesubvolumesamplingtohistory
-        coordinates
-        monitorvalue
-        setvolumeoffset
-        setvolumeoffsettype
     end
 end
 

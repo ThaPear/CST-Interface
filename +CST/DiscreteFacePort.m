@@ -31,41 +31,15 @@
 % impedance element which also absorbs some power and enables S-parameter
 % calculation.
 classdef DiscreteFacePort < handle
-    properties(SetAccess = protected)
-        project
-        hDiscreteFacePort
-        history
-        
-        portnumber
-        label
-        type
-        impedance
-        voltageportimpedance
-        voltageamplitude
-        picked1
-        x1, y1, z1
-        picked2
-        x2, y2, z2
-        invertdirection
-        localcoordinates
-        centeredge
-        useprojection
-        reverseprojection
-        monitor
-        allowfullsize
-        currentamplitude
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.DiscreteFacePort object.
         function obj = DiscreteFacePort(project, hProject)
             obj.project = project;
             obj.hDiscreteFacePort = hProject.invoke('DiscreteFacePort');
-            
-            obj.Reset();
         end
     end
-    
+    %% CST Object functions.
     methods
         function AddToHistory(obj, command)
             obj.history = [obj.history, '     ', command, newline];
@@ -87,7 +61,7 @@ classdef DiscreteFacePort < handle
             
             % Prepend With and append End With
             obj.history = ['With DiscreteFacePort', newline, obj.history, 'End With'];
-            obj.project.AddToHistory(['Modify DiscreteFacePort "', num2str(obj.portnumber), '"'], obj.history);
+            obj.project.AddToHistory(['Modify DiscreteFacePort "', num2str(obj.portnumber, '%.15g'), '"'], obj.history);
             obj.history = [];
         end
         
@@ -96,16 +70,7 @@ classdef DiscreteFacePort < handle
             obj.history = [];
             obj.AddToHistory(['.Reset']);
             
-            obj.portnumber = 1;
-            obj.label = '';
-            obj.type = 'SParameter';
-            obj.impedance = 50;
-            obj.picked1 = 0;
-            obj.x1 = 0; obj.y1 = 0; obj.z1 = 0;
-            obj.picked2 = 0;
-            obj.x2 = 0; obj.y2 = 1; obj.z2 = 0;
-            obj.centeredge = 0;
-            obj.monitor = 0;
+            obj.portnumber = [];
         end
         function PortNumber(obj, portnumber)
             % Chooses the discrete face port by its number.
@@ -115,7 +80,6 @@ classdef DiscreteFacePort < handle
         function Label(obj, label)
             % Sets the label of the discrete port.
             obj.AddToHistory(['.Label "', label, '"']);
-            obj.label = label;
         end
         function Type(obj, type)
             % Defines the type of the discrete port.
@@ -123,80 +87,59 @@ classdef DiscreteFacePort < handle
             %       'Voltage'
             %       'Current'
             obj.AddToHistory(['.Type "', type, '"']);
-            obj.type = type;
         end
         function Impedance(obj, impedance)
             % Specifies the input impedance of the discrete face port, if
             % it is of type 'Sparameter'.
             obj.AddToHistory(['.Impedance "', num2str(impedance), '"']);
-            obj.impedance = impedance;
         end
         function VoltagePortImpedance(obj, voltageportimpedance)
             % Specifies the input impedance of the discrete face port, if
             % it is of type 'Voltage'.
             obj.AddToHistory(['.VoltagePortImpedance "', num2str(voltageportimpedance), '"']);
-            obj.voltageportimpedance = voltageportimpedance;
         end
         function VoltageAmplitude(obj, amplitude)
             % Specifies the input impedance of the discrete face port, if
             % it is of type 'Voltage'.
             obj.AddToHistory(['.VoltageAmplitude "', num2str(amplitude), '"']);
-            obj.voltageamplitude = amplitude;
         end
         function SetP1(obj, picked, x, y, z)
             % Define the starting / end point of the discrete face port.
             % picked has to be True however, hence the coordinates are only
             % used as a reference.
             if(nargin < 3)
-                x = obj.x1;
-                y = obj.y1;
-                z = obj.z1;
             end
             obj.AddToHistory(['.SetP1 "', num2str(picked), '", '...
                                      '"', num2str(x), '", '...
                                      '"', num2str(y), '", '...
                                      '"', num2str(z), '"']);
-            obj.picked1 = picked;
-            obj.x1 = x;
-            obj.y1 = y;
-            obj.z1 = z;
         end
         function SetP2(obj, picked, x, y, z)
             % Define the starting / end point of the discrete face port.
             % picked has to be True however, hence the coordinates are only
             % used as a reference.
             if(nargin < 3)
-                x = obj.x2;
-                y = obj.y2;
-                z = obj.z2;
             end
             obj.AddToHistory(['.SetP2 "', num2str(picked), '", '...
                                      '"', num2str(x), '", '...
                                      '"', num2str(y), '", '...
                                      '"', num2str(z), '"']);
-            obj.picked2 = picked;
-            obj.x2 = x;
-            obj.y2 = y;
-            obj.z2 = z;
 
         end
         function InvertDirection(obj, boolean)
             % Set switch to True to reverse the orientation of the discrete
             % face port.
             obj.AddToHistory(['.InvertDirection "', num2str(boolean), '"']);
-            obj.invertdirection = boolean;
         end
         function LocalCoordinates(obj, boolean)
             % This method decides whether local (flag = True) or global
             % (flag = False) coordinates will be used for determining the
             % location of the discrete face port.
             obj.AddToHistory(['.LocalCoordinates "', num2str(boolean), '"']);
-            obj.localcoordinates = boolean;
         end
         function CenterEdge(obj, boolean)
             % The excitation takes place at the center edge of the port.
             obj.AddToHistory(['.CenterEdge "', num2str(boolean), '"']);
-            obj.centeredge = boolean;
         end
         function UseProjection(obj, boolean)
             % When this flag is activated then one edge is projected onto
@@ -216,7 +159,6 @@ classdef DiscreteFacePort < handle
             % This method decides whether voltage and current of the
             % discrete face port should be monitored or not.
             obj.AddToHistory(['.Monitor "', num2str(boolean), '"']);
-            obj.monitor = boolean;
         end
         function AllowFullSize(obj, boolean)
             % This flag tells the solvers whether they are allowed to let
@@ -226,13 +168,20 @@ classdef DiscreteFacePort < handle
             % cylinder-barrel face ports in the Frequency Domain solver
             % with Tetrahedral mesh.
             obj.AddToHistory(['.AllowFullSize "', num2str(boolean), '"']);
-            obj.allowfullsize = boolean;
         end
         %% Undocumented functions
         function CurrentAmplitude(obj, amplitude)
             obj.AddToHistory(['.CurrentAmplitude "', num2str(amplitude), '"']);
-            obj.currentamplitude = amplitude;
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hDiscreteFacePort
+        history
+        
+        portnumber
     end
 end
 

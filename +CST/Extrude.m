@@ -41,6 +41,9 @@ classdef Extrude < handle
         function Reset(obj)
             % Resets all internal settings.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = '';
+            obj.component = '';
         end
         function Name(obj, objectname)
             % Sets the name of the extrude Object.
@@ -55,33 +58,27 @@ classdef Extrude < handle
         function Material(obj, materialname)
             % Sets the material for the new Solid. The material must already exist.
             obj.AddToHistory(['.Material "', num2str(materialname, '%.15g'), '"']);
-            obj.material = materialname;
         end
         function Mode(obj, extrMode)
             % Selects whether a profile or a surface is to be extruded.
             % extrMode may have the following settings:
-            % ”pointlist”
+            % ï¿½pointlistï¿½
             % A profile defined by points is to be extruded
-            % ”picks”
+            % ï¿½picksï¿½
             % A picked face is to be extruded
             % "multiplepicks"
             % multpile picked faces are to be extruded
             obj.AddToHistory(['.Mode "', num2str(extrMode, '%.15g'), '"']);
-            obj.mode = extrMode;
         end
         function Height(obj, heightval)
             % Defines the height of the extruded solid.
             obj.AddToHistory(['.Height "', num2str(heightval, '%.15g'), '"']);
-            obj.height = heightval;
         end
         function Origin(obj, x, y, z)
             % Defines the location of the origin.
             obj.AddToHistory(['.Origin "', num2str(x, '%.15g'), '", '...
                                       '"', num2str(y, '%.15g'), '", '...
                                       '"', num2str(z, '%.15g'), '"']);
-            obj.origin.x = x;
-            obj.origin.y = y;
-            obj.origin.z = z;
         end
         function Uvector(obj, u, v, w)
             % Vvector ( double u , double v, double w )
@@ -89,74 +86,55 @@ classdef Extrude < handle
             obj.AddToHistory(['.Uvector "', num2str(u, '%.15g'), '", '...
                                        '"', num2str(v, '%.15g'), '", '...
                                        '"', num2str(w, '%.15g'), '"']);
-            obj.uvector.u = u;
-            obj.uvector.v = v;
-            obj.uvector.w = w;
         end
         function Vvector(obj, u, v, w)
             % These settings define the plane on which the profile will be defined. u, v, w are related on the current working coordinate system.
             obj.AddToHistory(['.Vvector "', num2str(u, '%.15g'), '", '...
                                        '"', num2str(v, '%.15g'), '", '...
                                        '"', num2str(w, '%.15g'), '"']);
-            obj.vvector.u = u;
-            obj.vvector.v = v;
-            obj.vvector.w = w;
         end
         function Point(obj, uPt, vPt)
-            % Sets the first point of the to be defined profile. This setting has an effect only if Mode is set to ”pointlist”.
+            % Sets the first point of the to be defined profile. This setting has an effect only if Mode is set to ï¿½pointlistï¿½.
             obj.AddToHistory(['.Point "', num2str(uPt, '%.15g'), '", '...
                                      '"', num2str(vPt, '%.15g'), '"']);
-            obj.point.uPt = uPt;
-            obj.point.vPt = vPt;
         end
         function LineTo(obj, u, v)
-            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location in absolute coordinates in the actual working coordinate system. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode  is set to ”pointlist”.
+            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location in absolute coordinates in the actual working coordinate system. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode  is set to ï¿½pointlistï¿½.
             obj.AddToHistory(['.LineTo "', num2str(u, '%.15g'), '", '...
                                       '"', num2str(v, '%.15g'), '"']);
-            obj.lineto.u = u;
-            obj.lineto.v = v;
         end
         function RLine(obj, u, v)
-            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location relative to the previous point in the current working coordinate sytem. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode is set to ”pointlist”.
+            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location relative to the previous point in the current working coordinate sytem. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode is set to ï¿½pointlistï¿½.
             obj.AddToHistory(['.RLine "', num2str(u, '%.15g'), '", '...
                                      '"', num2str(v, '%.15g'), '"']);
-            obj.rline.u = u;
-            obj.rline.v = v;
         end
         function Taper(obj, tp)
             % Defines a value of how much the to be extruded face is enlarged during extrusion.
             obj.AddToHistory(['.Taper "', num2str(tp, '%.15g'), '"']);
-            obj.taper = tp;
         end
         function Twist(obj, tw)
             % Twists the solid around the direction of extrusion. The parameter tw defines the angle in degree of how much the solid will be twisted.
             obj.AddToHistory(['.Twist "', num2str(tw, '%.15g'), '"']);
-            obj.twist = tw;
         end
         function UsePicksForHeight(obj, flag)
             % Use a previously picked point for the height of the extrusion.
             obj.AddToHistory(['.UsePicksForHeight "', num2str(flag, '%.15g'), '"']);
-            obj.usepicksforheight = flag;
         end
         function PickHeightDeterminedByFirstFace(obj, flag)
             % For multiple picked faces and a picked point that is used for calculating the height: If true, the height that is calculated for the first picked face will be applied to all created shapes. If false, for each picked face, the height will be calculated to meet the picked point.
             obj.AddToHistory(['.PickHeightDeterminedByFirstFace "', num2str(flag, '%.15g'), '"']);
-            obj.pickheightdeterminedbyfirstface = flag;
         end
         function NumberOfPickedFaces(obj, nCount)
             % If the mode is "multiplepicks", the number of picked faces is set here.
             obj.AddToHistory(['.NumberOfPickedFaces "', num2str(nCount, '%.15g'), '"']);
-            obj.numberofpickedfaces = nCount;
         end
         function DeleteBaseFaceSolid(obj, flag)
             % Deletes the face used for the extrusion.
             obj.AddToHistory(['.DeleteBaseFaceSolid "', num2str(flag, '%.15g'), '"']);
-            obj.deletebasefacesolid = flag;
         end
         function ClearPickedFace(obj, flag)
             % Cleares the picked face after the extrude command.
             obj.AddToHistory(['.ClearPickedFace "', num2str(flag, '%.15g'), '"']);
-            obj.clearpickedface = flag;
         end
         function ModifyHeight(obj)
             % Changes the solid to the previously specified settings.
@@ -165,42 +143,34 @@ classdef Extrude < handle
         function SetSimplifyActive(obj, boolean)
             % Set this option to enable the polygon simplification.
             obj.AddToHistory(['.SetSimplifyActive "', num2str(boolean, '%.15g'), '"']);
-            obj.setsimplifyactive = boolean;
         end
         function SetSimplifyMinPointsArc(obj, nCount)
             % Minimum number of segments needed to recognize an arc. Must be >= 3.
             obj.AddToHistory(['.SetSimplifyMinPointsArc "', num2str(nCount, '%.15g'), '"']);
-            obj.setsimplifyminpointsarc = nCount;
         end
         function SetSimplifyMinPointsCircle(obj, nCount)
             % Minimum number of segments needed for complete circles. Must be > 'SetSimplifyMinPointsArc' and at least 5.
             obj.AddToHistory(['.SetSimplifyMinPointsCircle "', num2str(nCount, '%.15g'), '"']);
-            obj.setsimplifyminpointscircle = nCount;
         end
         function SetSimplifyAngle(obj, angle)
             % The maximum angle in degrees between two adjacent segments. All smaller angles will be considered to be simplified. The angle is only used for arcs and not for circles.
             obj.AddToHistory(['.SetSimplifyAngle "', num2str(angle, '%.15g'), '"']);
-            obj.setsimplifyangle = angle;
         end
         function SetSimplifyAdjacentTol(obj, angle)
             % Is only used by the simplification algorithm to find a good starting point for arcs. It means the maximum angular difference in the angle of adjacent segments. A good value for this parameter will be 1.0.
             obj.AddToHistory(['.SetSimplifyAdjacentTol "', num2str(angle, '%.15g'), '"']);
-            obj.setsimplifyadjacenttol = angle;
         end
         function SetSimplifyRadiusTol(obj, deviation)
             % This means the maximum deviation in percent the distance a segment end point can have to the current definition of the simplification circle center point. The tolerance is used for circles and arcs.
             obj.AddToHistory(['.SetSimplifyRadiusTol "', num2str(deviation, '%.15g'), '"']);
-            obj.setsimplifyradiustol = deviation;
         end
         function SetSimplifyAngleTang(obj, angle)
             % Maximum angular tolerance in radians used when deciding to create the arc tangential or not to its adjacent line segments. If an angle is beneath the specified value, the arc is build tangential to the neighbor edge.
             obj.AddToHistory(['.SetSimplifyAngleTang "', num2str(angle, '%.15g'), '"']);
-            obj.setsimplifyangletang = angle;
         end
         function SetSimplifyEdgeLength(obj, length)
             % Edges smaller than the defined length will be removed. Can be used to remove tiny fragments.
             obj.AddToHistory(['.SetSimplifyEdgeLength "', num2str(length, '%.15g'), '"']);
-            obj.setsimplifyedgelength = length;
         end
         function Create(obj)
             % Creates a new extruded solid. All necessary settings for this element have to be made previously.
@@ -210,7 +180,7 @@ classdef Extrude < handle
             obj.history = [ 'With Extrude', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define extrude: ', obj.name], obj.history);
+            obj.project.AddToHistory(['define extrude: ', obj.component, ':', obj.name], obj.history);
             obj.history = [];
         end
     end
@@ -223,30 +193,6 @@ classdef Extrude < handle
 
         name
         component
-        material
-        mode
-        height
-        origin
-        uvector
-        vvector
-        point
-        lineto
-        rline
-        taper
-        twist
-        usepicksforheight
-        pickheightdeterminedbyfirstface
-        numberofpickedfaces
-        deletebasefacesolid
-        clearpickedface
-        setsimplifyactive
-        setsimplifyminpointsarc
-        setsimplifyminpointscircle
-        setsimplifyangle
-        setsimplifyadjacenttol
-        setsimplifyradiustol
-        setsimplifyangletang
-        setsimplifyedgelength
     end
 end
 

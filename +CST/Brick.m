@@ -41,6 +41,9 @@ classdef Brick < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = [];
+            obj.component = [];
         end
         function Name(obj, brickname)
             % Sets the name of the brick.
@@ -55,28 +58,21 @@ classdef Brick < handle
         function Material(obj, materialname)
             % Sets the material name for the new brick. The material must already exist.
             obj.AddToHistory(['.Material "', num2str(materialname, '%.15g'), '"']);
-            obj.material = materialname;
         end
         function Xrange(obj, xmin, xmax)
             % Sets the bounds for the x- or u-coordinate for the new brick, depending if a local coordinate system is active or not.
             obj.AddToHistory(['.Xrange "', num2str(xmin, '%.15g'), '", '...
                                       '"', num2str(xmax, '%.15g'), '"']);
-            obj.xrange.xmin = xmin;
-            obj.xrange.xmax = xmax;
         end
         function Yrange(obj, ymin, ymax)
             % Sets the bounds for the y- or v-coordinate for the new brick, depending if a local coordinate system is active or not.
             obj.AddToHistory(['.Yrange "', num2str(ymin, '%.15g'), '", '...
                                       '"', num2str(ymax, '%.15g'), '"']);
-            obj.yrange.ymin = ymin;
-            obj.yrange.ymax = ymax;
         end
         function Zrange(obj, zmin, zmax)
             % Sets the bounds for the z- or w-coordinate for the new brick, depending if a local coordinate system is active or not.
             obj.AddToHistory(['.Zrange "', num2str(zmin, '%.15g'), '", '...
                                       '"', num2str(zmax, '%.15g'), '"']);
-            obj.zrange.zmin = zmin;
-            obj.zrange.zmax = zmax;
         end
         function XRange(obj, ymin, ymax)
             % Sets the bounds for the x- or u-coordinate for the new brick, depending if a local coordinate system is active or not.
@@ -126,10 +122,6 @@ classdef Brick < handle
 
         name
         component
-        material
-        xrange
-        yrange
-        zrange
     end
 end
 

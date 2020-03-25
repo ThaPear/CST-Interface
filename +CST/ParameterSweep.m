@@ -82,17 +82,14 @@ classdef ParameterSweep < handle
             % "PIC" - Particle in cell simulation
             % "Particle Tracking" - Particle tracking
             obj.AddToHistory(['.SetSimulationType "', num2str(type, '%.15g'), '"']);
-            obj.setsimulationtype = type;
         end
         function AddSequence(obj, name)
             % Defines a new simulation sequence. In a sequence several different sets of parameters with different values can be defined. These sets are then taken by the parameter sweep to recreate the structure and automatically simulate it for each set.
             obj.AddToHistory(['.AddSequence "', num2str(name, '%.15g'), '"']);
-            obj.addsequence = name;
         end
         function DeleteSequence(obj, name)
             % Deletes a sequence.
             obj.AddToHistory(['.DeleteSequence "', num2str(name, '%.15g'), '"']);
-            obj.deletesequence = name;
         end
         function DeleteAllSequences(obj)
             % Deletes all previously defined sequences.
@@ -102,8 +99,6 @@ classdef ParameterSweep < handle
             % Renames a sequence.
             obj.AddToHistory(['.RenameSequence "', num2str(oldname, '%.15g'), '", '...
                                               '"', num2str(newname, '%.15g'), '"']);
-            obj.renamesequence.oldname = oldname;
-            obj.renamesequence.newname = newname;
         end
         function AddParameter_Samples(obj, sequencename, parametername, from, to, steps, logarithmic_sweep)
             % Adds a parameter to a sequence.
@@ -117,11 +112,6 @@ classdef ParameterSweep < handle
                                                     '"', num2str(to, '%.15g'), '", '...
                                                     '"', num2str(steps, '%.15g'), '", '...
                                                     '"', num2str(logarithmic_sweep, '%.15g'), '"']);
-            obj.addparameter_samples.sequencename = sequencename;
-            obj.addparameter_samples.parametername = parametername;
-            obj.addparameter_samples.from = from;
-            obj.addparameter_samples.to = to;
-            obj.addparameter_samples.steps = steps;
             obj.addparameter_samples.logarithmic_sweep = logarithmic_sweep;
         end
         function AddParameter_Stepwidth(obj, sequencename, parametername, from, to, width)
@@ -134,11 +124,6 @@ classdef ParameterSweep < handle
                                                       '"', num2str(from, '%.15g'), '", '...
                                                       '"', num2str(to, '%.15g'), '", '...
                                                       '"', num2str(width, '%.15g'), '"']);
-            obj.addparameter_stepwidth.sequencename = sequencename;
-            obj.addparameter_stepwidth.parametername = parametername;
-            obj.addparameter_stepwidth.from = from;
-            obj.addparameter_stepwidth.to = to;
-            obj.addparameter_stepwidth.width = width;
         end
         function AddParameter_ArbitraryPoints(obj, sequencename, parametername, points)
             % Adds a parameter to a sequence.
@@ -146,16 +131,11 @@ classdef ParameterSweep < handle
             obj.AddToHistory(['.AddParameter_ArbitraryPoints "', num2str(sequencename, '%.15g'), '", '...
                                                             '"', num2str(parametername, '%.15g'), '", '...
                                                             '"', num2str(points, '%.15g'), '"']);
-            obj.addparameter_arbitrarypoints.sequencename = sequencename;
-            obj.addparameter_arbitrarypoints.parametername = parametername;
-            obj.addparameter_arbitrarypoints.points = points;
         end
         function DeleteParameter(obj, sequencename, parametername)
             % Deletes a parameter from a sequence.
             obj.AddToHistory(['.DeleteParameter "', num2str(sequencename, '%.15g'), '", '...
                                                '"', num2str(parametername, '%.15g'), '"']);
-            obj.deleteparameter.sequencename = sequencename;
-            obj.deleteparameter.parametername = parametername;
         end
         function Start(obj)
             % Starts the parameter sweep.
@@ -167,7 +147,6 @@ classdef ParameterSweep < handle
         function UseDistributedComputing(obj, boolean)
             % Enables/disables the distributed calculation of different solver runs across the network.
             obj.AddToHistory(['.UseDistributedComputing "', num2str(boolean, '%.15g'), '"']);
-            obj.usedistributedcomputing = boolean;
         end
         
         %% Undocumented functions.
@@ -175,7 +154,6 @@ classdef ParameterSweep < handle
         function EnableTreeUpdate(obj, boolean)
             % Possibly toggles visual updating of the parameter sweep window.
             obj.AddToHistory(['.EnableTreeUpdate "', num2str(boolean, '%.15g'), '"']);
-            obj.enabletreeupdate = boolean;
         end
         % Found in 'Library/Result Templates/S-Parameters/- Touchstone Export^+MWS+DS.rtp'
         function nparams = GetNumberOfVaryingParameters(obj)
@@ -212,11 +190,6 @@ classdef ParameterSweep < handle
                                                       '"', num2str(from, '%.15g'), '", '...
                                                       '"', num2str(to, '%.15g'), '", '...
                                                       '"', num2str(steps, '%.15g'), '"']);
-            obj.addparameter_linear.sequencename = sequencename;
-            obj.addparameter_linear.parametername = parametername;
-            obj.addparameter_linear.from = from;
-            obj.addparameter_linear.to = to;
-            obj.addparameter_linear.steps = steps;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -227,18 +200,6 @@ classdef ParameterSweep < handle
         history
         bulkmode
 
-        setsimulationtype
-        addsequence
-        deletesequence
-        renamesequence
-        addparameter_samples
-        addparameter_stepwidth
-        addparameter_arbitrarypoints
-        deleteparameter
-        usedistributedcomputing
-        
-        enabletreeupdate
-        addparameter_linear
     end
 end
 

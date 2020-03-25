@@ -42,6 +42,9 @@ classdef LumpedFaceElement < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = '';
+            obj.folder = '';
         end
         function Create(obj)
             % Creates a new element. All necessary settings for this element have to be made previously.
@@ -51,7 +54,11 @@ classdef LumpedFaceElement < handle
             obj.history = [ 'With LumpedFaceElement', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define LumpedFaceElement'], obj.history);
+            if(~isempty(obj.folder))
+                obj.project.AddToHistory(['define LumpedFaceElement: ', obj.folder, '/', obj.name, ''], obj.history);
+            else
+                obj.project.AddToHistory(['define LumpedFaceElement: ', obj.name], obj.history);
+            end
             obj.history = [];
         end
         function Modify(obj)
@@ -62,28 +69,31 @@ classdef LumpedFaceElement < handle
             obj.history = [ 'With LumpedFaceElement', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['modify LumpedFaceElement'], obj.history);
+            if(~isempty(obj.folder))
+                obj.project.AddToHistory(['modify LumpedFaceElement: ', obj.folder, '/', obj.name, ''], obj.history);
+            else
+                obj.project.AddToHistory(['modify LumpedFaceElement: ', obj.name], obj.history);
+            end
             obj.history = [];
         end
         function SetType(obj, key)
             % Sets the type of the discrete element.
             % enum key
             % meaning
-            % ”rlcparallel”
+            % ï¿½rlcparallelï¿½
             % The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance. (default)
-            % ”rlcserial”
+            % ï¿½rlcserialï¿½
             % The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance.
-            % ”diode”
+            % ï¿½diodeï¿½
             % The discrete element is a diode.
-            % ”generalcircuit”
+            % ï¿½generalcircuitï¿½
             % The discrete element is defined by circuit file.
             obj.AddToHistory(['.SetType "', num2str(key, '%.15g'), '"']);
-            obj.settype = key;
         end
         function SetName(obj, name)
             % Sets the name of the Lumped Face Element.
             obj.AddToHistory(['.SetName "', num2str(name, '%.15g'), '"']);
-            obj.setname = name;
+            obj.name = name;
         end
         function Folder(obj, foldername)
             % Sets the name of the folder for the new Lumped Face Element. If the name is empty, then the Lumped Face Element does not belong to a folder.
@@ -93,32 +103,26 @@ classdef LumpedFaceElement < handle
         function SetR(obj, dValue)
             % Defines the value of resistance / inductance / capacitance of the Lumped Face Element.
             obj.AddToHistory(['.SetR "', num2str(dValue, '%.15g'), '"']);
-            obj.setr = dValue;
         end
         function SetL(obj, dValue)
             % Defines the value of resistance / inductance / capacitance of the Lumped Face Element.
             obj.AddToHistory(['.SetL "', num2str(dValue, '%.15g'), '"']);
-            obj.setl = dValue;
         end
         function SetC(obj, dValue)
             % Defines the value of resistance / inductance / capacitance of the Lumped Face Element.
             obj.AddToHistory(['.SetC "', num2str(dValue, '%.15g'), '"']);
-            obj.setc = dValue;
         end
         function SetGs(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ”diode”.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ï¿½diodeï¿½.
             obj.AddToHistory(['.SetGs "', num2str(dValue, '%.15g'), '"']);
-            obj.setgs = dValue;
         end
         function SetI0(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ”diode”.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ï¿½diodeï¿½.
             obj.AddToHistory(['.SetI0 "', num2str(dValue, '%.15g'), '"']);
-            obj.setio = dValue;
         end
         function SetT(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ”diode”.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to ï¿½diodeï¿½.
             obj.AddToHistory(['.SetT "', num2str(dValue, '%.15g'), '"']);
-            obj.sett = dValue;
         end
         function SetP1(obj, picked, x, y, z)
             % Define the starting / end point of the discrete element. If picked is True, two previously picked points will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
@@ -126,10 +130,6 @@ classdef LumpedFaceElement < handle
                                      '"', num2str(x, '%.15g'), '", '...
                                      '"', num2str(y, '%.15g'), '", '...
                                      '"', num2str(z, '%.15g'), '"']);
-            obj.setp1.picked = picked;
-            obj.setp1.x = x;
-            obj.setp1.y = y;
-            obj.setp1.z = z;
         end
         function SetP2(obj, picked, x, y, z)
             % Define the starting / end point of the discrete element. If picked is True, two previously picked points will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
@@ -137,10 +137,6 @@ classdef LumpedFaceElement < handle
                                      '"', num2str(x, '%.15g'), '", '...
                                      '"', num2str(y, '%.15g'), '", '...
                                      '"', num2str(z, '%.15g'), '"']);
-            obj.setp2.picked = picked;
-            obj.setp2.x = x;
-            obj.setp2.y = y;
-            obj.setp2.z = z;
         end
         function [x0, y0, z0, x1, y1, z1] = GetCoordinates(obj, name)
             % Queries the start and end point coordinates of a discrete element specified by name.
@@ -179,22 +175,18 @@ classdef LumpedFaceElement < handle
         function CircuitFileName(obj, filename)
             % Sets the name of the external Spice file to be imported.
             obj.AddToHistory(['.CircuitFileName "', num2str(filename, '%.15g'), '"']);
-            obj.circuitfilename = filename;
         end
         function UseRelativePath(obj, flag)
             % Defines if the CircuitFileName is given with a relative or absolute path. In the former case CircuitFileName must specify a location relative to the current project file.
             obj.AddToHistory(['.UseRelativePath "', num2str(flag, '%.15g'), '"']);
-            obj.userelativepath = flag;
         end
         function CircuitId(obj, Id)
             % Set a unique id to identify the local copy of the circuit file.
             obj.AddToHistory(['.CircuitId "', num2str(Id, '%.15g'), '"']);
-            obj.circuitid = Id;
         end
         function UseCopyOnly(obj, flag)
             % Only the initially copied circuit file in the project folder is used. Any later changes in the external file are ignored.
             obj.AddToHistory(['.UseCopyOnly "', num2str(flag, '%.15g'), '"']);
-            obj.usecopyonly = flag;
         end
         function StartLumpedFaceElementNameIteration(obj)
             % Initialize an iterator over all Lumped Face Elements and place it before the first element. Returns the current number of elements in the list.
@@ -228,17 +220,14 @@ classdef LumpedFaceElement < handle
         function SetInvert(obj, boolean)
             % Set switch to True to reverse the orientation of the Lumped Face Element. This might be important, if the Lumped Face Element is a diode.
             obj.AddToHistory(['.SetInvert "', num2str(boolean, '%.15g'), '"']);
-            obj.setinvert = boolean;
         end
         function SetMonitor(obj, boolean)
             % If switch is True, current and voltage between start and end point of the Lumped Face Element will be monitored.
             obj.AddToHistory(['.SetMonitor "', num2str(boolean, '%.15g'), '"']);
-            obj.setmonitor = boolean;
         end
         function SetRadius(obj, value)
             % Specifies a radius for the Lumped Face Element.
             obj.AddToHistory(['.SetRadius "', num2str(value, '%.15g'), '"']);
-            obj.setradius = value;
         end
         function UseProjection(obj, flag)
             % When this flag is activated then one edge is projected onto the other edge and the face Lumped Face Element is created in between the edge and its projection.
@@ -253,41 +242,32 @@ classdef LumpedFaceElement < handle
         function Wire(obj, wirename)
             % Defines the name of the wire, on which the Lumped Face Element is attached to.
             obj.AddToHistory(['.Wire "', num2str(wirename, '%.15g'), '"']);
-            obj.wire = wirename;
         end
         function Position(obj, name)
             % Defines the end of the wire, on which the Lumped Face Element is attached to. Possible values are 'end1' or 'end2'.
             obj.AddToHistory(['.Position "', num2str(name, '%.15g'), '"']);
-            obj.position = name;
         end
         function Rename(obj, sOldName, sNewName)
             % Changes the name of an existing object.
             obj.project.AddToHistory(['LumpedFaceElement.Rename "', num2str(sOldName, '%.15g'), '", '...
                                                                 '"', num2str(sNewName, '%.15g'), '"']);
-            obj.rename.sOldName = sOldName;
-            obj.rename.sNewName = sNewName;
         end
         function Delete(obj, name)
             % Deletes an existing object.
             obj.project.AddToHistory(['LumpedFaceElement.Delete "', num2str(name, '%.15g'), '"']);
-            obj.delete = name;
         end
         function NewFolder(obj, foldername)
             % Creates a new folder with the given name.
             obj.project.AddToHistory(['LumpedFaceElement.NewFolder "', num2str(foldername, '%.15g'), '"']);
-            obj.newfolder = foldername;
         end
         function DeleteFolder(obj, foldername)
             % Deletes an existing folder and all the containing elements.
             obj.project.AddToHistory(['LumpedFaceElement.DeleteFolder "', num2str(foldername, '%.15g'), '"']);
-            obj.deletefolder = foldername;
         end
         function RenameFolder(obj, oldFoldername, newFoldername)
             % Changes the name of an existing folder.
             obj.project.AddToHistory(['LumpedFaceElement.RenameFolder "', num2str(oldFoldername, '%.15g'), '", '...
                                                                       '"', num2str(newFoldername, '%.15g'), '"']);
-            obj.renamefolder.oldFoldername = oldFoldername;
-            obj.renamefolder.newFoldername = newFoldername;
         end
         function Defaults(obj)
             % SetType ("rlcparallel")
@@ -311,32 +291,7 @@ classdef LumpedFaceElement < handle
         hLumpedFaceElement
         history
 
-        settype
-        setname
+        name
         folder
-        setr
-        setl
-        setc
-        setgs
-        setio
-        sett
-        setp1
-        setp2
-        circuitfilename
-        userelativepath
-        circuitid
-        usecopyonly
-        setinvert
-        setmonitor
-        setradius
-        useprojection
-        reverseprojection
-        wire
-        position
-        rename
-        delete
-        newfolder
-        deletefolder
-        renamefolder
     end
 end

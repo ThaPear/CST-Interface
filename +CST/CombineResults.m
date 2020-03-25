@@ -67,29 +67,24 @@ classdef CombineResults < handle
             % monitorType: 'frequency'
             %              'time'
             obj.AddToHistory(['.SetMonitorType "', num2str(monitorType, '%.15g'), '"']);
-            obj.setmonitortype = monitorType;
         end
         function SetOffsetType(obj, offsetType)
             % Selects the offset type when combining time domain monitors. This offset may be either a time shift or a phase shift at a given reference frequency.
             % offsetType: 'time'
             %             'phase'
             obj.AddToHistory(['.SetOffsetType "', num2str(offsetType, '%.15g'), '"']);
-            obj.setoffsettype = offsetType;
         end
         function SetReferenceFrequency(obj, fRef)
             % Sets the reference frequency for the phase shift when combining time domain monitor results.
             obj.AddToHistory(['.SetReferenceFrequency "', num2str(fRef, '%.15g'), '"']);
-            obj.setreferencefrequency = fRef;
         end
         function EnableAutomaticLabeling(obj, bFlag)
             % Activates or deactivates the automatic labeling when combining results.
             obj.AddToHistory(['.EnableAutomaticLabeling "', num2str(bFlag, '%.15g'), '"']);
-            obj.enableautomaticlabeling = bFlag;
         end
         function SetLabel(obj, labelName)
             % Sets the name for a result combination.
             obj.AddToHistory(['.SetLabel "', num2str(labelName, '%.15g'), '"']);
-            obj.setlabel = labelName;
         end
         function SetExcitationValues(obj, Type, Source, Mode, amplitude, phase_or_timedelay)
             % Specifies the amplitude and phase (respectively  time shift value) for a selected excitation. Supported excitations are:
@@ -106,10 +101,6 @@ classdef CombineResults < handle
                                                    '"', num2str(Mode, '%.15g'), '", '...
                                                    '"', num2str(amplitude, '%.15g'), '", '...
                                                    '"', num2str(phase_or_timedelay, '%.15g'), '"']);
-            obj.setexcitationvalues.Type = Type;
-            obj.setexcitationvalues.Source = Source;
-            obj.setexcitationvalues.Mode = Mode;
-            obj.setexcitationvalues.amplitude = amplitude;
             obj.setexcitationvalues.phase_or_timedelay = phase_or_timedelay;
         end
         function string = GetCombinationFromLabel(obj, labelName)
@@ -120,18 +111,15 @@ classdef CombineResults < handle
             % For all available excitations the amplitudes are set to amplitude and the phase values (respectively  time shift values) are set to phase_or_timedelay.
             obj.AddToHistory(['.SetAllExcitations "', num2str(amplitude, '%.15g'), '", '...
                                                  '"', num2str(phase_or_timedelay, '%.15g'), '"']);
-            obj.setallexcitations.amplitude = amplitude;
             obj.setallexcitations.phase_or_timedelay = phase_or_timedelay;
         end
         function SetSystemAmplitude(obj, amplitude)
             % The combine results feature may be used to simulate a network excitation. amplitude is the system stimulation amplitude which is equivalent to the excitation defined above.
             obj.AddToHistory(['.SetSystemAmplitude "', num2str(amplitude, '%.15g'), '"']);
-            obj.setsystemamplitude = amplitude;
         end
         function SetSystemBalance(obj, balance)
             % Sets the balance of the total system (i.e. model and exciting circuit).
             obj.AddToHistory(['.SetSystemBalance "', num2str(balance, '%.15g'), '"']);
-            obj.setsystembalance = balance;
         end
         function SetNone(obj)
             % Sets the amplitudes and phase values (or time shift values) for all excitations to 0 and resets the system settings. Therefore no combination will be done.
@@ -155,12 +143,10 @@ classdef CombineResults < handle
             % :eenergy:             All E-energy monitors are added to the selection
             % :henergy:             All H-energy monitors are added to the selection
             obj.AddToHistory(['.AddFilter "', num2str(Filter, '%.15g'), '"']);
-            obj.addfilter = Filter;
         end
         function OnlyAtFrequency(obj, freq)
             % Combines all monitors defined the frequency "freq".
             obj.AddToHistory(['.OnlyAtFrequency "', num2str(freq, '%.15g'), '"']);
-            obj.onlyatfrequency = freq;
         end
         function Run(obj)
             % Starts combining monitor results. The combined results are added to the result tree in the respective sub folders.
@@ -175,17 +161,6 @@ classdef CombineResults < handle
         history
         bulkmode
 
-        setmonitortype
-        setoffsettype
-        setreferencefrequency
-        enableautomaticlabeling
-        setlabel
-        setexcitationvalues
-        setallexcitations
-        setsystemamplitude
-        setsystembalance
-        addfilter
-        onlyatfrequency
     end
 end
 

@@ -66,7 +66,6 @@ classdef FarfieldArray < handle
         function UseArray(obj, bFlag)
             % Activates the array pattern for farfield calculation.
             obj.AddToHistory(['.UseArray "', num2str(bFlag, '%.15g'), '"']);
-            obj.usearray = bFlag;
         end
         function Arraytype(obj, type)
             % Sets the type of the array pattern.
@@ -74,7 +73,6 @@ classdef FarfieldArray < handle
             % �rectangular� - A rectangular array pattern (linear: 1D, planar: 2D, cubic: 3D) can be defined by setting the corresponding antenna numbers together with the space and phaseshift information using the methods XSet, YSet, and ZSet. The resulting list is then calculated by SetList. The array setup uses automatically the unit cell geometry and phasing if unit cell or periodic boundaries are active.
             % �edit� - This mode offers the possibility to edit the current antennalist by adding single antenna elements to the list using the method Antenna.
             obj.AddToHistory(['.Arraytype "', num2str(type, '%.15g'), '"']);
-            obj.arraytype = type;
         end
         function XSet(obj, number, spaceshift, phaseshift)
             % Defines a linear array pattern in the x,y or z-direction respectively. Thus a linear, planar or cubic antenna array structure may be created.
@@ -87,9 +85,6 @@ classdef FarfieldArray < handle
             obj.AddToHistory(['.XSet "', num2str(number, '%.15g'), '", '...
                                     '"', num2str(spaceshift, '%.15g'), '", '...
                                     '"', num2str(phaseshift, '%.15g'), '"']);
-            obj.xset.number = number;
-            obj.xset.spaceshift = spaceshift;
-            obj.xset.phaseshift = phaseshift;
         end
         function YSet(obj, number, spaceshift, phaseshift)
             % Defines a linear array pattern in the x,y or z-direction respectively. Thus a linear, planar or cubic antenna array structure may be created.
@@ -102,9 +97,6 @@ classdef FarfieldArray < handle
             obj.AddToHistory(['.YSet "', num2str(number, '%.15g'), '", '...
                                     '"', num2str(spaceshift, '%.15g'), '", '...
                                     '"', num2str(phaseshift, '%.15g'), '"']);
-            obj.yset.number = number;
-            obj.yset.spaceshift = spaceshift;
-            obj.yset.phaseshift = phaseshift;
         end
         function ZSet(obj, number, spaceshift, phaseshift)
             % Defines a linear array pattern in the x,y or z-direction respectively. Thus a linear, planar or cubic antenna array structure may be created.
@@ -117,9 +109,6 @@ classdef FarfieldArray < handle
             obj.AddToHistory(['.ZSet "', num2str(number, '%.15g'), '", '...
                                     '"', num2str(spaceshift, '%.15g'), '", '...
                                     '"', num2str(phaseshift, '%.15g'), '"']);
-            obj.zset.number = number;
-            obj.zset.spaceshift = spaceshift;
-            obj.zset.phaseshift = phaseshift;
         end
         function SetList(obj)
             % Calculates a complete list of single antenna elements based on the specified array configuration and transfers these settings to the farfield plotter.
@@ -146,11 +135,6 @@ classdef FarfieldArray < handle
                                        '"', num2str(z, '%.15g'), '", '...
                                        '"', num2str(amplitude, '%.15g'), '", '...
                                        '"', num2str(phase, '%.15g'), '"']);
-            obj.antenna.x = x;
-            obj.antenna.y = y;
-            obj.antenna.z = z;
-            obj.antenna.amplitude = amplitude;
-            obj.antenna.phase = phase;
         end
         function AddAntennaItem(obj, sfile, x, y, z, alpha, beta, gamma, A, phase)
             % Loads an antenna farfield from sfile and adds it to the combine list.
@@ -163,15 +147,6 @@ classdef FarfieldArray < handle
                                               '"', num2str(gamma, '%.15g'), '", '...
                                               '"', num2str(A, '%.15g'), '", '...
                                               '"', num2str(phase, '%.15g'), '"']);
-            obj.addantennaitem.sfile = sfile;
-            obj.addantennaitem.x = x;
-            obj.addantennaitem.y = y;
-            obj.addantennaitem.z = z;
-            obj.addantennaitem.alpha = alpha;
-            obj.addantennaitem.beta = beta;
-            obj.addantennaitem.gamma = gamma;
-            obj.addantennaitem.A = A;
-            obj.addantennaitem.phase = phase;
         end
         function AddAntennaItemA(obj, sfile, x, y, z, z1, z2, z3, x1, x2, x3, A, phase)
             % The command is similar to AddAntennaItem, but the orientation is specified by the antenna frame z-axis and x-axis in global coordinates.
@@ -200,18 +175,6 @@ classdef FarfieldArray < handle
                                                '"', num2str(x3, '%.15g'), '", '...
                                                '"', num2str(A, '%.15g'), '", '...
                                                '"', num2str(phase, '%.15g'), '"']);
-            obj.addantennaitema.sfile = sfile;
-            obj.addantennaitema.x = x;
-            obj.addantennaitema.y = y;
-            obj.addantennaitema.z = z;
-            obj.addantennaitema.z1 = z1;
-            obj.addantennaitema.z2 = z2;
-            obj.addantennaitema.z3 = z3;
-            obj.addantennaitema.x1 = x1;
-            obj.addantennaitema.x2 = x2;
-            obj.addantennaitema.x3 = x3;
-            obj.addantennaitema.A = A;
-            obj.addantennaitema.phase = phase;
         end
         function ClearAntennaItems(obj)
             % Clears the antenna combine list.   
@@ -220,12 +183,10 @@ classdef FarfieldArray < handle
         function SetNormalizeAntennas(obj, bflag)
             % Activates the normalization of all antennas  to 1 W(peak) stimulated power before the execution of the combine command. The user specified amplitudes are  applied to the scaled farfields.
             obj.AddToHistory(['.SetNormalizeAntennas "', num2str(bflag, '%.15g'), '"']);
-            obj.setnormalizeantennas = bflag;
         end
         function SetCombineFrequency(obj, frequency)
             % Sets the frequency of the combined antenna. All antennas in the combine list must have the same frequency, otherwise the consistent combination of the antennas is not possible.
             obj.AddToHistory(['.SetCombineFrequency "', num2str(frequency, '%.15g'), '"']);
-            obj.setcombinefrequency = frequency;
         end
         function SetCombineReferenceAxes(obj, z1, z2, z3, x1, x2, x3)
             % Sets the theta reference axis (z1, z2, z3) and the phi reference axis (x1, x2, x3) of the combined antenna.
@@ -235,21 +196,12 @@ classdef FarfieldArray < handle
                                                        '"', num2str(x1, '%.15g'), '", '...
                                                        '"', num2str(x2, '%.15g'), '", '...
                                                        '"', num2str(x3, '%.15g'), '"']);
-            obj.setcombinereferenceaxes.z1 = z1;
-            obj.setcombinereferenceaxes.z2 = z2;
-            obj.setcombinereferenceaxes.z3 = z3;
-            obj.setcombinereferenceaxes.x1 = x1;
-            obj.setcombinereferenceaxes.x2 = x2;
-            obj.setcombinereferenceaxes.x3 = x3;
         end
         function SetCombineReferenceOrigin(obj, p1, p2, p3)
             % Sets the phase reference origin (p1, p2, p3) of the combined antenna.
             obj.AddToHistory(['.SetCombineReferenceOrigin "', num2str(p1, '%.15g'), '", '...
                                                          '"', num2str(p2, '%.15g'), '", '...
                                                          '"', num2str(p3, '%.15g'), '"']);
-            obj.setcombinereferenceorigin.p1 = p1;
-            obj.setcombinereferenceorigin.p2 = p2;
-            obj.setcombinereferenceorigin.p3 = p3;
         end
         function ExecuteCombine(obj, sfile, stepInDegree)
             % Combines all antennas from the combine list to a single antenna. The new antenna data is sampled with stepInDegree and written to sfile. No further scaling is applied to the combined field.
@@ -258,8 +210,6 @@ classdef FarfieldArray < handle
             % Returns the ratio of the actual emitted power to the integrated input power of all antennas from the combine list. A strong deviation from unity indicates a non-negligible interaction of the antennas.
             obj.AddToHistory(['.ExecuteCombine "', num2str(sfile, '%.15g'), '", '...
                                               '"', num2str(stepInDegree, '%.15g'), '"']);
-            obj.executecombine.sfile = sfile;
-            obj.executecombine.stepInDegree = stepInDegree;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -270,19 +220,6 @@ classdef FarfieldArray < handle
         history
         bulkmode
 
-        usearray
-        arraytype
-        xset
-        yset
-        zset
-        antenna
-        addantennaitem
-        addantennaitema
-        setnormalizeantennas
-        setcombinefrequency
-        setcombinereferenceaxes
-        setcombinereferenceorigin
-        executecombine
     end
 end
 

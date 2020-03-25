@@ -16,6 +16,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Still requires autogeneration.
+
 classdef Group < handle
     properties(SetAccess = protected)
         project

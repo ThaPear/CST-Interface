@@ -32,23 +32,7 @@
 % As soon as the blend is defined it will appear in the main plot window
 % and on the Navigation Tree.
 classdef BlendCurve < handle
-    properties
-        project
-        hBlendCurve
-        history
-        
-        name
-        radius
-        curve
-        curveitem1
-        curveitem2
-        edgeid1
-        edgeid2
-        vertexid1
-        vertexid2
-        
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.BlendCurve object.
         function obj = BlendCurve(project, hProject)
@@ -57,7 +41,7 @@ classdef BlendCurve < handle
             obj.Reset();
         end
     end
-    
+    %% CST Object functions.
     methods
         function AddToHistory(obj, command)
             obj.history = [obj.history, '     ', command, newline];
@@ -99,13 +83,8 @@ classdef BlendCurve < handle
             
             obj.name = '';
             obj.curve = '';
-            obj.radius = 0;
             obj.curveitem1 = '';
             obj.curveitem2 = '';
-            obj.edgeid1 = 0;
-            obj.edgeid2 = 0;
-            obj.vertexid1 = 0;
-            obj.vertexid2 = 0;
         end
         function Name(obj, name)
             % Sets the name of the new blend item.
@@ -115,7 +94,6 @@ classdef BlendCurve < handle
         function Radius(obj, radius)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Radius "', num2str(radius, '%.15g'), '"']);
-            obj.radius = radius;
         end
         function Curve(obj, curve)
             % Specifies the curve the new created blend item object will
@@ -139,26 +117,34 @@ classdef BlendCurve < handle
             % Defines a specified edge of a curve item by its identity
             % number.
             obj.AddToHistory(['.EdgeId1 "', num2str(edgeid1), '"']);
-            obj.edgeid1 = edgeid1;
         end
         function EdgeId2(obj, edgeid2)
             % Defines a specified edge of a curve item by its identity
             % number.
             obj.AddToHistory(['.EdgeId2 "', num2str(edgeid2), '"']);
-            obj.edgeid2 = edgeid2;
         end
         function VertexId1(obj, vertexid1)
             % Defines a specified vertex of a curve item by its identity
             % number.
             obj.AddToHistory(['.VertexId1 "', num2str(vertexid1), '"']);
-            obj.vertexid1 = vertexid1;
         end
         function VertexId2(obj, vertexid2)
             % Defines a specified vertex of a curve item by its identity
             % number.
             obj.AddToHistory(['.VertexId2 "', num2str(vertexid2), '"']);
-            obj.vertexid2 = vertexid2;
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties
+        project
+        hBlendCurve
+        history
+        
+        name
+        curve
+        curveitem1
+        curveitem2
     end
 end
 

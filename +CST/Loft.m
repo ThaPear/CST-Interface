@@ -41,6 +41,9 @@ classdef Loft < handle
         function Reset(obj)
             % Resets all internal settings.
             obj.AddToHistory(['.Reset']);
+            
+            obj.name = '';
+            obj.component = '';
         end
         function Name(obj, objectname)
             % Sets the name of the new Object.
@@ -55,12 +58,10 @@ classdef Loft < handle
         function Material(obj, materialname)
             % Sets the material for the new Solid. The material must already exist.
             obj.AddToHistory(['.Material "', num2str(materialname, '%.15g'), '"']);
-            obj.material = materialname;
         end
         function Tangency(obj, tang)
             % Defines the shape of the connection.
             obj.AddToHistory(['.Tangency "', num2str(tang, '%.15g'), '"']);
-            obj.tangency = tang;
         end
         function Create(obj)
             % Creates a new solid. All necessary settings for this element have to be made previously.
@@ -70,7 +71,7 @@ classdef Loft < handle
             obj.history = [ 'With Loft', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define loft: ', obj.name], obj.history);
+            obj.project.AddToHistory(['define loft: ', obj.component, ':', obj.name], obj.history);
             obj.history = [];
         end
     end
@@ -83,8 +84,6 @@ classdef Loft < handle
 
         name
         component
-        material
-        tangency
     end
 end
 

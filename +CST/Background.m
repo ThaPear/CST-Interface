@@ -71,52 +71,42 @@ classdef Background < handle
             % pec
             % Perfect electric conducting material
             obj.AddToHistory(['.Type "', num2str(materialType, '%.15g'), '"']);
-            obj.type = materialType;
         end
         function Epsilon(obj, value)
             % Defines the electric permittivity of the background material.
             obj.AddToHistory(['.Epsilon "', num2str(value, '%.15g'), '"']);
-            obj.epsilon = value;
         end
         function Mu(obj, value)
             % Defines the permeability of the background material.
             obj.AddToHistory(['.Mu "', num2str(value, '%.15g'), '"']);
-            obj.mu = value;
         end
         function ElConductivity(obj, value)
             % Defines the electric conductivity of the background material. This value is considered only for Low Frequency simulations.
             obj.AddToHistory(['.ElConductivity "', num2str(value, '%.15g'), '"']);
-            obj.elconductivity = value;
         end
         function XminSpace(obj, value)
             % Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
             obj.AddToHistory(['.XminSpace "', num2str(value, '%.15g'), '"']);
-            obj.xminspace = value;
         end
         function XmaxSpace(obj, value)
             % Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
             obj.AddToHistory(['.XmaxSpace "', num2str(value, '%.15g'), '"']);
-            obj.xmaxspace = value;
         end
         function YminSpace(obj, value)
             % Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
             obj.AddToHistory(['.YminSpace "', num2str(value, '%.15g'), '"']);
-            obj.yminspace = value;
         end
         function YmaxSpace(obj, value)
             % Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
             obj.AddToHistory(['.YmaxSpace "', num2str(value, '%.15g'), '"']);
-            obj.ymaxspace = value;
         end
         function ZminSpace(obj, value)
             % Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
             obj.AddToHistory(['.ZminSpace "', num2str(value, '%.15g'), '"']);
-            obj.zminspace = value;
         end
         function ZmaxSpace(obj, value)
             % Adds space to the lower or upper x, y or z boundary of the current calculation volume respectively.
             obj.AddToHistory(['.ZmaxSpace "', num2str(value, '%.15g'), '"']);
-            obj.zmaxspace = value;
         end
         function ThermalType(obj, thermalMaterialType)
             % Sets the material type used for the background.
@@ -126,34 +116,28 @@ classdef Background < handle
             % ptc
             % Perfect thermal conducting material
             obj.AddToHistory(['.ThermalType "', num2str(thermalMaterialType, '%.15g'), '"']);
-            obj.thermaltype = thermalMaterialType;
         end
         function ThermalConductivity(obj, value)
             % Thermal conductivity is a property of materials that expresses the heat flux f (W/m2) that will flow through the material if a certain temperature gradient DT (K/m) exists over the material. The unit for value is W/K/m.
             obj.AddToHistory(['.ThermalConductivity "', num2str(value, '%.15g'), '"']);
-            obj.thermalconductivity = value;
         end
         function ApplyInAllDirections(obj, flag)
             % Is at the moment used for the background dialog to identify if the xmin value should be applied in all directions.
             obj.AddToHistory(['.ApplyInAllDirections "', num2str(flag, '%.15g'), '"']);
-            obj.applyinalldirections = flag;
         end
         %% Undocumented functions.
         % Found in template: 'Planar Coupler & Divider.cfg'
         function HeatCapacity(obj, heatcapacity)
             obj.AddToHistory(['.HeatCapacity "', num2str(heatcapacity, '%.15g'), '"']);
-            obj.heatcapacity = heatcapacity;
         end
         % Found in template: 'Planar Coupler & Divider.cfg'
         function Rho(obj, rho)
             obj.AddToHistory(['.Rho "', num2str(rho, '%.15g'), '"']);
-            obj.rho = rho;
         end
         % Found in history list when defining background
         function ResetBackground(obj)
             obj.AddToHistory(['.ResetBackground']);
         end
-        
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -163,22 +147,6 @@ classdef Background < handle
         history
         bulkmode
 
-        type
-        epsilon
-        mu
-        elconductivity
-        xminspace
-        xmaxspace
-        yminspace
-        ymaxspace
-        zminspace
-        zmaxspace
-        thermaltype
-        thermalconductivity
-        applyinalldirections
-        
-        heatcapacity
-        rho
     end
 end
 

@@ -17,11 +17,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 classdef EvaluateFieldAlongCurve < handle
-    properties(SetAccess = protected)
-        project
-        hEvaluateFieldAlongCurve
-    end
-    
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.EvaluateFieldAlongCurve object.
         function obj = EvaluateFieldAlongCurve(project, hProject)
@@ -29,7 +24,7 @@ classdef EvaluateFieldAlongCurve < handle
             obj.hEvaluateFieldAlongCurve = hProject.invoke('EvaluateFieldAlongCurve');
         end
     end
-    
+    %% CST Interface specific functions.
     methods
         function PlotField(obj, curvename, component)
             % Creates a 1D-plot of the selected field component / absolute
@@ -86,6 +81,13 @@ classdef EvaluateFieldAlongCurve < handle
             % values (e.g. PEC).
             obj.hEvaluateFieldAlongCurve.invoke('EvaluateOnSurface', boolean);
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hEvaluateFieldAlongCurve
+
     end
 end
 

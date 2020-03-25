@@ -24,32 +24,7 @@
 % boundary plane. You may either have a magnetic, electric or an open
 % boundary condition.
 classdef Boundary < handle
-    properties(SetAccess = protected)
-        project
-        hBoundary
-        history
-        bulkmode
-        
-        xmin, xmax, ymin, ymax, zmin, zmax
-        xsymmetry, ysymmetry, zsymmetry
-        layer
-        minimumlinesdistance
-        minimumdistancetype
-        absolutedistance
-        minimumdistancereferencefrequencytype
-        minimumdistanceperwavelength
-        minimumdistanceperwavelengthnewmeshengine
-        frequencyforminimumdistance
-        xperiodicshift, yperiodicshift, zperiodicshift
-        periodicuseconstantangles
-        periodicboundaryanglesth, periodicboundaryanglesph
-        periodicboundaryanglesdirection
-        unitcellds1, unitcellds2
-        unitcellangle
-        unitcelloriginx, unitcelloriginy
-        unitcellfittoboundingbox
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.Boundary object.
         function obj = Boundary(project, hProject)
@@ -57,7 +32,6 @@ classdef Boundary < handle
             obj.hBoundary = hProject.invoke('Boundary');
         end
     end
-    
     methods
         function StartBulkMode(obj)
             % Buffers all commands instead of sending them to CST
@@ -82,8 +56,9 @@ classdef Boundary < handle
                 obj.project.AddToHistory(['Boundary', command]);
             end
         end
-        
-        
+    end
+    %% CST Object functions.
+    methods
         function AllBoundaries(obj, xmin, xmax, ymin, ymax, zmin, zmax)
             if(nargin == 2)
                 xmax = xmin;
@@ -124,7 +99,6 @@ classdef Boundary < handle
             %               'conducting wall' - This boundary behaves like a wall of lossy metal material.
             %               'unit cell' - Simulates a unit cell structure.
             obj.AddToHistory(['.Xmin "', boundarytype, '"']);
-            obj.xmin = boundarytype;
         end
         function Xmax(obj, boundarytype)
             % Specifies the boundary conditions for the upper x calculation domain.
@@ -139,7 +113,6 @@ classdef Boundary < handle
             %               'conducting wall' - This boundary behaves like a wall of lossy metal material.
             %               'unit cell' - Simulates a unit cell structure.
             obj.AddToHistory(['.Xmax "', boundarytype, '"']);
-            obj.xmax = boundarytype;
         end
         function Ymin(obj, boundarytype)
             % Specifies the boundary conditions for the lower y calculation domain.
@@ -154,7 +127,6 @@ classdef Boundary < handle
             %               'conducting wall' - This boundary behaves like a wall of lossy metal material.
             %               'unit cell' - Simulates a unit cell structure.
             obj.AddToHistory(['.Ymin "', boundarytype, '"']);
-            obj.ymin = boundarytype;
         end
         function Ymax(obj, boundarytype)
             % Specifies the boundary conditions for the upper y calculation domain.
@@ -169,7 +141,6 @@ classdef Boundary < handle
             %               'conducting wall' - This boundary behaves like a wall of lossy metal material.
             %               'unit cell' - Simulates a unit cell structure.
             obj.AddToHistory(['.Ymax "', boundarytype, '"']);
-            obj.ymax = boundarytype;
         end
         function Zmin(obj, boundarytype)
             % Specifies the boundary conditions for the lower z calculation domain.
@@ -184,7 +155,6 @@ classdef Boundary < handle
             %               'conducting wall' - This boundary behaves like a wall of lossy metal material.
             %               'unit cell' - Simulates a unit cell structure.
             obj.AddToHistory(['.Zmin "', boundarytype, '"']);
-            obj.zmin = boundarytype;
         end
         function Zmax(obj, boundarytype)
             % Specifies the boundary conditions for the upper z calculation domain.
@@ -199,7 +169,6 @@ classdef Boundary < handle
             %               'conducting wall' - This boundary behaves like a wall of lossy metal material.
             %               'unit cell' - Simulates a unit cell structure.
             obj.AddToHistory(['.Zmax "', boundarytype, '"']);
-            obj.zmax = boundarytype;
         end
         function boundarytype = GetXmin(obj)
             % Returns the boundary conditions at the lower x calculation domain boundary.
@@ -233,7 +202,6 @@ classdef Boundary < handle
             %               'magnetic' - All tangential H-fields are considered zero at the symmetry plane.
             %               'none' - No symmetry.
             obj.AddToHistory(['.Xsymmetry "', symmetrytype, '"']);
-            obj.xsymmetry = symmetrytype;
         end
         function Ysymmetry(obj, symmetrytype)
             % Defines if the structure is electrically or magnetically symmetric regarding the
@@ -243,7 +211,6 @@ classdef Boundary < handle
             %               'magnetic' - All tangential H-fields are considered zero at the symmetry plane.
             %               'none' - No symmetry.
             obj.AddToHistory(['.Ysymmetry "', symmetrytype, '"']);
-            obj.ysymmetry = symmetrytype;
         end
         function Zsymmetry(obj, symmetrytype)
             % Defines if the structure is electrically or magnetically symmetric regarding the
@@ -253,7 +220,6 @@ classdef Boundary < handle
             %               'magnetic' - All tangential H-fields are considered zero at the symmetry plane.
             %               'none' - No symmetry.
             obj.AddToHistory(['.Zsymmetry "', symmetrytype, '"']);
-            obj.zsymmetry = symmetrytype;
         end
         function symmetrytype = GetXSymmetry(obj)
             % Returns the currently set symmetry type for the x-symmetry plane.
@@ -301,13 +267,11 @@ classdef Boundary < handle
         function Layer(obj, numlayers)
             % Specifies the number of PML layers. Usually 4 layers are sufficient.
             obj.AddToHistory(['.Layer "', num2str(numlayers), '"']);
-            obj.layer = numlayers;
         end
         function MinimumLinesDistance(obj, minimumlinesdistance)
             % Specifies the minimum distance from the PML boundary to the structure to be modeled.
             % The distance is determined by the absolute number of grid lines.
             obj.MinimumLinesDistance(['.MinimumLinesDistance "', num2str(minimumlinesdistance), '"']);
-            obj.minimumlinesdistance = minimumlinesdistance;
         end
         function MinimumDistanceType(obj, type)
             % Selecting the Fraction option activates the geometrical domain enlargement computed as
@@ -316,7 +280,6 @@ classdef Boundary < handle
             %
             % type: 'Fraction', 'Absolute'
             obj.AddToHistory(['.MinimumDistanceType "', type, '"']);
-            obj.minimumdistancetype = type;
         end
         function SetAbsoluteDistance(obj, distance)
             % Specifies the absolute distance to enlarge the simulation domain. To be used selecting
@@ -324,7 +287,6 @@ classdef Boundary < handle
             %
             % Requires MinimumDistanceType 'Absolute'.
             obj.AddToHistory(['.SetAbsoluteDistance "', num2str(distance), '"']);
-            obj.absolutedistance = distance;
         end
         function MinimumDistanceReferenceFrequencyType(obj, type)
             % The command determines the reference frequency where the wavelength has to be
@@ -343,7 +305,6 @@ classdef Boundary < handle
             %
             % type: 'Center', 'Centernmonitors', 'User'
             obj.AddToHistory(['.MinimumDistanceReferenceFrequencyType "', type, '"']);
-            obj.minimumdistancereferencefrequencytype = type;
         end
         function MinimumDistancePerWavelength(obj, distance)
             % Specifies the minimum distance from the PML boundary to the structure to be modeled.
@@ -353,7 +314,6 @@ classdef Boundary < handle
             %
             % Requires MinimumDistanceType 'Fraction'
             obj.AddToHistory(['.MinimumDistancePerWavelength "', num2str(distance), '"']);
-            obj.minimumdistanceperwavelength = distance;
         end
         function MinimumDistancePerWavelengthNewMeshEngine(obj, distance)
             % Was found in the CST-generated history list, seems to replace the
@@ -361,7 +321,6 @@ classdef Boundary < handle
             %
             % Requires MinimumDistanceType 'Fraction'
             obj.AddToHistory(['.MinimumDistancePerWavelengthNewMeshEngine "', num2str(distance), '"']);
-            obj.minimumdistanceperwavelengthnewmeshengine = distance;
         end
         function FrequencyForMinimumDistance(obj, freq)
             % Specifies the frequency which represents the reference value for the
@@ -370,28 +329,24 @@ classdef Boundary < handle
             % Requires MinimumDistanceType 'Fraction'
             % Requires MinimumDistanceReferenceFrequencyType 'User'
             obj.AddToHistory(['.FrequencyForMinimumDistance "', num2str(freq), '"']);
-            obj.frequencyforminimumdistance = freq;
         end
         function XPeriodicShift(obj, shift)
             % Enables to define a phase shift value for a periodic boundary condition. Please note
             % that the phase shift only applies to the frequency domain solver and the eigenmode
             % solver. The settings are ignored by the transient solver.
             obj.AddToHistory(['.XPeriodicShift "', num2str(shift), '"']);
-            obj.xperiodicshift = shift;
         end
         function YPeriodicShift(obj, shift)
             % Enables to define a phase shift value for a periodic boundary condition. Please note
             % that the phase shift only applies to the frequency domain solver and the eigenmode
             % solver. The settings are ignored by the transient solver.
             obj.AddToHistory(['.YPeriodicShift "', num2str(shift), '"']);
-            obj.yperiodicshift = shift;
         end
         function ZPeriodicShift(obj, shift)
             % Enables to define a phase shift value for a periodic boundary condition. Please note
             % that the phase shift only applies to the frequency domain solver and the eigenmode
             % solver. The settings are ignored by the transient solver.
             obj.AddToHistory(['.ZPeriodicShift "', num2str(shift), '"']);
-            obj.zperiodicshift = shift;
         end
         function PeriodicUseConstantAngles(obj, boolean)
             % In contrast to the definition of a constant phase shift between two opposite periodic
@@ -403,7 +358,6 @@ classdef Boundary < handle
             % time it depends on the current frequency sample. You can activate (bFlag = True) or
             % deactivate (bFlag = False) this option using the present method.
             obj.AddToHistory(['.PeriodicUseConstantAngles "', num2str(boolean), '"']);
-            obj.periodicuseconstantangles = boolean;
         end
         function SetPeriodicBoundaryAngles(obj, theta, phi)
             % Defines the angle in a spherical coordinate system using theta and phi values for the
@@ -415,8 +369,6 @@ classdef Boundary < handle
             % are used.
             obj.AddToHistory(['.SetPeriodicBoundaryAngles "', num2str(theta), '", '...
                                                          '"', num2str(phi), '"']);
-            obj.periodicboundaryanglesth = theta;
-            obj.periodicboundaryanglesph = phi;
         end
         function SetPeriodicBoundaryAnglesDirection(obj, direction)
             % direction defines whether the scan angle defined with
@@ -428,15 +380,14 @@ classdef Boundary < handle
             %            'outward' - The phase is set for an inward traveling plane wave.
             %                        Floquet modes should be excited at Zmax.
             obj.AddToHistory(['.SetPeriodicBoundaryAnglesDirection "', direction, '"']);
-            obj.periodicboundaryanglesdirection = direction;
         end
         function [valid, theta, phi, direction] = GetUnitCellScanAngle(obj)
             % The scan angle defined with SetPeriodicBoundaryAngles and its orientation as defined
             % by calling SetPeriodicBoundaryAnglesDirection can be accessed using this function. All
             % arguments of this function are output values, which are set by the function. Its
             % return value is True if the unit cell is active and the expressions for the scan angle
-            % are valid. If direction is +1, then it refers to the ”outward” direction, and to the
-            % ”inward” direction if direction is -1.
+            % are valid. If direction is +1, then it refers to the ï¿½outwardï¿½ direction, and to the
+            % ï¿½inwardï¿½ direction if direction is -1.
             %
             % NOTE: valid is -1 when true.
             functionString = [...
@@ -463,7 +414,6 @@ classdef Boundary < handle
             %
             % By default Ds1 is the x-distance between unit cells.
             obj.AddToHistory(['.UnitCellDs1 "', num2str(ds1), '"']);
-            obj.unitcellds1 = ds1;
         end
         function UnitCellDs2(obj, ds2)
             % These two methods [UnitCellDs1 and UnitCellDs2] specify the
@@ -475,7 +425,6 @@ classdef Boundary < handle
             %
             % By default Ds2 is the y-distance between unit cells.
             obj.AddToHistory(['.UnitCellDs2 "', num2str(ds2), '"']);
-            obj.unitcellds2 = ds2;
         end
         function ds1 = GetUnitCellDs1(obj)
             % These two functions [UnitCellDs1 and UnitCellDs2] return the
@@ -494,7 +443,6 @@ classdef Boundary < handle
             % Please note, that the hexahedral frequency domain solver
             % needs a value of 90 degree for this value.
             obj.AddToHistory(['.UnitCellAngle "', num2str(angle), '"']);
-            obj.unitcellangle = angle;
         end
         function angle = GetUnitCellAngle(obj)
             % This function returns the angle between the unit cell lattice
@@ -511,16 +459,22 @@ classdef Boundary < handle
             % lattice in the corresponding direction.
             obj.AddToHistory(['.UnitCellOrigin "', num2str(originx), '", '...
                                               '"', num2str(originy), '"']);
-            obj.unitcelloriginx = originx;
-            obj.unitcelloriginy = originy;
         end
         function UnitCellFitToBoundingBox(obj, boolean)
             % If this method is activated, the structure model will be
             % repeated at its bounding box borders, neglecting any settings
             % of the methods UnitCellDs1, UnitCellDs2 and UnitCellAngle.
             obj.project.AddToHistory(['Boundary.UnitCellFitToBoundingBox "', num2str(boolean), '"']);
-            obj.unitcellfittoboundingbox = boolean;
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hBoundary
+        history
+        bulkmode
+        
     end
 end
 

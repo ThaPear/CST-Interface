@@ -19,13 +19,7 @@
 % The Component Object lets you define or change components. Each solid is
 % sorted into a component.
 classdef Component < handle
-    properties(SetAccess = protected)
-        project
-        hComponent
-        
-        components % List of existing components.
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.Component object.
         function obj = Component(project, hProject)
@@ -35,7 +29,7 @@ classdef Component < handle
             obj.components = [];
         end
     end
-    
+    %% CST Object functions.
     methods
         function New(obj, name)
             % Creates a new component with the given name.
@@ -74,8 +68,7 @@ classdef Component < handle
             % Returns the next unused component name.
             name = obj.hComponent.invoke('GetNextFreeName');
         end
-        
-        %%
+        %% Utility functions.
         function number = GetNextFreeNameWithBase(obj, name)
             % Returns the next unused component name with given base.
             % e.g. component1, component2, etc...
@@ -93,6 +86,14 @@ classdef Component < handle
         function exists = Exists(obj, name)
             exists = isfield(obj.components, name) && obj.components.(name);
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hComponent
+        
+        components % List of existing components.
     end
 end
 

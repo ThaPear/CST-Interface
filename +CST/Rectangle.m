@@ -21,17 +21,7 @@
      %#ok<*NBRAK> 
 
 classdef Rectangle < handle
-    properties
-        project
-        hRectangle
-        history
-        
-        name
-        curve
-        x1, x2
-        y1, y2
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.Rectangle object.
         function obj = Rectangle(project, hProject)
@@ -40,12 +30,43 @@ classdef Rectangle < handle
             obj.Reset();
         end
     end
-    
     methods
         function AddToHistory(obj, command)
             obj.history = [obj.history, '     ', command, newline];
         end
+    end
+    %% CST Object functions.
+    methods
+        function Reset(obj)
+            % Resets all internal settings to their default values.
+            obj.history = [];
+            obj.AddToHistory(['.Reset']);
+            
+            obj.name = '';
+            obj.curve = '';
+        end
+        function Name(obj, name)
+            % Sets the name of the rectangle.
+            obj.AddToHistory(['.Name "', name, '"']);
+            obj.name = name;
+        end
+        function Curve(obj, curve)
+            % Sets the name of the curve for the new rectangle curve item. The curve must already exist.
+            obj.AddToHistory(['.Curve "', curve, '"']);
+            obj.curve = curve;
+        end
+        function Xrange(obj, x1, x2)
+            % Sets the bounds for the x- or u-coordinate for the new rectangle, depending if a local coordinate system is active or not.
+            obj.AddToHistory(['.Xrange "', num2str(x1, '%.15g'), '", '...
+                                      '"', num2str(x2, '%.15g'), '"']);
+        end
+        function Yrange(obj, y1, y2)
+            % Sets the bounds for the y- or v-coordinate for the new rectangle, depending if a local coordinate system is active or not.
+            obj.AddToHistory(['.Yrange "', num2str(y1, '%.15g'), '", '...
+                                      '"', num2str(y2, '%.15g'), '"']);
+        end
         function Create(obj)
+            % Creates a new rectangle curve item. All necessary settings for this rectangle have to be made previously.
             obj.AddToHistory(['.Create']);
             
             % Prepend With and append End With
@@ -53,39 +74,28 @@ classdef Rectangle < handle
             obj.project.AddToHistory(['define rectangle: ', obj.curve, ':', obj.name], obj.history);
             obj.history = [];
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties
+        project
+        hRectangle
+        history
         
-        function Reset(obj)
-            obj.history = [];
-            obj.AddToHistory(['.Reset']);
-            
-            obj.name = '';
-            obj.curve = '';
-            obj.x1 = 0; obj.x2 = 0;
-            obj.y1 = 0; obj.y2 = 0;
-        end
-        function Name(obj, name)
-            obj.name = name;
-            
-            obj.AddToHistory(['.Name "', name, '"']);
-        end
-        function Curve(obj, curve)
-            obj.curve = curve;
-            
-            obj.AddToHistory(['.Curve "', curve, '"']);
-        end
-        function Xrange(obj, x1, x2)
-            obj.x1 = x1;
-            obj.x2 = x2;
-            
-            obj.AddToHistory(['.Xrange "', num2str(x1, '%.15g'), '", '...
-                                      '"', num2str(x2, '%.15g'), '"']);
-        end
-        function Yrange(obj, y1, y2)
-            obj.y1 = y1;
-            obj.y2 = y2;
-            
-            obj.AddToHistory(['.Yrange "', num2str(y1, '%.15g'), '", '...
-                                      '"', num2str(y2, '%.15g'), '"']);
-        end
+        name
+        curve
     end
 end
+
+%% Default Settings
+% Xrange (0.0, 0.0)
+% Yrange (0.0, 0.0)
+%% Example
+% With Rectangle
+%      .Reset
+%      .Name "rectangle1"
+%      .Curve "curve1"
+%      .Xrange "-8.2", "-0.7"
+%      .Yrange "0.3", "a-0.9"
+%      .Create
+% End With

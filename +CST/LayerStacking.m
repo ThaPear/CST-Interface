@@ -46,12 +46,10 @@ classdef LayerStacking < handle
         function LayerStackingActive(obj, flag)
             % Identifies the activation state of the layer stacking feature.
             obj.AddToHistory(['.LayerStackingActive "', num2str(flag, '%.15g'), '"']);
-            obj.layerstackingactive = flag;
         end
         function AlignValueBackgroundItems(obj, value)
             % Defines the value all layers are aligned on. Usually on the bottom line of the lowest layer. But also layers with negative thickness can be defined below the align value.
             obj.AddToHistory(['.AlignValueBackgroundItems "', num2str(value, '%.15g'), '"']);
-            obj.alignvaluebackgrounditems = value;
         end
         function NormalBackgroundItems(obj, direction)
             % Sets the normal axis of the background items .
@@ -59,26 +57,20 @@ classdef LayerStacking < handle
             %            'y'
             %            'z'
             obj.AddToHistory(['.NormalBackgroundItems "', num2str(direction, '%.15g'), '"']);
-            obj.normalbackgrounditems = direction;
         end
         function InvertDirection(obj, flag)
             % Identifies if the layer stacking is aligned at positive or negative normal direction.
             obj.AddToHistory(['.InvertDirection "', num2str(flag, '%.15g'), '"']);
-            obj.invertdirection = flag;
         end
         function FixTransversal(obj, flag)
             % Identifies if the layer stacking should be fixed with the actual transversal measurements.
             obj.AddToHistory(['.FixTransversal "', num2str(flag, '%.15g'), '"']);
-            obj.fixtransversal = flag;
         end
         function AddItem(obj, index, thickness, materialname)
             % Adds a new background layer to the model. Index defines the order of the layer stacking items. Positive thickness is in positive direction of the normal beginning at the align value. Vice versa for negative thickness. Materialname defines the material the background item consist of. The material must already exist.
             obj.AddToHistory(['.AddItem "', num2str(index, '%.15g'), '", '...
                                        '"', num2str(thickness, '%.15g'), '", '...
                                        '"', num2str(materialname, '%.15g'), '"']);
-            obj.additem.index = index;
-            obj.additem.thickness = thickness;
-            obj.additem.materialname = materialname;
         end
         function Create(obj)
             % Creates the background items. All necessary settings for the layers have to be made previously.
@@ -99,12 +91,6 @@ classdef LayerStacking < handle
         hLayerStacking
         history
 
-        layerstackingactive
-        alignvaluebackgrounditems
-        normalbackgrounditems
-        invertdirection
-        fixtransversal
-        additem
     end
 end
 

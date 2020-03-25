@@ -29,78 +29,38 @@ classdef WCS < handle
             obj.project = project;
             obj.hWCS = hProject.invoke('WCS');
             obj.history = [];
-            obj.bulkmode = 0;
         end
     end
     methods
-        function StartBulkMode(obj)
-            % Buffers all commands instead of sending them to CST
-            % immediately.
-            obj.bulkmode = 1;
-        end
-        function EndBulkMode(obj)
-            % Flushes all commands since StartBulkMode to CST.
-            obj.bulkmode = 0;
-            % Prepend With WCS and append End With
-            obj.history = [ 'With WCS', newline, ...
-                                obj.history, ...
-                            'End With'];
-            obj.project.AddToHistory(['define WCS settings'], obj.history);
-            obj.history = [];
-        end
         function AddToHistory(obj, command)
-            if(obj.bulkmode)
-                obj.history = [obj.history, '     ', command, newline];
-            else
-                obj.project.AddToHistory(['WCS', command]);
-            end
+            obj.project.AddToHistory(['WCS', command]);
         end
     end
     %% CST Object functions.
     methods
-        %% Extra methods, implemented by interface.
-        function Enable(obj)
-            % Enables the local coordinate system.
-            obj.ActivateWCS('local');
-        end
-        function Disable(obj)
-            % Disables the local coordinate system.
-            obj.ActivateWCS('global');
-        end
-        function Reset(obj)
-            % Resets the origin to 0,0,0, and the normal to 0,0,1.
-            obj.SetOrigin(0, 0, 0);
-            obj.SetNormal(0, 0, 1);
-        end
         %% General Methods
         function ActivateWCS(obj, axis)
             % This method allows to switch from global to local coordinates and reverse.
             % axis: 'local'
             %       'global'
             obj.AddToHistory(['.ActivateWCS "', num2str(axis, '%.15g'), '"']);
-            obj.activatewcs = axis;
         end
         function Store(obj, WCSName)
             % Stores the active WCS with the given name.
             obj.AddToHistory(['.Store "', num2str(WCSName, '%.15g'), '"']);
-            obj.store = WCSName;
         end
         function Restore(obj, WCSName)
             % Restores the WCS with the given name.
             obj.AddToHistory(['.Restore "', num2str(WCSName, '%.15g'), '"']);
-            obj.restore = WCSName;
         end
         function Delete(obj, WCSName)
             % Deletes the WCS with the given name.
             obj.AddToHistory(['.Delete "', num2str(WCSName, '%.15g'), '"']);
-            obj.delete = WCSName;
         end
         function Rename(obj, oldName, newName)
             % Changes the name of an already named WCS.
             obj.AddToHistory(['.Rename "', num2str(oldName, '%.15g'), '", '...
                                       '"', num2str(newName, '%.15g'), '"']);
-            obj.rename.oldName = oldName;
-            obj.rename.newName = newName;
         end
         %% Defining a WCS
         function SetNormal(obj, x, y, z)
@@ -108,27 +68,18 @@ classdef WCS < handle
             obj.AddToHistory(['.SetNormal "', num2str(x, '%.15g'), '", '...
                                          '"', num2str(y, '%.15g'), '", '...
                                          '"', num2str(z, '%.15g'), '"']);
-            obj.setnormal.x = x;
-            obj.setnormal.y = y;
-            obj.setnormal.z = z;
         end
         function SetOrigin(obj, x, y, z)
             % Defines the origin of the Working Coordinate System (WCS).
             obj.AddToHistory(['.SetOrigin "', num2str(x, '%.15g'), '", '...
                                          '"', num2str(y, '%.15g'), '", '...
                                          '"', num2str(z, '%.15g'), '"']);
-            obj.setorigin.x = x;
-            obj.setorigin.y = y;
-            obj.setorigin.z = z;
         end
         function SetUVector(obj, x, y, z)
             % Define u-vector of the WCS coordinate system.
             obj.AddToHistory(['.SetUVector "', num2str(x, '%.15g'), '", '...
                                           '"', num2str(y, '%.15g'), '", '...
                                           '"', num2str(z, '%.15g'), '"']);
-            obj.setuvector.x = x;
-            obj.setuvector.y = y;
-            obj.setuvector.z = z;
         end
         function AlignWCSWithSelected(obj, mode)
             % Depending on mode does the following:
@@ -147,7 +98,6 @@ classdef WCS < handle
             %       'Face'
 
             obj.AddToHistory(['.AlignWCSWithSelected "', num2str(mode, '%.15g'), '"']);
-            obj.alignwcswithselected = mode;
         end
         function RotateWCS(obj, axis, angle)
             % Rotates the axis of the Working Coordinate System clockwise of about the angle degree.
@@ -156,8 +106,6 @@ classdef WCS < handle
             %       'w'
             obj.AddToHistory(['.RotateWCS "', num2str(axis, '%.15g'), '", '...
                                          '"', num2str(angle, '%.15g'), '"']);
-            obj.rotatewcs.axis = axis;
-            obj.rotatewcs.angle = angle;
         end
         function MoveWCS(obj, axis, du, dv, dw)
             % Shifts the Working Coordinate System (WCS). With the key option ”local” you can move the WCS about (du, dv, dw) in local coordinates. To move the WCS in global coordinates use the key setting ”global”.
@@ -167,10 +115,6 @@ classdef WCS < handle
                                        '"', num2str(du, '%.15g'), '", '...
                                        '"', num2str(dv, '%.15g'), '", '...
                                        '"', num2str(dw, '%.15g'), '"']);
-            obj.movewcs.axis = axis;
-            obj.movewcs.du = du;
-            obj.movewcs.dv = dv;
-            obj.movewcs.dw = dw;
         end
         function AlignWCSWithGlobalCoordinates(obj)
             % The position of the WCS will be changed to the position of the Global Coordinate System. In other words, a reset of the WCS into its origin position.
@@ -180,37 +124,30 @@ classdef WCS < handle
         function SetWorkplaneSize(obj, wpSize)
             % The workplane is a square grid. This setting can be used to enlarge its size. The value wpSize defines the shortest distance between the origin and one of the sizes of the workplane. A value of wpSize smaller than the outer dimensions of a already defined structure will have no effect.
             obj.AddToHistory(['.SetWorkplaneSize "', num2str(wpSize, '%.15g'), '"']);
-            obj.setworkplanesize = wpSize;
         end
         function SetWorkplaneRaster(obj, rasterSize)
             % Sets the raster width of the working plane.
             obj.AddToHistory(['.SetWorkplaneRaster "', num2str(rasterSize, '%.15g'), '"']);
-            obj.setworkplaneraster = rasterSize;
         end
         function SetWorkplaneSnap(obj, flag)
             % Switches the snap option on or off. This causes that only input values that match the snap width can be input by mouse because the value will always be snapped to the snap raster.
             obj.AddToHistory(['.SetWorkplaneSnap "', num2str(flag, '%.15g'), '"']);
-            obj.setworkplanesnap = flag;
         end
         function SetWorkplaneAutoadjust(obj, flag)
             % Switches the raster auto adjust option on or off. This causes an automatic change of  the raster size if the working plane is too large or too small.
             obj.AddToHistory(['.SetWorkplaneAutoadjust "', num2str(flag, '%.15g'), '"']);
-            obj.setworkplaneautoadjust = flag;
         end
         function SetWorkplaneSnapAutoadjust(obj, flag)
             % Switches the snap width auto adjust option on or off. If enabled, the snap steps is dependent on zoom state, raster size, screen size and a factor given by SetWorkplaneAutosnapFactor. If switched off, the snap width is determined by SetWorkplaneSnapRaster alone.
             obj.AddToHistory(['.SetWorkplaneSnapAutoadjust "', num2str(flag, '%.15g'), '"']);
-            obj.setworkplanesnapautoadjust = flag;
         end
         function SetWorkplaneAutosnapFactor(obj, autosnapFactor)
             % This value acts as a factor to the snap width if the auto flag for snapping is set. If you prefer bigger steps while snapping, use a bigger factor here. The default factor is 1.0 which yields to a snapping behavior of more or less the raster width in not zoomed state. This setting has only an effect on the interactive construction via mouse. The Snap Raster is a grid of snap points. Any point picked on the workplane is snapped to this grid. The Snap switch must be turned on, otherwise this setting will have no effect.
             obj.AddToHistory(['.SetWorkplaneAutosnapFactor "', num2str(autosnapFactor, '%.15g'), '"']);
-            obj.setworkplaneautosnapfactor = autosnapFactor;
         end
         function SetWorkplaneSnapRaster(obj, snapRasterSize)
             % Sets the Snap Raster width. This setting has only an effect on the interactive construction via mouse and auto adjustment for snapping is turned off. The Snap Raster is a grid of snap points. If a point is picked by mouse near to one of these snap points, the selected point snaps to the grid point. The Snap switch must be turned on, otherwise this setting will have no effect.
             obj.AddToHistory(['.SetWorkplaneSnapRaster "', num2str(snapRasterSize, '%.15g'), '"']);
-            obj.setworkplanesnapraster = snapRasterSize;
         end
         %% Queries
         % A general remark to Queries:
@@ -223,7 +160,6 @@ classdef WCS < handle
         function bool = DoesExist(obj, WCSName)
             % Checks if the WCS with the given name does exist.
             bool = obj.hWCS.invoke('DoesExist', WCSName);
-            obj.doesexist = WCSName;
         end
         function [bool, x, y, z] = GetOrigin(obj, WCSName)
             % Stores the origin of the specified* working coordinate system in x, y and z, returns
@@ -362,6 +298,20 @@ classdef WCS < handle
             y = str2double(y);
             z = str2double(z);
         end
+        %% Utility functions.
+        function Enable(obj)
+            % Enables the local coordinate system.
+            obj.ActivateWCS('local');
+        end
+        function Disable(obj)
+            % Disables the local coordinate system.
+            obj.ActivateWCS('global');
+        end
+        function Reset(obj)
+            % Resets the origin to 0,0,0, and the normal to 0,0,1.
+            obj.SetOrigin(0, 0, 0);
+            obj.SetNormal(0, 0, 1);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -369,34 +319,7 @@ classdef WCS < handle
         project
         hWCS
         history
-        bulkmode
 
-        activatewcs
-        store
-        restore
-        delete
-        rename
-        setnormal
-        setorigin
-        setuvector
-        alignwcswithselected
-        rotatewcs
-        movewcs
-        setworkplanesize
-        setworkplaneraster
-        setworkplanesnap
-        setworkplaneautoadjust
-        setworkplanesnapautoadjust
-        setworkplaneautosnapfactor
-        setworkplanesnapraster
-        doesexist
-        getorigin
-        getnormal
-        getuvector
-        getaffinematrixuvw2xyz
-        getaffinematrixxyz2uvw
-        getwcspointfromglobal
-        getglobalpointfromwcs
     end
 end
 

@@ -16,6 +16,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Still requires autogeneration.
+
 classdef PostProcess1D < handle
     properties(SetAccess = protected)
         project

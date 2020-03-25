@@ -19,31 +19,11 @@
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
      %#ok<*NBRAK> 
+
+% Still requires autogeneration.
      
 classdef Transform_ < handle
-    properties(SetAccess = protected)
-        project
-        hTransform
-        history
-        
-        names
-        usepickedpoints
-        invertpickedpoints
-        multipleobjects
-        groupobjects
-        origin
-        xcenter, ycenter, zcenter
-        xvector, yvector, zvector
-        xscale, yscale, zscale
-        xangle, yangle, zangle
-        xplanenormal, yplanenormal, zplanenormal
-        repetitions
-        componentname
-        materialname
-        multipleselection
-        destinationname
-    end
-    
+    %% CST Interface specific functions.
     methods(Access = ?CST.Project)
         % Only CST.Project can create a CST.Transform object.
         function obj = Transform_(project, hProject)
@@ -53,11 +33,13 @@ classdef Transform_ < handle
             obj.Reset();
         end
     end
-    
     methods
         function AddToHistory(obj, command)
             obj.history = [obj.history, '     ', command, newline];
         end
+    end
+    %% CST Object functions.
+    methods
         function obj = Transform(obj, objecttype, transform)
             % objecttype: Curve, Shape, FFS, Port, CurrentDistribution,
             %             Part, LumpedElement
@@ -82,20 +64,6 @@ classdef Transform_ < handle
             obj.AddToHistory(['.Reset']);
             
             obj.names = {};
-            obj.usepickedpoints = 0;
-            obj.invertpickedpoints = 0;
-            obj.multipleobjects = 0;
-            obj.groupobjects = 0;
-            obj.origin = 'ShapeCenter';
-            obj.xcenter = 0; obj.ycenter = 0; obj.zcenter = 0;
-            obj.xvector = 0; obj.yvector = 0; obj.zvector = 0;
-            obj.xscale  = 0; obj.yscale  = 0; obj.zscale  = 0;
-            obj.xangle  = 0; obj.yangle  = 0; obj.zangle  = 0;
-            obj.xplanenormal = 0; obj.yplanenormal = 0; obj.zplanenormal = 0;
-            obj.repetitions = 1;
-            obj.componentname = '';
-            obj.materialname = '';
-            obj.multipleselection = 0;
         end
         function Name(obj, name)
             % Removes all previous names specified using AddName
@@ -110,107 +78,91 @@ classdef Transform_ < handle
             obj.AddToHistory(['.AddName "', name, '"']);
         end
         function UsePickedPoints(obj, boolean)
-            obj.usepickedpoints = boolean;
             
             obj.AddToHistory(['.UsePickedPoints "', num2str(boolean), '"']);
         end
         function InvertPickedPoints(obj, boolean)
-            obj.invertpickedpoints = boolean;
             
             obj.AddToHistory(['.InvertPickedPoints "', num2str(boolean), '"']);
         end
         function MultipleObjects(obj, boolean)
             % Copy shape, keeping original
-            obj.multipleobjects = boolean;
             
             obj.AddToHistory(['.MultipleObjects "', num2str(boolean), '"']);
         end
         function GroupObjects(obj, boolean)
-            obj.groupobjects = boolean;
             
             obj.AddToHistory(['.GroupObjects "', num2str(boolean), '"']);
         end
         function Origin(obj, origin)
             % ShapeCenter, CommonCenter, Free
-            obj.origin = origin;
             
             obj.AddToHistory(['.Origin "', origin, '"']);
         end
         function Center(obj, xcenter, ycenter, zcenter)
             % Only works if Origin is set to 'Free'
-            obj.xcenter = xcenter;
-            obj.ycenter = ycenter;
-            obj.zcenter = zcenter;
             
             obj.AddToHistory(['.Center "', num2str(xcenter, '%.15g'), '", '...
                                       '"', num2str(ycenter, '%.15g'), '", '...
                                       '"', num2str(zcenter, '%.15g'), '"']);
         end
         function Vector(obj, xvector, yvector, zvector)
-            obj.xvector = xvector;
-            obj.yvector = yvector;
-            obj.zvector = zvector;
             
             obj.AddToHistory(['.Vector "', num2str(xvector, '%.15g'), '", '...
                                       '"', num2str(yvector, '%.15g'), '", '...
                                       '"', num2str(zvector, '%.15g'), '"']);
         end
         function ScaleFactor(obj, xscale, yscale, zscale)
-            obj.xscale = xscale;
-            obj.yscale = yscale;
-            obj.zscale = zscale;
             
             obj.AddToHistory(['.ScaleFactor "', num2str(xscale, '%.15g'), '", '...
                                            '"', num2str(yscale, '%.15g'), '", '...
                                            '"', num2str(zscale, '%.15g'), '"']);
         end
         function Angle(obj, xangle, yangle, zangle)
-            obj.xangle = xangle;
-            obj.yangle = yangle;
-            obj.zangle = zangle;
             
             obj.AddToHistory(['.Angle "', num2str(xangle, '%.15g'), '", '...
                                      '"', num2str(yangle, '%.15g'), '", '...
                                      '"', num2str(zangle, '%.15g'), '"']);
         end
         function PlaneNormal(obj, xplanenormal, yplanenormal, zplanenormal)
-            obj.xplanenormal = xplanenormal;
-            obj.yplanenormal = yplanenormal;
-            obj.zplanenormal = zplanenormal;
             
             obj.AddToHistory(['.PlaneNormal "', num2str(xplanenormal, '%.15g'), '", '...
                                            '"', num2str(yplanenormal, '%.15g'), '", '...
                                            '"', num2str(zplanenormal, '%.15g'), '"']);
         end
         function Repetitions(obj, repetitions)
-            obj.repetitions = repetitions;
             
             obj.AddToHistory(['.Repetitions "', num2str(repetitions), '"']);
         end
         function Component(obj, componentname)
             % Can be specified to move the translated object to another
             % component. Target component must already exist.
-            obj.componentname = componentname;
             
             obj.AddToHistory(['.Component "', componentname, '"']);
         end
         function Material(obj, materialname)
             % Sets the material of the new object.
-            obj.materialname = materialname;
             
             obj.AddToHistory(['.Material "', materialname, '"']);
         end
         function MultipleSelection(obj, boolean)
-            obj.multipleselection = boolean;
             
             obj.AddToHistory(['.MultipleSelection "', num2str(boolean), '"']);
         end
         
         function Destination(obj, destinationname)
-            obj.destinationname = destinationname;
             
             obj.AddToHistory(['.Destination "', destinationname, '"']);
         end
+    end
+    %% MATLAB-side stored settings of CST state.
+    % Note that these can be incorrect at times.
+    properties(SetAccess = protected)
+        project
+        hTransform
+        history
+        
+        names
     end
 end
 

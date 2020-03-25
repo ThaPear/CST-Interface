@@ -44,7 +44,7 @@ classdef FloquetPort < handle
             obj.history = [ 'With FloquetPort', newline, ...
                                 obj.history, ...
                             'End With'];
-            obj.project.AddToHistory(['define FloquetPort settings'], obj.history);
+            obj.project.AddToHistory(['define FloquetPort ''', obj.port, ''' settings'], obj.history);
             obj.history = [];
         end
         function AddToHistory(obj, command)
@@ -86,7 +86,6 @@ classdef FloquetPort < handle
             obj.AddToHistory(['.AddMode "', num2str(type, '%.15g'), '", '...
                                        '"', num2str(order_x, '%.15g'), '", '...
                                        '"', num2str(order_yprime, '%.15g'), '"']);
-            obj.addmode.type = type;
             obj.addmode.order_x = order_x;
             obj.addmode.order_yprime = order_yprime;
         end
@@ -94,7 +93,6 @@ classdef FloquetPort < handle
             % If this flag is set to True, left and right circularly polarized waves (LCP, RCP) will
             % be excited instead of the linearly polarized TE(0,0) and TM(0,0) modes.
             obj.AddToHistory(['.SetUseCircularPolarization "', num2str(flag, '%.15g'), '"']);
-            obj.setusecircularpolarization = flag;
         end
         function SetPolarizationIndependentOfScanAnglePhi(obj, value, flag)
             % The polarization of the Floquet modes is usually given implicitly as a function of the
@@ -104,8 +102,6 @@ classdef FloquetPort < handle
             % waveguide ports.)
             obj.AddToHistory(['.SetPolarizationIndependentOfScanAnglePhi "', num2str(value, '%.15g'), '", '...
                                                                         '"', num2str(flag, '%.15g'), '"']);
-            obj.setpolarizationindependentofscananglephi.value = value;
-            obj.setpolarizationindependentofscananglephi.flag = flag;
         end
         function SetDialogFrequency(obj, value)
             % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as
@@ -114,12 +110,10 @@ classdef FloquetPort < handle
             % needs to be fixed by calling this method. Pass an empty string to sort the modes at
             % the uppermost frequency. Calling this method affects all Floquet ports.
             obj.AddToHistory(['.SetDialogFrequency "', num2str(value, '%.15g'), '"']);
-            obj.setdialogfrequency = value;
         end
         function SetDialogMediaFactor(obj, value)
             % The preview calculation of alpha and beta can be adapted to a specific material by calling this method. Pass an empty string to perform the calculations in the current background material. For different materials, pass the square root of the relative permittivity times the square root of the relative permeability as the value. Calling this method affects the preview for all Floquet ports.
             obj.AddToHistory(['.SetDialogMediaFactor "', num2str(value, '%.15g'), '"']);
-            obj.setdialogmediafactor = value;
         end
         function SetDialogTheta(obj, value)
             % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as
@@ -127,7 +121,6 @@ classdef FloquetPort < handle
             % while a frequency sweep is performed, the theta at which the modes are sorted needs to
             % be fixed by calling this method. Calling this method affects all Floquet ports.
             obj.AddToHistory(['.SetDialogTheta "', num2str(value, '%.15g'), '"']);
-            obj.setdialogtheta = value;
         end
         function SetDialogPhi(obj, value)
             % The sorting of the Floquet modes (e.g. by decreasing beta) depends on frequency as
@@ -135,7 +128,6 @@ classdef FloquetPort < handle
             % while a frequency sweep is performed, the phi at which the modes are sorted needs to
             % be fixed by calling this method. Calling this method affects all Floquet ports.
             obj.AddToHistory(['.SetDialogPhi "', num2str(value, '%.15g'), '"']);
-            obj.setdialogphi = value;
         end
         function SetDialogMaxOrderX(obj, value)
             % The number of Floquet modes which need to be considered depends on the size of the
@@ -148,7 +140,6 @@ classdef FloquetPort < handle
             % terms of the wavelength at the sorting frequency. Calling this method affects all
             % Floquet ports.
             obj.AddToHistory(['.SetDialogMaxOrderX "', num2str(value, '%.15g'), '"']);
-            obj.setdialogmaxorderx = value;
         end
         function SetDialogMaxOrderYPrime(obj, value)
             % The number of Floquet modes which need to be considered depends on the size of the
@@ -161,14 +152,12 @@ classdef FloquetPort < handle
             % terms of the wavelength at the sorting frequency. Calling this method affects all
             % Floquet ports.
             obj.AddToHistory(['.SetDialogMaxOrderYPrime "', num2str(value, '%.15g'), '"']);
-            obj.setdialogmaxorderyprime = value;
         end
         function SetCustomizedListFlag(obj, flag)
             % The flag should be set to True whenever modes are explicitly defined by calling
             % AddMode. Otherwise, the Floquet modes are assigned automatically based on the
             % arguments passed to SetDialogMaxOrderX and SetDialogMaxOrderYPrime.
             obj.AddToHistory(['.SetCustomizedListFlag "', num2str(flag, '%.15g'), '"']);
-            obj.setcustomizedlistflag = flag;
         end
         function SetNumberOfModesConsidered(obj, value)
             % As the number of Floquet modes specified for the given Floquet port might be much
@@ -176,7 +165,6 @@ classdef FloquetPort < handle
             % this method defines how many modes to consider during the simulation. Note that the
             % number of modes to consider is larger than or equal to the number of modes to excite.
             obj.AddToHistory(['.SetNumberOfModesConsidered "', num2str(value, '%.15g'), '"']);
-            obj.setnumberofmodesconsidered = value;
         end
         function SetSortCode(obj, code)
             % Specifies how to sort the list of Floquet modes (unless it has been customized). The
@@ -202,7 +190,6 @@ classdef FloquetPort < handle
             %       '+ordery'
             %       '-ordery'
             obj.AddToHistory(['.SetSortCode "', num2str(code, '%.15g'), '"']);
-            obj.setsortcode = code;
         end
         function SetDistanceToReferencePlane(obj, value)
             % Defines the phase deembedding distance for the Floquet port. The Frequency Domain
@@ -210,7 +197,6 @@ classdef FloquetPort < handle
             % port were placed at the given distance to the reference plane. The value is negative
             % if the new reference plane is inside the structure.
             obj.AddToHistory(['.SetDistanceToReferencePlane "', num2str(value, '%.15g'), '"']);
-            obj.setdistancetoreferenceplane = value;
         end
         function int = GetNumberOfModes(obj)
             % Returns the number of modes specified for the currently selected port. This number is less than or equal to the number of modes to consider during the calculation, which is returned by GetNumberOfModesConsidered.
@@ -225,9 +211,6 @@ classdef FloquetPort < handle
             bool = obj.hFloquetPort.invoke(['GetMode "', num2str(type, '%.15g'), '", '...
                                                     '"', num2str(order_x, '%.15g'), '", '...
                                                     '"', num2str(order_yprime, '%.15g'), '"']);
-            obj.getmode.type = type;
-            obj.getmode.order_x = order_x;
-            obj.getmode.order_yprime = order_yprime;
         end
         function bool = NextMode(obj)
             % The method moves the port mode iteration to the next mode of the currently selected Floquet port, or returns False if there are no more modes.
@@ -249,20 +232,15 @@ classdef FloquetPort < handle
             % Use this method to get a mode's name by specifying its number, which refers to the currently active mode order, as defined by the current sorting mode. While the order of the modes may change with frequency and scan angle, their names naturally remain constant.
             bool = obj.hFloquetPort.invoke(['GetModeNameByNumber "', num2str(name, '%.15g'), '", '...
                                                                 '"', num2str(number, '%.15g'), '"']);
-            obj.getmodenamebynumber.name = name;
-            obj.getmodenamebynumber.number = number;
         end
         function bool = GetModeNumberByName(obj, number, name)
             % Use this method to get a mode's number, which corresponds to the currently active mode order, by specifying the mode's name.
             bool = obj.hFloquetPort.invoke(['GetModeNumberByName "', num2str(number, '%.15g'), '", '...
                                                                 '"', num2str(name, '%.15g'), '"']);
-            obj.getmodenumberbyname.number = number;
-            obj.getmodenumberbyname.name = name;
         end
         function ForceLegacyPhaseReference(obj, flag)
             % If this flag is set to True, the phase reference for the Floquet port modes is the smallest x- and y-coordinate of the Floquet ports and thus of the unit cell. This is the legacy behavior for versions older than 2017. The new default is the xy-center of the bounding box, with gives more symmetric modes at phase Zero.
             obj.AddToHistory(['.ForceLegacyPhaseReference "', num2str(flag, '%.15g'), '"']);
-            obj.forcelegacyphasereference = flag;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -274,23 +252,6 @@ classdef FloquetPort < handle
         bulkmode
 
         port
-        addmode
-        setusecircularpolarization
-        setpolarizationindependentofscananglephi
-        setdialogfrequency
-        setdialogmediafactor
-        setdialogtheta
-        setdialogphi
-        setdialogmaxorderx
-        setdialogmaxorderyprime
-        setcustomizedlistflag
-        setnumberofmodesconsidered
-        setsortcode
-        setdistancetoreferenceplane
-        getmode
-        getmodenamebynumber
-        getmodenumberbyname
-        forcelegacyphasereference
     end
 end
 

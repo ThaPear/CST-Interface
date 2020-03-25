@@ -57,21 +57,16 @@ classdef QFactor < handle
         function SetHField(obj, sFieldName)
             % Specifies the magnetic field from the loss-free calculation. It is possible to choose 3d eigenmodes (i.e. "Mode 1") or any 3d h-field by their Navigation Tree path (i.e. "2D/3D Results\H-Field\h-field (f=10) [1]"). In case that there does not exist a corresponding electric field monitor, the magnetic and electric energy will be assumed to be identically.
             obj.AddToHistory(['.SetHField "', num2str(sFieldName, '%.15g'), '"']);
-            obj.sethfield = sFieldName;
         end
         function SetConductivity(obj, name, value)
             % Defines the conductivity / mu to be used in the calculation for a specific material indicated by its name. Choose �**Cond. Enclosure**� to set the value for the background material and/or electric boundaries. The conductivity is set either by a numerical value or to infinity using �PEC�.
             obj.AddToHistory(['.SetConductivity "', num2str(name, '%.15g'), '", '...
                                                '"', num2str(value, '%.15g'), '"']);
-            obj.setconductivity.name = name;
-            obj.setconductivity.value = value;
         end
         function SetMu(obj, name, value)
             % Defines the conductivity / mu to be used in the calculation for a specific material indicated by its name. Choose �**Cond. Enclosure**� to set the value for the background material and/or electric boundaries. The conductivity is set either by a numerical value or to infinity using �PEC�.
             obj.AddToHistory(['.SetMu "', num2str(name, '%.15g'), '", '...
                                      '"', num2str(value, '%.15g'), '"']);
-            obj.setmu.name = name;
-            obj.setmu.value = value;
         end
         function double = GetTotalQ(obj)
             % Returns the value of total Q, Loss or Energy respectively after execution of the calculate method.
@@ -100,7 +95,6 @@ classdef QFactor < handle
             % **Sum of Surface Losses**
             % Integrated Q/loss of all surface losses
             double = obj.hQFactor.invoke('GetQ', name);
-            obj.getq = name;
         end
         function double = GetLossRMS(obj, name)
             % Returns the value of Q or Loss respectively for an entity name. Supported values are:
@@ -117,22 +111,18 @@ classdef QFactor < handle
             % **Sum of Surface Losses**
             % Integrated Q/loss of all surface losses
             double = obj.hQFactor.invoke('GetLossRMS', name);
-            obj.getlossrms = name;
         end
         function UseNewMethod(obj, boolean)
             % If switch is False, sets the old method for surface loss calculation.
             obj.AddToHistory(['.UseNewMethod "', num2str(boolean, '%.15g'), '"']);
-            obj.usenewmethod = boolean;
         end
         function Save3DData(obj, boolean)
             % If switch is True, the calculate method will also save plotable 3D field data into the Navigation Tree under "2D/3D Results\Power Loss Dens".
             obj.AddToHistory(['.Save3DData "', num2str(boolean, '%.15g'), '"']);
-            obj.save3ddata = boolean;
         end
         function ASCIIExport(obj, sFileName)
             % This method offers ASCII export of the settings and results concerning the loss and Q-factor calculation into a file specified by sFileName. The data is listed for each solid separately together with the overall amount of the surface losses, the dielectric losses and the total losses.
             obj.AddToHistory(['.ASCIIExport "', num2str(sFileName, '%.15g'), '"']);
-            obj.asciiexport = sFileName;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -142,14 +132,6 @@ classdef QFactor < handle
         hQFactor
         history
 
-        sethfield
-        setconductivity
-        setmu
-        getq
-        getlossrms
-        usenewmethod
-        save3ddata
-        asciiexport
     end
 end
 

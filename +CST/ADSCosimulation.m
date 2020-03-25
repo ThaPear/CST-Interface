@@ -62,24 +62,20 @@ classdef ADSCosimulation < handle
         function EnableCoSimulation(obj, flag)
             % This method enables the ADS Co-Simulation. Whenever the calculation of new S-parameter data is required, the co-simulation interface will then automatically launch CST MICROWAVE STUDIO.
             obj.AddToHistory(['.EnableCoSimulation "', num2str(flag, '%.15g'), '"']);
-            obj.enablecosimulation = flag;
         end
         function UseInterpolation(obj, flag)
             % This option specifies whether the S-parameter data may be interpolated or not. If this option deactivated, the S-parameters will be directly calculated for every requested parameter combination. If the interpolation feature is activated, the interpolation is done on a regular grid of so called anchor points, which can be independently controlled for each parameter using the ParameterInformation method.
             obj.AddToHistory(['.UseInterpolation "', num2str(flag, '%.15g'), '"']);
-            obj.useinterpolation = flag;
         end
         function SolverType(obj, type)
             % Select here the solver type (transient or frequency domain) which will be used for the calculation if CST MICROWAVE STUDIO is automatically launched.
             % type: 'transient'
             %       'frequency domain'
             obj.AddToHistory(['.SolverType "', num2str(type, '%.15g'), '"']);
-            obj.solvertype = type;
         end
         function Description(obj, description)
             % Specify here a description text which will later be shown in the ADS library browser.
             obj.AddToHistory(['.Description "', num2str(description, '%.15g'), '"']);
-            obj.description = description;
         end
         function ParameterInformation(obj, parametername, use, type, NominalValue, StepSize)
             % This method offers the possibility to define certain information for a specific parameter, which is determined by its parametername.
@@ -104,11 +100,6 @@ classdef ADSCosimulation < handle
                                                     '"', num2str(type, '%.15g'), '", '...
                                                     '"', num2str(NominalValue, '%.15g'), '", '...
                                                     '"', num2str(StepSize, '%.15g'), '"']);
-            obj.parameterinformation.parametername = parametername;
-            obj.parameterinformation.use = use;
-            obj.parameterinformation.type = type;
-            obj.parameterinformation.NominalValue = NominalValue;
-            obj.parameterinformation.StepSize = StepSize;
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -119,11 +110,6 @@ classdef ADSCosimulation < handle
         history
         bulkmode
 
-        enablecosimulation
-        useinterpolation
-        solvertype
-        description
-        parameterinformation
     end
 end
 

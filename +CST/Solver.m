@@ -23,7 +23,6 @@ classdef Solver < handle
         project
         hSolver
         
-        fmin, fmax
     end
     
     methods(Access = ?CST.Project)
@@ -36,7 +35,6 @@ classdef Solver < handle
     
     methods
         function FrequencyRange(obj, fmin, fmax)
-            obj.fmin = fmin; obj.fmax = fmax;
             
 %             obj.hSolver.invoke('FrequencyRange', fmin, fmax);
             obj.project.AddToHistory(['Solver.FrequencyRange "', num2str(fmin), '", "', num2str(fmax), '"']);

@@ -1,6 +1,4 @@
-
-Show 
-Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Curve
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Cylinder
 
 Curve Object
 
