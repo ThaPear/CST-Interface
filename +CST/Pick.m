@@ -83,10 +83,10 @@ classdef Pick < handle
         end
         function SnapLastPointToDraplane(obj)
             % The last selected point will be projected to the drawing plane. In contrast to the Modeling: Picks > Picks  > Snap points to drawing plane  - which depends on the current view - the macro command is view independent.
-            % Generic Picking on Lumped Elements, Ports and Coils
-            % For some picking (e.g. on Lumped Elements, Port and Coils), generic Pick commands can be used. Those require a global name. If in doubt whether these methods can be used, please perform an interactive pick and then check the history entry... Face picking is only available for coils, via these generic commands.
             obj.project.AddToHistory(['Pick.SnapLastPointToDraplane']);
         end
+        %% Generic Picking on Lumped Elements, Ports and Coils
+        % For some picking (e.g. on Lumped Elements, Port and Coils), generic Pick commands can be used. Those require a global name. If in doubt whether these methods can be used, please perform an interactive pick and then check the history entry... Face picking is only available for coils, via these generic commands.
         function PickPointFromIdOn(obj, name, picktype, id)
             % Picks the point with the given id from the element given by a global name. Currently the only supported value for picktype is "EndPoint".
             obj.project.AddToHistory(['Pick.PickPointFromIdOn "', num2str(name, '%.15g'), '", '...
@@ -438,6 +438,18 @@ classdef Pick < handle
             obj.project.AddToHistory(['Pick.ExportFaceTriangles "', num2str(filename, '%.15g'), '", '...
                                                                '"', num2str(maxlen, '%.15g'), '", '...
                                                                '"', num2str(surftol, '%.15g'), '"']);
+        end
+        %% Undocumented functions.
+        % Found in history list of migrated CST 2014 file.
+        % Possibly equivalent to NextPickToDataBase.
+        function NextPickToDatabase(obj, id)
+            obj.project.AddToHistory(['Pick.NextPickToDatabase "', num2str(id, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'unpick mid point'.
+        % Possibly inverse of PickMidpointFromId.
+        function UnpickMidpointFromId(obj, shapeName, id)
+            obj.project.AddToHistory(['Pick.UnpickMidpointFromId "', num2str(shapeName, '%.15g'), '", '...
+                                                                '"', num2str(id, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

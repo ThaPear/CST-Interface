@@ -1,0 +1,148 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Dimensions | Dimension
+
+Dimension Object
+Can be used to create and change dimensions.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the default values.
+
+ 
+
+UsePicks ( bool use )
+
+Deprecated and will not be used anymore
+
+ 
+
+CreationType( string  type )
+
+Indicates the type of the components involved to create the dimension. Can currently only contain "cbls" (Cable Studio) and "picks".
+
+ 
+
+SetID ( string  id )
+
+The id of the next dimension to be created. Creation for duplicated entries will fail. The ID need to be a positive integer value but can contain a valid expression.
+
+ 
+
+SetType ( string  type )
+
+Must be either "Distance" or "Angular". No other values are allowed.
+
+ 
+
+SetOrientation ( string  orientation )
+
+Only available for distance dimensions. Must be one of the following: Smart Mode, Face, X-Axis, Y-Axis, Z-Axis, Force-X, Force-Y, Force-Z, View.   
+
+ 
+
+SetOrientationFace ( string  faceID )
+
+Only needed if the orientation is "Face". Need to be a valid pick-id for a solid the dimension is attached to..
+
+ 
+
+SetDistance ( string  distance )
+
+Set the distance from the dimension orthogonal to its origin (vector from start to end of the picked edge or between the two picked points) for the next dimension to be created. The distance need to be a double value but can contain a valid expression.
+
+ 
+
+SetDistance ( string  distance )
+
+Set the distance from the dimension orthogonal to its origin (vector from start to end of the picked edge or between the two picked points) for the next dimension to be created. The distance need to be a double value but can contain a valid expression.
+
+ 
+
+SetViewVector ( string  xvalue, string  yvalue, string  zvalue )
+
+Set the view vector for the next dimension to be created. The view vector is used to compute the orientation of the dimension. If no faces attached to the current picks the orientation is the cross-product of the view vector and the vector between the picks. Otherwise the direction is orthogonal to the normal of the face that is next to the viewing vector. All parameters need to be double values but can contain a valid expression.
+
+ 
+
+SetLabelPattern ( string  label )
+
+Defines a pattern for the dimension to be created/modified. "%v" is here a placeholder for the dimension value, "%e" for the dimension unit and expressions can be enclosed in the smaller "<" and bigger ">" symbol.
+
+ 
+
+SetConnectedElement1( global name name)
+
+Global Name for the element the first point is connected to. Can be empty.
+
+ 
+
+SetConnectedElement2( global name name)
+
+Global Name for the element the second point is connected to. Can be empty and will be ignored for Annotations.
+
+ 
+
+SetConnectedElement3( global name name)
+
+Global Name for the element the third point is connected to. Can be empty and will be ignored for Distance Dimensions and Annotations.
+
+ 
+
+SetPointRotation( int  rotation)
+
+Indicator for Angular dimensions which picked point should be used as center point.
+
+ 
+
+Create
+
+Creates the dimension with the previously made settings.
+
+ 
+
+RemoveDimension ( string  id )
+
+Deletes the specified dimension. The ID need to be a positive integer value but can contain a valid expression.
+
+ 
+
+ChangeDimensionDistance ( string  id, string  distance )
+
+Changes the distance of the specified dimension. The id need to be an integer value and the distance a double value but both can contain a valid expression.
+
+ 
+
+Default Settings
+
+UsePicks (true)
+
+SetID ("0")
+
+SetDistance ("1.0")
+
+SetViewVector ("0.0", "1.0", "0.0")
+
+Example
+
+With Dimension
+
+    .UsePicks True
+
+    .SetID "1"
+
+    .SetDistance "2.0"
+
+    .SetViewVector "-1.0", "0", "0"
+
+    .SetLabelPattern "%v%e"
+
+    .Create
+
+End With

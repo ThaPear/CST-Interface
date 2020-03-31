@@ -1,0 +1,207 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ScalarPlot3D
+
+ScalarPlot3D Object
+
+This object allows to plot three dimensional complex scalar values. To choose what scalar field to plot the SelectTreeItem command can be used.
+
+General Methods
+
+Query
+
+Default Settings
+
+Example
+
+General Methods
+
+Type ( enum key )
+
+Selects the type of Plot.
+
+key can have one of  the following values:
+
+"contour"
+
+The field values of the chosen scalar field will be plotted on the surfaces of the structure in different colors.
+
+"isosurfaces"
+
+Surfaces of equal value of the chosen scalar field will be plotted.
+
+"bubbles"
+
+Spheres of color and size depending on field value are plotted on equidistant positions.
+
+ 
+
+PlotAmplitude ( bool switch )
+
+If switch is True, the absolute values (the amplitudes) of the complex scalar values are plotted.
+
+ 
+
+PhaseValue ( double phase )
+
+Specifies the phase of to be plotted complex field values.
+
+ 
+
+PhaseStep ( double step )
+
+Specifies the step width used by phase incrementing actions.
+
+ 
+
+Quality ( int quality )
+
+The Plot data for scalar values on surfaces is represented by triangles. This setting influences the number of triangles used for the plot. A fine plot quality will result in a longer plot generation time and thus in slower movies as well. A value between 0 and 100 may be given.
+
+ 
+
+SetTime ( double time )
+
+The current time value of a time monitor plot is set.
+
+ 
+
+SetSample ( long sample )
+
+The current time sample number of a time monitor plot is set.
+
+ 
+
+IsoValue ( double value )
+
+Draw surfaces on which the selected component or absolute value have a specific value.
+
+ 
+
+SetComponent ( enum component )
+
+Sets the vector component of a vector result that should be visualized by a Scalar Plot.
+
+component can have one of  the following values:
+
+"x"
+
+The x component of the vector result
+
+"y"
+
+The y component of the vector result
+
+"z"
+
+The z component of the vector result
+
+"abs"
+
+The absolute value of the vector result
+
+"normal"
+
+The normal part of the vector field is the scalar product of the surface’s normal vector and the field vector on the surface.
+
+"tangential"
+
+The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
+
+ 
+
+%% Query
+
+ 
+
+GetDomain enum
+
+Returns the domain of the monitor used, return code can have the following values:
+
+"frequency"     The plot is based on recordings of a frequency domain monitor.
+
+"time"          The plot is based on recordings of a time domain monitor.
+
+"static"        The plot is based on recordings of a static monitor.
+
+ 
+
+GetNumberOfSamples long
+
+Returns the total number of samples if the plot is based on recordings of a time monitor else 0.
+
+ 
+
+GetTStart double
+
+Returns the start time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTEnd double
+
+Returns the end time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTStep double
+
+Returns the time step width of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTime double
+
+Returns the current  time set of a time monitor plot.
+
+ 
+
+GetSample long
+
+Returns the current time sample number of a time monitor plot.
+
+Default Settings
+
+Type ("contour")
+
+PlotAmplitude (False)
+
+PhaseValue (0.0)
+
+PhaseStep (22.5)
+
+Quality (50)
+
+SetTime (0.0)
+
+SetSample (0)
+
+Example
+
+The following script plots surfaces of equal amplitude of the vector field component Y of the electric field "e1".
+
+ 
+
+' Plot only a wire frame of the structure to be able to look inside
+
+Plot.wireframe (True)
+
+ 
+
+' Select the Y-Component of the electric field e1 in the tree
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+SetComponent ("Y")
+
+ 
+
+' Plot the scalar field of the selected monitor
+
+With ScalarPlot3D
+
+    .Type ("isosurfaces")
+
+    .PlotAmplitude (False)
+
+    .Quality (60)
+
+End With

@@ -20,16 +20,15 @@
 classdef Application < handle
     %% CST Interface specific functions.
     methods(Static)
-        function cst = GetHandle()
-%             persistent cst_handle;
-%             if(~isempty(cst_handle))
-%                 if(~isa(cst_handle, 'COM.CSTStudio_Application'))
-%                     error(['Invalid CST handle of type ', class(cst_handle)]);
+        function hCST = GetHandle()
+%             persistent hCST_Persistent;
+%             if(~isempty(hCST_Persistent))
+%                 if(~isa(hCST_Persistent, 'COM.CSTStudio_Application'))
+%                     error(['Invalid CST handle of type ', class(hCST_Persistent)]);
 %                 end
-%                 cst = cst_handle;
 %             else
-                cst_handle = actxserver('CSTStudio.Application');
-                cst = cst_handle;
+                hCST_Persistent = actxserver('CSTStudio.Application');
+                hCST = hCST_Persistent;
 %             end
         end
     end
@@ -37,71 +36,119 @@ classdef Application < handle
     methods(Static)
         function project = NewMWS()
             % Creates a new CST MICROWAVE STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('NewMWS');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewMWS');
             project = CST.Project(hProject);
         end
         function project = NewEMS()
             % Creates a new CST EM STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('NewEMS');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewEMS');
             project = CST.Project(hProject);
         end
         function project = NewPS()
             % Creates a new CST PARTICLE STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('NewPS');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewPS');
             project = CST.Project(hProject);
         end
         function project = NewMPS()
             % Creates a new CST MPHYSICS STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('NewMPS');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewMPS');
             project = CST.Project(hProject);
         end
         function project = NewCS()
             % Creates a new CST CABLE STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('NewCS');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewCS');
             project = CST.Project(hProject);
         end
         function project = NewPCBS()
             % Creates a new CST PCB STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('NewPCBS');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewPCBS');
             project = CST.Project(hProject);
         end
         function dsproject = NewDS()
             % Creates a new CST DESIGN STUDIO project.
-            cst = CST.Application.GetHandle();
-            hDSProject = cst.invoke('NewDS');
+            hCST = CST.Application.GetHandle();
+            hDSProject = hCST.invoke('NewDS');
             dsproject = CST.Project(hDSProject);
         end
-        function project = OpenFile(filename)
+        function project = OpenFile(filepath)
             % Opens a project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('OpenFile', filename);
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('OpenFile', filepath);
             if(isempty(hProject))
-                error('File not found or file is already open.');
+                error(['Could not open CST file ''%s''.\n', ...
+                       'This could be due to it being open already or due to an incorrect path.\n', ...
+                       'To force open the file, use CST.Application.CloseProject(filepath) first.'], filepath);
             end
             project = CST.Project(hProject);
         end
         function project = Active3D()
             % Offers access to the currently active CST MICROWAVE STUDIO, CST EM STUDIO, CST PARTICLE STUDIO, CST MPHYSICS STUDIO or CST CABLE STUDIO project.
-            cst = CST.Application.GetHandle();
-            hProject = cst.invoke('Active3D');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('Active3D');
             project = CST.Project(hProject);
         end
         function dsproject = ActiveDS()
             % Offers access to the currently active CST DESIGN STUDIO project.
-            cst = CST.Application.GetHandle();
-            hDSProject  = cst.invoke('ActiveDS');
+            hCST = CST.Application.GetHandle();
+            hDSProject  = hCST.invoke('ActiveDS');
             dsproject = CST.DS.Project(hDSProject);
         end
         function Quit()
             % Exits the application.
-            cst = CST.Application.GetHandle();
-            cst.invoke('Quit');
+            hCST = CST.Application.GetHandle();
+            hCST.invoke('Quit');
+        end
+        %% Undocumented functions.
+        % Found in 'methodsview(CST.Application.GetHandle())'
+        function hProject = FileNew()
+            warning('\nCST.Application.FileNew is undocumented.\nReturning raw activeX handle.');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('FileNew');
+        end
+        % Found in 'methodsview(CST.Application.GetHandle())'
+        function hProject = NewSystemsimulator()
+            warning('\nCST.Application.NewSystemsimulator is undocumented.\nReturning raw activeX handle.');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewSystemsimulator');
+        end
+        % Found in 'methodsview(CST.Application.GetHandle())'
+        function hProject = NewDesign()
+            warning('\nCST.Application.NewDesign is undocumented.\nReturning raw activeX handle.\nRecommend using CST.Application.NewDS.%s', '');
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewDesign');
+        end
+        % Found in 'methodsview(CST.Application.GetHandle())'
+        function hProject = NewProject(id)
+            % Creates a new project based on the given id.
+            % id: 0,6 = DS
+            %     1   = MWS
+            %     2   = EM
+            %     3   = PS
+            %     4   = MPS
+            %     5   = CS
+            % Other values = error: 'No manager implemented so far. Be patient.'
+            hCST = CST.Application.GetHandle();
+            hProject = hCST.invoke('NewProject', id);
+        end
+        % Found in 'methodsview(CST.Application.GetHandle())'
+        function OpenDesign(filepath)
+            % Switches the view in CST to the given design.
+            % If the design is not open, CST will open it.
+            % Can use Active3D or ActiveDS to get the appropriate handle.
+            hCST = CST.Application.GetHandle();
+            hCST.invoke('OpenDesign', filepath);
+        end
+        % Found in 'methodsview(CST.Application.GetHandle())'
+        function CloseProject(filepath)
+            % Closes the specified project (requires full path).
+            hCST = CST.Application.GetHandle();
+            hCST.invoke('CloseProject', filepath);
         end
     end
 end

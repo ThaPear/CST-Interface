@@ -1,0 +1,91 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Circle
+
+Circle Object
+
+This object is used to create a new circle curve item.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name circlename )
+
+Sets the name of the circle.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new circle curve item. The curve must already exist.
+
+ 
+
+Radius ( double radius )
+
+Sets the radius for the circle.
+
+ 
+
+Xcenter ( double xcenter )
+
+Sets the x-coordinate from the center point of the circle.
+
+ 
+
+Ycenter ( double  ycenter )
+
+Sets the y-coordinate from the center point of the circle.
+
+ 
+
+Segments ( int segments )
+
+Sets the number of parts the circle should be segmented.
+
+The value must be either 0 or greater than 2.
+
+ 
+
+Create
+
+Creates a new circle curve item. All necessary settings for this circle have to be made previously.
+
+Default Settings
+
+Xcenter (0.0)
+
+Ycenter (0.0)
+
+Segments (0)
+
+Example
+
+With Circle
+
+    .Reset
+
+    .Name ("circle1")
+
+    .Curve ("curve1")
+
+    .Radius (1.6)
+
+    .Xcenter (2.2)
+
+    .Ycenter (a+8)
+
+    .Segments (0)
+
+    .Create
+
+End With

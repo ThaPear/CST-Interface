@@ -1,0 +1,206 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | High Frequency | FieldSource
+
+FieldSource Object
+Use this object to define a field source for the simulation.
+
+Methods: General
+
+Methods: Field Import
+
+Example
+
+General Methods
+
+Reset ()
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name for the current distribution.
+
+ 
+
+FileName  ( string name )
+
+Specifies the name of the field source data file. Available for import are CST MICROWAVE STUDIO FSM files (*.fsm), CST MICROWAVE STUDIO hexanhedral field monitors (*.m3d), CST MPHYSICS STUDIO displacement files (*.fic), CST CABLE STUDIO / CST PCB STUDIO RSD files (*.rsd), or Sigrity® NFD files (*.nfd).
+
+ 
+
+Delete ( string name )
+
+Deletes an existing field source, which is specified by the name.
+
+ 
+
+Id ( integer uniqueID)
+
+Set the unique ID of the field source which was generated using GetNextId.
+
+ 
+
+GetNextId () integer
+
+Returns the next free unique ID for a new field source. The filename has to be set and match the filename of the new field source. Set filename with FileName.
+
+ 
+
+DeleteAll
+
+Delete all field sources.
+
+ 
+
+Rename  ( string oldname, string newname )
+
+Renames an existing field source from oldname to newname.
+
+ 
+
+Read
+
+Activates the import, which has to be previously specified using the FileName method. This method is used for the following file types:  *.rsd, *.fsm, and *.nfd.
+
+ 
+
+%% Methods: Field Import
+
+ 
+
+ProjectPath (string path)
+
+Specifies the project the field import is taken from. This may be an absolute path (UseRelativePath is set to "False") or a path relative to the current project file (UseRelativePath is set to "True").
+
+ 
+
+UseRelativePath (bool flag)
+
+Defines if the ProjectPath is given with a relative or absolute path. In the former case ProjectPath must specify a location relative to the current project file.
+
+ 
+
+ResultSubDirectory  (string dirname)
+
+Specifies the name of the subdirectory within the Result directory where the solver results can be found. For example, IR-Drop solver writes the archive with thermal losses into Result\IRDROPRESULTS. In this case, the name of subdirectory must be specified by .ResultSubDirectory "IRDROPRESULTS".
+
+ 
+
+SourceName (enum FieldType)
+
+Defines which field should be imported from the project specified by ProjectPath. The value of FieldType must be "Temperature", "Displacement", "Force Density", "Nodal Forces" or "Thermal Losses".
+
+ 
+
+FieldMonitorName (enum name)
+
+If the project specified by ProjectPath contains a transient thermal solution, use this command to specify the monitor from which the distribution should be imported. name may have the following values:
+
+”Initial Solution”                      the initial temperature distribution is imported.
+
+”Stationary Solution”                   if the source project contains a solution made by the stationary thermal solver, this solution will be imported.
+
+Name of a 3D temperature monitor        one of the temperature distributions saved by this monitor is imported. The time frame is then specified in TimeValue or by UseLastTimeFrame.
+
+ 
+
+TimeValue (double time)
+
+If a single temperature field is imported from a transient temperature monitor specified in FieldMonitorName, use this command to specify from which time point the temperature distribution must be imported. Parameter time must be specified in seconds. This command is ignored if UseLastTimeFrame is set to "True".
+
+ 
+
+UseLastTimeFrame (bool flag)
+
+If a single temperature field is imported from a transient temperature monitor specified in FieldMonitorName, use this command to select the last frame saved by the monitor.
+
+ 
+
+UseCopyOnly (bool flag)
+
+Defines if the internal copy of the field import should be used only. If this setting is activated, the imported field is not updated anymore, even if it has been changed in the source project.
+
+ 
+
+CreateFieldImport
+
+Creates a temperature, displacement, thermal loss or static force field import from a project, which needs to be specified with the ProjectPath method.
+
+ 
+
+Default Settings
+
+ 
+
+Example
+
+' Obtain a free unique ID for "test.rsd"
+
+Dim sID as String
+
+ 
+
+With FieldSource
+
+    .Reset
+
+    .FileName ("test.rsd")
+
+    fsID = .GetNextId
+
+    .Reset
+
+End With
+
+ 
+
+' Define a field source with an evaluated ID
+
+With FieldSource
+
+    .Reset
+
+    .Name ("CD1")
+
+    .FileName ("test.rsd")
+
+    .Id "42"
+
+    .Read
+
+End With
+
+ 
+
+' Import a single (final) temperature distribution from a transient thermal project
+
+With FieldSource
+
+    .Reset
+
+    .Name ("field1")
+
+    .Id ("59")
+
+    .ProjectPath ("Thermal TD.cst")
+
+    .UseRelativePath ("True")
+
+    .SourceName ("Temperature")
+
+    .FieldMonitorName ("temp (t=0.0..end(100))")
+
+    .UseLastTimeFrame ("True")
+
+    .UseCopyOnly ("False")
+
+    .CreateFieldImport
+
+End With
+
+ 
+
+'Delete the FieldSource
+
+FieldSource .Delete ("CD1")

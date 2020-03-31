@@ -1,0 +1,297 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | 2D-Profiles to Shapes | Rotate
+
+Rotate Object
+
+Creates a three dimensional solid by rotating  a Profile or a selected face.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings.
+
+ 
+
+Name ( name objectname )
+
+Sets the name of the extrude Object.
+
+ 
+
+Component ( name componentname )
+
+Sets the component for the new Solid. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material for the new Solid. The material must already exist.
+
+ 
+
+Mode ( enum rotMode )
+
+Selects whether a profile or a surface is to be rotated.
+
+rotMode may have the following settings:
+
+”pointlist”
+
+A profile defined by points is to be rotated
+
+”picks”
+
+A picked face is to be rotated
+
+ 
+
+StartAngle ( double startA)
+
+ If the  Mode is "pointlist", specify the start angle for the rotation.
+
+ 
+
+Angle ( double angleVal )
+
+Sets the angle of rotation. If  the Mode is ”pointlist” this value will be counted from the StartAngle.
+
+ 
+
+Height ( double heightVal )
+
+Bends the rotated solid along the rotation axis such that a helix is created. The argument heightVal specifies the distance between the starting profile and the ending profile along the axis of rotation.
+
+ 
+
+Origin (  double x , double y, double z )
+
+Defines the origin for the rotation.
+
+ 
+
+Rvector ( double u, double v, double w )
+
+These settings define the plane on which the profile will be defined. u, v, w are related on the current working coordinate system.
+
+ 
+
+Zvector ( double u , double v, double w )
+
+These settings define the plane on which the profile will be defined. u, v, w are related on the current working coordinate system.
+
+ 
+
+Point ( double uPt, double vPt )
+
+Sets the first point of the to be defined profile. This setting has an effect only if Mode is set to ”pointlist”.
+
+ 
+
+LineTo ( double u, double v )
+
+Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location in absolute coordinates in the actual working coordinate system. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode  is set to ”pointlist”.
+
+ 
+
+RLine ( double u, double v )
+
+Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location relative to the previous point in the current working coordinate sytem. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode is set to ”pointlist”.
+
+ 
+
+RadiusRatio ( double radRat )
+
+A value different to one will cause a linear change to the radius of rotation depending on the angle. The radRat value defines the ratio between the radius after a 360 degree rotation and the starting radius. The radius is the distance from the axis of rotation and the center of gravity of the to be rotated profile.
+
+ 
+
+ModifyAngle
+
+Changes the angle of the rotation to the previously set solid and value.
+
+ 
+
+NSteps ( int nSteps )
+
+The parameter nSteps defines the number of segments (elements) the rotated solid will be made of. If NStep is zero, an analytical shape is created. This is the most accurate way to model the structure, but its creation might also be very time consuming in some cases. Therefore this method allows to approximate the rotated shape with NStep extruded elements.
+
+ 
+
+SplitClosedEdges ( bool flag )
+
+This command is used for backward compatibility only. It is strongly recommended to set this flag to 'True' for newly created solids. In case that the newly created faces would become complex splines, this setting splits the edges of the rotated base face first such that the complexity of the resulting spline faces is reduced. This setting is especially important for helical types of structures with many turns.
+
+ 
+
+SegmentedProfile ( bool flag )
+
+The rotation will be done by the defined number of segments.
+
+ 
+
+DeleteBaseFaceSolid ( bool flag )
+
+Deletes the face used for rotation.
+
+ 
+
+ClearPickedFace ( bool flag )
+
+Clears the picked face after the rotation.
+
+ 
+
+SimplifySolid ( bool flag )
+
+This command is used for backward compatibility only. Setting this flag to 'True' is strongly recommended for automatically reducing the number of spline faces in the newly created solid as much as possible.
+
+ 
+
+UseAdvancedSegmentedRotation ( bool flag )
+
+This command is used for backward compatibility only. It is strongly recommended to set this flag to 'True' for newly created solids.
+
+ 
+
+SetSimplifyActive ( bool switch )
+
+Set this option to enable the polygon simplification.
+
+ 
+
+SetSimplifyMinPointsArc ( int nCount )
+
+Minimum number of segments needed to recognize an arc. Must be >= 3.
+
+ 
+
+SetSimplifyMinPointsCircle ( int nCount )
+
+Minimum number of segments needed for complete circles. Must be > 'SetSimplifyMinPointsArc' and at least 5.
+
+ 
+
+SetSimplifyAngle ( double angle )
+
+The maximum angle in degrees between two adjacent segments. All smaller angles will be considered to be simplified. The angle is only used for arcs and not for circles.
+
+ 
+
+SetSimplifyAdjacentTol ( double angle )
+
+Is only used by the simplification algorithm to find a good starting point for arcs. It means the maximum angular difference in the angle of adjacent segments. A good value for this parameter will be 1.0.
+
+ 
+
+SetSimplifyRadiusTol ( double deviation )
+
+This means the maximum deviation in percent the distance a segment end point can have to the current definition of the simplification circle center point. The tolerance is used for circles and arcs.
+
+ 
+
+SetSimplifyAngleTang ( double angle )
+
+Maximum angular tolerance in radians used when deciding to create the arc tangential or not to its adjacent line segments. If an angle is beneath the specified value, the arc is build tangential to the neighbor edge.
+
+ 
+
+SetSimplifyEdgeLength ( double length )
+
+Edges smaller than the defined length will be removed. Can be used to remove tiny fragments.
+
+ 
+
+Create
+
+Creates a new rotated solid. All necessary settings for this element have to be made previously.
+
+Default Settings:
+
+Mode ("pointlist")
+
+StartAngle (0)
+
+Height (0)
+
+Rvector (0, 0, 0)
+
+Zvector (0, 0, 0)
+
+RadiusRatio (1.0)
+
+SplitClosedEdges (False)
+
+SegmentedProfile (False)
+
+DeleteBaseFaceSolid (False)
+
+ClearPickedFAce (False)
+
+SimplifySolid (False)
+
+UseAdvancedSegmentedRotation (False)
+
+Material ("default")
+
+Component ("default")
+
+SetSimplifyActive (False)
+
+SetSimplifyMinPointsArc (3)
+
+SetSimplifyMinPointsCircle (5)
+
+SetSimplifyAngle (0.0)
+
+SetSimplifyAdjacentTol (1.0)
+
+SetSimplifyRadiusTol (0.0)
+
+SetSimplifyAngleTang (1.0)
+
+SetSimplifyEdgeLength (0.0)
+
+Example:
+
+With Rotate
+
+     .Reset
+
+     .Name ("solid2")
+
+     .Component ("component1")
+
+     .Material ("Vacuum")
+
+     .Mode ("Picks")
+
+     .Angle (180)
+
+     .Height (20)
+
+     .RadiusRatio (2)
+
+     .NSteps (20)
+
+     .SplitClosedEdges (False)
+
+     .SegmentedProfile (True)
+
+     .DeleteBaseFaceSolid (False)
+
+     .ClearPickedFace (True)
+
+     .SimplifySolid (True)
+
+     .UseAdvancedSegmentedRotation (True)
+
+     .Create
+
+End With

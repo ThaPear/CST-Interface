@@ -1,0 +1,225 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | VectorPlot3D
+
+VectorPlot3D Object
+
+With this object three dimensional complex vector fields can be plotted in various ways. To choose what field to plot the SelectTreeItem command can be used.
+
+General Methods
+
+Query
+
+Default Settings
+
+Example
+
+General Methods
+
+Type ( enum key )
+
+Selects the type of Plot.
+
+key can have one of  the following values:
+
+"arrows"            The field vectors will be plotted as arrows.
+
+"cone"              The field vectors will be plotted as cones.
+
+"thinarrows"        The field vectors will be plotted as thin arrows.
+
+"bubble"            The field vectors will be plotted as bubble.
+
+"hedgehog”          The field vectors will be plotted as ”lines”.
+
+"streamline”        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+
+"thinstreamline”    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+
+ 
+
+PhaseValue ( double phase )
+
+Specifies the phase of to be plotted complex field values.
+
+ 
+
+PhaseStep ( double phasestep )
+
+Specifies the step width used by phase incrementing actions.
+
+ 
+
+SetDensityInPercent( int objects )
+
+Specifies the relative  number of plotted objects. Default density is set to 50%. The density  should be between 0% and 100%
+
+ 
+
+Scaling ( int scale )
+
+Defines a scale factor of the plotted objects. A value between 0 and 100 may be given. This value influences the size of the objects.
+
+ 
+
+ActivateStreamLines( int SeedPoints )
+
+Specifies the number of seedpoints used to generate stream lines and activates the stream line plot.
+
+ 
+
+SetTime ( double time )
+
+The current time value of a time monitor plot is set.
+
+ 
+
+SetSample ( long sample )
+
+The current time sample number of a time monitor plot is set.
+
+ 
+
+%% Query
+
+ 
+
+GetDomain enum
+
+Returns the domain of the monitor used, return code can have the following values:
+
+"frequency"     The plot is based on recordings of a frequency domain monitor.
+
+"time"          The plot is based on recordings of a time domain monitor.
+
+"static"        The plot is based on recordings of a static monitor.
+
+ 
+
+GetNumberOfSamples long
+
+Returns the total number of samples if the plot is based on recordings of a time monitor else 0.
+
+ 
+
+GetTStart double 
+
+Returns the start time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTEnd double  
+
+Returns the end time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTStep double 
+
+Returns the time step width of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTime double 
+
+Returns the current  time set of a time monitor plot.
+
+ 
+
+GetSample long 
+
+Returns the current time sample number of a time monitor plot.
+
+ 
+
+AddListItem ( double x, double  y, double z)
+
+Adds a field value query point to the internal coordinate list. Coordinates are expected in project units.
+
+ 
+
+SetPoints(variant var_x, variant var_y, variant var_z)
+
+Adds a field value arrays query point to the internal coordinate list. Coordinates are expected in project units.
+
+ 
+
+CalculateList
+
+Calculates field values at all query points provided by the AddListItem command.
+
+ 
+
+GetListLength long 
+
+Returns the number of field values calculated by CalculateList.
+
+ 
+
+GetListItem( long index, double_ref FieldXRe, double_ref FieldXIm, double_ref FieldYRe, double_ref FieldYIm, double_ref FieldZRe, double_ref FieldZIm) bool 
+
+Returns the field value at position index calculated by CalculateList.
+
+ 
+
+GetList( string fieldComponent ) variant 
+
+Returns the field values calculated by CalculateList as an array of doubles. Allowed values for fieldComponent are "xre", "yre", "zre", "xim", "yim", "zim".
+
+ 
+
+GetLogarithmicFactor() double 
+
+Returns the logarithmic factor of selected result. This factor is used .for dB scaling.
+
+ 
+
+ 
+
+Reset
+
+Clears the internal storage used by the field list evaluation and empties the evaluation point storage.
+
+Default Settings
+
+Type ("arrowscolor")
+
+PhaseValue (0.0)
+
+PhaseStep (22.5)
+
+SetDensityInPercent(50)
+
+Scaling (50)
+
+SetTime (0.0)
+
+SetSample (0)
+
+Example
+
+The following script plots the electric field  "e1" (if available) in a linear scale by using  thin arrows with density 30%.
+
+ 
+
+' Plot only a wire frame of the structure to be able to look inside
+
+Plot.wireframe (True)
+
+ 
+
+' Select the desired monitor in the tree.
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+ 
+
+' Plot the field of the selected monitor
+
+With VectorPlot3D
+
+    .Type ("thinarrows")
+
+    .SetDensityInPercent(30)
+
+End With 
+
+ 

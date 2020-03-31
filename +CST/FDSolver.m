@@ -560,10 +560,27 @@ classdef FDSolver < handle
             % This method exports available 3D solutions at the chosen frequency to CST PARTICLE Studio. Afterwards the exported fields can be imported in CST PARTICLE Studio with the Predefined Field feature. Applies to the fast reduced order model sweep method only.
             obj.AddToHistory(['.ExportMORSolution "', num2str(frequency, '%.15g'), '"']);
         end
-        %% Undocumented functions.
-        function InterpolationSamples(obj, interpolationsamples) 
-            obj.AddToHistory(['.InterpolationSamples "', num2str(interpolationsamples, '%.15g'), '"']); 
+        %% From 2013 documentation.
+        function InterpolationSamples(obj, nSamples)
+            % Specifies the resolution of the interpolated S-parameters during a broadband S-parameter frequency sweep. Increase the number of samples if a higher resolution is required, for instance due to poles which are very close.
+            obj.AddToHistory(['.InterpolationSamples "', num2str(nSamples, '%.15g'), '"']);
         end
+        function SetCalculateExcitationsInParallel(obj, enable, useblock, maxparallel)
+            % This method toggles whether or not and how excitations will be solved in parallel if the iterative solver is used. Only applies to the Frequency Domain solver with tetrahedral mesh. A new version is available by setting useblock to true. It usually provides better performance for simulations with a large number of tetrahedrons or many excitations. Leave maxparallel blank (pass "") to let the solver decide how many excitations to calculate in parallel. Note that hardware and license restrictions may apply and overwrite some of those settings.
+            obj.AddToHistory(['.SetCalculateExcitationsInParallel "', num2str(enable, '%.15g'), '", '...
+                                                                 '"', num2str(useblock, '%.15g'), '", '...
+                                                                 '"', num2str(maxparallel, '%.15g'), '"']);
+        end
+        function SweepErrorThreshold(obj, flag, threshold)
+            % Activates (switch = "True") or deactivates (switch = "False") the broadband S-parameter frequency sweep convergence check, and sets the corresponding error threshold thres for the interpolation of the S-parameters when using the broadband frequency sweep feature (SParameterSweep).  The number of frequency samples needed for a S-parameter simulation by  the solver usually decreases if the check is activated, since the solver stops calculating additional frequency samples as soon as the convergence criterion is reached, which, in addition, can be influenced by the SweepErrorChecks and SweepMinimumSamples methods.
+            obj.AddToHistory(['.SweepErrorThreshold "', num2str(flag, '%.15g'), '", '...
+                                                   '"', num2str(threshold, '%.15g'), '"']);
+        end
+        function LimitCPUs(obj, flag)
+            % Enabling this method offers the possibility to define a maximum number of CPUs using the MaxCPUs method.
+            obj.AddToHistory(['.LimitCPUs "', num2str(flag, '%.15g'), '"']);
+        end
+        %% Undocumented functions.
         % Found in history list when setting frequency domain solver settings.
         function NewIterativeSolver(obj, bool)
             obj.AddToHistory(['.NewIterativeSolver "', num2str(bool, '%.15g'), '"']); 
@@ -597,12 +614,6 @@ classdef FDSolver < handle
         % Found in history list when setting frequency domain solver settings.
         function MPIParallelization(obj, bool)
             obj.AddToHistory(['.MPIParallelization "', num2str(bool, '%.15g'), '"']); 
-        end
-        % Found in history list of migrated CST file when setting frequency domain solver settings.
-        function SetCalculateExcitationsInParallel(obj, bool1, bool2, arg)
-            obj.AddToHistory(['.SetCalculateExcitationsInParallel "', num2str(bool1, '%.15g'), '", '...
-                                                                 '"', num2str(bool2, '%.15g'), '", '...
-                                                                 '"', num2str(arg, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

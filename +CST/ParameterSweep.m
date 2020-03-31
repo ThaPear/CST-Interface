@@ -112,7 +112,6 @@ classdef ParameterSweep < handle
                                                     '"', num2str(to, '%.15g'), '", '...
                                                     '"', num2str(steps, '%.15g'), '", '...
                                                     '"', num2str(logarithmic_sweep, '%.15g'), '"']);
-            obj.addparameter_samples.logarithmic_sweep = logarithmic_sweep;
         end
         function AddParameter_Stepwidth(obj, sequencename, parametername, from, to, width)
             % Adds a parameter to a sequence.

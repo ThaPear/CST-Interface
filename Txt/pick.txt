@@ -104,9 +104,11 @@ SnapLastPointToDraplane
 
 The last selected point will be projected to the drawing plane. In contrast to the Modeling: Picks > Picks  > Snap points to drawing plane  - which depends on the current view - the macro command is view independent.
 
-Generic Picking on Lumped Elements, Ports and Coils
+ 
 
-For some picking (e.g. on Lumped Elements, Port and Coils), generic Pick commands can be used. Those require a global name. If in doubt whether these methods can be used, please perform an interactive pick and then check the history entry... Face picking is only available for coils, via these generic commands.
+%% Generic Picking on Lumped Elements, Ports and Coils
+
+% For some picking (e.g. on Lumped Elements, Port and Coils), generic Pick commands can be used. Those require a global name. If in doubt whether these methods can be used, please perform an interactive pick and then check the history entry... Face picking is only available for coils, via these generic commands.
 
  
 

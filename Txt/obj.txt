@@ -1,0 +1,105 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | OBJ
+
+OBJ_ Object
+
+This object offers you the options for import object files (.obj). OBJ data import can take some time and might lead to a very slow meshing process, because every OBJ triangle will be converted to an ACIS FACE.
+
+If you have the choice between a high end data format like SAT / IGES and OBJ – choose the high end format, because further operations on the structure will be much faster.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+ 
+
+Reset
+
+Resets the import options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets the name of the imported file.
+
+ 
+
+Name ( name name )
+
+Sets a name.
+
+ 
+
+Layer ( name layername )
+
+Sets the layer for the new solid. The component and the material are chosen according to the specified layer.
+
+ 
+
+ScaleFactor ( double scalefactor )
+
+Set the scale factor to scale the coordinates of all vertices. Importing object files from the program package Poser then it seems that the scale factor has to be 2500. This scale factor is the default value. If you do not want the coordinates to be scaled then set the scale factor to 1.0.
+
+ 
+
+ScaleToUnit ( bool switch )
+
+If set to True the imported model is scaled to the currently active unit. The scale factor is determined by the unit of the import model and the currently active unit in the project. As the unit of the import model are not defined in the import file you have to specify the unit of the import model by using  ImportFileUnits. If not activated no scaling occurs.
+
+ 
+
+ImportFileUnits ( enum {"m", "cm", "mm", "um", "nm", "ft", "mil", "in"} units )
+
+Sets the units of the imported model. The units have to be defined when ScaleToUnit is activated.
+
+ 
+
+ImportToActiveCoordinateSystem ( bool switch )
+
+Import the CAD data relative to the active coordinate system.
+
+ 
+
+Read
+
+Starts the actual import of the file.
+
+ 
+
+Default Settings
+
+FileName ("")
+
+Name ("")
+
+Layer ("default")
+
+ScaleFactor ("1.0")
+
+ImportToActiveCoordinateSystem (False)
+
+Example
+
+With OBJ
+
+    .Reset
+
+    .FileName (".\example.obj")
+
+    .Name ("test")
+
+    .Layer ("default")
+
+    .ScaleFactor ("1.0")
+
+    .ImportToActiveCoordinateSystem (False)
+
+    .Read
+
+End With
+
+ 

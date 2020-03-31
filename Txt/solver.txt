@@ -744,7 +744,7 @@ The steady state monitor is disabled. If no additional stop criteria are defined
 
  
 
-With the following commands it is possible to define customized stop rules in addition to the energy criteria specified by the .SteadyStateLimit command. A combination of S-parameter, probe or radiated power convergence criteria is available. For more details on the error evaluation formula please refer to the Steady State help page.
+%% With the following commands it is possible to define customized stop rules in addition to the energy criteria specified by the .SteadyStateLimit command. A combination of S-parameter, probe or radiated power convergence criteria is available. For more details on the error evaluation formula please refer to the Steady State help page.
 
 RemoveAllStopCriteria
 

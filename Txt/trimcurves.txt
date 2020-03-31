@@ -1,0 +1,73 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Curve Operations | TrimCurves
+
+TrimCurves Object
+
+This object enables a trim operation on two intersecting curve items. The points of intersection create new segments respectively edges which afterwards can be deleted separately.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Curve ( name curvename )
+
+Specifies the curve to which both of the selected curve items are belonging to
+
+ 
+
+CurveItem1 ( name curveitemname )
+
+Selects a specified curve item which has to belong to the same curve object as curve item No.2.
+
+ 
+
+CurveItem2 ( name curveitemname )
+
+Selects a specified curve item which has to belong to the same curve object as curve item No.1.
+
+ 
+
+DeleteEdges1 ( string edgeids )
+
+Defines the list of edges associated with curve item No.1, which will be deleted applying the Trim method. More than one indices must be separated by ", ".
+
+ 
+
+DeleteEdges2 ( string edgeids )
+
+Defines the list of edges associated with curve item No.2, which will be deleted applying the Trim method. More than one indices must be separated by ", ".
+
+ 
+
+Trim
+
+Executes the trim operation due to the previously made settings.
+
+ 
+
+Example
+
+With TrimCurves
+
+  .Reset
+
+  .Curve "curve1"
+
+  .CurveItem1 "rectangle1"
+
+  .CurveItem2 "polygon1"
+
+  .DeleteEdges1 "2"
+
+  .DeleteEdges2 "5,2"
+
+  .Trim
+
+End With

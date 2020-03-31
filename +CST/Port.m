@@ -65,9 +65,13 @@ classdef Port < handle
             int = obj.hPort.invoke('GetNextPortNumber');
         end
         %% Port Creation / Modification
-        function int = LoadContentForModify(obj)
+        function LoadContentForModify(obj, portnumber)
+            % NOTE: Different from documentation.
+            %       Implemented based on history list of migrated CST 2014 file.
             % If you want to modify an existing port with the Modify command, the first step is, to load the properties of that port. Then you may use methods to change particular settings and call Modify in the end. Loading the content first is mandatory for flawless operation of port modification even if all properties will be overwritten by the Port Settings and Mode Settings commands.
-            int = obj.hPort.invoke('LoadContentForModify');
+            obj.AddToHistory(['.LoadContentForModify "', num2str(portnumber, '%.15g'), '"']);
+            obj.portnumber = portnumber;
+%             int = obj.hPort.invoke('LoadContentForModify');
         end
         function Create(obj)
             % Creates a new or modifies an existing waveguide port.

@@ -1,0 +1,453 @@
+Boundary Object
+
+Represents the boundary condition of the calculation domain for each boundary plane. You may either have a magnetic, electric or an open boundary condition.
+
+General Methods
+
+Methods Concerning Open Boundary Conditions
+
+Methods Concerning Periodic Boundary Conditions
+
+Methods Concerning Periodic Boundaries and Unit Cells
+
+Methods Concerning the Unit Cell Geometry
+
+Default Settings
+
+Example
+
+General Methods
+
+XminThermal(enum ThermalBoundaryType)
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+XmaxThermal(enum ThermalBoundaryType)
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+YminThermal(enum ThermalBoundaryType)
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+YmaxThermal(enum ThermalBoundaryType)
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+ZminThermal(enum ThermalBoundaryType)
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+ZmaxThermal(enum ThermalBoundaryType)
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetXminThermal enum ThermalBoundaryType
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetXmaxThermal enum ThermalBoundaryType
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetYminThermal enum ThermalBoundaryType
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetYmaxThermal enum ThermalBoundaryType
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetZminThermal enum ThermalBoundaryType
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetZmaxThermal enum ThermalBoundaryType
+
+ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+
+                     "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+
+                     ”open” - Simulates the open space.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+XsymmetryThermal(enum ThermalSymmetryType)
+
+thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+
+                     "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+
+                     "none" - No symmetry.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+YsymmetryThermal(enum ThermalSymmetryType)
+
+thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+
+                     "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+
+                     "none" - No symmetry.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+ZsymmetryThermal(enum ThermalSymmetryType)
+
+thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+
+                     "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+
+                     "none" - No symmetry.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetXSymmetryThermal enum ThermalSymmetryType
+
+thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+
+                     "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+
+                     "none" - No symmetry.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetYSymmetryThermal enum ThermalSymmetryType
+
+thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+
+                     "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+
+                     "none" - No symmetry.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+GetZSymmetryThermal enum ThermalSymmetryType
+
+thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+
+                     "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+
+                     "none" - No symmetry.
+
+                     ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+
+ 
+
+XminTemperatureType ( enum type )
+
+Specifies the temperature type of the lower and upper boundaries.
+
+type: ”none” - No temperature is set for  the corresponding boundary.
+
+      ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+
+      ”floating” - The temperature is defined as floating on the corresponding boundary.
+
+ 
+
+XmaxTemperatureType ( enum type )
+
+Specifies the temperature type of the lower and upper boundaries.
+
+type: ”none” - No temperature is set for  the corresponding boundary.
+
+      ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+
+      ”floating” - The temperature is defined as floating on the corresponding boundary.
+
+ 
+
+YminTemperatureType ( enum type )
+
+Specifies the temperature type of the lower and upper boundaries.
+
+type: ”none” - No temperature is set for  the corresponding boundary.
+
+      ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+
+      ”floating” - The temperature is defined as floating on the corresponding boundary.
+
+ 
+
+YmaxTemperatureType ( enum type )
+
+Specifies the temperature type of the lower and upper boundaries.
+
+type: ”none” - No temperature is set for  the corresponding boundary.
+
+      ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+
+      ”floating” - The temperature is defined as floating on the corresponding boundary.
+
+ 
+
+ZminTemperatureType ( enum type )
+
+Specifies the temperature type of the lower and upper boundaries.
+
+type: ”none” - No temperature is set for  the corresponding boundary.
+
+      ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+
+      ”floating” - The temperature is defined as floating on the corresponding boundary.
+
+ 
+
+ZmaxTemperatureType ( enum type )
+
+Specifies the temperature type of the lower and upper boundaries.
+
+type: ”none” - No temperature is set for  the corresponding boundary.
+
+      ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+
+      ”floating” - The temperature is defined as floating on the corresponding boundary.
+
+ 
+
+XminTemperature ( double  value )
+
+Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+
+ 
+
+XmaxTemperature  ( double  value )
+
+Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+
+ 
+
+YminTemperature  ( double  value )
+
+Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+
+ 
+
+YmaxTemperature  ( double  value )
+
+Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+
+ 
+
+ZminTemperature  ( double  value )
+
+Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+
+ 
+
+ZmaxTemperature  ( double  value )
+
+Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+
+ 
+
+Default Settings
+
+Xmin ("electric")
+
+Xmax ("electric")
+
+Ymin ("electric")
+
+Ymax ("electric")
+
+Zmin ("electric")
+
+Zmax ("electric")
+
+Xsymmetry ("none")
+
+Ysymmetry ("none")
+
+Zsymmetry ("none")
+
+ApplyInAllDirections (False)
+
+XminTemperatureType ("none")
+
+XmaxTemperatureType ("none")
+
+YminTemperatureType ("none")
+
+YmaxTemperatureType ("none")
+
+ZminTemperatureType ("none")
+
+ZmaxTemperatureType ("none")
+
+Layer (4)
+
+Reflection (0.0001)
+
+MinimumLinesDistance (5)
+
+MinimumDistancePerWavelength  (8)
+
+SetConvPMLExponentM (3)
+
+SetConvPMLKMax (5)
+
+SetConvPMLOuterBoundary ("MAG")
+
+ActivePMLFactor  (1.0)
+
+XPeriodicShift (0.0)
+
+YPeriodicShift (0.0)
+
+ZPeriodicShift (0.0)
+
+PeriodicUseConstantAngles (False)
+
+SetPeriodicBoundaryAnglesDirection ("outward")
+
+SetPeriodicBoundaryAngles (0.0, 0.0)
+
+UnitCellFitToBoundingBox (True)
+
+UnitCellAngle (90.0)
+
+UnitCellOrigin (0.0, 0.0)
+
+MinimumDistanceAtCenterFrequency (True)
+
+Example
+
+With Boundary
+
+     .Xmin ("electric")
+
+     .Xmax ("electric")
+
+     .Ymin ("electric")
+
+     .Ymax ("electric")
+
+     .Zmin ("electric")
+
+     .Zmax ("electric")
+
+     .Xsymmetry ("none")
+
+     .Ysymmetry ("none")
+
+     .Zsymmetry ("none")
+
+     .ApplyInAllDirections (False)
+
+     .XPeriodicShift (45.0)
+
+     .YPeriodicShift (0.0)
+
+     .ZPeriodicShift (0.0)
+
+     .PeriodicUseConstantAngles (True)
+
+     .SetPeriodicBoundaryAngles (30.0, 0.0)
+
+ .XminPotential ""
+
+End With
+
+ 

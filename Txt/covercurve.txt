@@ -1,0 +1,71 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Curve Operations | CoverCurve
+
+CoverCurve Object
+
+This object is used to cover a planar curve with a sheet in order to create a shape from a curve. The created shape is a single face and thus not a valid solid. Constraint: The curve must be closed and planar.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name solidname )
+
+Sets the name of the new sheet solid.
+
+ 
+
+Component ( name componentname )
+
+Sets the name of the component for the new sheet solid. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new sheet solid. The material must already exist.
+
+ 
+
+Curve ( name curvename )
+
+The name of the curve item the new solid should be created. The correct format for the name should be 'curvename:curveitemname' (see the example below). If the curve item (e.g. a line) is connected with an other curve item (e.g. a polygon) both curve items will be transformed into the new sheet solid.
+
+ 
+
+Create
+
+Creates a new sheet solid. All necessary settings for this sheet solid have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Example
+
+With CoverCurve
+
+     .Reset
+
+     .Name "solid1"
+
+     .Component "component1"
+
+     .Material "Vacuum"
+
+     .Curve "curve1:polygon1"
+
+     .Create
+
+End With

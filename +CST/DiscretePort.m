@@ -104,6 +104,11 @@ classdef DiscretePort < handle
         end
         function SetP1(obj, picked, x, y, z)
             % Define the starting / end point of the discrete port. If picked is True, the last or second-to-last picked point will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
+            if(nargin < 3)
+                x = 0;
+                y = 0;
+                z = 0;
+            end
             obj.AddToHistory(['.SetP1 "', num2str(picked, '%.15g'), '", '...
                                      '"', num2str(x, '%.15g'), '", '...
                                      '"', num2str(y, '%.15g'), '", '...
@@ -111,6 +116,11 @@ classdef DiscretePort < handle
         end
         function SetP2(obj, picked, x, y, z)
             % Define the starting / end point of the discrete port. If picked is True, the last or second-to-last picked point will be used for the coordinates of the start / end point. Otherwise the point will be defined by x / y / z.
+            if(nargin < 3)
+                x = 0;
+                y = 0;
+                z = 1;
+            end
             obj.AddToHistory(['.SetP2 "', num2str(picked, '%.15g'), '", '...
                                      '"', num2str(x, '%.15g'), '", '...
                                      '"', num2str(y, '%.15g'), '", '...
@@ -183,6 +193,10 @@ classdef DiscretePort < handle
             x1 = str2double(x1);
             y1 = str2double(y1);
             z1 = str2double(z1);
+        end
+        %% Undocumented functions.
+        function Folder(obj, folder)
+            obj.AddToHistory(['.Folder "', num2str(folder, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

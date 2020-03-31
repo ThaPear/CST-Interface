@@ -1,0 +1,203 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | VectorPlot2D
+
+VectorPlot2D Object
+
+This object allows to plot three dimensional vector fields in a cutting plane. Therefore the 3D Fields on 2D Plane option has to be active. To choose what field to plot the SelectTreeItem command can be used.
+
+General Methods
+
+Query
+
+Default Settings
+
+Example
+
+General Methods
+
+Type ( enum key )
+
+Selects the type of Plot.
+
+key can have one of  the following values:
+
+"arrows"        The field vectors will be plotted as arrows.
+
+"cone"          The field vectors will be plotted as cones.
+
+"thinarrows"    The field vectors will be plotted as thin arrows.
+
+"hedgehog”      The field vectors will be plotted as ”lines”.
+
+ 
+
+PhaseValue ( double phase )
+
+Specifies the phase of to be plotted complex field values.
+
+ 
+
+PhaseStep ( double phasestep )
+
+Specifies the step width used by phase incrementing actions.
+
+ 
+
+SetDensityInPercent( int objects )
+
+Specifies the relative  number of plotted objects. Default density is set to 50%. The density  should be between 0% and 100%
+
+ 
+
+ArrowSize ( int size )
+
+Defines the size of the arrows by scaling the field. The scaling size factor must be between 0 and 100
+
+ 
+
+PlaneNormal ( enum normal )
+
+Sets the direction of the cutting plane where the fields are to be plotted. The position of the plane can be set by PlaneCoordinate.
+
+normal can have one of  the following values:
+
+"x"     x  is the coordinate direction of the cutting plane.
+
+"y"     y  is the coordinate direction of the cutting plane.
+
+"z"     z  is the coordinate direction of the cutting plane.
+
+ 
+
+PlaneCoordinate ( double position )
+
+Sets the position of the cutting plane where the fields are to be plotted. The direction of the plane can be set by PlaneNormal.
+
+ 
+
+SetTime ( double time )
+
+The current time value of a time monitor plot is set.
+
+ 
+
+SetSample ( long sample )
+
+The current time sample number of a time monitor plot is set.
+
+ 
+
+%% Query
+
+ 
+
+GetDomain enum
+
+Returns the domain of the monitor used, return code can have the following values:
+
+"frequency"     The plot is based on recordings of a frequency domain monitor.
+
+"time"          The plot is based on recordings of a time domain monitor.
+
+"static"        The plot is based on recordings of a static monitor.
+
+ 
+
+GetNumberOfSamples long
+
+Returns the total number of samples if the plot is based on recordings of a time monitor else 0.
+
+ 
+
+GetTStart double
+
+Returns the start time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTEnd double
+
+Returns the end time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTStep double
+
+Returns the time step width of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTime double
+
+Returns the current  time set of a time monitor plot.
+
+ 
+
+GetSample long
+
+Returns the current time sample number of a time monitor plot.
+
+Default Settings
+
+PhaseValue (0.0)
+
+PhaseStep (22.5)
+
+SetDensityInPercent(50)
+
+ArrowSize (50)
+
+LogScale (False)
+
+LogStrength (10.0)
+
+PlaneNormal ("x")
+
+PlaneCoordinate (0)
+
+SetTime (0.0)
+
+SetSample (0)
+
+Example
+
+The following script plots the electric field  "e1" (if available) in a linear scale by using arrows with density equal 30% . The y-z-plane is defined as cutting plane.
+
+ 
+
+' Plot only a wire frame of the structure to be able to look inside
+
+Plot.wireframe (True)
+
+ 
+
+' Select the desired monitor in the tree.
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+ 
+
+' Enables plotting of 3D fields on 2D planes
+
+Plot3DPlotsOn2DPlane (True)
+
+ 
+
+' Plot the field of the selected monitor
+
+With VectorPlot2D
+
+    .SetDensityInPercent(30)
+
+    .ArrowSize (50)
+
+    .PlaneNormal ("x")
+
+    .PlaneCoordinate (0.0)
+
+    .LogScale (False)
+
+End With 
+
+ 
+
+ 

@@ -1,0 +1,99 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Ellipse
+
+Ellipse Object
+
+This object is used to create a new ellipse curve item.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name ellipsename )
+
+Sets the name of the ellipse.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new ellipse curve item. The curve must already exist.
+
+ 
+
+XRadius ( double radiusXdirection )
+
+Sets the radius in x-direction for the ellipse.
+
+ 
+
+YRadius ( double radiusYdirection )
+
+Sets the radius in y-direction for the ellipse.
+
+ 
+
+Xcenter ( double  xcenter )
+
+Sets the x-coordinate from the center point of the ellipse.
+
+ 
+
+Ycenter ( double  ycenter )
+
+Sets the y-coordinate from the center point of the ellipse.
+
+ 
+
+Segments ( int segments )
+
+Sets the number of parts the ellipse should be segmented.
+
+The value must be either 0 or greater than 2.
+
+ 
+
+Create
+
+Creates a new ellipse curve item. All necessary settings for this ellipse have to be made previously.
+
+Default Settings
+
+Xcenter (0.0)
+
+Ycenter (0.0)
+
+Segments (0)
+
+Example
+
+With Ellipse
+
+     .Reset
+
+     .Name "ellipse1"
+
+     .Curve "curve1"
+
+     .XRadius "3.9"
+
+     .YRadius "1.6"
+
+     .Xcenter "-1.7"
+
+     .Ycenter "a+1.7"
+
+     .Segments "0"
+
+     .Create
+
+End With

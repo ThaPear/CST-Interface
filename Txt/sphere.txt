@@ -1,0 +1,117 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Sphere
+
+Sphere Object
+
+This object is used to create a new sphere shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name spherename )
+
+Sets the name of the sphere.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new sphere. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new sphere. The material must already exist.
+
+ 
+
+Axis ( enum{"x", "y", "z"} direction )
+
+Sets the axis of the sphere.
+
+ 
+
+CenterRadius ( double radius )
+
+Sets the center radius of the sphere.
+
+ 
+
+TopRadius ( double radius )
+
+Sets the radius at the top of the sphere.
+
+ 
+
+BottomRadius ( double radius )
+
+Sets the radius at the bottom of the sphere.
+
+ 
+
+Center ( double xcenter, double ycenter, double zcenter )
+
+Sets the (x, y, z) or (u, v, w) coordinates of the sphere's center point depending on whether a local coordinate system is active or not.
+
+ 
+
+Segments ( int number )
+
+This setting specifies how the sphere's geometry is modelled, either as a smooth surface of by a facetted approximation. If this value is set to "0", an analytical (smooth) representation of the sphere will be created. If this number is set to another value greater than 2, the sphere's face will be approximated by this number of planar facets along each of the angular directions. The higher the number of segments, the better the representation of the sphere will be.
+
+ 
+
+Create
+
+Creates a new sphere. All necessary settings for this sphere have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Center (0, 0, 0)
+
+Segments (0)
+
+TopRadius (0)
+
+BottomRadius (0)
+
+Example
+
+With Sphere
+
+    .Reset
+
+    .Name ("sphere1")
+
+    .Component ("component1")
+
+    .Material ("PEC")
+
+    .Axis "z"
+
+    .CenterRadius (1)
+
+    .TopRadius (0)
+
+    .BottomRadius (0)
+
+    .Center (2, 1, 3)
+
+    .Segments (0)
+
+    .Create
+
+End With

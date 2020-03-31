@@ -116,6 +116,7 @@ classdef Plot1D < handle
             % Specifies the distance between two successive ticks to be displayed at the y/r-axis. This method automatically turns the YAutoTick switch off.
             obj.hPlot1D.invoke('YTicksDistance', distance);
         end
+        %% Markers and Measure Lines
         function AddMarker(obj, absczissa)
             % On each curve in the selected plot a curve marker will be set
             % at the specified abscissa. For polar or Smith chart plots the
@@ -173,6 +174,7 @@ classdef Plot1D < handle
             % If MeasureLines are active, their positions with respect to the y-axis will be specified here. This method is available only for cartesian plots.
             obj.hPlot1D.invoke('YMeasureLines', min, max);
         end
+        %% Background Shapes
         function AddThickBackGroundLine(obj, x0, y0, x1, y1)
             % Adds a thick background line to a cartesian plot going from (x0, y0) to (x1, y1). The points are given in data coordinates with respect to current plot. This method is available only for cartesian plots.
             obj.hPlot1D.invoke('AddThickBackGroundLine', x0, y0, x1, y1);
@@ -185,6 +187,8 @@ classdef Plot1D < handle
             % Deletes all previously set background lines. This method is available only for cartesian plots.
             obj.hPlot1D.invoke('DeleteAllBackGroundShapes');
         end
+        %% Plot Styles
+        % The parameter curveindex of the following commands is zero-based (i.e. 0 for the first curve).
         function SetLineColor(obj, curveindex, red, green, blue)
             % Sets the color of the curve with the given curve index to the specified RGB-value. Each parameter red, green and blue can be a value between 0 and 255. After this method has been called it is necessary to call the Plot method to make the changes visible.
             obj.hPlot1D.invoke('SetLineColor', curveindex, red, green, blue);
@@ -209,6 +213,8 @@ classdef Plot1D < handle
             % Sets the line style and line thickness of the curve with the given curve index to default values. After this method has been called it is necessary to call the Plot method to make the changes visible. The markers are not visible in Polar plots and Smith chart plots.
             obj.hPlot1D.invoke('RemoveMarkerStyle', curveindex);
         end
+        %% Queries
+        % The parameter curveindex of the following commands is zero-based (i.e. 0 for the first curve).
         function int = GetCurveIndexOfCurveLabel(obj, curvelabel)
             % Returns the index of the curve with the specified curve label. If the curve label is not found  -1 will be returned. In case the curve label is not unique, the first matching index will be returned. Please note that it is the curve label which is needed, not the name of the Tree entry. In a Smith chart plot, this could be for example "S1,1 (var. ref. imp.)". Use the method GetCurveLabelOfCurveIndex to get the correct spelling of a certain curve label.
             int = obj.hPlot1D.invoke('GetCurveIndexOfCurveLabel', curvelabel);
@@ -239,7 +245,13 @@ classdef Plot1D < handle
         end
         function string = GetCurrentPlotSettings(obj, options)
             % Returns the current plot settings as a string. The parameter 'options' is expected to be an empty string. The string returned by this method contains VBA commands that can be used to restore the current plot state.
-            string = obj.hPlot1D.invoke('GetCurrentPlotSettings', options);
+            functionString = [...
+                'Dim options As String', newline, ...
+                'Dim str As String', newline, ...
+                'str = Plot1D.GetCurrentPlotSettings(options)', newline, ...
+            ];
+            returnvalues = {'str'};
+            [string] = obj.project.RunVBACode(functionString, returnvalues);
         end
         function [enabled, curvelimit] = GetCurveLimit(obj)
             % This method allows querying the settings that correspond to the "No. of curves" option

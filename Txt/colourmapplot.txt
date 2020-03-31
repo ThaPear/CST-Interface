@@ -1,0 +1,163 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ColourMapPlot
+
+ColourMapPlot Object
+
+This object allows controlling the visualization of color map plots.
+
+ 
+
+Methods
+
+Reset
+
+Reset all plot options to their default values.
+
+ 
+
+PlotView( string type ) bool
+
+This method corresponds to selecting a certain plot of the plot toolbar. The variable type specifies the type of view that should be plotted and can be one of the following strings: "real", "imaginary", "magnitude", "magnitudedb", "phase". If the data could be plotted with the given view type, the method returns true, otherwise false.
+
+ 
+
+SetXTicks( long nticks)
+
+Specifies the number of ticks along the horizontal axis. Please note that at least two ticks must be specified.
+
+ 
+
+SetYTicks( long nticks)
+
+Specifies the number of ticks along the vertical axis. Please note that at least two ticks must be specified.
+
+ 
+
+SetDrawGrid ( bool grid)
+
+This option specifies whether a grid is drawn on top of the data.
+
+ 
+
+SetClampToRange( bool clamp)
+
+This option specifies whether the color ramp is scaled to the maximum data range or to a custom lower and upper limit. If this setting is turned on, the color ramp limits are specified by the SetClampToRangeMin and SetClampToRangeMax settings.
+
+ 
+
+SetClampToRangeMin( double limit )
+
+This option is used only if the SetClampToRange option is turned on. The limit specifies the lower bound of the color ramp scale.
+
+ 
+
+SetClampToRangeMax( double limit )
+
+This option is used only if the SetClampToRange option is turned on. The limit specifies the upper bound of the color ramp scale.
+
+ 
+
+SetSkipLessThan ( bool skip)
+
+This option specifies whether data values below a given threshold shall be skipped from visualization. The threshold value is specified by the SetSkipLessThanValue setting.
+
+ 
+
+SetSkipLessThanValue( double threshold)
+
+This option is used only if the SetSkipLessThan option is turned on. The limit specifies the threshold such that data values below this limit will be skipped from visualization.
+
+ 
+
+GetXMinData double
+
+Get the x and y ranges of the data.
+
+ 
+
+GetXMaxData double
+
+Get the x and y ranges of the data.
+
+ 
+
+GetYMinData double
+
+Get the x and y ranges of the data.
+
+ 
+
+GetYMaxData double
+
+Get the x and y ranges of the data.
+
+ 
+
+GetXMinView double
+
+Get the x and y ranges of the current view.
+
+ 
+
+GetXMaxView double
+
+Get the x and y ranges of the current view.
+
+ 
+
+GetYMinView double
+
+Get the x and y ranges of the current view.
+
+ 
+
+GetYMaxView double
+
+Get the x and y ranges of the current view.
+
+ 
+
+GetDataMinValue double
+
+Get the minimum and maximum values of the data.
+
+ 
+
+GetDataMaxValue double
+
+Get the minimum and maximum values of the data.
+
+ 
+
+GetViewMinValue double
+
+Get the minimum and maximum values of the subset of the data which is currently displayed in the view.
+
+ 
+
+GetViewMaxValue double
+
+Get the minimum and maximum values of the subset of the data which is currently displayed in the view.
+
+ 
+
+GetDataNx  long
+
+Get the number of data samples along the x and y axes.
+
+ 
+
+GetDataNy long
+
+Get the number of data samples along the x and y axes.
+
+ 
+
+GetDataValue (  long x, long y ) double
+
+Get the value of the data with the given indices x and y. Valid indices are greater or equal 0 and lower than the number of data samples in the corresponding direction.
+
+ 
+
+Default Settings
+
+Examples

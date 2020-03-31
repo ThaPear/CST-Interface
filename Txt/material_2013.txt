@@ -1,0 +1,495 @@
+
+Material Object
+
+The Material Object lets you define or change materials. Each material defines the material constants of the associated solids.
+
+General
+
+Appearance
+
+Basic Material Parameters
+
+Surface Impedance Materials
+
+Electric Conductivity
+
+Magnetic Conductivity
+
+Dispersion
+
+Tensor Formulas
+
+Temperature Dependent Materials
+
+Thermal Material Properties
+
+Mechanics Material Properties
+
+Queries
+
+Default Settings
+
+General Methods
+
+
+Mue ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+MueX ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+MueY ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+MueZ ( double dValue )
+
+Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+
+ 
+
+AddTanDValueWeightedEps ( double dFrequency, double dTanD, double dWeight )
+
+This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDModel set to "DispTanD". Note, that the real part of the permittivity is given by the .Epsilon method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+
+Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedEps method to define the components of the diagonal tensor.
+
+Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+ 
+
+AddTanDValueXYZWeightedEps ( double dFrequency, double dTanDX, double dTanDY, double dTanDZ, double dWeight )
+
+This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDModel set to "DispTanD". Note, that the real part of the permittivity is given by the .Epsilon method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+
+Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedEps method to define the components of the diagonal tensor.
+
+Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+ 
+
+ResetTanDListEps
+
+Reset the list of tan(delta) values set by the .AddTanDValueWeightedEps and AddTanDValueXYZWeightedEps  methods.
+
+ 
+
+ConstTanDModelOrderMue ( int iValue )
+
+Sets the order for the ConstTanD model which corresponds to the number of poles used in the internal material representation. An order=1 corresponds to a Debye model.
+
+ 
+
+AddTanDValueWeightedMue ( double dFrequency, double dTanDM, double dWeight )
+
+This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDMModel set to "DispTanD". Note, that the real part of the permeability is given by the .Mue method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+
+Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedMue method to define the components of the diagonal tensor.
+
+Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+ 
+
+AddTanDValueXYZWeightedMue ( double dFrequency, double dTanDMX, double dTanDMY, double dTanDMZ, double dWeight )
+
+This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDMModel set to "DispTanD". Note, that the real part of the permeability is given by the .Mue method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+
+Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedMue method to define the components of the diagonal tensor.
+
+Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+
+ 
+
+ResetTanDListMue
+
+Reset the list of tan(delta) values set by the .AddTanDValueWeightedMue and AddTanDValueXYZWeightedMue methods.
+
+
+
+DispModelMue ( enum{"None", "Debye1st", "Debye2nd", "Drude", "Lorentz", "Gyrotropic", "General1st", "General2nd", "NonLinear2nd", "NonLinear3rd", "NonLinearKerr", "NonLinearRaman"} key }
+
+Sets the dispersion model for dielectric / magnetic dispersion.
+
+These material dispersions are specified by several coefficients, describing the corresponding dispersive behavior. Please find the meaning of the coefficients in the following list, for epsilon and mu respectively. Note, that in case of general 1st or 2nd order models the parameters have no special physical meaning, but represent mathematical coefficients of general polynomials.
+
+The following table describes the coefficient for the linear dispersive materials.
+
+                        Coeff1              Coeff2              Coeff3                  Coeff4
+
+Debye 1st order         Static value        Relaxation time     -                       -
+
+Debye 2nd order         Static value 1      Static value  2     Relaxation time 1       Relaxation time 2
+
+Drude                   Plasma freq.        Collision freq.     -                       -
+
+Lorentz                 Static epsilon      Resonance freq.     Damping freq.           -
+
+Gyrotropic Gauss        Landé factor        Sat. magnetization  Resonance line width    Magnetic field vector
+
+Gyrotropic SI           Larmor freq.        Gyrotropic freq.    Damping factor          Biasing direction
+
+General 1st order       Alpha0              Beta0               -                       -
+
+General 2nd order       Alpha0              Alpha1              Beta0                   Beta1
+
+General                 Higher order dispersion model is specified with a summation of first and second order poles using the AddDispEpsPole1stOrder or AddDispEpsPole2ndOrder methods for the dielectric dispersion or AddDispMuPole1stOrder or AddDispMuPole2ndOrder methods for the magnetic dispersion, respectively.
+
+In case of the nonlinear dispersive material the parameter correspondence is described by the following table.
+
+                        Coeff0              Coeff1              Coeff2                  Coeff3      Coeff4
+
+Nonlinear 2nd order     Chi2 value          -                   -                       -           -
+
+Nonlinear 3rd order     Chi3 value          -                   -                       -           -
+
+Nonlinear Kerr          Chi3 infinity value Chi3 static value   Relaxation time         -           -
+
+Nonlinear Raman         Chi3 infinity value Chi3 static value   Plasma freq.        Collision freq. -
+
+ 
+
+AddDispMuePole1stOrder ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole1stOrderX ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole1stOrderY ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole1stOrderZ ( double alpha0,  double beta0 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole2ndOrder ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole2ndOrderX ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole2ndOrderY ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+AddDispMuePole2ndOrderZ ( double alpha0,  double alpha1, double beta0 ,  double beta1 )
+
+These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+
+ 
+
+MueInfinity ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+MueInfinityX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+MueInfinityY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+MueInfinityZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0Mue ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0MueX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0MueY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff0MueZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1Mue ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1MueX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1MueY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff1MueZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2Mue ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2MueX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2MueY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff2MueZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3Mue ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3MueX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3MueY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff3MueZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4Mue ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4MueX ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4MueY ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+DispCoeff4MueZ ( double dValue )
+
+Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+
+ 
+
+GyroFreqMue ( double dValue )
+
+Reference frequency for the conversion of gyrotropic material parameters given in Gauss units into the SI system.
+
+ 
+
+AddDispersionFittingValueMue ( double dFrequency, double dRe, double dIm, double dWeight  )
+
+Use this method to add a complex material value eps/mue with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMue method to define the components of the diagonal tensor.
+
+This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function
+
+DispersiveFittingSchemeEps/DispersiveFittingSchemeMue. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMue.
+
+ 
+
+AddDispersionFittingValueXYZMue ( double dFrequency, double dReX, double dImX, double dReY, double dImY, double dReZ, double dImZ, double dWeight  )
+
+Use this method to add a complex material value eps/mue with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMue method to define the components of the diagonal tensor.
+
+This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function
+
+DispersiveFittingSchemeEps/DispersiveFittingSchemeMue. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMue.
+
+ 
+
+DispersiveFittingSchemeMue ( enum {"Conductivity", "1st Order", "2nd Order", "Nth Order"} key )
+
+Sets the required fitting scheme.
+
+ 
+
+MaximalOrderNthModelFitMue ( int iValue )
+
+Set the maximum allowed order for the nth fit interpolation scheme ("Nth Order"), for the eps or mue interpolation, respectively. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+
+ 
+
+UseOnlyDataInSimFreqRangeNthModelMue ( bool switch )
+
+Allow the nth order fit for the eps or mue interpolation scheme, respectively, ("Nth Order") to use only the frequency data points that lie within the "frequency range settings" defined by the user. Activating this switch enables an accurate data fitting of the material resonances which occur in the simulation bandwidth of interest using possibly a reduced number of poles and zeroes with respect to the complete data fitting. And this, in turn, translates into benefits for the simulation complexity in terms of memory and computational time.
+
+ 
+
+UseGeneralDispersionMue ( bool switch )
+
+Use this function to activate/deactivate the user defined dispersion.
+
+ 
+
+%% Temperature Dependent Materials
+
+ 
+
+AddTemperatureDepMue ( double dTemperature, double dValue )
+
+With this method a new point for temperature dependency of magnetic permeability can be specified. Use with set to "Normal".
+
+ 
+
+ResetTemperatureDepMue
+
+Deletes the temperature dependency curve for magnetic permeability.
+
+ 
+
+%% Queries
+
+ 
+
+GetMue ( name name, double_ref MueX, double_ref MueY, double_ref MueZ )
+
+Returns the specific material parameter for the material specified by name in the respective double variables.
+
+ 
+
+Exists  ( name name ) bool
+
+Returns True if the material specified by name exists.
+
+Default Settings
+
+.Type ("Normal")
+
+.Colour ("0", "1", "1")
+
+.Wireframe ("False")
+
+.Transparency ("0")
+
+.Epsilon ("1.0")
+
+.Mue ("1.0")
+
+.Rho ("0.0")
+
+.Sigma ("0.0")
+
+.TanD ("0.0")
+
+.TanDFreq ("0.0")
+
+.TanDGiven ("False")
+
+.TanDModel ("ConstTanD")
+
+.SigmaM ("0.0")
+
+.TanDM ("0.0")
+
+.TanDMFreq ("0.0")
+
+.TanDMGiven ("False")
+
+.DispModelEps ("None")
+
+.DispModelMue ("None")
+
+.MueInfinity ("1.0")
+
+.EpsInfinity ("1.0")
+
+.DispCoeff1Eps ("0.0")
+
+.DispCoeff2Eps ("0.0")
+
+.DispCoeff3Eps ("0.0")
+
+.DispCoeff4Eps ("0.0")
+
+.DispCoeff1Mue ("0.0")
+
+.DispCoeff2Mue ("0.0")
+
+.DispCoeff3Mue ("0.0")
+
+.DispCoeff4Mue ("0.0")
+
+.AddDispEpsPole1stOrder ("0.0", "0.0")
+
+.AddDispEpsPole2ndOrder ("0.0", "0.0", "0.0", "0.0")
+
+ 
+
+ 

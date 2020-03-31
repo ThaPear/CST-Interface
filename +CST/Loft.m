@@ -74,6 +74,23 @@ classdef Loft < handle
             obj.project.AddToHistory(['define loft: ', obj.component, ':', obj.name], obj.history);
             obj.history = [];
         end
+        %% Undocumented functions.
+        % Found in history list of migrated CST 2014 file in 'define loft'.
+        % Possibly equivalent to Loft.Create.
+        function CreateNew(obj)
+            obj.AddToHistory(['.CreateNew']);
+            
+            % Prepend With Loft and append End With
+            obj.history = [ 'With Loft', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define loft: ', obj.component, ':', obj.name], obj.history);
+            obj.history = [];
+        end
+        % Found in history list of migrated CST 2014 file in 'define loft'.
+        function Minimizetwist(obj, boolean)
+            obj.AddToHistory(['.Minimizetwist "', num2str(boolean, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

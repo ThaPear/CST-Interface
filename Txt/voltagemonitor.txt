@@ -1,0 +1,69 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | VoltageMonitor
+
+VoltageMonitor Object
+
+Monitors voltages along curves.
+
+Methods
+
+Reset
+
+Resets all internal settings to their values after the last modifying function.
+
+ 
+
+Name ( name name )
+
+Sets a name.
+
+ 
+
+Curve ( string curvekey )
+
+Assigns a path to the voltage monitor.
+
+ 
+
+InvertOrientation ( bool switch )
+
+Inverts orientation.
+
+ 
+
+Rename ( name oldname, name newname )
+
+Rename the monitor.
+
+ 
+
+Delete ( name name )
+
+Deletes the object.
+
+ 
+
+Add
+
+Adds the new element.
+
+ 
+
+Default Settings
+
+InvertOrientation (False)
+
+Example:
+
+With VoltageMonitor
+
+     .Reset
+
+     .Name ("voltage1")
+
+     .Curve ("curve1:line1")
+
+     .InvertOrientation (False)
+
+     .Add
+
+End With

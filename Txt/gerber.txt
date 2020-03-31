@@ -1,0 +1,221 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | GERBER
+
+GERBER Object
+
+This command offers GERBER file import (RS274-D, RS274-X). With this feature you can import data from any IC package system providing the GERBER format.
+
+The GERBER data is imported relative to the current coordinate system and extruded with a profile height to a 3D solid. Use this import option to import the 2D profiles of printed circuits or complex microstrip lines. In case of a standard GERBER file (RS274-D) you need to specify the appropriate aperture file.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+ 
+
+Reset
+
+Resets the import options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets the name of the imported file.
+
+ 
+
+Version ( double version )
+
+Sets the version of the import filter, since the behavior of the import may slightly change from version to version. This setting is available for backward compatibility reasons and should ensure that later versions of the import can exactly reproduce the behavior of earlier versions. The most recent version of the import is 11.3.
+
+ 
+
+GerberType ( enum type )
+
+Specifies the imported GERBER Type. The standard GERBER type (RS274-D) needs an aperture file, while the extended GERBER format (RS274-X) has the aperture data included.
+
+type can have one of  the following values:
+
+type: 'RS274D' - RS274-D GERBER
+
+      'RS274X' - RS274-X Extended GERBER
+
+ 
+
+Height ( double height )
+
+This value specifies the extrusion height applied to the 2D profiles to create a 3D solid. The default value 0.0 leads to a very thin (not exact zero) profile.
+
+ 
+
+Offset ( double offset )
+
+This value specifies the distance of the imported 2D profiles relative to the active coordinate system.
+
+ 
+
+AddAllShapes ( enum{"True", "False"}  switch )
+
+Profiles which have a different start and end point are automatically closed, if this parameter is "True".
+
+ 
+
+Id ( int id )
+
+A CAD file may be imported more than once into the same project with different settings of import options or layer selections. In order to improve the performance of structure rebuilds, an intermediate file is stored during the import process which allows to quickly re-read the data during rebuilds in case that the original CAD file has not been modified. The naming convention of the intermediate file follows the name of the original file, but is marked with a tilde at the end of the file name. However, these names have to be unique for each individual import step. Therefore, in case that the same file is imported more than once into the project, the Id setting needs to be increased. The Id will then be incorporated into the file name which ensures unique file names for every import.
+
+ 
+
+AsCurves ( enum{"True", "False"}  switch )
+
+Reads the geometric structure of the corresponding data file as curves (switch = "True") or as solids (switch = "False"). The import as curves offers a fast possibility to get a sufficient impression of the complete structure.
+
+ 
+
+ApertureFileName ( filename filename )
+
+Sets a name of the aperture file for the standard GERBER format.
+
+ 
+
+AllowZeroHeight ( bool switch )
+
+Set this option to allow shapes of zero height.
+
+ 
+
+SetSimplifyActive ( bool switch )
+
+Set this option to enable the polygon simplification.
+
+ 
+
+SetSimplifyMinPointsArc ( int nCount )
+
+Minimum number of segments needed to recognize an arc. Must be >= 3.
+
+ 
+
+SetSimplifyMinPointsCircle ( int nCount )
+
+Minimum number of segments needed for complete circles. Must be > 'SetSimplifyMinPointsArc' and at least 5.
+
+ 
+
+SetSimplifyAngle ( double angle )
+
+The maximum angle in degrees between two adjacent segments. All smaller angles will be considered to be simplified. The angle is only used for arcs and not for circles.
+
+ 
+
+SetSimplifyAdjacentTol ( double angle )
+
+Is only used by the simplification algorithm to find a good starting point for arcs. It means the maximum angular difference in the angle of adjacent segments. A good value for this parameter will be 1.0.
+
+ 
+
+SetSimplifyRadiusTol ( double deviation )
+
+This means the maximum deviation in percent the distance a segment end point can have to the current definition of the simplification circle center point. The tolerance is used for circles and arcs.
+
+ 
+
+SetSimplifyAngleTang ( double angle )
+
+Maximum angular tolerance in radians used when deciding to create the arc tangential or not to its adjacent line segments. If an angle is beneath the specified value, the arc is build tangential to the neighbor edge.
+
+ 
+
+SetSimplifyEdgeLength ( double length )
+
+Edges smaller than the defined length will be removed. Can be used to remove tiny fragments.
+
+ 
+
+Stackup ( enum{"True", "False"}  switch )
+
+If set to "True" the multilayer GERBER import is used.
+
+ 
+
+Read
+
+Starts the actual import of the file.
+
+ 
+
+Default Settings
+
+FileName ("")
+
+Version (5.1)
+
+GerberType ("RS274D")
+
+Height (0.0)
+
+Offset (0.0)
+
+CloseShapes ("True")
+
+AddAllShapes ("False")
+
+Id (0)
+
+AsCurves ("False")
+
+ApertureFileName ("")
+
+AllowZeroHeight (False)
+
+SetSimplifyActive (True)
+
+SetSimplifyMinPointsArc (3)
+
+SetSimplifyMinPointsCircle (5)
+
+SetSimplifyAngle (10.0)  //Single layer
+
+SetSimplifyAngle (24.0)  //Multiple layer
+
+SetSimplifyAdjacentTol (1.0)
+
+SetSimplifyRadiusTol (5.0)
+
+SetSimplifyAngleTang (1.0)
+
+SetSimplifyEdgeLength (0.0001)
+
+Stackup (FALSE)
+
+Example
+
+With GERBER
+
+    .Reset
+
+    .FileName (".\example.gbr")
+
+    .CloseShapes ("True")
+
+    .AddAllShapes ("False")
+
+    .AsCurves ("False")
+
+    .ApertureFileName (".\example.apt")
+
+    .SetSimplifyActive "True"
+
+    .SetSimplifyAngle "10"
+
+    .SetSimplifyRadiusTol "5.0"
+
+    .SetSimplifyEdgeLength "0.0001"
+
+    .Read
+
+End With

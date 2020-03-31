@@ -219,13 +219,24 @@ classdef Project < handle
             % Adds or modifies an arbitrary number of parameters in one go. For bulk changes of many parameters this method can be considerably faster than changing parameters one after another in a loop.
             % The parameters are allowed to arbitrarily depend on each other or on other already existing parameters.
             % Example:
-            % Dim names(1 To 2) As String, values(1 To 2) As String
-            % names(1) = "a"
-            % names(2) = "b"
-            % values(1) = "5*b"
-            % values(2) = "2"
-            % StoreParameters(names, values)
-            obj.hProject.invoke('StoreParameters', names, values);
+            % names = {'param1', 'param2'};
+            % values = {5, 30};
+            % project.StoreParameters(names, values)
+            N = length(names);
+            functionString = [...
+                sprintf('Dim names(1 To %i) As String, values(1 To %i) As String', N, N), newline, ...
+                ];
+            for(i = 1:N)
+                functionString = [functionString, ...
+                    sprintf('names(%i) = "%s"', i, names{i}), newline, ...
+                    sprintf('values(%i) = "%s"', i, num2str(values{i}, '%.15g')), newline, ...
+                    ]; %#ok<AGROW>
+            end
+            functionString = [functionString, ...
+                'StoreParameters(names, values)', newline, ...
+                ];
+            returnvalues = {}; % No return values.
+            obj.RunVBACode(functionString, returnvalues);
         end
         function StoreDoubleParameter(obj, name, value)
             % Creates a new double parameter or changes an existing one, with the specified double value.
@@ -839,11 +850,13 @@ classdef Project < handle
         end
         function BeginHide(obj)
             % These function has an effect only if they are used in connection with the History List .
-            obj.hProject.invoke('BeginHide');
+%             obj.hProject.invoke('BeginHide');
+            obj.AddToHistory('BeginHide');
         end
         function EndHide(obj)
             % These function has an effect only if they are used in connection with the History List .
-            obj.hProject.invoke('EndHide');
+%             obj.hProject.invoke('EndHide');
+            obj.AddToHistory('EndHide');
         end
         function double = dist2d(obj, id, x, y)
             % Returns the spatial distance in 2d of a pickpoint to a specified position.
@@ -961,7 +974,11 @@ classdef Project < handle
             % ASCIIExport.Execute();
             obj.hProject.invoke('ExportPlotData', filename);
         end
-        
+        % Found in history list of migrated CST 2014 file.
+        function ChangeSolverAndMeshType(obj, type)
+            % type: 'HF Frequency Domain'
+            obj.AddToHistory(['ChangeSolverAndMeshType "', type, '"']);
+        end
         %% Utility functions.
         function varargout = RunVBACode(obj, functionstring, returnvalues)
             % functionstring specifies the VBA code to be run.
@@ -982,7 +999,7 @@ classdef Project < handle
             
             % Run the code in CST.
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
-            obj.RunScript(GetFullPath('CST Interface\Bas\RunVBACode.bas'));
+            obj.RunScript(GetFullPath('CST-Interface\Bas\RunVBACode.bas'));
             
             if(~isempty(returnvalues))
                 % Retrieve return arguments.
@@ -997,8 +1014,28 @@ classdef Project < handle
             parameters = struct();
             for(i = 0:nparams-1)
                 parametername = obj.GetParameterName(i);
-                parameters.(parametername) = obj.RestoreParameter(parametername);
+                parameters.(parametername) = obj.GetParameterSValue(double(i));
+%                 parameters.(parametername) = obj.RestoreParameterExpression(parametername);
             end
+        end
+        function [parameters, descriptions] = GetAllParametersWithDescription(obj)
+            nparams = obj.GetNumberOfParameters();
+            parameters = struct();
+            descriptions = struct();
+            for(i = 0:nparams-1)
+                parametername = obj.GetParameterName(i);
+                parameters.(parametername) = obj.RestoreParameterExpression(parametername);
+%                 parameters.(parametername) = obj.GetParameterSValue(double(i));
+                descriptions.(parametername) = obj.GetParameterDescription(parametername);
+            end
+        end
+        function StoreParameterStruct(obj, strct)
+            names = fieldnames(strct);
+            values = cell(size(names, 1), size(names, 2));
+            for(i = 1:length(names))
+                values{i} = strct.(names{i});
+            end
+            obj.StoreParameters(names, values);
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -1018,24 +1055,36 @@ classdef Project < handle
         blendcurve                  CST.BlendCurve
         boundary                    CST.Boundary
         brick                       CST.Brick
+        circle                      CST.Circle
         colorramp                   CST.ColorRamp
+        colourmapplot               CST.ColourMapPlot
         component                   CST.Component
+        covercurve                  CST.CoverCurve
+        currentmonitor              CST.CurrentMonitor
         curve                       CST.Curve
         cylinder                    CST.Cylinder
+        dimension                   CST.Dimension
         discretefaceport            CST.DiscreteFacePort
         discreteport                CST.DiscretePort
+        discretizer                 CST.Discretizer
+        dxf                         CST.DXF
         eigenmodesolver             CST.EigenmodeSolver
+        ellipse                     CST.Ellipse
         evaluatefieldalongcurve     CST.EvaluateFieldAlongCurve
         evaluatefieldonface         CST.EvaluateFieldOnFace
         extrude                     CST.Extrude
         extrudecurve                CST.ExtrudeCurve
+        face                        CST.Face
         farfieldarray               CST.FarfieldArray
         farfieldplot                CST.FarfieldPlot
         fdsolver                    CST.FDSolver
+        fieldsource                 CST.FieldSource
         floquetport                 CST.FloquetPort
         force                       CST.Force
+        gerber                      CST.GERBER
         group                       CST.Group
         iesolver                    CST.IESolver
+        iges                        CST.IGES
         layerstacking               CST.LayerStacking
         line                        CST.Line
         loft                        CST.Loft
@@ -1047,28 +1096,43 @@ classdef Project < handle
         meshsettings                CST.MeshSettings
         monitor                     CST.Monitor
         networkparameterextraction  CST.NetworkParameterExtraction
+        obj_                        CST.OBJ
         optimizer                   CST.Optimizer
         parametersweep              CST.ParameterSweep
         pick                        CST.Pick
+        planewave                   CST.PlaneWave
         plot                        CST.Plot
         plot1d                      CST.Plot1D
         polygon                     CST.Polygon
         polygon3d                   CST.Polygon3D
         port                        CST.Port
         postprocess1d               CST.PostProcess1D
+        probe                       CST.Probe
         qfactor                     CST.QFactor
         rectangle                   CST.Rectangle
 %         result0d                    CST.Result0D
 %         result1d                    CST.Result1D
 %         result1dcomplex             CST.Result1DComplex
         resulttree                  CST.ResultTree
+        rotate                      CST.Rotate
+        sat                         CST.SAT
+        scalarplot2d                CST.ScalarPlot2D
+        scalarplot23                CST.ScalarPlot3D
         solid                       CST.Solid
         solver                      CST.Solver
         solverparameter             CST.SolverParameter
+        sphere                      CST.Sphere
+        spline                      CST.Spline
+        step                        CST.STEP
+        timesignal                  CST.TimeSignal
         touchstone                  CST.Touchstone
         tracefromcurve              CST.TraceFromCurve
         transform                   CST.Transform_
+        trimcurves                  CST.TrimCurves
         units                       CST.Units
+        vectorplot2d                CST.VectorPlot2D
+        vectorplot23                CST.VectorPlot3D
+        voltagemonitor              CST.VoltageMonitor
         wcs                         CST.WCS
     end
     methods
@@ -1142,6 +1206,13 @@ classdef Project < handle
             brick = obj.brick;
         end
         
+        function circle = Circle(obj)
+            if(isempty(obj.circle))
+                obj.circle = CST.Circle(obj, obj.hProject);
+            end
+            circle = obj.circle;
+        end
+        
         function colorramp = ColorRamp(obj)
             if(isempty(obj.colorramp))
                 obj.colorramp = CST.ColorRamp(obj, obj.hProject);
@@ -1149,11 +1220,32 @@ classdef Project < handle
             colorramp = obj.colorramp;
         end
         
+        function colourmapplot = ColourMapPlot(obj)
+            if(isempty(obj.colourmapplot))
+                obj.colourmapplot = CST.ColourMapPlot(obj, obj.hProject);
+            end
+            colourmapplot = obj.colourmapplot;
+        end
+        
         function component = Component(obj)
             if(isempty(obj.component))
                 obj.component = CST.Component(obj, obj.hProject);
             end
             component = obj.component;
+        end
+        
+        function covercurve = CoverCurve(obj)
+            if(isempty(obj.covercurve))
+                obj.covercurve = CST.CoverCurve(obj, obj.hProject);
+            end
+            covercurve = obj.covercurve;
+        end
+        
+        function currentmonitor = CurrentMonitor(obj)
+            if(isempty(obj.currentmonitor))
+                obj.currentmonitor = CST.CurrentMonitor(obj, obj.hProject);
+            end
+            currentmonitor = obj.currentmonitor;
         end
         
         function curve = Curve(obj)
@@ -1170,6 +1262,13 @@ classdef Project < handle
             cylinder = obj.cylinder;
         end
         
+        function dimension = Dimension(obj)
+            if(isempty(obj.dimension))
+                obj.dimension = CST.Dimension(obj, obj.hProject);
+            end
+            dimension = obj.dimension;
+        end
+        
         function discretefaceport = DiscreteFacePort(obj)
             if(isempty(obj.discretefaceport))
                 obj.discretefaceport = CST.DiscreteFacePort(obj, obj.hProject);
@@ -1184,11 +1283,32 @@ classdef Project < handle
             discreteport = obj.discreteport;
         end
         
+        function discretizer = Discretizer(obj)
+            if(isempty(obj.discretizer))
+                obj.discretizer = CST.Discretizer(obj, obj.hProject);
+            end
+            discretizer = obj.discretizer;
+        end
+        
+        function dxf = DXF(obj)
+            if(isempty(obj.dxf))
+                obj.dxf = CST.DXF(obj, obj.hProject);
+            end
+            dxf = obj.dxf;
+        end
+        
         function eigenmodesolver = EigenmodeSolver(obj)
             if(isempty(obj.eigenmodesolver))
                 obj.eigenmodesolver = CST.EigenmodeSolver(obj, obj.hProject);
             end
             eigenmodesolver = obj.eigenmodesolver;
+        end
+        
+        function ellipse = Ellipse(obj)
+            if(isempty(obj.ellipse))
+                obj.ellipse = CST.Ellipse(obj, obj.hProject);
+            end
+            ellipse = obj.ellipse;
         end
         
         function evaluatefieldalongcurve = EvaluateFieldAlongCurve(obj)
@@ -1219,6 +1339,13 @@ classdef Project < handle
             extrudecurve = obj.extrudecurve;
         end
         
+        function face = Face(obj)
+            if(isempty(obj.face))
+                obj.face = CST.Face(obj, obj.hProject);
+            end
+            face = obj.face;
+        end
+        
         function farfieldarray = FarfieldArray(obj)
             if(isempty(obj.farfieldarray))
                 obj.farfieldarray = CST.FarfieldArray(obj, obj.hProject);
@@ -1240,6 +1367,13 @@ classdef Project < handle
             fdsolver = obj.fdsolver;
         end
         
+        function fieldsource = FieldSource(obj)
+            if(isempty(obj.fieldsource))
+                obj.fieldsource = CST.FieldSource(obj, obj.hProject);
+            end
+            fieldsource = obj.fieldsource;
+        end
+        
         function floquetport = FloquetPort(obj)
             if(isempty(obj.floquetport))
                 obj.floquetport = CST.FloquetPort(obj, obj.hProject);
@@ -1254,6 +1388,13 @@ classdef Project < handle
             force = obj.force;
         end
         
+        function gerber = GERBER(obj)
+            if(isempty(obj.gerber))
+                obj.gerber = CST.GERBER(obj, obj.hProject);
+            end
+            gerber = obj.gerber;
+        end
+        
         function group = Group(obj)
             if(isempty(obj.group))
                 obj.group = CST.Group(obj, obj.hProject);
@@ -1266,6 +1407,13 @@ classdef Project < handle
                 obj.iesolver = CST.IESolver(obj, obj.hProject);
             end
             iesolver = obj.iesolver;
+        end
+        
+        function iges = IGES(obj)
+            if(isempty(obj.iges))
+                obj.iges = CST.IGES(obj, obj.hProject);
+            end
+            iges = obj.iges;
         end
         
         function layerstacking = LayerStacking(obj)
@@ -1345,6 +1493,13 @@ classdef Project < handle
             networkparameterextraction = obj.networkparameterextraction;
         end
         
+        function obj_ = OBJ(obj)
+            if(isempty(obj.obj_))
+                obj.obj_ = CST.OBJ(obj, obj.hProject);
+            end
+            obj_ = obj.obj_;
+        end
+        
         function optimizer = Optimizer(obj)
             if(isempty(obj.optimizer))
                 obj.optimizer = CST.Optimizer(obj, obj.hProject);
@@ -1364,6 +1519,13 @@ classdef Project < handle
                 obj.pick = CST.Pick(obj, obj.hProject);
             end
             pick = obj.pick;
+        end
+        
+        function planewave = PlaneWave(obj)
+            if(isempty(obj.planewave))
+                obj.planewave = CST.PlaneWave(obj, obj.hProject);
+            end
+            planewave = obj.planewave;
         end
         
         function plot = Plot(obj)
@@ -1406,6 +1568,13 @@ classdef Project < handle
                 obj.postprocess1d = CST.PostProcess1D(obj, obj.hProject);
             end
             postprocess1d = obj.postprocess1d;
+        end
+        
+        function probe = Probe(obj)
+            if(isempty(obj.probe))
+                obj.probe = CST.Probe(obj, obj.hProject);
+            end
+            probe = obj.probe;
         end
         
         function qfactor = QFactor(obj)
@@ -1462,6 +1631,34 @@ classdef Project < handle
             resulttree = obj.resulttree;
         end
         
+        function rotate = Rotate(obj)
+            if(isempty(obj.rotate))
+                obj.rotate = CST.Rotate(obj, obj.hProject);
+            end
+            rotate = obj.rotate;
+        end
+        
+        function sat = SAT(obj)
+            if(isempty(obj.sat))
+                obj.sat = CST.SAT(obj, obj.hProject);
+            end
+            sat = obj.sat;
+        end
+        
+        function scalarplot2d = ScalarPlot2D(obj)
+            if(isempty(obj.scalarplot2d))
+                obj.scalarplot2d = CST.ScalarPlot2D(obj, obj.hProject);
+            end
+            scalarplot2d = obj.scalarplot2d;
+        end
+        
+        function scalarplot3d = ScalarPlot3D(obj)
+            if(isempty(obj.scalarplot3d))
+                obj.scalarplot3d = CST.ScalarPlot3D(obj, obj.hProject);
+            end
+            scalarplot3d = obj.scalarplot3d;
+        end
+        
         function solid = Solid(obj)
             if(isempty(obj.solid))
                 obj.solid = CST.Solid(obj, obj.hProject);
@@ -1481,6 +1678,34 @@ classdef Project < handle
                 obj.solverparameter = CST.SolverParameter(obj, obj.hProject);
             end
             solverparameter = obj.solverparameter;
+        end
+        
+        function sphere = Sphere(obj)
+            if(isempty(obj.sphere))
+                obj.sphere = CST.Sphere(obj, obj.hProject);
+            end
+            sphere = obj.sphere;
+        end
+        
+        function spline = Spline(obj)
+            if(isempty(obj.spline))
+                obj.spline = CST.Spline(obj, obj.hProject);
+            end
+            spline = obj.spline;
+        end
+        
+        function step = STEP(obj)
+            if(isempty(obj.step))
+                obj.step = CST.STEP(obj, obj.hProject);
+            end
+            step = obj.step;
+        end
+        
+        function timesignal = TimeSignal(obj)
+            if(isempty(obj.timesignal))
+                obj.timesignal = CST.TimeSignal(obj, obj.hProject);
+            end
+            timesignal = obj.timesignal;
         end
         
         function touchstone = Touchstone(obj)
@@ -1504,11 +1729,39 @@ classdef Project < handle
             transform = obj.transform;
         end
         
+        function trimcurves = TrimCurves(obj)
+            if(isempty(obj.trimcurves))
+                obj.trimcurves = CST.TrimCurves(obj, obj.hProject);
+            end
+            trimcurves = obj.trimcurves;
+        end
+        
         function units = Units(obj)
             if(isempty(obj.units))
                 obj.units = CST.Units(obj, obj.hProject);
             end
             units = obj.units;
+        end
+        
+        function vectorplot2d = VectorPlot2D(obj)
+            if(isempty(obj.vectorplot2d))
+                obj.vectorplot2d = CST.VectorPlot2D(obj, obj.hProject);
+            end
+            vectorplot2d = obj.vectorplot2d;
+        end
+        
+        function vectorplot3d = VectorPlot3D(obj)
+            if(isempty(obj.vectorplot3d))
+                obj.vectorplot3d = CST.VectorPlot3D(obj, obj.hProject);
+            end
+            vectorplot3d = obj.vectorplot3d;
+        end
+        
+        function voltagemonitor = VoltageMonitor(obj)
+            if(isempty(obj.voltagemonitor))
+                obj.voltagemonitor = CST.VoltageMonitor(obj, obj.hProject);
+            end
+            voltagemonitor = obj.voltagemonitor;
         end
         
         function wcs = WCS(obj)

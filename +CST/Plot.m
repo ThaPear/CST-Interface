@@ -150,13 +150,41 @@ classdef Plot < handle
         %% View Options
         function DrawBox(obj, boolean)
             % Shows or hides the bounding box of the whole structure.
-            obj.hPlot.invoke('DrawBox', boolean);
+            
+            % For some reason this function does not accept numerical booleans.
+            numboolean = str2double(boolean);
+            if(~isnan(numboolean))
+                boolean = numboolean;
+            end
+            if(isnumeric(boolean))
+                if(boolean)
+                    boolean = 'true';
+                else
+                    boolean = 'false';
+                end
+            end
+            
+            obj.project.AddToHistory(['Plot.DrawWorkplane "', num2str(boolean, '%.15g'), '"']);
         end
         function DrawWorkplane(obj, boolean)
             % Shows or hides the working plane.
             % switch: 'TRUE'
             %         'FALSE'
-            obj.hPlot.invoke('DrawWorkplane', boolean);
+            
+            % For some reason this function does not accept numerical booleans.
+            numboolean = str2double(boolean);
+            if(~isnan(numboolean))
+                boolean = numboolean;
+            end
+            if(isnumeric(boolean))
+                if(boolean)
+                    boolean = 'true';
+                else
+                    boolean = 'false';
+                end
+            end
+            
+            obj.project.AddToHistory(['Plot.DrawWorkplane "', boolean, '"']);
         end
         function InnerSurfaces(obj, boolean)
             % This setting affects the scene only if a cutplane is defined such that the inside of the structure can be seen. If switch is True then the inner surfaces will be plotted in the same color as the solid. Otherwise they will be plotted in black.

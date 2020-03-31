@@ -59,33 +59,6 @@ classdef Boundary < handle
     end
     %% CST Object functions.
     methods
-        function AllBoundaries(obj, xmin, xmax, ymin, ymax, zmin, zmax)
-            if(nargin == 2)
-                xmax = xmin;
-                ymin = xmin;
-                ymax = xmin;
-                zmin = xmin;
-                zmax = xmin;
-            end
-            
-            obj.Xmin(xmin);
-            obj.Xmax(xmax);
-            obj.Ymin(ymin);
-            obj.Ymax(ymax);
-            obj.Zmin(zmin);
-            obj.Zmax(zmax);
-            obj.ApplyInAllDirections(0);
-%             history = ['With Boundary', newline, ...
-%                        '.ApplyInAllDirections "False"', newline, ...
-%                        '     .Xmin "', xmin, '"', newline, ...
-%                        '     .Xmax "', xmax, '"', newline, ...
-%                        '     .Ymin "', ymin, '"', newline, ...
-%                        '     .Ymax "', ymax, '"', newline, ...
-%                        '     .Zmin "', zmin, '"', newline, ...
-%                        '     .Zmax "', zmax, '"', newline, ...
-%                        'End With'];
-%             obj.project.AddToHistory('define boundaries', history);
-        end
         function Xmin(obj, boundarytype)
             % Specifies the boundary conditions for the lower x calculation domain.
             %
@@ -236,7 +209,7 @@ classdef Boundary < handle
         function ApplyInAllDirections(obj, boolean)
             % Is used by the background dialog to identify if the Xmin value should be applied in
             % all the other directions.
-            obj.AddToHistory(['.ApplyInAllDirections "', num2str(boolean), '"']);
+            obj.AddToHistory(['.ApplyInAllDirections "', num2str(boolean, '%.15g'), '"']);
         end
         % TODO: 
         % PotentialType
@@ -264,14 +237,15 @@ classdef Boundary < handle
             zmin = str2double(zmin);
             zmax = str2double(zmax);
         end
+        %% Methods Concerning Open Boundary Conditions
         function Layer(obj, numlayers)
             % Specifies the number of PML layers. Usually 4 layers are sufficient.
-            obj.AddToHistory(['.Layer "', num2str(numlayers), '"']);
+            obj.AddToHistory(['.Layer "', num2str(numlayers, '%.15g'), '"']);
         end
         function MinimumLinesDistance(obj, minimumlinesdistance)
             % Specifies the minimum distance from the PML boundary to the structure to be modeled.
             % The distance is determined by the absolute number of grid lines.
-            obj.MinimumLinesDistance(['.MinimumLinesDistance "', num2str(minimumlinesdistance), '"']);
+            obj.MinimumLinesDistance(['.MinimumLinesDistance "', num2str(minimumlinesdistance, '%.15g'), '"']);
         end
         function MinimumDistanceType(obj, type)
             % Selecting the Fraction option activates the geometrical domain enlargement computed as
@@ -286,7 +260,7 @@ classdef Boundary < handle
             % the Absolute option with the command MinimumDistanceType.
             %
             % Requires MinimumDistanceType 'Absolute'.
-            obj.AddToHistory(['.SetAbsoluteDistance "', num2str(distance), '"']);
+            obj.AddToHistory(['.SetAbsoluteDistance "', num2str(distance, '%.15g'), '"']);
         end
         function MinimumDistanceReferenceFrequencyType(obj, type)
             % The command determines the reference frequency where the wavelength has to be
@@ -313,14 +287,14 @@ classdef Boundary < handle
             % See also the MinimumDistanceReferenceFrequencyType command.
             %
             % Requires MinimumDistanceType 'Fraction'
-            obj.AddToHistory(['.MinimumDistancePerWavelength "', num2str(distance), '"']);
+            obj.AddToHistory(['.MinimumDistancePerWavelength "', num2str(distance, '%.15g'), '"']);
         end
         function MinimumDistancePerWavelengthNewMeshEngine(obj, distance)
             % Was found in the CST-generated history list, seems to replace the
             % MinimumDistancePerWavelength function.
             %
             % Requires MinimumDistanceType 'Fraction'
-            obj.AddToHistory(['.MinimumDistancePerWavelengthNewMeshEngine "', num2str(distance), '"']);
+            obj.AddToHistory(['.MinimumDistancePerWavelengthNewMeshEngine "', num2str(distance, '%.15g'), '"']);
         end
         function FrequencyForMinimumDistance(obj, freq)
             % Specifies the frequency which represents the reference value for the
@@ -328,25 +302,26 @@ classdef Boundary < handle
             %
             % Requires MinimumDistanceType 'Fraction'
             % Requires MinimumDistanceReferenceFrequencyType 'User'
-            obj.AddToHistory(['.FrequencyForMinimumDistance "', num2str(freq), '"']);
+            obj.AddToHistory(['.FrequencyForMinimumDistance "', num2str(freq, '%.15g'), '"']);
         end
+        %% Methods Concerning Periodic Boundary Conditions
         function XPeriodicShift(obj, shift)
             % Enables to define a phase shift value for a periodic boundary condition. Please note
             % that the phase shift only applies to the frequency domain solver and the eigenmode
             % solver. The settings are ignored by the transient solver.
-            obj.AddToHistory(['.XPeriodicShift "', num2str(shift), '"']);
+            obj.AddToHistory(['.XPeriodicShift "', num2str(shift, '%.15g'), '"']);
         end
         function YPeriodicShift(obj, shift)
             % Enables to define a phase shift value for a periodic boundary condition. Please note
             % that the phase shift only applies to the frequency domain solver and the eigenmode
             % solver. The settings are ignored by the transient solver.
-            obj.AddToHistory(['.YPeriodicShift "', num2str(shift), '"']);
+            obj.AddToHistory(['.YPeriodicShift "', num2str(shift, '%.15g'), '"']);
         end
         function ZPeriodicShift(obj, shift)
             % Enables to define a phase shift value for a periodic boundary condition. Please note
             % that the phase shift only applies to the frequency domain solver and the eigenmode
             % solver. The settings are ignored by the transient solver.
-            obj.AddToHistory(['.ZPeriodicShift "', num2str(shift), '"']);
+            obj.AddToHistory(['.ZPeriodicShift "', num2str(shift, '%.15g'), '"']);
         end
         function PeriodicUseConstantAngles(obj, boolean)
             % In contrast to the definition of a constant phase shift between two opposite periodic
@@ -357,8 +332,9 @@ classdef Boundary < handle
             % procedure also realizes a phase shift between the periodic boundaries, however, this
             % time it depends on the current frequency sample. You can activate (bFlag = True) or
             % deactivate (bFlag = False) this option using the present method.
-            obj.AddToHistory(['.PeriodicUseConstantAngles "', num2str(boolean), '"']);
+            obj.AddToHistory(['.PeriodicUseConstantAngles "', num2str(boolean, '%.15g'), '"']);
         end
+        %% Methods Concerning Periodic Boundaries and Unit Cells
         function SetPeriodicBoundaryAngles(obj, theta, phi)
             % Defines the angle in a spherical coordinate system using theta and phi values for the
             % calculation of phase shifts between periodic boundaries. The z-axis corresponds to
@@ -367,8 +343,8 @@ classdef Boundary < handle
             % Please note that this method is only relevant for the frequency domain solver and in
             % case that the PeriodicUseConstantAngles method is activated or unit cell boundaries
             % are used.
-            obj.AddToHistory(['.SetPeriodicBoundaryAngles "', num2str(theta), '", '...
-                                                         '"', num2str(phi), '"']);
+            obj.AddToHistory(['.SetPeriodicBoundaryAngles "', num2str(theta, '%.15g'), '", '...
+                                                         '"', num2str(phi, '%.15g'), '"']);
         end
         function SetPeriodicBoundaryAnglesDirection(obj, direction)
             % direction defines whether the scan angle defined with
@@ -404,67 +380,275 @@ classdef Boundary < handle
             phi = str2double(phi);
             direction = str2double(direction);
         end
+        %% Methods Concerning the Unit Cell Geometry
         function UnitCellDs1(obj, ds1)
-            % These two methods [UnitCellDs1 and UnitCellDs2] specify the
-            % distances between two neighboring unit cells in two different
-            % coordinate directions, whereby the first axis (UnitCellDs1)
-            % is always aligned to the x-axis of the global coordinate
-            % system. The spatial relation between these  two axes is
-            % defined by the UnitCellAngle method.
+            % These two methods specify the distances between two neighboring unit cells in two different coordinate directions, whereby the first axis (UnitCellDs1) is always aligned to the x-axis of the global coordinate system. The spatial relation between these two axes is defined by the UnitCellAngle method.
             %
             % By default Ds1 is the x-distance between unit cells.
-            obj.AddToHistory(['.UnitCellDs1 "', num2str(ds1), '"']);
+            obj.AddToHistory(['.UnitCellDs1 "', num2str(ds1, '%.15g'), '"']);
         end
         function UnitCellDs2(obj, ds2)
-            % These two methods [UnitCellDs1 and UnitCellDs2] specify the
-            % distances between two neighboring unit cells in two different
-            % coordinate directions, whereby the first axis (UnitCellDs1)
-            % is always aligned to the x-axis of the global coordinate
-            % system. The spatial relation between these  two axes is
-            % defined by the UnitCellAngle method.
+            % These two methods specify the distances between two neighboring unit cells in two different coordinate directions, whereby the first axis (UnitCellDs1) is always aligned to the x-axis of the global coordinate system. The spatial relation between these two axes is defined by the UnitCellAngle method.
             %
             % By default Ds2 is the y-distance between unit cells.
-            obj.AddToHistory(['.UnitCellDs2 "', num2str(ds2), '"']);
+            obj.AddToHistory(['.UnitCellDs2 "', num2str(ds2, '%.15g'), '"']);
         end
         function ds1 = GetUnitCellDs1(obj)
-            % These two functions [UnitCellDs1 and UnitCellDs2] return the
-            % lengths of the unit cell lattice vectors.
+            % These two functions return the lengths of the unit cell lattice vectors.
             ds1 = obj.hBoundary.invoke('UnitCellDs1');
         end
         function ds2 = GetUnitCellDs2(obj)
-            % These two functions [UnitCellDs1 and UnitCellDs2] return the
-            % lengths of the unit cell lattice vectors.
+            % These two functions return the lengths of the unit cell lattice vectors.
             ds2 = obj.hBoundary.invoke('UnitCellDs2');
         end
         function UnitCellAngle(obj, angle)
-            % Specifies the spatial relation between the two axes defined
-            % by the methods UnitCellDs1 and UnitCellDs2 .
+            % Specifies the spatial relation between the two axes defined by the methods UnitCellDs1 and UnitCellDs2 .
             %
-            % Please note, that the hexahedral frequency domain solver
-            % needs a value of 90 degree for this value.
-            obj.AddToHistory(['.UnitCellAngle "', num2str(angle), '"']);
+            % Please note, that the hexahedral frequency domain solver needs a value of 90 degree for this value.
+            obj.AddToHistory(['.UnitCellAngle "', num2str(angle, '%.15g'), '"']);
         end
         function angle = GetUnitCellAngle(obj)
-            % This function returns the angle between the unit cell lattice
-            % vectors in degrees.
+            % This function returns the angle between the unit cell lattice vectors in degrees.
             angle = obj.hBoundary.invoke('GetUnitCellAngle');
         end
         function UnitCellOrigin(obj, originx, originy)
-            % Allows to shift the origin of the unit cell and thereby the
-            % calculation domain for the frequency domain solver with
-            % tetrahedral mesh. The values may range from zero to one,
-            % where the default zero lets the center of the bounding box
-            % and the center of the unit cell coincide, while a value of
-            % one moves the origin by half the size of the unit cell
-            % lattice in the corresponding direction.
-            obj.AddToHistory(['.UnitCellOrigin "', num2str(originx), '", '...
-                                              '"', num2str(originy), '"']);
+            % Allows to shift the origin of the unit cell and thereby the calculation domain for the frequency domain solver with tetrahedral mesh. The values may range from zero to one, where the default zero lets the center of the bounding box and the center of the unit cell coincide, while a value of one moves the origin by half the size of the unit cell lattice in the corresponding direction.
+            obj.AddToHistory(['.UnitCellOrigin "', num2str(originx, '%.15g'), '", '...
+                                              '"', num2str(originy, '%.15g'), '"']);
         end
         function UnitCellFitToBoundingBox(obj, boolean)
-            % If this method is activated, the structure model will be
-            % repeated at its bounding box borders, neglecting any settings
-            % of the methods UnitCellDs1, UnitCellDs2 and UnitCellAngle.
-            obj.project.AddToHistory(['Boundary.UnitCellFitToBoundingBox "', num2str(boolean), '"']);
+            % If this method is activated, the structure model will be repeated at its bounding box borders, neglecting any settings of the methods UnitCellDs1, UnitCellDs2 and UnitCellAngle.
+            obj.project.AddToHistory(['Boundary.UnitCellFitToBoundingBox "', num2str(boolean, '%.15g'), '"']);
+        end
+        %% From 2013 documentation.
+        function XminThermal(obj, ThermalBoundaryType)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.XminThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
+        end
+        function XmaxThermal(obj, ThermalBoundaryType)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.XmaxThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
+        end
+        function YminThermal(obj, ThermalBoundaryType)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.YminThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
+        end
+        function YmaxThermal(obj, ThermalBoundaryType)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.YmaxThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
+        end
+        function ZminThermal(obj, ThermalBoundaryType)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.ZminThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
+        end
+        function ZmaxThermal(obj, ThermalBoundaryType)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.ZmaxThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
+        end
+        function enum = GetXminThermal(obj)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetXminThermal');
+        end
+        function enum = GetXmaxThermal(obj)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetXmaxThermal');
+        end
+        function enum = GetYminThermal(obj)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetYminThermal');
+        end
+        function enum = GetYmaxThermal(obj)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetYmaxThermal');
+        end
+        function enum = GetZminThermal(obj)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetZminThermal');
+        end
+        function enum = GetZmaxThermal(obj)
+            % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
+            %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
+            %                      ”open” - Simulates the open space.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetZmaxThermal');
+        end
+        function XsymmetryThermal(obj, ThermalSymmetryType)
+            % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+            %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+            %                      "none" - No symmetry.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.XsymmetryThermal "', num2str(ThermalSymmetryType, '%.15g'), '"']);
+        end
+        function YsymmetryThermal(obj, ThermalSymmetryType)
+            % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+            %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+            %                      "none" - No symmetry.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.YsymmetryThermal "', num2str(ThermalSymmetryType, '%.15g'), '"']);
+        end
+        function ZsymmetryThermal(obj, ThermalSymmetryType)
+            % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+            %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+            %                      "none" - No symmetry.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            obj.AddToHistory(['.ZsymmetryThermal "', num2str(ThermalSymmetryType, '%.15g'), '"']);
+        end
+        function enum = GetXSymmetryThermal(obj)
+            % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+            %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+            %                      "none" - No symmetry.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetXSymmetryThermal');
+        end
+        function enum = GetYSymmetryThermal(obj)
+            % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+            %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+            %                      "none" - No symmetry.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetYSymmetryThermal');
+        end
+        function enum = GetZSymmetryThermal(obj)
+            % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
+            %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
+            %                      "none" - No symmetry.
+            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            enum = obj.hBoundary.invoke('GetZSymmetryThermal');
+        end
+        function XminTemperatureType(obj, type)
+            % Specifies the temperature type of the lower and upper boundaries.
+            % type: ”none” - No temperature is set for  the corresponding boundary.
+            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            obj.AddToHistory(['.XminTemperatureType "', num2str(type, '%.15g'), '"']);
+        end
+        function XmaxTemperatureType(obj, type)
+            % Specifies the temperature type of the lower and upper boundaries.
+            % type: ”none” - No temperature is set for  the corresponding boundary.
+            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            obj.AddToHistory(['.XmaxTemperatureType "', num2str(type, '%.15g'), '"']);
+        end
+        function YminTemperatureType(obj, type)
+            % Specifies the temperature type of the lower and upper boundaries.
+            % type: ”none” - No temperature is set for  the corresponding boundary.
+            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            obj.AddToHistory(['.YminTemperatureType "', num2str(type, '%.15g'), '"']);
+        end
+        function YmaxTemperatureType(obj, type)
+            % Specifies the temperature type of the lower and upper boundaries.
+            % type: ”none” - No temperature is set for  the corresponding boundary.
+            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            obj.AddToHistory(['.YmaxTemperatureType "', num2str(type, '%.15g'), '"']);
+        end
+        function ZminTemperatureType(obj, type)
+            % Specifies the temperature type of the lower and upper boundaries.
+            % type: ”none” - No temperature is set for  the corresponding boundary.
+            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            obj.AddToHistory(['.ZminTemperatureType "', num2str(type, '%.15g'), '"']);
+        end
+        function ZmaxTemperatureType(obj, type)
+            % Specifies the temperature type of the lower and upper boundaries.
+            % type: ”none” - No temperature is set for  the corresponding boundary.
+            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            obj.AddToHistory(['.ZmaxTemperatureType "', num2str(type, '%.15g'), '"']);
+        end
+        function XminTemperature(obj, value)
+            % Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+            obj.AddToHistory(['.XminTemperature "', num2str(value, '%.15g'), '"']);
+        end
+        function XmaxTemperature(obj, value)
+            % Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+            obj.AddToHistory(['.XmaxTemperature "', num2str(value, '%.15g'), '"']);
+        end
+        function YminTemperature(obj, value)
+            % Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+            obj.AddToHistory(['.YminTemperature "', num2str(value, '%.15g'), '"']);
+        end
+        function YmaxTemperature(obj, value)
+            % Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+            obj.AddToHistory(['.YmaxTemperature "', num2str(value, '%.15g'), '"']);
+        end
+        function ZminTemperature(obj, value)
+            % Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+            obj.AddToHistory(['.ZminTemperature "', num2str(value, '%.15g'), '"']);
+        end
+        function ZmaxTemperature(obj, value)
+            % Specifies the temperature values of the lower and upper boundaries. This settings has only an effect if the type of the corresponding TemperatureType is set to "fixed".
+            obj.AddToHistory(['.ZmaxTemperature "', num2str(value, '%.15g'), '"']);
+        end
+        %% Undocumented functions.
+        % Found in history list of migrated CST 2014 file in 'define boundaries'
+        function ApplyInAllDirectionsThermal(obj, boolean)
+            obj.AddToHistory(['.ApplyInAllDirectionsThermal "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define pml specials'
+        function ReflectionLevel(obj, level)
+            obj.AddToHistory(['.ReflectionLevel "', num2str(level, '%.15g'), '"']);
+        end
+        %% Utility functions.
+        function AllBoundaries(obj, xmin, xmax, ymin, ymax, zmin, zmax)
+            if(nargin == 2)
+                xmax = xmin;
+                ymin = xmin;
+                ymax = xmin;
+                zmin = xmin;
+                zmax = xmin;
+            end
+            
+            obj.Xmin(xmin);
+            obj.Xmax(xmax);
+            obj.Ymin(ymin);
+            obj.Ymax(ymax);
+            obj.Zmin(zmin);
+            obj.Zmax(zmax);
+            obj.ApplyInAllDirections(0);
+%             history = ['With Boundary', newline, ...
+%                        '.ApplyInAllDirections "False"', newline, ...
+%                        '     .Xmin "', xmin, '"', newline, ...
+%                        '     .Xmax "', xmax, '"', newline, ...
+%                        '     .Ymin "', ymin, '"', newline, ...
+%                        '     .Ymax "', ymax, '"', newline, ...
+%                        '     .Zmin "', zmin, '"', newline, ...
+%                        '     .Zmax "', zmax, '"', newline, ...
+%                        'End With'];
+%             obj.project.AddToHistory('define boundaries', history);
         end
     end
     %% MATLAB-side stored settings of CST state.

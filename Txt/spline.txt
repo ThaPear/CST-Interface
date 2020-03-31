@@ -1,0 +1,73 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Curves | Spline
+
+Spline Object
+
+This object is used to create a new spline curve item.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name splinename )
+
+Sets the name of the spline curve.
+
+ 
+
+Curve ( name curvename  )
+
+Sets the name of the curve for the new spline curve item. The curve must already exist.
+
+ 
+
+Point ( double xCoord, double yCoord )
+
+Sets the coordinates for the first point of the spline to be defined.
+
+ 
+
+LineTo ( double xCoord, double yCoord )
+
+Sets a line from the point previously defined to the point defined by x, y here. x and y specify a location in absolute coordinates in the actual working coordinate system.
+
+ 
+
+RLine ( double xCoord, double yCoord )
+
+Sets a line from the point previously defined to the point defined by x, y here. x and y specify a location relative to the previous point in the current working coordinate system.
+
+ 
+
+Create
+
+Creates a new spline curve item. All necessary settings for this spline have to be made previously.
+
+Example
+
+With Spline
+
+     .Reset
+
+     .Name "spline1"
+
+     .Curve "curve1"
+
+     .Point "-16.5", "a+25.6"
+
+     .LineTo "-4.9", "18.4"
+
+     .RLine "7.6", "30.5"
+
+     .LineTo "12.3", "18.6"
+
+     .Create
+
+End With

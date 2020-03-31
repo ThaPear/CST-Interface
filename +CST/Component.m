@@ -46,21 +46,21 @@ classdef Component < handle
 %                 breakpoint;
             end
             obj.project.AddToHistory(['Component.New "', name, '"']);
-            name = strrep(name, '/', '__');
+            name = strrep(strrep(name, ' ', '__'), '/', '__');
             obj.components.(name) = 1;
         end
         function Delete(obj, name)
             % Deletes an existing component and all the containing solids.
             obj.project.AddToHistory(['Component.Delete "', name, '"']);
-            name = strrep(name, '/', '__');
+            name = strrep(strrep(name, ' ', '__'), '/', '__');
             obj.components.(name) = 0;
         end
         function Rename(obj, oldname, newname)
             % Changes the name of an existing component.
             obj.project.AddToHistory(['Component.Rename "', oldname, '", '...
                                                        '"', newname, '"']);
-            oldname = strrep(oldname, '/', '__');
-            newname = strrep(newname, '/', '__');
+            oldname = strrep(strrep(oldname, ' ', '__'), '/', '__');
+            newname = strrep(strrep(newname, ' ', '__'), '/', '__');
             obj.components.(oldname) = 0;
             obj.components.(newname) = 1;
         end

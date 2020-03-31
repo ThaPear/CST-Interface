@@ -138,6 +138,11 @@ classdef Background < handle
         function ResetBackground(obj)
             obj.AddToHistory(['.ResetBackground']);
         end
+        % Found in history list of migrated CST 2014 file when defining background.
+        % Possibly equivalent to Background.Mu
+        function Mue(obj, value)
+            obj.AddToHistory(['.Mue "', num2str(value, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

@@ -126,19 +126,29 @@ classdef MeshSettings < handle
             % Found in ModelCache\Model.mif in .ItemMeshSettings with .SetMeshType "All"
             % Found in ModelCache\Model.smp in .ItemMeshSettings with .SetMeshType "All"
             % Transform                     | 9         | "0", "-1", "0", "1", "0", "0", "0", "0", "1" 
+            % Found in history list in 'set mesh properties (for backward compatibility)'
+            % PlaneMergeVersion             | 1         | "0"
             command = ['.Set "', param, '"'];
             for(i = 1:nargin-2)
                 command = [command, ', "', num2str(varargin{i}, '%.15g'), '"']; %#ok<AGROW>
             end
             obj.AddToHistory(command);
         end
-        
+        % Found in history list of migrated CST 2014 file when setting local mesh settings.
         function SetMeshType(obj, type)
             % type: 'All'
             %       'Tet'
             %       'Hex'
             %       'HexTLM'
             obj.AddToHistory(['.SetMeshType "', type, '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'paste structure data'
+        function AdjustItemMeshSettingsStart(obj)
+            obj.project.AddToHistory(['MeshSettings.AdjustItemMeshSettingsStart']);
+        end
+        % Found in history list of migrated CST 2014 file in 'paste structure data'
+        function AdjustItemMeshSettingsEnd(obj)
+            obj.project.AddToHistory(['MeshSettings.AdjustItemMeshSettingsEnd']);
         end
     end
     %% MATLAB-side stored settings of CST state.

@@ -2120,6 +2120,304 @@ classdef Material < handle
         end
         %% Notes
         % (*) The value will be shared among all available material sets and problem types.
+        %% CST 2013 functions.
+        function Mue(obj, dValue)
+            % Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+            obj.AddToHistory(['.Mue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function MueX(obj, dValue)
+            % Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+            obj.AddToHistory(['.MueX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function MueY(obj, dValue)
+            % Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+            obj.AddToHistory(['.MueY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function MueZ(obj, dValue)
+            % Defines the relative permeability. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal permeability tensor can be set with the respective methods.
+            obj.AddToHistory(['.MueZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function AddTanDValueWeightedEps(obj, dFrequency, dTanD, dWeight)
+            % This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDModel set to "DispTanD". Note, that the real part of the permittivity is given by the .Epsilon method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+            % Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedEps method to define the components of the diagonal tensor.
+            % Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+            obj.AddToHistory(['.AddTanDValueWeightedEps "', num2str(dFrequency, '%.15g'), '", '...
+                                                       '"', num2str(dTanD, '%.15g'), '", '...
+                                                       '"', num2str(dWeight, '%.15g'), '"']);
+        end
+        function AddTanDValueXYZWeightedEps(obj, dFrequency, dTanDX, dTanDY, dTanDZ, dWeight)
+            % This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDModel set to "DispTanD". Note, that the real part of the permittivity is given by the .Epsilon method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+            % Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedEps method to define the components of the diagonal tensor.
+            % Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+            obj.AddToHistory(['.AddTanDValueXYZWeightedEps "', num2str(dFrequency, '%.15g'), '", '...
+                                                          '"', num2str(dTanDX, '%.15g'), '", '...
+                                                          '"', num2str(dTanDY, '%.15g'), '", '...
+                                                          '"', num2str(dTanDZ, '%.15g'), '", '...
+                                                          '"', num2str(dWeight, '%.15g'), '"']);
+        end
+        function ResetTanDListEps(obj)
+            % Reset the list of tan(delta) values set by the .AddTanDValueWeightedEps and AddTanDValueXYZWeightedEps  methods.
+            obj.AddToHistory(['.ResetTanDListEps']);
+        end
+        function ConstTanDModelOrderMue(obj, iValue)
+            % Sets the order for the ConstTanD model which corresponds to the number of poles used in the internal material representation. An order=1 corresponds to a Debye model.
+            obj.AddToHistory(['.ConstTanDModelOrderMue "', num2str(iValue, '%.15g'), '"']);
+        end
+        function AddTanDValueWeightedMue(obj, dFrequency, dTanDM, dWeight)
+            % This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDMModel set to "DispTanD". Note, that the real part of the permeability is given by the .Mue method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+            % Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedMue method to define the components of the diagonal tensor.
+            % Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+            obj.AddToHistory(['.AddTanDValueWeightedMue "', num2str(dFrequency, '%.15g'), '", '...
+                                                       '"', num2str(dTanDM, '%.15g'), '", '...
+                                                       '"', num2str(dWeight, '%.15g'), '"']);
+        end
+        function AddTanDValueXYZWeightedMue(obj, dFrequency, dTanDMX, dTanDMY, dTanDMZ, dWeight)
+            % This method offers the possibility to define a specific tangent delta dispersion curve, which is then fitted to the model of a first order Debye dispersion. Use with .TanDMModel set to "DispTanD". Note, that the real part of the permeability is given by the .Mue method. Thus, due to the frequency dependent material behavior the values correspond only at the center frequency.
+            % Use this method to add a tangent delta value with the corresponding frequency to the dispersion curve represented by a list. In case of diagonal anisotropic material, use the .AddTanDValueXYZWeightedMue method to define the components of the diagonal tensor.
+            % Moreover (both in the isotropic and anisotropic case) a weight, i.e. a double value greater than/equal to 0.0, is assigned to each frequency in order to direct the interpolation algorithm and to enforce a reduced error in correspondence of the given frequency point.
+            obj.AddToHistory(['.AddTanDValueXYZWeightedMue "', num2str(dFrequency, '%.15g'), '", '...
+                                                          '"', num2str(dTanDMX, '%.15g'), '", '...
+                                                          '"', num2str(dTanDMY, '%.15g'), '", '...
+                                                          '"', num2str(dTanDMZ, '%.15g'), '", '...
+                                                          '"', num2str(dWeight, '%.15g'), '"']);
+        end
+        function ResetTanDListMue(obj)
+            % Reset the list of tan(delta) values set by the .AddTanDValueWeightedMue and AddTanDValueXYZWeightedMue methods.
+            % DispModelMue ( enum{"None", "Debye1st", "Debye2nd", "Drude", "Lorentz", "Gyrotropic", "General1st", "General2nd", "NonLinear2nd", "NonLinear3rd", "NonLinearKerr", "NonLinearRaman"} key }
+            % Sets the dispersion model for dielectric / magnetic dispersion.
+            % These material dispersions are specified by several coefficients, describing the corresponding dispersive behavior. Please find the meaning of the coefficients in the following list, for epsilon and mu respectively. Note, that in case of general 1st or 2nd order models the parameters have no special physical meaning, but represent mathematical coefficients of general polynomials.
+            % The following table describes the coefficient for the linear dispersive materials.
+            %                         Coeff1              Coeff2              Coeff3                  Coeff4
+            % Debye 1st order         Static value        Relaxation time     -                       -
+            % Debye 2nd order         Static value 1      Static value  2     Relaxation time 1       Relaxation time 2
+            % Drude                   Plasma freq.        Collision freq.     -                       -
+            % Lorentz                 Static epsilon      Resonance freq.     Damping freq.           -
+            % Gyrotropic Gauss        Landé factor        Sat. magnetization  Resonance line width    Magnetic field vector
+            % Gyrotropic SI           Larmor freq.        Gyrotropic freq.    Damping factor          Biasing direction
+            % General 1st order       Alpha0              Beta0               -                       -
+            % General 2nd order       Alpha0              Alpha1              Beta0                   Beta1
+            % General                 Higher order dispersion model is specified with a summation of first and second order poles using the AddDispEpsPole1stOrder or AddDispEpsPole2ndOrder methods for the dielectric dispersion or AddDispMuPole1stOrder or AddDispMuPole2ndOrder methods for the magnetic dispersion, respectively.
+            % In case of the nonlinear dispersive material the parameter correspondence is described by the following table.
+            %                         Coeff0              Coeff1              Coeff2                  Coeff3      Coeff4
+            % Nonlinear 2nd order     Chi2 value          -                   -                       -           -
+            % Nonlinear 3rd order     Chi3 value          -                   -                       -           -
+            % Nonlinear Kerr          Chi3 infinity value Chi3 static value   Relaxation time         -           -
+            % Nonlinear Raman         Chi3 infinity value Chi3 static value   Plasma freq.        Collision freq. -
+            obj.AddToHistory(['.ResetTanDListMue']);
+        end
+        function AddDispMuePole1stOrder(obj, alpha0, beta0)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole1stOrder "', num2str(alpha0, '%.15g'), '", '...
+                                                      '"', num2str(beta0, '%.15g'), '"']);
+        end
+        function AddDispMuePole1stOrderX(obj, alpha0, beta0)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole1stOrderX "', num2str(alpha0, '%.15g'), '", '...
+                                                       '"', num2str(beta0, '%.15g'), '"']);
+        end
+        function AddDispMuePole1stOrderY(obj, alpha0, beta0)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole1stOrderY "', num2str(alpha0, '%.15g'), '", '...
+                                                       '"', num2str(beta0, '%.15g'), '"']);
+        end
+        function AddDispMuePole1stOrderZ(obj, alpha0, beta0)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole1stOrderZ "', num2str(alpha0, '%.15g'), '", '...
+                                                       '"', num2str(beta0, '%.15g'), '"']);
+        end
+        function AddDispMuePole2ndOrder(obj, alpha0, alpha1, beta0, beta1)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole2ndOrder "', num2str(alpha0, '%.15g'), '", '...
+                                                      '"', num2str(alpha1, '%.15g'), '", '...
+                                                      '"', num2str(beta0, '%.15g'), '", '...
+                                                      '"', num2str(beta1, '%.15g'), '"']);
+        end
+        function AddDispMuePole2ndOrderX(obj, alpha0, alpha1, beta0, beta1)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole2ndOrderX "', num2str(alpha0, '%.15g'), '", '...
+                                                       '"', num2str(alpha1, '%.15g'), '", '...
+                                                       '"', num2str(beta0, '%.15g'), '", '...
+                                                       '"', num2str(beta1, '%.15g'), '"']);
+        end
+        function AddDispMuePole2ndOrderY(obj, alpha0, alpha1, beta0, beta1)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole2ndOrderY "', num2str(alpha0, '%.15g'), '", '...
+                                                       '"', num2str(alpha1, '%.15g'), '", '...
+                                                       '"', num2str(beta0, '%.15g'), '", '...
+                                                       '"', num2str(beta1, '%.15g'), '"']);
+        end
+        function AddDispMuePole2ndOrderZ(obj, alpha0, alpha1, beta0, beta1)
+            % These commands allow the specification of a higher order dispersion model in form of an arbitrary summation of first or second order pole descriptions. These commands apply to the magnetic dispersion and only work together with the "General" model defined with the DispModelMue method. The corresponding infinity value has to be defined with the MueInfinity method.
+            obj.AddToHistory(['.AddDispMuePole2ndOrderZ "', num2str(alpha0, '%.15g'), '", '...
+                                                       '"', num2str(alpha1, '%.15g'), '", '...
+                                                       '"', num2str(beta0, '%.15g'), '", '...
+                                                       '"', num2str(beta1, '%.15g'), '"']);
+        end
+        function MueInfinity(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.MueInfinity "', num2str(dValue, '%.15g'), '"']);
+        end
+        function MueInfinityX(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.MueInfinityX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function MueInfinityY(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.MueInfinityY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function MueInfinityZ(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.MueInfinityZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff0Mue(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff0Mue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff0MueX(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff0MueX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff0MueY(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff0MueY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff0MueZ(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff0MueZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff1Mue(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff1Mue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff1MueX(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff1MueX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff1MueY(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff1MueY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff1MueZ(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff1MueZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff2Mue(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff2Mue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff2MueX(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff2MueX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff2MueY(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff2MueY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff2MueZ(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff2MueZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff3Mue(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff3Mue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff3MueX(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff3MueX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff3MueY(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff3MueY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff3MueZ(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff3MueZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff4Mue(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff4Mue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff4MueX(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff4MueX "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff4MueY(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff4MueY "', num2str(dValue, '%.15g'), '"']);
+        end
+        function DispCoeff4MueZ(obj, dValue)
+            % Define specific magnetic dispersion model parameters of dispersions model for the linear and nonlinear material. The settings depend on the dispersion model selected by the DispModelMue method. In case of diagonal anisotropic material, the parameters for the specific components of the diagonal tensor can be set with the respective methods. The infinity value for the linear dispersive model has to be defined with the MueInfinity method whereas the DispCoeff0Mue method is used in correspondence of the nonlinear material.
+            obj.AddToHistory(['.DispCoeff4MueZ "', num2str(dValue, '%.15g'), '"']);
+        end
+        function GyroFreqMue(obj, dValue)
+            % Reference frequency for the conversion of gyrotropic material parameters given in Gauss units into the SI system.
+            obj.AddToHistory(['.GyroFreqMue "', num2str(dValue, '%.15g'), '"']);
+        end
+        function AddDispersionFittingValueMue(obj, dFrequency, dRe, dIm, dWeight)
+            % Use this method to add a complex material value eps/mue with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMue method to define the components of the diagonal tensor.
+            % This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function
+            % DispersiveFittingSchemeEps/DispersiveFittingSchemeMue. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMue.
+            obj.AddToHistory(['.AddDispersionFittingValueMue "', num2str(dFrequency, '%.15g'), '", '...
+                                                            '"', num2str(dRe, '%.15g'), '", '...
+                                                            '"', num2str(dIm, '%.15g'), '", '...
+                                                            '"', num2str(dWeight, '%.15g'), '"']);
+        end
+        function AddDispersionFittingValueXYZMue(obj, dFrequency, dReX, dImX, dReY, dImY, dReZ, dImZ, dWeight)
+            % Use this method to add a complex material value eps/mue with the corresponding frequency to the dispersion curve represented by a list. The weight specifies with which priority the values are considered. In case of diagonal anisotropic material, use the AddGeneralDispersionValueXYZEps/AddGeneralDispersionValueXYZMue method to define the components of the diagonal tensor.
+            % This method offers the possibility to define a specific electric/magnetic material dispersion curve, which is then fitted to the model defined by function
+            % DispersiveFittingSchemeEps/DispersiveFittingSchemeMue. The user defined dispersion fit is activated by the function UseGeneralDispersionEps/UseGeneralDispersionMue.
+            obj.AddToHistory(['.AddDispersionFittingValueXYZMue "', num2str(dFrequency, '%.15g'), '", '...
+                                                               '"', num2str(dReX, '%.15g'), '", '...
+                                                               '"', num2str(dImX, '%.15g'), '", '...
+                                                               '"', num2str(dReY, '%.15g'), '", '...
+                                                               '"', num2str(dImY, '%.15g'), '", '...
+                                                               '"', num2str(dReZ, '%.15g'), '", '...
+                                                               '"', num2str(dImZ, '%.15g'), '", '...
+                                                               '"', num2str(dWeight, '%.15g'), '"']);
+        end
+        function DispersiveFittingSchemeMue(obj, key)
+            % Sets the required fitting scheme.
+            % key: 'Conductivity'
+            %      '1st Order'
+            %      '2nd Order'
+            %      'Nth Order'
+            obj.AddToHistory(['.DispersiveFittingSchemeMue "', num2str(key, '%.15g'), '"']);
+        end
+        function MaximalOrderNthModelFitMue(obj, iValue)
+            % Set the maximum allowed order for the nth fit interpolation scheme ("Nth Order"), for the eps or mue interpolation, respectively. The maximum number of poles is directly related both to the fitting accuracy and to the model complexity and therefore to simulation memory and computational time requirements.
+            obj.AddToHistory(['.MaximalOrderNthModelFitMue "', num2str(iValue, '%.15g'), '"']);
+        end
+        function UseOnlyDataInSimFreqRangeNthModelMue(obj, boolean)
+            % Allow the nth order fit for the eps or mue interpolation scheme, respectively, ("Nth Order") to use only the frequency data points that lie within the "frequency range settings" defined by the user. Activating this switch enables an accurate data fitting of the material resonances which occur in the simulation bandwidth of interest using possibly a reduced number of poles and zeroes with respect to the complete data fitting. And this, in turn, translates into benefits for the simulation complexity in terms of memory and computational time.
+            obj.AddToHistory(['.UseOnlyDataInSimFreqRangeNthModelMue "', num2str(boolean, '%.15g'), '"']);
+        end
+        function UseGeneralDispersionMue(obj, boolean)
+            % Use this function to activate/deactivate the user defined dispersion.
+            obj.AddToHistory(['.UseGeneralDispersionMue "', num2str(boolean, '%.15g'), '"']);
+        end
+        function AddTemperatureDepMue(obj, dTemperature, dValue)
+            % With this method a new point for temperature dependency of magnetic permeability can be specified. Use with set to "Normal".
+            obj.AddToHistory(['.AddTemperatureDepMue "', num2str(dTemperature, '%.15g'), '", '...
+                                                    '"', num2str(dValue, '%.15g'), '"']);
+        end
+        function ResetTemperatureDepMue(obj)
+            % Deletes the temperature dependency curve for magnetic permeability.
+            obj.AddToHistory(['.ResetTemperatureDepMue']);
+        end
+        function [MueX, MueY, MueZ] = GetMue(obj, name)
+            % Returns the specific material parameter for the material specified by name in the respective double variables.
+            functionString = [...
+                'Dim MueX As Double, MueY As Double, MueZ As Double', newline, ...
+                'Material.GetMue(', name, ', MueX, MueY, MueZ)', newline, ...
+            ];
+            returnvalues = {'MueX', 'MueY', 'MueZ'};
+            [MueX, MueY, MueZ] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            MueX = str2double(MueX);
+            MueY = str2double(MueY);
+            MueZ = str2double(MueZ);
+        end
+        %% Undocumented CST 2013 functions.
         %% Undocumented functions.
         % Found in history list when background material is changed.
         function ChangeBackgroundMaterial(obj)
@@ -2146,6 +2444,50 @@ classdef Material < handle
         % Found in history list when defining a new material.
         function NonlinearMeasurementError(obj, error)
             obj.AddToHistory(['.NonlinearMeasurementError "', num2str(error, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file under 'set units in materials'.
+        function SetUnitInMaterial(obj, name, frequnit, distunit)
+            obj.project.AddToHistory(['Material.SetUnitInMaterial "', name, '", ', ...
+                                                                 '"', frequnit, '", ', ...
+                                                                 '"', distunit, '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        function SetMaterialUnit(obj, frequnit, distunit)
+            obj.AddToHistory(['.SetMaterialUnit "', frequnit, '", ', ...
+                                               '"', distunit, '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        function SetActiveMaterial(obj, key)
+            % key: 'all'
+            obj.AddToHistory(['.SetActiveMaterial "', num2str(key, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        function ThinPanel(obj, boolean)
+            obj.AddToHistory(['.ThinPanel "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        function ErrorLimitNthModelFitMue(obj, error)
+            obj.AddToHistory(['.ErrorLimitNthModelFitMue "', num2str(error, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        function Kappa(obj, dValue)
+            obj.AddToHistory(['.Kappa "', num2str(dValue, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        function KappaM(obj, dValue)
+            obj.AddToHistory(['.KappaM "', num2str(dValue, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        % Possibly equivalent to Material.DispModelMu
+        function DispModelMue(obj, key)
+            % key: 'None'
+            obj.AddToHistory(['.DispModelMue "', num2str(key, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file when defining a new material.
+        % Possibly equivalent to Material.EnableUserConstTanDModelOrderMu
+        function EnableUserConstTanDModelOrderMue(obj, boolean)
+            % If set to "True" the model order for the ConstTanD model will be selected according to the ConstTanDModelOrderMu method. If set to "False" the model order will be automatically determined by the fitting algorithm, selecting the best choice between optimal approximation and smallest possible number of poles.
+            obj.AddToHistory(['.EnableUserConstTanDModelOrderMue "', num2str(boolean, '%.15g'), '"']);
         end
         %% Utility Functions.
         function CreateConditional(obj, condition)

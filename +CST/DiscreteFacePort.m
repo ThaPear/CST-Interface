@@ -124,7 +124,7 @@ classdef DiscreteFacePort < handle
             if(nargin < 3)
                 x = 0;
                 y = 0;
-                z = 0;
+                z = 1;
             end
             obj.AddToHistory(['.SetP2 "', num2str(picked), '", '...
                                      '"', num2str(x), '", '...

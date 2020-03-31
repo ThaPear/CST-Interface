@@ -1,0 +1,109 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Construction Curves and Faces | Faces | Face
+
+Face Object
+
+Defines a Face object
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings.
+
+ 
+
+Name ( name objectName )
+
+Sets the name of the face.
+
+ 
+
+Curve ( name curvName )
+
+Specifies a curve that is taken to define the new face.
+
+ 
+
+Offset ( double offs )
+
+A face can be created by picking a face of a solid. The resulting face is placed with the given offs from the picked face.
+
+ 
+
+Taperangle ( double ta )
+
+A face can be created by extruding a curve profile. The resulting face is the surface of the base solid body created when extruding the curve profile. This method determines the taper angle used for  the extrusion. It extends the profile along the direction of extrusion.
+
+ 
+
+Thickness ( double thick )
+
+A face can be created by extruding a curve profile. The resulting face is the surface of the solid body created when extruding the curve profile. This method determines the height of the extrusion.
+
+ 
+
+Twistangle ( double angle )
+
+A face can be created by extruding a curve profile. The resulting face is the surface of the solid body created when extruding the curve profile. This method sets the twist angle used for  the extrusion. It twists the profile of about angle degrees along the direction of extrusion.
+
+ 
+
+Type ( enum mode )
+
+Selects whether a profile or a surface is to be extruded.
+
+ 
+
+mode may have the following settings:
+
+”PickFace”      The face is created by a picked face of a solid.
+
+”ExtrudeCurve”  The face is created by extruding a curve profile.
+
+”CoverCurve”    The face is created by covering a curve profile.
+
+ 
+
+Rename ( name oldName, name newName  )
+
+Changes the name of an already created face.
+
+ 
+
+Delete ( name faceName )
+
+Deletes the face with the given name.
+
+ 
+
+Create
+
+Creates a new extruded solid. All necessary settings for this element have to be made previously.
+
+Default Settings:
+
+Thickness (0.0)
+
+Example:
+
+With Face
+
+     .Reset
+
+     .Name ("face1")
+
+     .Type ("PickFace")
+
+     .Offset (0.5)
+
+     .Create
+
+End With
+
+ 

@@ -267,11 +267,11 @@ classdef Transform_ < handle
             % 3. Align the local coordinate system to specify the target of your previously defined anchor coordinate system
             % 4. Transform "GlobalToLocal" your object of interest.
             % (There is a Macro for that. Contstruct/Miscellaneous/Transform selected objects to local WCS or to global coordinates")
-            % what,: 'Shape'
-            %        'FFS'
-            %        'Port'
-            %        'Currentdistribution'
-            %        'Part'
+            % what: 'Shape'
+            %       'FFS'
+            %       'Port'
+            %       'Currentdistribution'
+            %       'Part'
             % how: 'Translate'
             %      'Rotate'
             %      'Scale'

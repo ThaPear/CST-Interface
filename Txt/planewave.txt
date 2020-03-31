@@ -1,0 +1,181 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | High Frequency | PlaneWave
+
+PlaneWave Object
+
+Defines a plane wave excited at an open boundary of the calculation domain. Unlike discrete ports or waveguide ports no S-parameters will be calculated. Instead the stimulation amplitude (unit is V/m) is recorded. To obtain further information you might specify probes or different types of field monitors. Combined with farfield monitors the plane wave source can be used to compute the radar cross section (RCS).
+
+Methods
+
+Queries
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Store
+
+This method stores the settings concerning the definition of a plane wave excitation after checking their validity.
+
+ 
+
+Delete
+
+Deletes the existing plane wave.
+
+ 
+
+Normal ( double xcomponent, double ycomponent, double zcomponent )
+
+This method defines the propagation direction of an excited plane wave by setting the components of the three dimensional normal vector.
+
+ 
+
+EVector ( double xcomponent, double ycomponent, double zcomponent )
+
+This method defines the electrical field vector of an excited plane wave. This vector must not be parallel to the defined propagation normal.
+
+ 
+
+Polarization ( enum {"Linear", "Circular", "Elliptic"} type )
+
+Specifies the polarization type of the plane wave excitation.
+
+ 
+
+ReferenceFrequency ( double frequency )
+
+Specifies the reference frequency for the plane wave excitation in case of a circular or elliptical polarization.
+
+ 
+
+PhaseDifference ( double angle )
+
+The phase difference between the two excitation vectors used for elliptical polarized plane waves.
+
+ 
+
+CircularDirection ( enum {"Left", "Right"} dir )
+
+Specifies "Left" or "Right" circular polarized plane wave excitation.
+
+ 
+
+AxialRatio ( double ratio )
+
+Defines the ratio between the amplitudes of the two electric field vectors used for elliptical polarization.
+
+ 
+
+SetUserDecouplingPlane ( bool flag )
+
+Activates a user defined decoupling plane for a plane wave excitation. The decoupling plane offers the possibility to deliberately imprint wave reflections due to metallic boundaries.
+
+ 
+
+DecouplingPlane ( enum {"x", "y", "z"} dir, double position )
+
+This command sets the orientation and location of a user defined decoupling plane for a defined plane wave excitation.
+
+ 
+
+%% Queries
+
+ 
+
+GetNormal ( double_ref xcomponent,  double_ref ycomponent, double_ref zcomponent)
+
+Returns the propagation direction of an excited plane wave by providing the components of the three dimensional normal vector.
+
+ 
+
+GetEVector ( double_ref xcomponent,  double_ref ycomponent, double_ref zcomponent)
+
+Returns the electrical field vector of an excited plane wave.
+
+ 
+
+GetPolarizationType enum {"Linear", "Circular", "Elliptic"}
+
+Returns the polarization type of the plane wave excitation.
+
+ 
+
+GetCircularDirection enum {"Left", "Right"}
+
+Returns the circular direction of a circular polarized plane wave excitation.
+
+ 
+
+GetReferenceFrequency double
+
+Returns the reference frequency for the plane wave excitation in case of a circular or elliptical polarization.
+
+ 
+
+GetPhaseDifference double
+
+Returns the phase difference between the two excitation vectors used for elliptical polarized plane waves.
+
+ 
+
+GetAxialRatio double
+
+Returns the ratio between the amplitudes of the two electric field vectors used for elliptical polarization.
+
+ 
+
+Default Settings
+
+.Normal (0, 0, 1)
+
+.EVector (1, 0, 0)
+
+.Polarization ("Linear")
+
+.ReferenceFrequency (0.0)
+
+.PhaseDifference (-90.0)
+
+.CircularDirection ("Left")
+
+.AxialRatio (1.0)
+
+.SetUserMirrorPlane (False)
+
+.MirrorPlane ("x", 0.0)
+
+Example
+
+With PlaneWave
+
+    .Reset
+
+    .Normal (0, 0, 1)
+
+    .EVector (1, 0, 0)
+
+    .Polarization ("Elliptical")
+
+    .ReferenceFrequency ("midfreq")
+
+    .PhaseDifference (-90.0)
+
+    .CircularDirection ("Left")
+
+    .AxialRatio (0.5)
+
+    .SetUserMirrorPlane (True)
+
+    .MirrorPlane ("y", 10.1)
+
+    .Store
+
+End With

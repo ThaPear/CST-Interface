@@ -198,17 +198,15 @@ classdef FarfieldPlot < handle
             % In case of CalculatePointNoApprox method the calculation is done without using the farfield approximation. Thus, radial field components may exist.
             % fieldComponent is a concatenation of four component specifiers separated by space:
             % fieldComponent = <Coord.System> +" " + <Polarization> +" " + <Component> +" " + <ComplexComp.>
+            %
             % Allowed values are:
-            % <Coord.System>
-            % "spherical", "ludwig2ae", "ludwig2ea", "ludwig3"
-            % <Polarization>
-            % "linear", "circular", "slant", "abs"
-            % <Component>
-            % "radial",
-            % "comp1", "theta", "azimuth", "left", "alpha", "horizontal", "crosspolar",
-            % "comp2", "phi", "elevation", "right", "epsilon", "vertical", "copolar"
-            % <ComplexComp.>
-            % "abs", "phase", "re", "im"
+            % <Coord.System>        "spherical", "ludwig2ae", "ludwig2ea", "ludwig3"
+            % <Polarization>        "linear", "circular", "slant", "abs"
+            % <Component>           "radial",
+            %                       "comp1", "theta", "azimuth", "left", "alpha", "horizontal", "crosspolar",
+            %                       "comp2", "phi", "elevation", "right", "epsilon", "vertical", "copolar"
+            % <ComplexComp.>        "abs", "phase", "re", "im"
+            %
             % The absolute value of the field vector is accessible via:
             % fieldComponent = <Coord.System> +" " + "abs"
             % The axial ratio and the component ratios are accessible through
@@ -223,17 +221,15 @@ classdef FarfieldPlot < handle
             % In case of CalculatePointNoApprox method the calculation is done without using the farfield approximation. Thus, radial field components may exist.
             % fieldComponent is a concatenation of four component specifiers separated by space:
             % fieldComponent = <Coord.System> +" " + <Polarization> +" " + <Component> +" " + <ComplexComp.>
+            %
             % Allowed values are:
-            % <Coord.System>
-            % "spherical", "ludwig2ae", "ludwig2ea", "ludwig3"
-            % <Polarization>
-            % "linear", "circular", "slant", "abs"
-            % <Component>
-            % "radial",
-            % "comp1", "theta", "azimuth", "left", "alpha", "horizontal", "crosspolar",
-            % "comp2", "phi", "elevation", "right", "epsilon", "vertical", "copolar"
-            % <ComplexComp.>
-            % "abs", "phase", "re", "im"
+            % <Coord.System>        "spherical", "ludwig2ae", "ludwig2ea", "ludwig3"
+            % <Polarization>        "linear", "circular", "slant", "abs"
+            % <Component>           "radial",
+            %                       "comp1", "theta", "azimuth", "left", "alpha", "horizontal", "crosspolar",
+            %                       "comp2", "phi", "elevation", "right", "epsilon", "vertical", "copolar"
+            % <ComplexComp.>        "abs", "phase", "re", "im"
+            %
             % The absolute value of the field vector is accessible via:
             % fieldComponent = <Coord.System> +" " + "abs"
             % The axial ratio and the component ratios are accessible through
@@ -335,33 +331,33 @@ classdef FarfieldPlot < handle
         end
         %% Scaling and Plot Modes
         function SetPlotMode(obj, plotMode)
-            % SetPlotMode specifies the mode for the farfield plot. GetPlotMode returns the currently set plot mode.
+            % SetPlotMode specifies the mode for the farfield plot.
             % plotMode can have one of the following values:
-            % "directivity" - The directivity is plotted in the farfield plot.
-            % "gain" - The gain is plotted in the farfield plot.
-            % "realized gain" - The realized gain is plotted in the farfield plot.
-            % "efield" - The electric field is plotted in the farfield plot.
-            % "epattern" - The electric field pattern is plotted in the farfield plot.
-            % "hfield" - The magnetic field is plotted in the farfield plot.
-            % "pfield" - The power flow is plotted in the farfield plot.
-            % "rcs" - The radar cross section (square meters) is plotted in the farfield plot.
-            % "rcsunits" - The radar cross section (project length units squared)  is plotted in the farfield plot.
-            % "rcssw" - The radar cross section (square wavelength)  is plotted in the farfield plot.
+            % "directivity"     - The directivity is plotted in the farfield plot.
+            % "gain"            - The gain is plotted in the farfield plot.
+            % "realized gain"   - The realized gain is plotted in the farfield plot.
+            % "efield"          - The electric field is plotted in the farfield plot.
+            % "epattern"        - The electric field pattern is plotted in the farfield plot.
+            % "hfield"          - The magnetic field is plotted in the farfield plot.
+            % "pfield"          - The power flow is plotted in the farfield plot.
+            % "rcs"             - The radar cross section (square meters) is plotted in the farfield plot.
+            % "rcsunits"        - The radar cross section (project length units squared)  is plotted in the farfield plot.
+            % "rcssw"           - The radar cross section (square wavelength)  is plotted in the farfield plot.
             obj.AddToHistory(['.SetPlotMode "', num2str(plotMode, '%.15g'), '"']);
         end
         function GetPlotMode(obj, plotMode)
-            % SetPlotMode specifies the mode for the farfield plot. GetPlotMode returns the currently set plot mode.
+            % GetPlotMode returns the currently set plot mode.
             % plotMode can have one of the following values:
-            % "directivity" - The directivity is plotted in the farfield plot.
-            % "gain" - The gain is plotted in the farfield plot.
-            % "realized gain" - The realized gain is plotted in the farfield plot.
-            % "efield" - The electric field is plotted in the farfield plot.
-            % "epattern" - The electric field pattern is plotted in the farfield plot.
-            % "hfield" - The magnetic field is plotted in the farfield plot.
-            % "pfield" - The power flow is plotted in the farfield plot.
-            % "rcs" - The radar cross section (square meters) is plotted in the farfield plot.
-            % "rcsunits" - The radar cross section (project length units squared)  is plotted in the farfield plot.
-            % "rcssw" - The radar cross section (square wavelength)  is plotted in the farfield plot.
+            % "directivity"     - The directivity is plotted in the farfield plot.
+            % "gain"            - The gain is plotted in the farfield plot.
+            % "realized gain"   - The realized gain is plotted in the farfield plot.
+            % "efield"          - The electric field is plotted in the farfield plot.
+            % "epattern"        - The electric field pattern is plotted in the farfield plot.
+            % "hfield"          - The magnetic field is plotted in the farfield plot.
+            % "pfield"          - The power flow is plotted in the farfield plot.
+            % "rcs"             - The radar cross section (square meters) is plotted in the farfield plot.
+            % "rcsunits"        - The radar cross section (project length units squared)  is plotted in the farfield plot.
+            % "rcssw"           - The radar cross section (square wavelength)  is plotted in the farfield plot.
             obj.AddToHistory(['.GetPlotMode "', num2str(plotMode, '%.15g'), '"']);
         end
         function SelectComponent(obj, fieldComponent)
@@ -370,14 +366,14 @@ classdef FarfieldPlot < handle
         end
         function SetSpecials(obj, option)
             % Activates additional farfield plot settings. Allowed values of option are:
-            % "enablepolarextralines" - Activates the main lobe and side lobe level visualization.
-            % "disablepolarextralines" - Deactivates the visualization.
-            % "showtrp" - Show the total radiated power. This settings affects only 3D farfields.
-            % "showtrpdb" - Show the total radiated power in dBmW.
-            % "showtrpoff" - Hide the total radiated power.
-            % "showtis" - Display the total isotropic sensitivity.
-            % "showtisdb" - Display the total isotropic sensitivity in dBmW.
-            % "showtisoff" - Hide the total isotropic sensitivity.
+            % "enablepolarextralines"   - Activates the main lobe and side lobe level visualization.
+            % "disablepolarextralines"  - Deactivates the visualization.
+            % "showtrp"                 - Show the total radiated power. This settings affects only 3D farfields.
+            % "showtrpdb"               - Show the total radiated power in dBmW.
+            % "showtrpoff"              - Hide the total radiated power.
+            % "showtis"                 - Display the total isotropic sensitivity.
+            % "showtisdb"               - Display the total isotropic sensitivity in dBmW.
+            % "showtisoff"              - Hide the total isotropic sensitivity.
             obj.AddToHistory(['.SetSpecials "', num2str(option, '%.15g'), '"']);
         end
         function Distance(obj, radius)
@@ -461,12 +457,9 @@ classdef FarfieldPlot < handle
             obj.AddToHistory(['.Origin "', num2str(originType, '%.15g'), '"']);
         end
         function can = originType(obj)
-            % bbox
-            % The center of the bounding box of the structure.
-            % zero
-            % Origin of coordinate system.
-            % free
-            % Any desired point defined by Userorigin
+            % bbox - The center of the bounding box of the structure.
+            % zero - Origin of coordinate system.
+            % free - Any desired point defined by Userorigin
             can = obj.hFarfieldPlot.invoke('originType');
         end
         function Userorigin(obj, x, y, z)
@@ -492,18 +485,18 @@ classdef FarfieldPlot < handle
         end
         function SetAxesType(obj, type)
             % Specifies the alignment of the farfield coordinate system. The following rotation types are available:
-            % "xyz" - Alignment with the global coordinate system.
-            % "user" - User defined alignment using the orientation specified by Thetastart and Phistart.
-            % "mainlobe" - Aligns the coordinate system with the main lobe direction (z') and the PolarizationVector (y').
-            % "currentwcs" - The coordinate system is set to the current wcs.
+            % "xyz"         - Alignment with the global coordinate system.
+            % "user"        - User defined alignment using the orientation specified by Thetastart and Phistart.
+            % "mainlobe"    - Aligns the coordinate system with the main lobe direction (z') and the PolarizationVector (y').
+            % "currentwcs"  - The coordinate system is set to the current wcs.
             obj.AddToHistory(['.SetAxesType "', num2str(type, '%.15g'), '"']);
         end
         function SetAntennaType(obj, type)
             % Specifies the antenna used to preconfigure the axes settings. The following types are available
-            % "unknown" - Antenna type is not known.
-            % "isotropic" - Isotropic antenna.
-            % "isotropic_linear" - Linearly polarized isotropic antenna.
-            % "directional_linear" - Linearly polarized directional antenna.
+            % "unknown"             - Antenna type is not known.
+            % "isotropic"            - Isotropic antenna.
+            % "isotropic_linear"     - Linearly polarized isotropic antenna.
+            % "directional_linear"   - Linearly polarized directional antenna.
             % "directional_circular" - Circularly  polarized directional antenna.
             obj.AddToHistory(['.SetAntennaType "', num2str(type, '%.15g'), '"']);
         end
@@ -521,7 +514,7 @@ classdef FarfieldPlot < handle
             % "spherical" - Sets the coordinate system to spherical coordinates.
             % "ludwig2ae" - Sets the coordinate system to Ludwig2 - azimuth over elevation
             % "ludwig2ea" - Sets the coordinate system to Ludwig2 - elevation over azimuth
-            % "ludwig3" - Sets the coordinate system to Ludwig3
+            % "ludwig3"   - Sets the coordinate system to Ludwig3
             can = obj.hFarfieldPlot.invoke('coordSys');
         end
         function SetAutomaticCoordinateSystem(obj, bFlag)
@@ -697,7 +690,11 @@ classdef FarfieldPlot < handle
         function GroundKappa(obj, value)
             obj.AddToHistory(['.GroundKappa "', num2str(value, '%.15g'), '"']);
         end
-        
+        % Found in the history list of migrated CST 2014 file in 'farfield plot options'
+        function SetAnntenaType(obj, type)
+            % type: 'unknown'
+            obj.AddToHistory(['.SetAnntenaType "', num2str(type, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

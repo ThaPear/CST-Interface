@@ -518,10 +518,10 @@ classdef Solver < handle
             % The steady state monitor is disabled. If no additional stop criteria are defined by means of the method AddStopCriterion the simulation stops after the defined NumberOfPulseWidths.
             obj.AddToHistory(['.SteadyStateLimit "', num2str(key, '%.15g'), '"']);
         end
-        function the = With(obj)
-            % RemoveAllStopCriteria
+        %% With the following commands it is possible to define customized stop rules in addition to the energy criteria specified by the .SteadyStateLimit command. A combination of S-parameter, probe or radiated power convergence criteria is available. For more details on the error evaluation formula please refer to the Steady State help page.
+        function RemoveAllStopCriteria(obj)
             % Resets all previously defined solver custom stop criteria, i.e. no custom stop rule will be active and in use.
-            the = obj.hSolver.invoke('With');
+            obj.AddToHistory('.RemoveAllStopCriteria');
         end
         function AddStopCriterion(obj, GroupName, Threshold, Checks, Active)
             % Adds a specific solver custom stop criterion measuring the deviation of the results (S-parameters, probes and radiated power) in subsequent time steps.
@@ -755,6 +755,220 @@ classdef Solver < handle
         function int = AKSGetNumberOfModes(obj)
             % Returns the number of defined modes.
             int = obj.hSolver.invoke('AKSGetNumberOfModes');
+        end
+        %% Undocumented functions.
+        % Found in history list of migrated CST 2014 file in 'define solver parameters'
+        function CalculationType(obj, type)
+            % type: 'TD-S'
+            obj.AddToHistory(['.CalculationType "', num2str(type, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define solver parameters'
+        function CalculateModesOnly(obj, boolean)
+            obj.AddToHistory(['.CalculateModesOnly "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define solver parameters'
+        function UseSensitivityAnalysis(obj, boolean)
+            obj.AddToHistory(['.UseSensitivityAnalysis "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function SteadyStateDurationType(obj, type)
+            % type: 'Number of pulses'
+            obj.AddToHistory(['.SteadyStateDurationType "', num2str(type, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function SteadyStateDurationTime(obj, time)
+            obj.AddToHistory(['.SteadyStateDurationTime "', num2str(time, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function SteadyStateDurationTimeAsDistance(obj, distance)
+            obj.AddToHistory(['.SteadyStateDurationTimeAsDistance "', num2str(distance, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function WaveguideBroadband(obj, boolean)
+            obj.AddToHistory(['.WaveguideBroadband "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function SetBBPSamples(obj, samples)
+            obj.AddToHistory(['.SetBBPSamples "', num2str(samples, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function UseOpenBoundaryForHigherModes(obj, boolean)
+            obj.AddToHistory(['.UseOpenBoundaryForHigherModes "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function ActivateSIPowerLossyMonitor(obj, boolean)
+            obj.AddToHistory(['.ActivateSIPowerLossyMonitor "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function SetPortShielding(obj, boolean)
+            obj.AddToHistory(['.SetPortShielding "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
+        function NormalizeToRefSignal(obj, boolean)
+            obj.AddToHistory(['.NormalizeToRefSignal "', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define time domain solver parameters'
+        function Method(obj, method)
+            % method; 'Hexahedral'
+            obj.AddToHistory(['.Method "', num2str(method, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define solver excitation modes'
+        function ExcitationFieldSource(obj, arg1, arg2, arg3, arg4, boolean)
+            % ExcitationFieldSource('fs1', '1.0', '0.0', 'default', 'True');
+            obj.AddToHistory(['.ExcitationFieldSource "', num2str(arg1, '%.15g'), '", '...
+                                                     '"', num2str(arg2, '%.15g'), '", '...
+                                                     '"', num2str(arg3, '%.15g'), '", '...
+                                                     '"', num2str(arg4, '%.15g'), '", '...
+                                                     '"', num2str(boolean, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special time domain solver
+        % parameters' under 'GENERAL'.
+        function SetBroadBandPhaseShiftLowerBoundFac(obj, value)
+            obj.AddToHistory(['.SetBroadBandPhaseShiftLowerBoundFac "', num2str(value, '%.15g'), '"']);
+        end
+        % Found in history list of migrated CST 2014 file in 'define special time domain solver
+        % parameters' under 'GENERAL'.
+        function SetPortShieldingType(obj, type)
+            % type: 'NONE'
+            obj.AddToHistory(['.SetPortShieldingType "', num2str(type, '%.15g'), '"']);
+        end
+        %% Undocumented functions for 'HEXAHEDRAL'.
+        % Found in history list of migrated CST 2014 file in 'define special time domain solver
+        % parameters' under 'HEXAHEDRAL'.
+        function UseVariablePMLLayerSizeStandard(obj, boolean)
+            obj.AddToHistory(['.UseVariablePMLLayerSizeStandard "', num2str(boolean, '%.15g'), '"']);
+        end
+        function KeepPMLDepthDuringMeshAdaptationWithVariablePMLLayerSize(obj, boolean)
+            obj.AddToHistory(['.KeepPMLDepthDuringMeshAdaptationWithVariablePMLLayerSize "', num2str(boolean, '%.15g'), '"']);
+        end
+        function SetEnhancedPMLStabilization(obj, value)
+            % value: 'Automatic'
+            obj.AddToHistory(['.SetEnhancedPMLStabilization "', num2str(value, '%.15g'), '"']);
+        end
+        function WaveguidePortROM(obj, boolean)
+            obj.AddToHistory(['.WaveguidePortROM "', num2str(boolean, '%.15g'), '"']);
+        end
+        %% Undocumented functions for 'HEXAHEDRAL TLM'.
+        % Found in history list of migrated CST 2014 file in 'define special time domain solver
+        % parameters' under 'HEXAHEDRAL TLM'.
+        function AnisotropicSheetSurfaceType(obj, type)
+            % type: '0'
+            obj.AddToHistory(['.AnisotropicSheetSurfaceType "', num2str(type, '%.15g'), '"']);
+        end
+        function UseMeshType(obj, type)
+            % type: '1'
+            obj.AddToHistory(['.UseMeshType "', num2str(type, '%.15g'), '"']);
+        end
+        function UseAbsorbingBoundary(obj, boolean)
+            obj.AddToHistory(['.UseAbsorbingBoundary "', num2str(boolean, '%.15g'), '"']);
+        end
+        function UseDoublePrecision(obj, boolean)
+            obj.AddToHistory(['.UseDoublePrecision "', num2str(boolean, '%.15g'), '"']);
+        end
+        function AllowMaterialOverlap(obj, boolean)
+            obj.AddToHistory(['.AllowMaterialOverlap "', num2str(boolean, '%.15g'), '"']);
+        end
+        function ExcitePlanewaveNearModel(obj, boolean)
+            obj.AddToHistory(['.ExcitePlanewaveNearModel "', num2str(boolean, '%.15g'), '"']);
+        end
+        function SetGroundPlane(obj, boolean)
+            obj.AddToHistory(['.SetGroundPlane "', num2str(boolean, '%.15g'), '"']);
+        end
+        function GroundPlane(obj, axis, value)
+            % axis: 'x'
+            obj.AddToHistory(['.GroundPlane "', num2str(axis, '%.15g'), '", '...
+                                           '"', num2str(value, '%.15g'), '"']);
+        end
+        function NumberOfLayers(obj, value)
+            obj.AddToHistory(['.NumberOfLayers "', num2str(value, '%.15g'), '"']);
+        end
+        function HealCheckAllObjects(obj, boolean)
+            obj.AddToHistory(['.HealCheckAllObjects "', num2str(boolean, '%.15g'), '"']);
+        end
+        function NormalizeToGaussian(obj, boolean)
+            obj.AddToHistory(['.NormalizeToGaussian "', num2str(boolean, '%.15g'), '"']);
+        end
+        function TimeSignalSamplingFactor(obj, factor)
+            obj.AddToHistory(['.TimeSignalSamplingFactor "', num2str(factor, '%.15g'), '"']);
+        end
+        %% Undocumented functions for 'TLM POSTPROCESSING'.
+        % Found in history list of migrated CST 2014 file in 'define special time domain solver
+        % parameters' under 'TLM POSTPROCESSING'.
+        function ResetSettings(obj)
+            obj.AddToHistory(['.ResetSettings']);
+        end
+        function CalculateNearFieldOnCylindricalSurfaces(obj, boolean, value)
+            % value: 'Coarse'
+            obj.AddToHistory(['.CalculateNearFieldOnCylindricalSurfaces  "', num2str(boolean, '%.15g'), '", '...
+                                                                        '"', num2str(value, '%.15g'), '"']);
+        end
+        function CylinderGridCustomStep(obj, value)
+            obj.AddToHistory(['.CylinderGridCustomStep "', num2str(value, '%.15g'), '"']);
+        end
+        function CalculateNearFieldOnCircularCuts(obj, boolean)
+            obj.AddToHistory(['.CalculateNearFieldOnCircularCuts "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderBaseCenter(obj, value1, value2, value3)
+            obj.AddToHistory(['.CylinderBaseCenter "', num2str(value1, '%.15g'), '", '...
+                                                  '"', num2str(value2, '%.15g'), '", '...
+                                                  '"', num2str(value3, '%.15g'), '"']);
+        end
+        function CylinderRadius(obj, value)
+            obj.AddToHistory(['.CylinderRadius "', num2str(value, '%.15g'), '"']);
+        end
+        function CylinderHeight(obj, value)
+            obj.AddToHistory(['.CylinderHeight "', num2str(value, '%.15g'), '"']);
+        end
+        function CylinderSpacing(obj, value)
+            obj.AddToHistory(['.CylinderSpacing "', num2str(value, '%.15g'), '"']);
+        end
+        function CylinderResolution(obj, value)
+            obj.AddToHistory(['.CylinderResolution "', num2str(value, '%.15g'), '"']);
+        end
+        function CylinderAllPolarization(obj, boolean)
+            obj.AddToHistory(['.CylinderAllPolarization "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderRadialAngularVerticalComponents(obj, boolean)
+            obj.AddToHistory(['.CylinderRadialAngularVerticalComponents "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderMagnitudeOfTangentialConponent(obj, boolean)
+            obj.AddToHistory(['.CylinderMagnitudeOfTangentialConponent "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderVm(obj, boolean)
+            obj.AddToHistory(['.CylinderVm "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderDBVm(obj, boolean)
+            obj.AddToHistory(['.CylinderDBVm "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderDBUVm(obj, boolean)
+            obj.AddToHistory(['.CylinderDBUVm "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylinderAndFrontAxes(obj, value1, value2)
+            % value1: '+y'
+            % value2: '+z'
+            obj.AddToHistory(['.CylinderAndFrontAxes "', num2str(value1, '%.15g'), '", '...
+                                                    '"', num2str(value2, '%.15g'), '"']);
+        end
+        function ApplyLinearPrediction(obj, boolean)
+            obj.AddToHistory(['.ApplyLinearPrediction "', num2str(boolean, '%.15g'), '"']);
+        end
+        function Windowing(obj, value)
+            % value: 'None'
+            obj.AddToHistory(['.Windowing "', num2str(value, '%.15g'), '"']);
+        end
+        function LogScaleFrequency(obj, boolean)
+            obj.AddToHistory(['.LogScaleFrequency "', num2str(boolean, '%.15g'), '"']);
+        end
+        function AutoFreqStep(obj, boolean, value)
+            obj.AddToHistory(['.AutoFreqStep "', num2str(boolean, '%.15g'), '", '...
+                                            '"', num2str(value, '%.15g'), '"']);
+        end
+        function SetExcitationSignal(obj, value)
+            % value: '' (empty)
+            obj.AddToHistory(['.SetExcitationSignal "', num2str(value, '%.15g'), '"']);
+        end
+        function SaveSettings(obj)
+            obj.AddToHistory(['.SaveSettings']);
         end
     end
     %% MATLAB-side stored settings of CST state.

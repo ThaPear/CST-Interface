@@ -94,6 +94,11 @@ classdef TraceFromCurve < handle
             obj.project.AddToHistory(['define TraceFromCurve: ', obj.component, ':', obj.name], obj.history);
             obj.history = [];
         end
+        %% Undocumented functions.
+        function DeleteCurve(obj, boolean)
+            % Delete the curve after the trace is formed.
+            obj.AddToHistory(['.DeleteCurve "', num2str(boolean, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

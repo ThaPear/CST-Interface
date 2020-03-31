@@ -1,0 +1,225 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ScalarPlot2D
+
+ScalarPlot2D Object
+
+This object allows to plot three dimensional vector fields on a cutting plane. Therefore the 3D Fields on 2D Plane option has to be active. To choose what field to plot, the SelectTreeItem command can be used.
+
+General Methods
+
+Query
+
+Default Settings
+
+Example
+
+General Methods
+
+Type ( enum key )
+
+Selects the type of Plot.
+
+key can have one of  the following values:
+
+"contour"       The field values of the chosen scalar field will be plotted on the chosen cutting plane in different colors.
+
+"isoline"       Lines of equal value of the chosen scalar field will be plotted on the chosen cutting plane.
+
+"carpet"        Plots a carpet or a surface where the distance of a point on the cutting plane to the surface represents the field value at this point.
+
+"carpetcolor"   The same as ”carpet”, but additionally it is colored in relation to the field values.
+
+ 
+
+PlotAmplitude ( bool switch )
+
+If switch is True, the absolute values (the amplitudes) of the complex scalar values are plotted.
+
+ 
+
+PhaseValue ( double phase )
+
+Specifies the phase of to be plotted complex field values.
+
+ 
+
+PhaseStep ( double step )
+
+Specifies the step width used by phase incrementing actions.
+
+ 
+
+Quality ( int quality )
+
+The Plot data for scalar values on surfaces is represented by triangles. This setting influences the number of triangles used for the plot. A fine plot quality will result in a longer plot generation time and thus in slower movies as well. A value between 0 and 100 may be given.
+
+ 
+
+Transparency ( double transparency )
+
+Sets the transparency for drawing contour plots or carpet plots. The transparency value is a floating point number in the range from 0.0 to 1.0. A value of 0.0 means that the field visualization is drawn opaquely whereas a value of 1.0 indicates that the field data is drawn completely transparent (invisible).
+
+ 
+
+PlaneNormal ( enum normal )
+
+Sets the direction of the cutting plane where the fields are to be plotted. The position of the plane can be set by PlaneCoordinate.
+
+normal can have one of  the following values:
+
+"x"     x  is the coordinate direction of the cutting plane.
+
+"y"     y  is the coordinate direction of the cutting plane.
+
+"z"     z  is the coordinate direction of the cutting plane.
+
+ 
+
+PlaneCoordinate ( double position )
+
+Sets the position of the cutting plane where the fields are to be plotted. The direction of the plane can be set by PlaneNormal.
+
+ 
+
+SetTime ( double time )
+
+The current time value of a time monitor plot is set.
+
+ 
+
+SetSample ( long sample )
+
+The current time sample number of a time monitor plot is set.
+
+ 
+
+SetComponent ( enum component )
+
+Sets the vector component of a vector result that should be visualized by a Scalar Plot.
+
+component can have one of  the following values:
+
+"x"             The x component of the vector result
+
+"y"             The y component of the vector result
+
+"z"             The z component of the vector result
+
+"abs"           The absolute value of the vector result
+
+"normal"        The normal part of the vector field is the scalar product of the surface’s normal vector and the field vector on the surface.
+
+"tangential"    The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
+
+ 
+
+%% Query
+
+ 
+
+GetDomain enum
+
+Returns the domain of the monitor used, return code can have the following values:
+
+"frequency"     The plot is based on recordings of a frequency domain monitor.
+
+"time"          The plot is based on recordings of a time domain monitor.
+
+"static"        The plot is based on recordings of a static monitor.
+
+ 
+
+GetNumberOfSamples long
+
+Returns the total number of samples if the plot is based on recordings of a time monitor else 0.
+
+ 
+
+GetTStart double
+
+Returns the start time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTEnd double
+
+Returns the end time of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTStep double
+
+Returns the time step width of recording if the plot is based on recordings of a time monitor else 0.0.
+
+ 
+
+GetTime double
+
+Returns the current  time set of a time monitor plot.
+
+ 
+
+GetSample long
+
+Returns the current time sample number of a time monitor plot.
+
+Default Settings
+
+Type ("contour")
+
+PlotAmplitude (False)
+
+PhaseValue (0.0)
+
+PhaseStep (22.5)
+
+Quality (50)
+
+PlaneNormal ("x")
+
+PlaneCoordinate (0.0)
+
+SetTime (0.0)
+
+SetSample (0)
+
+Examples
+
+The following script plots surfaces of equal amplitude of the vector field component Y of the electric field "e1".
+
+ 
+
+' Plot only a wire frame of the structure to be able to look inside
+
+Plot.wireframe (True)
+
+ 
+
+' Select the Y-Component of the electric field e1 in the tree
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+SetComponent ("Y")
+
+ 
+
+' Enables plotting of 3D fields on 2D planes
+
+Plot3DPlotsOn2DPlane (True)
+
+ 
+
+' Plot the scalar field of the selected monitor
+
+With ScalarPlot2D
+
+    .Type ("isoline")
+
+    .PlaneNormal ("x")
+
+    .PlotAmplitude (False)
+
+    .PlaneCoordinate (0.0)
+
+    .Quality (60)
+
+End With

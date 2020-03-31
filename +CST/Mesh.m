@@ -60,21 +60,11 @@ classdef Mesh < handle
     methods
         function MeshType(obj, mType)
             % Sets the type of the mesh.
-            % PBA
-            % Hexahedral mesh with Perfect Boundary Approximation
-            % Staircase
-            % Hexahedral mesh with staircase cells
-            % Tetrahedral
-            % Tetrahedral mesh
-            % Surface
-            % Surface mesh
-            % SurfaceML
-            % Surface multi layer mesh
-            % mType: 'PBA'
-            %        'Staircase'
-            %        'Tetrahedral'
-            %        'Surface'
-            %        'SurfaceML'
+            % mType: 'PBA' -  Hexahedral mesh with Perfect Boundary Approximation
+            %        'Staircase' - Hexahedral mesh with staircase cells
+            %        'Tetrahedral' - Tetrahedral mesh
+            %        'Surface' - Surface mesh
+            %        'SurfaceML' - Surface multi layer mesh
             obj.AddToHistory(['.MeshType "', num2str(mType, '%.15g'), '"']);
         end
         function PBAType(obj, mType)
