@@ -1,0 +1,105 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Curve Operations | ChamferCurve
+
+ChamferCurve Object
+
+This object enables a chamfer operation on a curve item. The edge produced by two segments of the item will be cut to the specified width. If the width is chosen in a way that the structure would change significantly, the operation might not be possible. The chamfer operation will then modify the curve items connected to the selected point and create a new item which actually represents the chamfer. The chamfer item can be identified by an unique name, e.g. for subsequent editing operations.
+
+As soon as the chamfer is defined it will appear in the main plot window and on the Navigation Tree.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name chamfername )
+
+Sets the name of the new chamfer item.
+
+ 
+
+Width ( double widthvalue )
+
+Specify a valid expression for the width of the chamfer.
+
+ 
+
+Curve ( name curvename )
+
+Specifies the curve the new created chamfer item object will belong to.
+
+ 
+
+CurveItem1 ( name curveitemname )
+
+Selects a specified curve item which has to belong to the same curve object as curve item No.2.
+
+ 
+
+CurveItem2 ( name curveitemname )
+
+Selects a specified curve item which has to belong to the same curve object as curve item No.1.
+
+ 
+
+EdgeId1 ( int edgeid1 )
+
+Defines a specified edge of a curve item by its identity number.
+
+ 
+
+EdgeId2 ( int edgeid2 )
+
+Defines a specified edge of a curve item by its identity number.
+
+ 
+
+VertexId1 ( int vertexid1 )
+
+Defines a specified vertex of a curve item by its identity number.
+
+ 
+
+VertexId2 ( int vertexid2 )
+
+Defines a specified vertex of a curve item by its identity number.
+
+ 
+
+Create
+
+Creates a new curve item. All necessary settings for it have to be made previously.
+
+Example
+
+With ChamferCurve
+
+  .Reset
+
+  .Name "chamfer1"
+
+  .Width "2"
+
+  .Curve "curve1"
+
+  .CurveItem1 "rectangle1"
+
+  .CurveItem2 "rectangle1"
+
+  .EdgeId1 "2"
+
+  .EdgeId2 "3"
+
+  .VertexId1 "3"
+
+  .VertexId2 "3"
+
+  .Create
+
+End With

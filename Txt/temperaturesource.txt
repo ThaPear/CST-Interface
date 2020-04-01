@@ -1,0 +1,98 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Thermal | TemperatureSource
+
+TemperatureSource Object
+This object is used to create new  temperature sources for the Thermal Solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the temperature source. Each source must have a unique name.
+
+ 
+
+Value ( double_expression value )
+
+Specifies  temperature in Kelvins (K).
+
+ 
+
+AddFace ( solidname solidname, int faceid )
+
+A temperature source can be defined on several faces. This method adds a face (indicated by its faceid) of a certain solid (indicated by its solidname) to the face list for the temperature source.
+
+ 
+
+Type ( enum { "Fixed", "Floating", "Initial" } type )
+
+Specifies the type of the temperature  source.
+
+ 
+
+Create
+
+Creates a new temperature source. All necessary settings for this object have to be made previously.
+
+ 
+
+Delete ( name  name )
+
+Deletes the temperature source with the given name.
+
+ 
+
+Rename ( name  oldname,  name newname )
+
+Renames the temperature source with the given oldname to the defined newname.
+
+ 
+
+GetType (name name ) type
+
+Returns the type ("Fixed", "Floating" or "Initial") of a temperature source with a given name.
+
+ 
+
+GetValue (name name ) value
+
+Returns the value of a temperature source with a given name.
+
+Default Settings
+
+Name ("")
+
+Value ("")
+
+Face ("", 0)
+
+Type ("Fixed")
+
+Example
+
+With TemperatureSource
+
+     .Reset
+
+     .Name ("temperaturesource1")
+
+     .Value (300)
+
+     .Face ("component1:solid1", "1")
+
+     .Type ("Fixed")
+
+     .Create
+
+End With

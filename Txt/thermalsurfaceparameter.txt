@@ -1,0 +1,288 @@
+Home | Visual Basic (VBA) Language | ThermalSourceParameter Object
+
+ThermalSourceParameter Object
+This object offers the possibility to define a thermal source based on a given field monitor of a previously performed calculation. These fields are used as a thermal source by the Thermal Solver and can be calculated by stationary current solvers as well as low or high frequency solvers. Moreover this VBA object allows to compute all or selected loss distributions of the current project in order to import them in another project.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+CreateThermalDistributions
+
+This command creates all or the previously selected loss distributions for the current project. These loss distribution files can be imported into another project.
+
+ 
+
+ExportSelectedLosses (bool  flag)
+
+Activates or deactivates the selective calculation of thermal loss distributions. This setting is helpful if a project contains many result files and only a a few loss distributions are of interest.
+
+ 
+
+AddLossForExport ( name name,  enum parameter, variant value )
+
+Adds a loss distribution or field to the thermal loss computation. The name represents the source name.
+
+Available enum values for the parameter are { "Frequency" or "Description" }. If "Frequency" is chosen, than value corresponds to the frequency of the source to be exported. If  "Description" is chosen, than value corresponds to the name of the loss source. This latter option is specifically designed for the losses computed with a time averaging method, for which the frequency value is otherwise meaningless.
+
+ 
+
+AddLossForExportInSubVolumeCoords ( name name,   enum parameter,   variant value,   double xmin,   double xmax,   double ymin,   double ymax,   double zmin,   double zmax )
+
+This command has the same functionality as the previous one, but the losses will be computed from the e- and h-fields saved by monitors in the corresponding subvolume.
+
+ 
+
+UseTriangularSurfaceLossCalc (bool  flag)
+
+For simulation results based on hexahedral grids, this setting can be used to switch between two different computation methods for surface losses. Especially if the EM- and the thermal simulation mesh are different this setting should be activated.
+
+ 
+
+GetNumberOfCreatedThermalDistributions  int
+
+If a loss computation was don this function returns the number of computed loss distributions.
+
+ 
+
+ResetExportLossSettings
+
+Resets all settings for the thermal loss computation.
+
+ 
+
+ResetLossFieldSettings
+
+Resets all parameter of the thermal loss field definition.
+
+ 
+
+ResetTemperatureSettings
+
+Resets the thermal background temperature definition and the blood temperature.
+
+ 
+
+ResetGlobalSurfaceLossSettings
+
+Resets all settings for the surface loss calculation.
+
+ 
+
+LossDistDefActive (bool flag)
+
+Activate or deactivate the thermal source field.
+
+ 
+
+ExternalProjectPath( name name)
+
+Define the project path if thermal losses should be imported from an external project.
+
+ 
+
+ExternalProjectUseCopy(bool  flag)
+
+Define if the local copy should always be used form imported losses, or if losses are updated before the solver is started.
+
+ 
+
+ExternalProjectUseRelativePath(bool  flag)
+
+Define if the path-name to an external project is relative or absolute.
+
+ 
+
+SourceSetup ( name name )
+
+Specifies the name of the source setup where the losses should be imported from.
+
+ 
+
+FrequencyParameter ( double value )
+
+Specifies the frequency to determine the correspondent loss fields.
+
+ 
+
+Factor ( double value )
+
+Specifies a factor value which is multiplied on the selected current field.
+
+ 
+
+SurfaceLossDefaultConductivity (double conductivity)
+
+Specifies the surface conductivity which is used to compute thermal losses on PEC solids.
+
+ 
+
+UseXminForSurfaceLossCalc (bool  flag)
+
+Specify if the boundary at Xmin should be taken into account for the surface loss calculation.
+
+ 
+
+UseXmaxForSurfaceLossCalc (bool  flag)
+
+Specify if the boundary at Xmax should be taken into account for the surface loss calculation.
+
+ 
+
+UseYminForSurfaceLossCalc (bool  flag)
+
+Specify if the boundary at Ymin should be taken into account for the surface loss calculation.
+
+ 
+
+UseYmaxForSurfaceLossCalc (bool  flag)
+
+Specify if the boundary at Ymax should be taken into account for the surface loss calculation.
+
+ 
+
+UseZminForSurfaceLossCalc (bool  flag)
+
+Specify if the boundary at Zmin should be taken into account for the surface loss calculation.
+
+ 
+
+UseZmaxForSurfaceLossCalc (bool  flag)
+
+Specify if the boundary at Zmax should be taken into account for the surface loss calculation.
+
+ 
+
+UseElVolumeLosses (bool flag)
+
+Specify if ohmic volume losses are taken into account for the thermal simulation.
+
+ 
+
+UseMagVolumeLosses (bool flag)
+
+Specify if magnetic dispersive volume losses are taken into account for the thermal simulation.
+
+ 
+
+UseSurfaceLosses (bool flag)
+
+Specify if surface based losses are taken into account for the thermal simulation.
+
+ 
+
+AddSource
+
+Adds the previously determined current field as a source to the thermal source definition.
+
+Please note, that momentarily only one current field can be used as thermal source.
+
+ 
+
+MinimumRelativeThermalConductanceForSurfaceLosses (double value)
+
+This settings defines the relative minimum thermal conductivity of a region where surface loss distributions are taken into account. The minimum conductance value is calculated by multiplying the entered relative value (between 0 and 1) with the maximum conductance value used for a certain example.
+
+ 
+
+MinimumRelativeThermalConductanceForVolumeLosses (double value)
+
+This settings defines the relative minimum thermal conductivity of a region where volume based loss distributions are taken into account. The minimum conductance value is calculated by multiplying the entered relative value (between 0 and 1) with the maximum conductance value used for a certain example.
+
+Default Settings
+
+Factor (0.0)
+
+FrequencyParameter (0.0)
+
+MinimumRelativeThermalConductance (1e-2)
+
+Example
+
+Create all loss distributions for an export to another .cst project.
+
+ 
+
+ThermalSourceParameter.CreateThermalDistributions
+
+ 
+
+Applying the field of a stationary current solver run as thermal source:
+
+ 
+
+With ThermalSourceParameter
+
+     .ResetLossFieldSettings
+
+     .LossDistDefActive "True"
+
+     .ExternalProjectPath "J-Statics.cst"
+
+     .ExternalProjectUseCopy "False"
+
+     .ExternalProjectUseRelativePath "True"
+
+     .SourceSetup "Stationary Current Solver"
+
+     .FrequencyParameter "0"
+
+     .UseElVolumeLosses "True"
+
+     .UseMagVolumeLosses "False"
+
+     .UseSurfaceLosses "False"
+
+     .Factor "1e6"
+
+     .MinRelThermConductanceForSurfaceLosses "0.01"
+
+     .MinRelThermConductanceForVolumeLosses "0.0"
+
+     .AddSource
+
+End With
+
+ 
+
+Applying the losses of a transient solver run as thermal source:
+
+ 
+
+With ThermalSourceParameter
+
+     .ResetLossFieldSettings
+
+     .LossDistDefActive "True"
+
+     .ExternalProjectPath "HFTD Seq.cst"
+
+     .ExternalProjectUseCopy "False"
+
+     .ExternalProjectUseRelativePath "True"
+
+     .SourceSetup "Time Domain: S-Parameter [1,1]"
+
+     .FrequencyParameter "82"
+
+     .UseElVolumeLosses "True"
+
+     .UseMagVolumeLosses "True"
+
+     .UseSurfaceLosses "True"
+
+     .Factor "100"
+
+     .MinRelThermConductanceForSurfaceLosses "0.01"
+
+     .MinRelThermConductanceForVolumeLosses "0.0"
+
+     .AddSource
+
+End With
+
+ 

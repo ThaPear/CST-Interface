@@ -1,0 +1,138 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | EDAImportDefaults
+
+EDAImportDefaults Object
+
+This object is used to specify the defaults settings to be used by the EDA import upon first import.
+
+For further details, see the documentation of the EDA import dialog.
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+EtchAs2D( bool switch )
+
+Ignores the layer thicknesses for conducting layers and imports them as 2D sheets when activated.
+
+ 
+
+EtchFactorSignalNets( bool switch )
+
+When True, limits the etch factor to signal nets only.
+
+ 
+
+ConformalSolderMask( bool switch )
+
+Turns on or off a conformal solder mask.
+
+ 
+
+ConformalSolderMaskSignalNets( bool switch )
+
+When True, limits the generation of conformal solder masks to signal nets only.
+
+ 
+
+ComponentElevation ( name type )
+
+Can be set to "Automatic" or "Explicit".
+
+ 
+
+ComponentElevationHeightMM ( double height )
+
+Sets the value of the explicit elevation height in mm.
+
+ 
+
+ShortGroundsOnBGA( bool switch )
+
+When True, shorts all grounds on the BGA side to a PEC sheet.
+
+ 
+
+PortGeometry ( name type )
+
+Can be set to "Edge", "EdgeToPEC" or "FaceToPEC".
+
+ 
+
+LumpedElementGeometry ( name type )
+
+Can be set to "Edge", "Face" or "EdgeToPEC".
+
+ 
+
+LumpedElementMonitors( bool switch )
+
+When True, adds voltage and current monitors to the lumped elements in the 3D model.
+
+ 
+
+MeshDensityX ( name type )
+
+Can be set to "Medium", "Course" or "Fine" or a factor (double) relative to the lateral reference length. Applies to the HEX mesh generation in the X-direction.
+
+ 
+
+MeshDensityY ( name type )
+
+Can be set to "Medium", "Course" or "Fine" or a factor (double) relative to the lateral reference length. Applies to the HEX mesh generation in the Y-direction.
+
+ 
+
+MeshLinesSubstrate ( int number )
+
+Sets the number of mesh lines within the substrate layers.
+
+ 
+
+Create
+
+Creates the defaults file.
+
+ 
+
+Example
+
+With ImportEDADefaults
+
+.Reset
+
+.EtchAs2D "True"
+
+.EtchFactorSignalNets True
+
+.ConformalSolderMask True
+
+.ConformalSolderMaskSignalNets True
+
+.ComponentElevation "Automatic"
+
+.ComponentElevationHeightMM 0.1234
+
+.ShortGroundsOnBGA True
+
+.PortGeometry "FaceToPEC"
+
+.LumpedElementGeometry "Face"
+
+.LumpedElementMonitors True
+
+.MeshDensityX "medium"
+
+.MeshDensityY "coarse"
+
+.MeshLinesSubstrate 2
+
+.Create
+
+End With

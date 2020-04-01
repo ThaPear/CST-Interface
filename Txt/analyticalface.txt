@@ -1,0 +1,110 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | AnalyticalFace
+
+AnalyticalFace Object
+This object is used to create a new analytical face shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name analyticalfacename )
+
+Sets the name of the analytical face.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new analytical. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new analytical face. The material must already exist.
+
+ 
+
+LawX ( double  xlaw)
+
+Sets the analytical function defining the x-coordinates for the analytical face dependent on the parameters u, and v.
+
+ 
+
+LawY ( double  ylaw)
+
+Sets the analytical function defining the y-coordinates for the analytical face dependent on the parameters u, and v.
+
+ 
+
+LawZ ( double  zlaw )
+
+Sets the analytical function defining the z-coordinates for the analytical face dependent on the parameters u, and v.
+
+ 
+
+ParamerRangeU ( double umin, double umax )
+
+Sets the bounds for the parameter u.
+
+ 
+
+ParameterRangeV ( double vmin, double vmax )
+
+Sets the bounds for the parameter v.
+
+ 
+
+Create
+
+Creates a new analytical face. All necessary settings for this analytical face have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+LawX (0)
+
+LawY (0)
+
+LawZ (0)
+
+ParameterRangeU (0, 1)
+
+ParameterRangeV (0, 1)
+
+Example
+
+With AnalyticalFace
+
+     .Reset
+
+     .Name "solid1"
+
+     .Component "component1"
+
+     .Material "PEC"
+
+     .LawX "cos(u) * sin(v)"
+
+     .LawY "u"
+
+     .LawZ "v"
+
+     .ParameterRangeU "0", "2*pi"
+
+     .ParameterRangeV "0", "2*pi"
+
+     .Create
+
+End With

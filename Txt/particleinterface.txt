@@ -1,0 +1,264 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Particles | Particle Interface
+
+ParticleInterface Object
+This Object is used to create a new particle interface for the tracking- or the PIC-solver.
+
+General Methods
+
+Export Methods
+
+Import Methods
+
+Default Settings
+
+Example
+
+General Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name (name  name)
+
+Sets the name of the particle interface.
+
+ 
+
+Type (enum  typename)
+
+Type of the particle interface.
+
+enum typename       meaning
+
+"Export"            Particle interface to export particle data to other projects.
+
+"Import"            Particle interface to import particle data from other projects.
+
+"Import ASCII DC"   Particle interface to import an ascii file (particle emission data).
+
+"Import ASCII TD"   Particle interface to import an ascii file (particle emission data).
+
+ 
+
+Delete (name  name)
+
+Deletes the specified particle interface.
+
+ 
+
+Rename (name  oldname, name  newname)
+
+Renames the particle interface.
+
+ 
+
+Create
+
+Creates the particle interface.
+
+ 
+
+%% Export Methods
+
+ 
+
+ExportParticleInterfaces
+
+Export particle interface data to file.
+
+ 
+
+Dir ( enum dir)
+
+The particle interface is defined on a plane.
+
+This method defines the plane normal of the particle interface.
+
+The values for dir can be: "X", "Y" or "Z".
+
+When the plane normal is defined in the w-direction of the local uvw-coordinate system, so that the uv-plane is transverse to the plane normal, the following table applies depending on the choice of dir:
+
+dir (w-direction)   u-direction         v-direction
+
+X                   Y                   Z
+
+Y                   Z                   X
+
+Z                   X                   Y
+
+ 
+
+Wcut ( double wcut )
+
+Value of the position of the interface plane along the direction of the specified plane normal (e.g. along the Z-axis when dir = "Z").
+
+ 
+
+Umin ( double umin )
+
+Value of the lower transverse u-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Umax ( double umax )
+
+Value of the upper transverse u-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Vmin ( double vmin )
+
+Value of the lower transverse v-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Vmax ( double vmax )
+
+Value of the upper transverse v-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+%% Import Methods
+
+ 
+
+InterfaceFile ( filename filename )
+
+Sets the name of the interface file which has to be imported.
+
+ 
+
+UseLocalCopyOnly ( bool switch )
+
+Defines if the local copy of the imported interface file should be used for all future simulation runs.
+
+ 
+
+DirNew ( enum dir)
+
+This method defines the new plane normal of the imported particle interface.
+
+The values for dir can be: "X", "Y" or "Z".
+
+ 
+
+InvertOrientation ( bool switch )
+
+This settings defines if the starting normal of all particles should be mirrored on the interface plane.
+
+ 
+
+XShift ( double xshift )
+
+Translation of the planes center-point along x-direction.
+
+ 
+
+YShift ( double yshift )
+
+Translation of the planes center-point along y-direction.
+
+ 
+
+ZShift ( double zshift )
+
+Translation of the planes center-point along z-direction.
+
+ 
+
+PICSuppressionLength ( double length )
+
+Defines the distance along the new interface normal, where particles do not react on fields caused by other particles in the PIC simulation.
+
+ 
+
+PICEmissionModel ( enum type )
+
+Defines the emission model of the particle import interface. Possible emission models are "DC" and "TD".
+
+ 
+
+PICRiseTimeDC( double time)
+
+Defines the rise time of the DC emission model for the PIC solver.
+
+Default Settings
+
+Name ("")
+
+Type (Export)
+
+Dir ("X")
+
+Wcut (0)
+
+Umin (0)
+
+Umax (0)
+
+Vmin (0)
+
+Vmax (0)
+
+InterfaceFile ("")
+
+UseLocalCopyOnly (False)
+
+DirNew ("X")
+
+InvertOrientation (False)
+
+XShift (0)
+
+YShift (0)
+
+ZShift (0)
+
+PICEmissionModel ("DC")
+
+PICSuppressionLength (0)
+
+PICRiseTimeDC (0)
+
+Example
+
+In the following example, a particle interface is defined to import the particle data from the binary file "particle interface 1.pio". The binary file has been created using an export interface. The .pio files are located under the "Results" folder of a given CST STUDIO SUITE project folder.
+
+ 
+
+With ParticleInterface
+
+     .Reset
+
+     .Name "particle interface 1"
+
+     .Type "Import"
+
+     .InterfaceFile "C:\Examples\PIC-TRK-Interfaces\Result\particle interface 1.pio"
+
+     .UseLocalCopyOnly "False"
+
+     .DirNew "Z"
+
+     .InvertOrientation "False"
+
+     .XShift "0.0"
+
+     .YShift "0.0"
+
+     .ZShift "-66"
+
+     .PICEmissionModel "DC"
+
+     .PICRiseTimeDC "1.0"
+
+     .PICSuppressionLength "0.0"
+
+     .Create
+
+End With
+
+ 

@@ -1,0 +1,44 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | Parametric Imports
+
+LiveLink Object
+This object is used to manage the synchronization of parameters with an external application like used for the parametric imports. Currently the object can not be used to create a parametric import.
+
+Methods
+
+Example
+
+Methods
+
+Synchronize ( string name )
+
+Make sure all parameters of a following CAD import are synchronized with the according external application. The name is the filename without extension and the used import ID separated by an underscore.  Returns false if the given name do not exists.
+
+Example
+
+' Synchronize the parameters of the import
+
+LiveLink.Synchronize "Link1_1"
+
+ 
+
+' Import the model file into cst (normal import)
+
+With SOLIDWORKS
+
+    .Reset
+
+    .Healing "1"
+
+    .ScaleToUnit "0"
+
+    .FileName "C:\Users\alexandermarinc\Desktop\SolidworksLink\Link1.SLDPRT"
+
+    .Id "1"
+
+    .ImportAttributes "True"
+
+    .ImportHiddenEntities "False"
+
+    .Read
+
+End With

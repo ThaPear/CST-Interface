@@ -1,0 +1,155 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Particles | Particle Beam
+
+ParticleBeam Object
+
+This Object is used to define a particle beam source for the wakefield-solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Delete (name  name)
+
+Deletes the specified particle-beam source.
+
+ 
+
+Rename (name  oldname, name  newname )
+
+Renames the specified particle-beam.
+
+ 
+
+Name (name  name )
+
+Sets the name of the new particle-beam source.
+
+ 
+
+IsBunchGaussian(bool flag)
+
+Sets the beam shape to a gaussian excitation.
+
+ 
+
+ExcitationSignal(string  name )
+
+Sets the name of the excitation signal, which should be of type ASCII-import or User-defined.
+
+ 
+
+Length (double  value)
+
+Sets the standard deviation (sigma) of the Gaussian shaped particle bunch.
+
+ 
+
+Beta (double  value)
+
+Sets the velocity of the particle bunch.
+
+ 
+
+Charge (double  value)
+
+Sets  the total charge of the particle bunch
+
+ 
+
+ConsiderForMeshRefinement (bool  flag)
+
+Determines if the bunch settings should affect the mesh generation or not. It is strongly recommended to set this value to "True".
+
+ 
+
+LinesPerSigma (bool flag, double lines)
+
+Allows to specify a longitudinal mesh refinement for particle beams. In case numerical dispersion plays an important role it is possible to refine the mesh with this setting only in direction of beam propagation.
+
+ 
+
+BeamPoint  (bool  pickpoint, double  xcoord, double  ycoord, double  zcoord)
+
+Define one point on the beam axis by choosing the last pickpoint (set pickpoint to "True") or by defining the coordinates numerically.
+
+ 
+
+BeamDir (double xdir, double ydir, double zdir)
+
+Define the beam axis direction numerically. The beam axis must be parallel to a main coordinate axis x,y or z.
+
+ 
+
+IndirectWakeIntegration (bool flag)
+
+Determines if the indirect integration should be used (more accurate) or not. If it is not possible to compute wakepotentials with the indirect method, the direct integration will be used.
+
+ 
+
+WakeIntegrationShift (double xshift, double yshift, double zshift)
+
+The wake integration axis, where the wake potential is calculated can be shifted to the particle beam axis, in order to compute wakefields for particles which are "off-axis". Ony two of three values are taken into account, since the wake-axis is shifted only transversal.
+
+ 
+
+Create
+
+Creates the source with the previously made settings.
+
+Default Settings
+
+Length "0.0"
+
+Beta "0.0"
+
+Charge "0.0"
+
+ConsiderForMeshRefinement "True"
+
+BeamPoint "False", "0.0", "0.0", "0.0"
+
+BeamDir "0.0", "0.0", "0.0"
+
+IndirectWakeIntegration "True"
+
+WakeIntegrationShift "0.0", "0.0", "0.0"
+
+Examples
+
+With ParticleBeam
+
+     .Reset
+
+     .Name "ParticleBeam1"
+
+     .Length "1"
+
+     .Beta "1.0"
+
+     .Charge "1e-12"
+
+     .ConsiderForMeshRefinement "True"
+
+     .BeamPoint "True", "2.4", "-1.2", "3.2"
+
+     .BeamDir "0.0", "0.0", "1.0"
+
+     .IndirectWakeIntegration "False"
+
+     .WakeIntegrationShift "0.0", "0.0", "0.0"
+
+     .Create
+
+End With
+
+ 

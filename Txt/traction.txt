@@ -1,0 +1,92 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Mechanics | Traction Boundary
+
+Traction Object
+Defines a new traction boundary condition on one or more faces.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the new traction boundary.
+
+ 
+
+Value ( double  valueX,  double  valueY,  double  valueZ )
+
+Sets the components of the traction in a cartesian coordinate system.
+
+ 
+
+NormalValue ( double  value )
+
+Sets the components of the traction oriented normally to a body's surface.
+
+ 
+
+UseValue ( bool useX,  bool useY,  bool useZ )
+
+Allows to deactivate certain components of the traction definition, so that these deactivated components are not fixed anymore.
+
+ 
+
+AddFace ( solidname  solidname, int  faceid )
+
+Adds a face from a solid by its face id, where the source is mapped to.
+
+ 
+
+Create
+
+Creates the source with the previously made settings.
+
+ 
+
+Delete ( name  name)
+
+Deletes the specified traction boundary.
+
+ 
+
+Rename ( name  oldname, name  newname )
+
+Renames the specified traction boundary.
+
+Default Settings
+
+Name ("")
+
+Value ("0.0", "0.0", "0.0")
+
+UseValue ("True", "True", "True")
+
+AddFace ("", 0)
+
+Example
+
+With Traction
+
+     .Reset
+
+     .Name "traction1"
+
+     .Value "1.0", "0.0", "0.0"
+
+     .UseValue "True", "True", "True"
+
+     .AddFace "component1:solid1", "1"
+
+     .Create
+
+End With

@@ -1,0 +1,114 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Thermal | HeatSource
+
+HeatSource Object
+This object is used to create new heat sources for the Thermal Solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings of the heat source to their default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name of the heat source.
+
+ 
+
+Value ( doubleexpression value )
+
+Specifies the heat flow value for the heat source.
+
+ 
+
+Type ( enum type )
+
+Selects one of the following types:
+
+"PTC"       Heat source on a perfect thermal conductor.
+
+"Volume"    Homogeneous volume heat source on a solid with normal thermal conductivity
+
+ 
+
+ValueType ( enum {"Integral", "Density"} type )
+
+Specify if the volume heat source value is defined as an integral type or a density type.
+
+ 
+
+Face ( solidname solidname, int faceid )
+
+A heat source can be defined on several faces. This method adds a face (indicated by its faceid) of a certain solid (indicated by its solidname) to the face list for the heat source.
+
+ 
+
+Create
+
+Creates the heat source with its previously made settings.
+
+ 
+
+Delete ( string name )
+
+Deletes the heat source with the given name.
+
+ 
+
+Rename  ( string oldname,  string newname  )
+
+Renames the heat source with the given oldname to the defined newname.
+
+ 
+
+GetValue (name name ) value
+
+Returns the value of a heat source with a given name.
+
+ 
+
+GetType (name name ) type
+
+Returns the type ("PTC" or "Volume") of a heat source with a given name.
+
+ 
+
+GetValueType (name name ) type
+
+Returns the value type ("Integral" or "Density") of a volume heat source source with a given name.
+
+Default Settings
+
+Name ("")
+
+Value ("")
+
+Face ("", 0)
+
+Type ("PTC")
+
+Example
+
+With HeatSource
+
+     .Reset
+
+     .Name "heatcurrent1"
+
+     .Type "PTC"
+
+     .Value "100"
+
+     .Face "component1:solid1", "1"
+
+     .Create
+
+End With

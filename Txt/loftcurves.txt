@@ -1,0 +1,99 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Curve Operations | LoftCurves
+
+LoftCurves Object
+
+This object enables a loft operation on a several number of curve items. A plane is fitted over the items comparable with some kind of stretched skin. The resulting structure can be created as a hollow or solid shape. As soon as the new shape is created it will appear in the main plot window and on the Navigation Tree. Note: All profile curves and the path curve must be located on different curves.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name solidname )
+
+Sets the name of the new solid.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new solid. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new solid. The material must already exist.
+
+ 
+
+Solid ( bool value )
+
+Set this option to create a solid shape by covering the two ends of the lofted free form surface. Otherwise the resulting shape is a single free face only.
+
+ 
+
+MinimizeTwist ( bool value )
+
+Set this option to automatically minimize the twisting of the resulting shape. If this option is true, the corresponding points on circles and ellipses will be adjusted such that the generated free form surface is not twisted at all. This option is only useful for lofts between circles and ellipses.
+
+ 
+
+Path ( name pathname )
+
+Specifies a curve item which will serve as a path for the loft operation. The correct format for the name should be 'curvename:curveitemname' (see the example below). If the curve item (e.g. a line) is connected with an other curve item (e.g. a polygon) both curve items will be used as path.
+
+ 
+
+AddCurve ( name curvename )
+
+Adds a curve item to the internal list for the later performed loft operation. The correct format for the name should be 'curvename:curveitemname' (see the example below). If the curve item (e.g. a line) is connected with an other curve item (e.g. a polygon) both curve items will be swept along the path.
+
+ 
+
+Create
+
+Creates a new solid. All necessary settings for this solid have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Solid (False)
+
+MinimizeTwist (False);
+
+Example
+
+With LoftCurves
+
+     .Reset
+
+     .Name "solid1"
+
+     .Component "component1"
+
+     .Material "Vacuum"
+
+     .Solid "True"
+
+     .MinimizeTwist "True"
+
+     .Path "curve1:polygon1"
+
+     .AddCurve "curve1:circle1"
+
+     .AddCurve "curve1:rectangle1"
+
+     .Create
+
+End With

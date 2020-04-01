@@ -1,0 +1,80 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Thermal | MovingMedia Object
+
+MovingMedia Object
+ 
+
+Use this object to create new moving media items for the thermal solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+ 
+
+Reset
+
+Resets all internal settings of the moving media item to their default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name of the moving media item.
+
+ 
+
+AddFace ( solidname solidname, int faceid )
+
+A moving media item can be defined on several solids. This method adds a face (indicated by its faceid) of a certain solid (indicated by its solidname) to the face list for the moving media item. Actually, the whole solidname is selected.
+
+ 
+
+VelocityVector (  doubleexpression x_component, doubleexpression y_component, doubleexpression z_component, enum { "m/s", "km/h" } units )
+
+Defines the velocity vector for the moving media.
+
+ 
+
+Create
+
+Creates a new moving media item with its previously made settings.
+
+ 
+
+Delete ( string name )
+
+Deletes the moving media item with the given name.
+
+ 
+
+Rename  ( string oldname,  string newname  )
+
+Renames the moving media item with the given oldname to the defined newname.
+
+Default Settings
+
+Name ("")
+
+VelocityVector ("0", "0", "0", "m/s")
+
+Example
+
+With MovingMedia
+
+     .Reset
+
+     .Name "translation1"
+
+     .AddFace "component1:solid2", "1"
+
+     .AddFace "component1:solid1", "2"
+
+     .VelocityVector "0", "10", "0", "m/s"
+
+     .Create
+
+End With

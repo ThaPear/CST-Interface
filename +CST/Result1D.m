@@ -68,20 +68,16 @@ classdef Result1D < handle
         end
         function DeleteAt(obj, type)
             % Defines the lifetime of the result object.
-            % enum type
-            % meaning
-            % "never"
-            % The result will be never deleted.
-            % "rebuild"
-            % Deletion during model update. (default)
-            % "solverstart"
-            % A solver start will delete the result.
-            % "truemodelchange"
-            % A parameter change will delete the results.
-            %   
-            % SetAsResult ( bool switch )
-            % If switch is True, the result object is treated like a normal solver result item.
+            % enum type           meaning
+            % "never"             The result will be never deleted.
+            % "rebuild"           Deletion during model update. (default)
+            % "solverstart"       A solver start will delete the result.
+            % "truemodelchange"   A parameter change will delete the results.
             obj.hResult1D.invoke('DeleteAt', type);
+        end
+        function SetAsResult(obj, boolean)
+            % If switch is True, the result object is treated like a normal solver result item.
+            obj.hResult1D.invoke('SetAsResult', boolean);
         end
         function InsertAsLastItem(obj)
             % If switch is True, .AddToTree inserts the Result1D Object at the end of the subfolder into the tree.

@@ -1,0 +1,125 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Torus
+
+Torus Object
+
+This object is used to create a new torus shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name torusname )
+
+Sets the name of the torus.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new torus. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new torus. The material must already exist.
+
+ 
+
+Axis ( enum{"x", "y", "z"} direction )
+
+Sets the axis of the torus.
+
+ 
+
+Outerradius ( double radius )
+
+Sets the large radius of the torus.
+
+ 
+
+Innerradius ( double radius )
+
+Sets the small radius of the torus.
+
+ 
+
+Xcenter ( double centercoordinate )
+
+Sets the x- or u-coordinate of the center point of the torus depending on whether a local coordinate system is active or not.
+
+ 
+
+Ycenter ( double centercoordinate )
+
+Sets the y- or v-coordinate of the center point of the torus, depending on whether a local coordinate system is active or not.
+
+ 
+
+Zcenter ( double centercoordinate )
+
+Sets the z- or w-coordinate of the center point of the torus, depending on whether a local coordinate system is active or not.
+
+ 
+
+Segments ( int number )
+
+This setting specifies how the torus' geometry is modelled, either as a smooth surface of by a facetted approximation. If this value is set to "0", an analytical (smooth) representation of the torus will be created. If this number is set to another value greater than 2, the torus' face will be approximated by this number of planar facets along each angular direction. The higher the number of segments, the better the representation of the torus will be.
+
+ 
+
+Create
+
+Creates a new torus. All necessary settings for this torus have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Xcenter (0)
+
+Ycenter (0)
+
+Zcenter (0)
+
+Segments (0)
+
+Example
+
+With Torus
+
+    .Reset
+
+    .Name ("torus1")
+
+    .Component ("component1")
+
+    .Material ("PEC")
+
+    .Axis ("z")
+
+    .Outerradius (1.5)
+
+    .Innerradius (0.5)
+
+    .Xcenter (2)
+
+    .Ycenter (1)
+
+    .Zcenter (0)
+
+    .Segments (0)
+
+    .Create
+
+End With

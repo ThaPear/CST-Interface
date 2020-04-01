@@ -1,0 +1,105 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Potential Object
+
+Potential Object
+
+Defines a new potential on a PEC solid or sheet.
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name (name  name )
+
+Sets the name of the new potential source.
+
+ 
+
+Value (double  potentialvalue )
+
+Sets  the potential value for a PEC solid which is specified by the face command.
+
+ 
+
+Phase (double  phasevalue )
+
+Sets  the phase value for a potential on a PEC solid. This setting is only considered when an electroquasistatic simulation is performed.
+
+ 
+
+AddFace (solidname  solidname, int  faceid )
+
+Selects a face from a solid by its face id, where the source is mapped to.
+
+ 
+
+Type ( enum {"Fixed", "Floating"} type )
+
+Specifies the type of the potential. If a perfect electric conductor (PEC) unit has to be maintained at a specific potential, then set the potential type to "Fixed". Alternatively, the PEC unit can be made "Floating" meaning that this the corresponding unit has a constant charge..
+
+ 
+
+Create
+
+Creates the source with the previously made settings.
+
+ 
+
+Delete (name  name)
+
+Deletes the specified potential source.
+
+ 
+
+Rename (name  oldname, name  newname )
+
+Renames the specified potential.
+
+ 
+
+GetType (name name ) type
+
+Returns the type ("Fixed" or "Floating") of a potential source with a given name.
+
+ 
+
+GetValue (name name ) potentialvalue
+
+Returns the value of a potential source with a given name.
+
+ 
+
+GetPhase (name name ) phasevalue
+
+Returns the phase of a potential source with a given name.
+
+Default Settings
+
+Value ("0")
+
+Face ("", 0)
+
+Example
+
+With Potential
+
+     .Reset
+
+     .Name ("potential1")
+
+     .Value ("1")
+
+     .Phase ("0")
+
+     .Face ("component1:solid1", "1")
+
+     .Type ("Fixed")
+
+     .Create
+
+End With
+
+ 

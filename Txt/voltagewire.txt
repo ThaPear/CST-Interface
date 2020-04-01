@@ -1,0 +1,109 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Voltage Wire
+
+VoltageWire Object
+
+Defines a new voltage path on a selected curve.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the new voltage wire.
+
+ 
+
+Type ( enum {"curvepath"} curvetype )
+
+Specifies the type of the voltage wire. Currently the is only one type available.
+
+ 
+
+Voltage ( double  value )
+
+Specifies the amplitude of the voltage.
+
+ 
+
+Phase ( double  value )
+
+Specifies the phase shift of the voltage.
+
+ 
+
+Curve ( solidname  curvename )
+
+Specifies the name of a curve to be converted into a voltage wire.
+
+ 
+
+Add
+
+Creates a curve with the previously defined settings.
+
+ 
+
+Change
+
+Changes the settings for a name specified  voltage path.
+
+ 
+
+Import
+
+This command is used if a voltage path created by a subproject import - it should not be used in a macro.
+
+ 
+
+Delete ( name  name )
+
+Deletes the specified voltage wire.
+
+ 
+
+Rename ( solidname  oldname, solidname  newname )
+
+Renames the specified voltage wire.
+
+Default Settings
+
+Name ("Vacuum")
+
+Type ("CurvePath")
+
+Voltage ("0")
+
+Phase ("0")
+
+Example
+
+With VoltageWire
+
+     .Reset
+
+     .Name ("path1")
+
+     .Type ("CurvePath")
+
+     .Voltage ("1.0")
+
+     .Phase ("0.0")
+
+     .Curve ("curve1:line1")
+
+     .Add
+
+End With
+
+ 

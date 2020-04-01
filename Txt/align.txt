@@ -1,0 +1,119 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Transformations and Picks | Align
+
+Align Object
+Offers a set of tools that change a solid by transformations.
+
+Methods
+
+Default Settings
+
+Methods
+
+Reset
+
+Resets all internal values to their defaults.
+
+ 
+
+Name ( name sObjectName )
+
+Defines the name of the object, the alignment should be applied to.
+
+Note: for some alignments, a global name may be required (mixed alignment).
+
+ 
+
+AddName ( name sObjectName )
+
+Defines one more name of an additional object, in addition to the previously defined object.
+
+Note: for some alignments, a global name may be required (mixed alignment).
+
+ 
+
+Align ( enum {"Shapes", "Subproject", "Part"} what,  enum {"Faces", "Rotate", "RotateByDegree"} how )
+
+This execute a specified alignment onto the given type of objects (named via Name and AddName).
+
+enum what   description
+
+Shape       this aligns solids
+
+Subproject  this aligns a previously imported subproject or a previously pasted structure
+
+Part        this aligns a complete block in the 3D Layout View
+
+Mixed       if a multi selection encompasses different kind of objects (e.g. wires and solids), this type of alignment is used. In this case, global names need to be used for .Name and .AddName
+
+enum how        description
+
+Faces           This transforms the objects by rotation and translation so that two selected "faces" touch afterwards. One "face" is selected on the objects to be moved, another "face" is selected at some target object.
+
+Rotate          This rotates the objects around a center of a picked "target" "face", having two picks that specify an angle, as input. For the angle, two directions need to be given: you can either pick a straight edge for a direction, or a point that will be pointed to from the center of rotation.
+
+RotateByDegree  This rotates the objects around a center of a picked "target" "face. The angle needs to be specified using the command "SetNumericalValue" (see below).
+
+ 
+
+SetKindOfPickFor ( enum {"SourcePlane", "TargetPlane", "ZeroAngle", "FinalAngle"} what,  enum {"Face", "Edge", "Point"} kind)
+
+This defines what is used to determine the information for calculating an alignment step. Different steps allow a different subset of kinds of information.
+
+%
+
+enum what   description                                                                         allowed kinds
+
+SourcePlane This defines a normal and a center from where the object is going to be aligned.    Face        
+
+TargetPlane This defines a normal and a center on which the object will be aligned.             Face
+
+ZeroAngle   This is used to determine a direction that defines the angle zero for rotation.
+            For the point, the direction is taken from TargetPlane center to the point.         Edge, Point
+
+FinalAngle  This defines a direction to which the angle is measured to. (From ZeroAngle)        Edge, Point
+
+%
+
+enum kind   description
+
+Face        A previously picked planar face is expected.
+
+Edge        A picked linear edge is expected
+
+Point       A picked point is expected
+
+ 
+
+SetNameToStep( enum {"SourcePlane", "TargetPlane", "ZeroAngle", "FinalAngle"} what, globalname objectname )
+
+Some steps may require a name attached to an alignment step. This methods uses global names for that. So far, only anchor points are allowed under certain circumstances.
+
+ 
+
+SetNumericalValue( enum {"Angle"} what, double value)
+
+This sets a value for numerical operations, so far, only "RotateByDegree" supports this command.
+
+enum what   description
+
+Angle       This defines an angle in degree - used for the rotation by value.
+
+ 
+
+SetOppositeFaceOrientation(  bool flippedSwitch )
+
+If flippedSwitch is true, instead of having z-axis (of faces or anchor points) opposing each other, the normal of the picked thing on the selected objects will point along the same direction as the normal on the previously picked remaining objects. This option is for the Face-Alignement step (see above). Interactively, pushing "TAB" at the right point in time during the alignment process will yield this flag to become set.
+
+ 
+
+ClearSubProjectImportInfo( bool switch )
+
+This only concerns alignments of subproject imports. If the flag is set, the information of objects imported during the latest subproject will be cleared. This should be called be the last alignment step for a particular subproject alignment.
+
+Default Settings
+
+ClearSubProjectImportInfo(False)
+
+SetOppositeFaceOrientation(False)
+
+Examples

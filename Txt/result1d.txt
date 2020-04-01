@@ -89,27 +89,17 @@ DeleteAt ( enum type )
 
 Defines the lifetime of the result object.
 
-enum type
+enum type           meaning
 
-meaning
+"never"             The result will be never deleted.
 
-"never"
+"rebuild"           Deletion during model update. (default)
 
-The result will be never deleted.
+"solverstart"       A solver start will delete the result.
 
-"rebuild"
+"truemodelchange"   A parameter change will delete the results.
 
-Deletion during model update. (default)
-
-"solverstart"
-
-A solver start will delete the result.
-
-"truemodelchange"
-
-A parameter change will delete the results.
-
-  
+ 
 
 SetAsResult ( bool switch )
 

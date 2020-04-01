@@ -14,14 +14,16 @@
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-clear;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
      %#ok<*NBRAK> 
 
+clear;
+
 % txt = clipboard('paste');
-txt = fileread('CST-Interface/Txt/curve.txt');
+txt = fileread('CST-Interface/Txt/result3d.txt');
 split = strsplit(txt, newline);
 % split = strrep(split, split{2}, '');
 split = strrep(split, char(13), '');
@@ -123,12 +125,12 @@ while(i <= length(methodlines))
                 for(enumargi = 1:length(enumargs))
                     enumarg = enumargs{enumargi};
                     if(enumargi == 1)
-                        enumdescr = [enumdescr, '            % ', enumname, ': ', enumarg, newline];
+                        enumdescr = [enumdescr, '            % ', enumname, ': ', enumarg, newline]; %#ok<AGROW>
                     else
-                        enumdescr = [enumdescr, '            % ', repmat(' ', 1, length(enumname)+2), enumarg, newline];
+                        enumdescr = [enumdescr, '            % ', repmat(' ', 1, length(enumname)+2), enumarg, newline]; %#ok<AGROW>
                     end
                 end
-                argdescr = [argdescr, enumdescr];
+                argdescr = [argdescr, enumdescr]; %#ok<AGROW>
             end
             % Split into separate args
             args = strsplit(args, ',');
@@ -146,12 +148,12 @@ while(i <= length(methodlines))
                     arg = strrep(arg, 'switch', 'boolean');
                     % Append to MATLAB function argument list.
                     if(length(arg) > 1)
-                        funcargs = [funcargs, {arg{2}}];
+                        funcargs = [funcargs, arg(2)]; %#ok<AGROW>
                         if(contains(arg{1}, '_ref'))
                             errorfunc = 1;
                         end
                     else
-                        funcargs = [funcargs, {arg{1}}];
+                        funcargs = [funcargs, arg(1)]; %#ok<AGROW>
                     end
                     nargs = nargs + 1;
                 end
@@ -338,6 +340,7 @@ if(defaultsettingsstartI <= length(split))
         line = strrep(line, ', "', ', ''');
         line = strrep(line, '")', ''');');
         line = strrep(line, ' "', '(''');
+        line = strrep(line, '")', ''');');
         line = strrep(line, '"', ''');');
         line = strrep(line, ' (', '(');
         line = strrep(line, 'False', '0');

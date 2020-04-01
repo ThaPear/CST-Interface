@@ -1,0 +1,102 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | ADSComponentExport
+
+ADSComponentExport Object
+
+This command offers the option to create an ADS® parametric component based  on the current project.
+
+ 
+Methods
+
+AddCurrentSparameterToMdifFile
+
+This command stored the currently calculated S-parameters together with the current structure parameters in the "<projectname>^sparameters.mdf" data file. This file may contain a collection of various S-parameter results for several structure parameter combinations. All data stored in this file can later be accessed from within the ADS schematic by using the corresponding component. Other parameter settings within this range will then be interpolated between the given data points, parameter settings outside this range will be extrapolated accordingly.
+
+ 
+
+SetDescription ( string description )
+
+Sets the description text of the ADS schematic component. This text will be used when the component is created the next time.
+
+ 
+
+SetParameterType ( name parametername,  string type )
+
+This command sets the type of a parameter. This information is required to correctly consider different unit settings in CST MICROWAVE STUDIO and ADS. Once the type of the parameter is known, the actual values are scaled accordingly.
+
+type can have one of  the following values:
+
+"String"        The parameter is an arbitrary string (no scaling)
+
+"Unitless"      The parameter does not have a unit (no scaling)
+
+"Frequency"     The parameter is related to a frequency (scaling by frequency units)
+
+"Resistance"    The parameter is related to a resistance (scaling by resistance units)
+
+"Conductance"   The parameter is related to a conductance (scaling by conductance units)
+
+"Inductance"    The parameter is related to a inductance (scaling by inductance units)
+
+"Capacitance"   The parameter is related to a capacitance (scaling by capacitance units)
+
+"Length"        The parameter is related to a length (scaling by length units)
+
+"Time"          The parameter is related to a time (scaling by time units)
+
+"Angle"         The parameter is related to an angle (scaling by angular units)
+
+"Power"         The parameter is related to a power (scaling by power units)
+
+"Voltage"       The parameter is related to a voltage (scaling by voltage units)
+
+"Current"       The parameter is related to a current (scaling by current units)
+
+"Distance"      The parameter is related to a distance (scaling by distance units)
+
+"Temperature"   The parameter is related to a temperature (scaling by temperature units)
+
+"dB"            The parameter is related to a dB value (no scaling)
+
+ 
+
+ExportADSComponent
+
+This command creates the ADS component in the design kit by using the previously made settings concerning description and parameter types.
+
+Default Settings
+
+SetDescription("<ADS component name> Component")
+
+SetParameterType("*", "Unitless")
+
+Example
+
+Storing currently calculated S-parameters in the data file for later use within the component. The data is stored together with the current parameter settings which allows for a parametric data access from within the ADS schematic.
+
+ 
+
+With ADSComponentExport
+
+    .AddCurrentSparameterToMdifFile
+
+End With
+
+ 
+
+Automatically creating an ADS component from within a VBA script:
+
+ 
+
+ With ADSComponentExport
+
+    .SetDescription("Magic Tee 4 Port Rectangular Waveguide")
+
+    .SetParameterType("waveguide_width", "Length")
+
+    .SetParameterType("waveguide_height", "Length")
+
+    .ExportADSComponent
+
+End With
+
+ 

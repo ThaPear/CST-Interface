@@ -21,6 +21,8 @@
      %#ok<*NBRAK> 
 
 % Offers a set of tools to find or set specific points, edges or areas.
+% Some methods/functions specify the objects that have to be picked by an id number. This id number is unique for every object. If not specified otherwise, the numbering starts with 0. Please note: If a solid changes such that new faces/edges/points are created, the id number might change!
+% Some other methods/functions work on existing picks that can be listed by the pick lists (Modeling: Picks > Pick Lists   ). In this case, an index is passed to the function. This index is 0-based. The first element in the list (the pick that was performed the earliest) will be addressed by "0". It is also possible to use negative numbers, in that case the list is addressed in reverse order: "-1" is the latest picked object (the one with the greatest index in the list), "-2" the second to last pick and so on.
 classdef Pick < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)

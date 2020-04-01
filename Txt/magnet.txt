@@ -1,0 +1,219 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Magnet
+
+Magnet Object
+
+Defines a new permanent magnet on a solid.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the new charge source.
+
+ 
+
+SetMagnetType ( enum {"Constant", "Radial"} type)
+
+Sets the type of the magnetization. Available options are "Constant" or "Radial".
+
+ 
+
+XMagVector ( double  value )
+
+Sets the x component of the remanent magnetization vector. Used only for constant magnets.
+
+ 
+
+YMagVector ( double  value )
+
+Sets the y component of the remanent magnetization vector. Used only for constant magnets.
+
+ 
+
+ZMagVector ( double  value )
+
+Sets the z component of the remanent magnetization vector. Used only for constant magnets.
+
+ 
+
+XMagAxis ( double  value )
+
+Sets the x component of the axis which is orthogonal to the radial field (z-axis of a local cylindrical coordinate system). Used only for radial magnets.
+
+ 
+
+YMagAxis ( double  value )
+
+Sets the y component of the axis which is orthogonal to the radial field (z-axis of a local cylindrical coordinate system). Used only for radial magnets.
+
+ 
+
+ZMagAxis ( double  value )
+
+Sets the z component of the axis which is orthogonal to the radial field (z-axis of a local cylindrical coordinate system). Used only for radial magnets.
+
+ 
+
+XMagOrigin ( double  value )
+
+Sets the x component of the center of the radial field (origin of a local cylindrical coordinate system). Used only for radial magnets.
+
+ 
+
+YMagOrigin ( double  value )
+
+Sets the y component of the center of the radial field (origin of a local cylindrical coordinate system). Used only for radial magnets.
+
+ 
+
+ZMagOrigin ( double  value )
+
+Sets the z component of the center of the radial field (origin of a local cylindrical coordinate system). Used only for radial magnets.
+
+ 
+
+InverseDir ( bool  type )
+
+Specifies whether the radial field points towards the origin (type = true) or outwards (type = false).
+
+ 
+
+Remanence ( double  value )
+
+Sets the remanence flux density. Used only for radial magnets.
+
+ 
+
+Face ( solidname  solidname, int  faceid )
+
+Selects a face from a solid by its face id, where the source is mapped to.
+
+ 
+
+Transformable( bool  type )
+
+Specifies whether the magnetization orientation will be transformed correlating with potential transformations (translation/rotation/mirroring) applied to the underlying solid.
+
+ 
+
+Repick
+
+Activates the face repicking for a previously specified magnet.
+
+ 
+
+Create
+
+Creates the source with the previously made settings.
+
+ 
+
+Delete ( name  name)
+
+Deletes the specified magnet source.
+
+ 
+
+Rename ( name  oldname, name  newname )
+
+Renames the specified magnet.
+
+Default Settings
+
+SetMagnetType ("Constant")
+
+XMagVector ("0")
+
+YMagVector ("0")
+
+ZMagVector ("0")
+
+XMagAxis ("0")
+
+YMagAxis ("0")
+
+ZMagAxis ("0")
+
+XMagOrigin ("0")
+
+YMagOrigin ("0")
+
+ZMagOrigin ("0")
+
+InverseDir ("False")
+
+Remanence ("0")
+
+Face ("", 0)
+
+Remanence ("False")
+
+Example
+
+To define a constant, non-transformable magnet:
+
+With Magnet
+
+     .Reset
+
+     .Name "magnet1"
+
+     .XMagVector "1"
+
+     .YMagVector "0"
+
+     .ZMagVector "0"
+
+     .Face "component1:solid1", "1"
+
+     .Create
+
+End With
+
+ 
+
+To define a radial, transformable magnet:
+
+With Magnet
+
+     .Reset
+
+     .MagnetType "Radial"
+
+     .Name "magnet1"
+
+     .XMagAxis "0"
+
+     .YMagAxis "0"
+
+     .ZMagAxis "1"
+
+     .XMagOrigin "0"
+
+     .YMagOrigin "0"
+
+     .ZMagOrigin "0"
+
+     .Remanence "0"
+
+     .Face "component1:solid1", "1"
+
+     .Transformable "True"
+
+     .Create
+
+End With
+
+ 

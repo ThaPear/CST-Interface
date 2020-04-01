@@ -1,0 +1,125 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Import/Export | HumanModel
+
+HumanModel Object
+
+This command offers the import of voxel data sets.
+
+The voxel data materials (except the air material) override any other material defined at the same location. If there is no other material defined besides the air material of the voxel data, the default background material is used.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the import options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets the name of the imported file.
+
+ 
+
+Tissue ( int index, name materialname, bool importvoxel, bool importmaterial )
+
+This method selects a material, specified by its materialname to be imported. Please indicate with the importvoxel flag if the material is enabled or disabled for the voxel set. Furthermore, the state of the importmaterial flag determines if the material is added to the list of materials available for the current project.
+
+ 
+
+Volume ( double xmin, double xmax, double ymin, double ymax, double zmin, double zmax )
+
+Selects a part of the data set’s volume by defining limits relatively to the entire volume.
+
+ 
+
+Priority ( double priority )
+
+Sets the mesh priority.
+
+ 
+
+Scale ( double xvalue, double yvalue, double zvalue  )
+
+Specifies the scale for the imported data set.
+
+ 
+
+Resolution ( double resolution )
+
+Specifies the resolution of the imported data set. Possible values for resolution are 0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007 and 0.008.
+
+ 
+
+Frequency ( double frequency )
+
+Sets a single  frequency.
+
+ 
+
+GetMIn( int dimension ) double
+
+Get coordinate of the lower corner of the bounding box of the imported data set.
+
+ 
+
+GetMax( int dimension ) double
+
+Get coordinate of the upper corner of the bounding box of the imported data set.
+
+ 
+
+Read
+
+Starts the actual import of the file.
+
+ 
+
+Modify
+
+Applies the settings without reading the file again.
+
+ 
+
+Delete
+
+Deletes the previously imported human model data set.
+
+Default Settings
+
+Volume (0.0, 1.0, 0.0, 1.0, 0.0, 1.0)
+
+Priority (0.0)
+
+Scale (-1.0, -1.0, -1.0)
+
+Subgrids (False)
+
+Resolution (0.0)
+
+Example
+
+With HumanModel
+
+    .Reset
+
+    .FileName (".\Human Model.vox")
+
+    .Tissue (1, "Marrow", True, True)
+
+    .Tissue (3, "Bones", True, True)
+
+    .Volume (0.0, 1.0, 0.0, 1.0, 0.0, 1.0)
+
+    .Resolution (0.008)
+
+    .Subgrids (False)
+
+    .Read
+
+End With

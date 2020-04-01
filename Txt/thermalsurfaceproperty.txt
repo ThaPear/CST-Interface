@@ -1,0 +1,162 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Thermal | ThermalSurfaceProperty
+
+ThermalSurfaceProperty Object
+This object offers the possibility to create a thermal surface with its radiation and convection properties. A thermal surface can consist of several different shape faces and is used by the Thermal Solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings of the thermal surface to its default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name of the thermal surface.
+
+ 
+
+AddFace  ( solidname solidname, int faceid )
+
+The thermal surface can consists of several different faces. This method adds a face (indicated by its faceid) of a certain solid (indicated by its solidname) to the face list for the thermal surface.
+
+ 
+
+UseEmissivityValue (bool  useEmissivity)
+
+This setting is taken into account only by conjugated heat transfer simulations. For other thermal simulations, this setting is ignored and the specified emissivity value is always used. For conjugated heat transfer simulations, it is possible to define emissivity as a material property. When this value is to be overwritten on the specified surface, the flag useEmissivity should be set True.  Otherwise (default: useEmissivity = False) the material setting will be used.
+
+Please note that settings concerning the emissivity are completely ignored in combination with the conjugated heat transfer solver, if the corresponding radiation flag (CHTSolver.Radiation) is set False.
+
+ 
+
+Emissivity ( double expression value )
+
+Specifies the emissivity value for the radiation of the thermal surface.
+
+This setting is ignored completely in combination with the conjugated heat transfer solver, if one of the corresponding radiation flags (UseEmissivityValue or CHTSolver.Radiation) is set False.
+
+ 
+
+ConvectiveHeatTransferCoefficient ( double expression value, string unit  )
+
+This setting is considered by the steady-state and transient thermal solvers only.
+
+It specifies the convective heat transfer coefficient value for the convection of the thermal surface. The second parameter defines the unit of the heat transfer coefficient. The following units are available:
+
+unit            relation
+
+"W/m^2/K"       = 0.85984 kcal / (h m² °C) = 0.1761 Btu / (ft² h °F)
+
+"Btu/ft^2/h/F"  = 5.678 W / m² / K = 4.882 kcal / (h m² °C)
+
+"kcal/h/m^2/C"  = 1.163 W / m² / K = 0.205 Btu / (ft² h °F)
+
+ 
+
+UseSurrogateHeatTransfer ( bool  overwriteHeatTransfer )
+
+This setting is used by the conjugated heat transfer solver only.
+
+By default (overwriteHeatTransfer=False), convection and conduction are calculated automatically by the conjugated heat transfer solver. It is possible, to prescribe the heat transfer (convection and conduction) on the given surface. To this end, the flag overwriteHeatTransfer should be set True.
+
+ 
+
+SurrogateHeatTransferCoefficient  ( double expression value, string unit  )
+
+This setting is used by the conjugated heat transfer solver only.
+
+It prescribes the heat transfer (convection/conduction) on the thermal surface. The second parameter defines the unit of the heat transfer coefficient. The following units are available:
+
+unit            relation
+
+"W/m^2/K"       = 0.85984 kcal / (h m² °C) = 0.1761 Btu / (ft² h °F)
+
+"Btu/ft^2/h/F"  = 5.678 W / m² / K = 4.882 kcal / (h m² °C)
+
+"kcal/h/m^2/C"  = 1.163 W / m² / K = 0.205 Btu / (ft² h °F)
+
+ 
+
+ReferenceTemperatureType (enum type)
+
+Specifies if the reference temperature is identical to the ambient temperature or if it is defined by a value.
+
+enum type       meaning
+
+"Ambient"       uses the ambient temperature (defined in the solver settings) as the reference temperature
+
+"Userdefined"   allows to define a reference temperature value with the command ReferenceTemperatureValue
+
+ 
+
+ReferenceTemperatureValue ( double expression value, string unit )
+
+Specifies the reference temperature value for the convection and/or the emission of the thermal surface. The second parameter is optional, but recommended. It defines the unit of the temperature value. By default, the global user unit is used. Available units are Kelvin, Celsius and Fahrenheit.
+
+ 
+
+UsePickedFaces (bool  usePickedFaces)
+
+Defines if faces which were picked before the tool activation are used for the definition instead of faces selected by the AddFace command.
+
+ 
+
+Create
+
+Creates the thermal surface with its previously made settings.
+
+ 
+
+Delete ( string name )
+
+Deletes the thermal surface with the given name.
+
+ 
+
+Rename  ( string oldname,  string newname  )
+
+Renames the thermal surface with the given oldname to the defined newname.
+
+ 
+
+Default Settings
+
+AddFace ("", 0)
+
+UseEmissivityValue ("True")
+
+Emissivity (0.0)
+
+ConvectiveHeatTransferCoefficient (0.0, "W/m^2/K")
+
+ReferenceTemperatureType ("Ambient")
+
+Example
+
+With ThermalSurfaceProperty
+
+     .Reset
+
+     .Name "surfaceprops1"
+
+     .AddFace "component1:solid1", "5"
+
+     .Emissivity "0.1"
+
+     .ConvectiveHeatTransferCoefficient "2", "W/m^2/K"  
+
+     .ReferenceTemperatureType "UserDefined"  
+
+     .ReferenceTemperatureValue "293.15", "Kelvin"  
+
+     .Create
+
+End With

@@ -1,0 +1,93 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Current Port
+
+CurrentPort Object
+
+The current port object defines a current port as a source of a stationary current calculation.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name (name name)
+
+The name of the current port element.
+
+ 
+
+Face (solidnamefaceid name)
+
+The name of the face (solidname:faceid) used for the definition.
+
+ 
+
+Value ( double  value )
+
+Sets  the potential or the current value of a current port - depending if the ValueType was set to "Potential" or "Current".
+
+ 
+
+ValueType ( enum {"Potential", "Current"} type )
+
+Specify if the current port value represents a potential or a current .
+
+ 
+
+Create
+
+Adds the current port definition to the source definitions.
+
+ 
+
+Rename (name oldname, name newname)
+
+Changes the name of an existing current port.
+
+ 
+
+Delete (name name)
+
+Deletes the current port  with the given name .
+
+ 
+
+GetValueType (name name )
+
+Returns the value type ("Potential" or "Current") of a current port source with a given name.
+
+ 
+
+GetValue (name name )
+
+Returns the value of a current port source with a given name.
+
+Default Settings
+
+Value "0"
+
+Example
+
+With CurrentPort
+
+     .Reset
+
+     .Name "currentport1"
+
+     .Value "0"
+
+     .Face "component1:yoke", "12"
+
+     .Create
+
+End With
+
+ 

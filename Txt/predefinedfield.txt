@@ -1,0 +1,156 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Predefined Field
+
+PredefinedField Object
+The object is used to initialize predefined electric and magnetic fields for tracking- or PIC-simulations.
+
+Two distinct possibilities exist. One is to define analytical magnetic fields, which can be homogeneous or rotational symmetric. The other possibility is to import fields from external files or from external CST projects.
+
+Although the methods of this object can be used to import external electric or magnetic fields from files, it is recommended to use instead the dialog box "Simulation: Sources and Loads -> Source Field -> Import External Field".
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+ResetAnalyticSettings
+
+Resets all settings of the analytically-defined magnetic fields to their default values.
+
+ 
+
+ResetExternalSettings
+
+Resets all settings of the fields which were imported from external files to their default values.
+
+ 
+
+FieldType (enum fieldtype)
+
+Type of the source field.
+
+enum fieldtype  meaning
+
+"Hconst"        A constant homogeneous magnetic field is defined.
+
+"Bconst"        A constant homogeneous magnetic flux density is defined.
+
+"Bz"            A rotational syymetric field is defined.
+
+"External"      An external field from an ASCII file or a .m3d file is imported.
+
+ 
+
+HFieldVector (double xcomp, double ycomp, double zcomp)
+
+Constant h-field,. The orientation and strength is given by the three arguments. Only evaluated if fieldtype "Hconst" is chosen.
+
+ 
+
+BFieldVector (double xcomp, double ycomp, double zcomp)
+
+Constant b-field,. The orientation and strength is given by the three arguments. Only evaluated if fieldtype "Bconst" is chosen.
+
+ 
+
+AddBzValue (double  position,  double bzvalue)
+
+B-field value at the given position along the z/w axis of the active coordinate system for the "1d description" definition type. Only evaluated if fieldtype "Bz" is chosen.
+
+ 
+
+ExternalFieldMur(double  mur)
+
+If a magnetic field monitor has been defined, this value is considered for the calculation of the relevant magnetic flux density.
+
+ 
+
+UseLocalCopyOnly ( bool switch )
+
+Defines if the local copy of the imported field data file should be used only for all future simulation runs.
+
+ 
+
+UpdateLocalCopies ( bool switch )
+
+If switch is set to True, the local copies of the imported fields are updated with the field data from the import location.
+
+ 
+
+SetExternalField ( bool switch, filename fieldpath, double factor, double  phase, int fieldID, bool relpath )
+
+Defines a new external field source. It is defined by a flag which indicates if the source is active, a field path, a scaling factor and for frequency dependant fields a phase value. The fieldID is a unique label that should be used only for the particular field import and it can be set to non-negative integer values.
+
+When a field is imported from a CST project, fieldpath is the path to the CST project including the ending ".cst".
+
+If relpath is set to True, the relative path of an imported file (with respect to the location of the .cst project) is used to access the imported files. For example, if the .cst project absolute path is "C:\projects\gun.cst" and the absolute path of the import file is "C:\imports\field.txt", then the relative path of the import is "..\..\imports\field.txt". This command is useful for simulations with the System Assembly and Modeling (SAM).
+
+ 
+
+SetExternalFieldTimeSignal( int fieldID, string  signal)
+
+Sets the signal with which the field with the given field ID will be multiplied.
+
+ 
+
+SetExternalFieldTimeShift( int fieldID, double shift)
+
+Sets the time shift with which the field with the given field ID will be shifted.
+
+ 
+
+SetExternalFieldDescription( int fieldID, double description)
+
+In case of a field import from a CST project (with the given field ID as set with SetExternalField), the description is the name of the field that is imported.
+
+ 
+
+SetExternalFiedASCIIType( filename fieldpath, string type)
+
+In case of a ASCII field import with a given fieldpath , the type is the field type and must be set to one of the following strings: "B-Field", "H-Field" or "E-Field"..
+
+ 
+
+SetExternalFiedASCIISymmetries( filename fieldpath, string symX, string symY,  string symZ )
+
+In case of a ASCII field import with a given fieldpath ,  symX, symY and symZ  set the symmetry type of the field in the corresponding directions and must be set to one of the following strings: "None", "Electric" or "Magnetic".
+
+ 
+
+SetExternalFiedASCIIFrequency( filename fieldpath, double frequency )
+
+In case of a ASCII field import with a given fieldpath , this method sets the frequency of the imported field..
+
+ 
+
+Create
+
+Creates the defined source field.
+
+Default Settings
+
+FieldType        ""
+
+HFieldVector     "0", "0", "0"
+
+BFieldVector     "0", "0", "0"
+
+UseLocalCopyOnly "False"
+
+ExternalFieldMur "1.0"
+
+Example:
+
+With PredefinedField
+
+     .ResetAnalyticSettings
+
+     .FieldType    "Hconst"
+
+     .HFieldVector "0.0", "0.0", "1.0"
+
+     .Create
+
+End With

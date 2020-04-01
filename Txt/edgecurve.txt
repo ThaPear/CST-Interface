@@ -1,0 +1,63 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Curve Operations | EdgeCurve
+
+EdgeCurve Object
+
+This object enables the creation of a new curve item from previously picked edges. The newly created item will become a copy of the picked edges. A new item will be assigned to a previously defined curve. Thus the corresponding menu or toolbar items will only be active if at least one curve has been defined before (Modeling: Curves > Curves  ) and an edge has been previously picked from within the structure.
+
+Within its curve each item is identified by an unique name. The curve item can be addressed by this name for subsequent editing operations.
+
+As soon as the curve item is defined it will appear in the main plot window and on the Navigation Tree.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name curveitemname )
+
+Sets the name of the new curve item.
+
+ 
+
+Curve ( name curvename )
+
+Specifies the curve to which the new curve item will belong to.
+
+ 
+
+AddEdge ( solidname solidname, int edgeid)
+
+Specifies an edge which will be added to a certain curve item. The edge is determined by the solid shape it belongs and its identity number.
+
+ 
+
+Create
+
+Executes the EdgeCurve operation due to the previously made settings.
+
+Example
+
+With EdgeCurve
+
+     .Reset
+
+     .Name "edges1"
+
+     .Curve "curve1"
+
+     .AddEdge "component1:solid2", "2"
+
+     .AddEdge "component1:solid1", "2"
+
+     .AddEdge "component1:solid1", "1"
+
+     .Create
+
+End With

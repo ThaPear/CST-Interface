@@ -1,0 +1,71 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shape Operations | Bending
+
+Bending Object
+
+This object is used to bend a planar sheet on a solid shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+ParamSweepAndOptimizerChecksResult( bool switch )
+
+To activate a check routine performed during a parameter sweep or optimizer calculation. The check verifies whether the sheets are entirely bent on the solid.
+
+ 
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Sheet ( name sheetname )
+
+Sets the name of the sheet to bend..
+
+ 
+
+Solid ( name solidname  )
+
+Sets the name of the solid to bend on.
+
+ 
+
+Faces ( name list of faces ids )
+
+Sets the list of faces to bend on. The faces are specified by the face ids. For example: "10,9,8,7".
+
+ 
+
+Bend
+
+Performs the bending operation.
+
+Default Settings
+
+Sheet ("")
+
+Solid ("")
+
+Faces ("")
+
+Example
+
+With Bending
+
+.Reset
+
+.Sheet "component1:sheet"
+
+.Solid "component2:solid1"
+
+.Faces "10,9,8,7"
+
+.Bend
+
+End With

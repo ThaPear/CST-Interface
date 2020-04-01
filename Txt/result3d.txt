@@ -1,0 +1,520 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | Result 3D
+
+Result3D Object
+This object offers access and manipulation functions to 3D results. Therefore it may contain either vector fields or scalar fields. If a scalar field is represented by this object, its values are treated to be x-components of a vector field, while all other components are not available. Therefore all functions that manipulate the x-components manipulate the components of the scalar field.
+
+Initialization, File Operation
+
+Global Field Operators
+
+Local Set/Get Methods
+
+General Settings
+
+Example
+
+Example for Tetrahedral Mesh
+
+General Methods
+
+%% Initialization, File Operation
+
+% Construction
+
+% A Result3D object must be constructed with a string as argument. The string may either be empty or the name of a result file. If the string is empty, an empty object will be created.
+
+% If the string contains a valid result file name, the object will read the values into its memory and represent this data. The behavior will be the same as if an empty object is created and afterwards filled by the Load command.
+
+ 
+
+Load ( name sObjectName )
+
+Only used for VBA scripts running in an external program. Loads a 3D result from a file with a file path contructed from sObjectName.
+
+Syntax              Resulting file path
+
+"ObjectName"        "object_name.m3d"  in the current working folder
+
+"^ObjectName"       "projectName^ObjectName.m3d"  in the current working folder
+
+"Path\ObjectName"   "object_name.m3d"  in the folder specified by "path". The "^" does not expand the file name.
+
+For tetrahedral mesh, the ending ".m3t" has to be used, for surface mesh ".sct".
+
+ 
+
+Save ( name sObjectName )
+
+Saves the object with the given filename. Note, that like in the Load method, the project name is added if the first character is a '^'. If the filename is blank the data is saved with name of the previous loaded file.
+
+ 
+
+Initialize ( long nx, long ny, long nz, enum{"vector", "scalar"} type )
+
+Initializes an empty Result3D object of the given type with the specified dimensions.
+
+ 
+
+InitSCT ( long numberOfFirstSideTriangles, long nSamplesPerTriangle, long nComponents, enum numberOfSecondSideTriangles )
+
+Initializes the object as zero valued SCT surface vector result data, i.e. nComponents=6 for complex vector.
+
+ 
+
+AddToTree ( name sTreePath, name sLabel )
+
+Inserts the Result3D object into the tree at the folder specified by sTreePath with a item name given by sLabel.
+
+ 
+
+%% Global Field Operators
+
+ 
+
+Copy ( ) result3d
+
+Returns a new Result3D object as copy. Usage: set res2 = res1.Copy(). Be aware to use set when assigning vba objects.
+
+ 
+
+ScalarMult ( double dFactor )
+
+Scales the Result3D Object with the given factor.
+
+ 
+
+ScalarMult3 ( double dFactorX, double dFactorY, double dFactorZ )
+
+Scales the x/y/z components of the Result3D Object individually. This function is only valid for vector field Result Objects.
+
+ 
+
+Add ( Result3DObject oObject )
+
+Adds / subtracts the components in oObject  to / from the calling object's components. The result will be stored in the calling object.
+
+ 
+
+Subtract ( Result3DObject oObject )
+
+Adds / subtracts the components in oObject  to / from the calling object's components. The result will be stored in the calling object.
+
+ 
+
+Combine ( Result3DObject oObject2, double dFactor2, long iComponent1, long iComponent2)
+
+Performs a component wise operation between two Result3D objects: oCallingObject[iComponent1] += dFactor2 * oObject2[iComponent2]. The component indices iComponent1 and iComponent2 can have values from 0 to 5 for Xre=0, Yre=1, Zre=2, ..., Zim=5. The result will be stored in the calling object.
+
+ 
+
+DotProduct ( Result3DObject oObject, double dRe, double dIm )
+
+Performs a inner product between field vectors of two Result3D objects for each point. The result will be stored in the x component of the calling object, y and z will be set to zero. The spatial sum over all points of the result can be obtained in dRe and dIm.
+
+ 
+
+VectorProd ( Result3DObject oObject )
+
+Performs a vector product of two Result3D objects. The result will be stored in the calling object.
+
+ 
+
+Conjugate
+
+Calculates the complex conjugates of calling object.
+
+ 
+
+%% Local Set/Get Methods
+
+% Local Set/Get methods use a zero-based index to reference data in the Result3D Object. For regular hexahedral mesh the index is given by
+
+% index = ix + iy*nx + iz*nx*ny < .GetLength = nx*ny*nz,
+
+% where ix, iy, iz are the zero based indices for the mesh nodes in one coordinate direction and nx, ny, nz are the numbers of meshnodes in the corresponding coordinate directions.
+
+% For tetrahedral mesh the index is based on the tetrahedron index combined with the number of samples per tetrahedron. A relation to coordinates is not given.
+
+ 
+
+SetXRe ( long index, double dValue )
+
+Changes the real/imaginary part of the x/y/z-component at the index in the Result3D Object to dValue. For scalar Result3D objects, only the SetXRe method may be used.
+
+ 
+
+SetYRe ( long index, double dValue )
+
+Changes the real/imaginary part of the x/y/z-component at the index in the Result3D Object to dValue. For scalar Result3D objects, only the SetXRe method may be used.
+
+ 
+
+SetZRe ( long index, double dValue )
+
+Changes the real/imaginary part of the x/y/z-component at the index in the Result3D Object to dValue. For scalar Result3D objects, only the SetXRe method may be used.
+
+ 
+
+SetXIm ( long index, double dValue )
+
+Changes the real/imaginary part of the x/y/z-component at the index in the Result3D Object to dValue. For scalar Result3D objects, only the SetXRe method may be used.
+
+ 
+
+SetYIm ( long index, double dValue )
+
+Changes the real/imaginary part of the x/y/z-component at the index in the Result3D Object to dValue. For scalar Result3D objects, only the SetXRe method may be used.
+
+ 
+
+SetZIm ( long index, double dValue )
+
+Changes the real/imaginary part of the x/y/z-component at the index in the Result3D Object to dValue. For scalar Result3D objects, only the SetXRe method may be used.
+
+ 
+
+GetXRe ( long index ) double
+
+Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
+
+ 
+
+GetYRe ( long index ) double
+
+Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
+
+ 
+
+GetZRe ( long index ) double
+
+Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
+
+ 
+
+GetXIm ( long index ) double
+
+Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
+
+ 
+
+GetYIm ( long index ) double
+
+Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
+
+ 
+
+GetZIm ( long index ) double
+
+Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
+
+ 
+
+GetDataFromIndex ( long index, double_ref xre, double_ref yre, double_ref zre, double_ref xim, double_ref yim, double_ref zim )
+
+Yields real and imaginary parts of all vector components for the given index.
+
+ 
+
+GetArray ( enum component ) variant
+
+Returns the array of the component results for all meshnodes ordered by the indexing scheme described above. The return value is an array of doubles. Valid components are "xre", "yre", "zre",  "xim", "yim", "zim".
+
+ 
+
+GetSubArray (  enum component ,  long offset, long length )  variant
+
+Returns a sub range of an array of component results ordered by the indexing scheme described above. The return value is an array of doubles. Valid components are "xre", "yre", "zre",  "xim", "yim", "zim". Offset is the start index of the range and length the number of elements in the range
+
+ 
+
+SetArray ( variant values, enum component )
+
+Sets an array of component results for all meshnodes ordered by the indexing scheme described above. Valid components are "xre", "yre", "zre",  "xim", "yim", "zim".
+
+ 
+
+SetSubArray ( variant values, enum component,  long offset )
+
+Sets a sub range on an array of component results ordered by the indexing scheme described above. Valid components are "xre", "yre", "zre",  "xim", "yim", "zim". Offset is the start index of the range.
+
+ 
+
+%% General Settings
+
+ 
+
+SetType ( enum type )
+
+enum type                   Object contains...
+
+"dynamic e-field"           electric vector field from a dynamic simulation.
+
+"dynamic d-field"           electric flux density vector field from a dynamic simulation.
+
+"dynamic h-field"           magnetic vector field from a dynamic simulation.
+
+"dynamic b-field"           magnetic flux density vector field from a dynamic simulation.
+
+"dynamic powerflow"         vector field of the calculated poynting vectors.
+
+"dynamic Current"           vector field of the current density from a dynamic simulation.
+
+"dynamic e-energy"          scalar field of the electric energy density.
+
+"dynamic h-energy"          scalar field of the magnetic energy density.
+
+"dynamic loss density"      scalar field of the loss density, caused by a conductivity.
+
+"dynamic sar"               scalar field of a sar simulation.
+
+"static e-field"            electric vector field from a static simulation.
+
+"static d-field"            electric flux density vector field from a static simulation.
+
+"static h-field"            magnetic vector field from a static simulation.
+
+"static b-field"            magnetic flux density vector field from a static simulation.
+
+"static current"            vector field of the current density from a static simulation.
+
+"static el-potential"       scalar field of electric potentials.
+
+"static charge"             scalar field of charges.
+
+"static material mu"        scalar field of the permeability.
+
+"space charge"              scalar field of the space charge density from a  PIC simulation
+
+"temperature"               scalar field of the temperature distribution from a thermal simulation
+
+"heat flow density"         vector field of the heat flow density from a thermal simulation
+
+"mechanical displacement"   vector field of the displacement from a mechanical simulation
+
+"mechanical stress"         scalar field of a component from the stress tensor from a mechanical simulation
+
+"von mises stress"          scalar field of the von mises stress from a mechanical simulation
+
+"hydrostatic stress"        scalar field of the hydrostatic stress from a mechanical simulation
+
+"mechanical strain"         scalar field of a component from the strain tensor from a mechanical simulation
+
+"volumetric strain"         scalar field of the volumetric strain from a mechanical simulation
+
+"temperature change"        scalar field of the interpolated temperature change from a mechanical simulation
+
+ 
+
+GetType enum
+
+Sets / returns the field type contained in the Result3D Object.
+
+ 
+
+SetActive ( bool flag )
+
+Sets / determines, if the object contains valid data. GetActive may return "false" if, for instance, the monitor was outside the frequency range, when performing a dynamic simulation.
+
+ 
+
+GetActive bool
+
+Sets / determines, if the object contains valid data. GetActive may return "false" if, for instance, the monitor was outside the frequency range, when performing a dynamic simulation.
+
+ 
+
+SetFrequency ( double dValue )
+
+Sets / returns the frequency for which the values in the Result3D object are valid.
+
+ 
+
+GetFrequency double
+
+Sets / returns the frequency for which the values in the Result3D object are valid.
+
+ 
+
+SetQFactor ( double dValue )
+
+Sets / returns the Q factor for the Result3D Object. Usually set in fields calculated by the complex eigenmode solver.
+
+ 
+
+GetQFactor double
+
+Sets / returns the Q factor for the Result3D Object. Usually set in fields calculated by the complex eigenmode solver.
+
+ 
+
+SetExternalQFactor ( double dValue )
+
+Sets / returns the external Q factor for the Result3D Object. Usually set in fields calculated by the eigenmode solver.
+
+ 
+
+GetExternalQFactor double
+
+Sets / returns the external Q factor for the Result3D Object. Usually set in fields calculated by the eigenmode solver.
+
+ 
+
+SetLoadedFrequency ( double dValue )
+
+Sets / returns the loaded frequency for the Result3D Object. Usually set in fields calculated by the eigenmode solver.
+
+ 
+
+GetLoadedFrequency double
+
+Sets / returns the loaded frequency for the Result3D Object. Usually set in fields calculated by the eigenmode solver.
+
+ 
+
+SetAccuracy ( double dValue )
+
+Sets / returns the accuracy of the values in the Result3D object.
+
+ 
+
+GetAccuracy double
+
+Sets / returns the accuracy of the values in the Result3D object.
+
+ 
+
+SetUnit ( string sUnit )
+
+Sets / returns the unit as string of the stored field. The unit string uses the syntax described on the Units help page.
+
+ 
+
+GetUnit string
+
+Sets / returns the unit as string of the stored field. The unit string uses the syntax described on the Units help page.
+
+ 
+
+SetLogarithmicFactor ( double dValue )
+
+Sets / returns logarithmic factor used for dB Scaling. The logarithmic factor can be 10 for power quantities, 20 for field quantities and zero if dB scaling is not available.
+
+ 
+
+GetLogarithmicFactor double
+
+Sets / returns logarithmic factor used for dB Scaling. The logarithmic factor can be 10 for power quantities, 20 for field quantities and zero if dB scaling is not available.
+
+ 
+
+GetNx long
+
+Returns the number of mesh nodes in x/y/z-direction. Returns zero for tetrahedral meshes.
+
+ 
+
+GetNy long
+
+Returns the number of mesh nodes in x/y/z-direction. Returns zero for tetrahedral meshes.
+
+ 
+
+GetNz long
+
+Returns the number of mesh nodes in x/y/z-direction. Returns zero for tetrahedral meshes.
+
+ 
+
+GetNxNyNz ( long_ref nx, long_ref ny, long_ref nz )
+
+Yields the number of mesh nodes in all three coordinate directions. Yields zero for tetrahedral meshes.
+
+ 
+
+GetLength long
+
+Returns the dimension of the Result3D Object. This value is equal to nx*ny*nz for regular hexahedral meshes and equal to nTets*nSamplesPerTet for tetrahedral meshes.
+
+ 
+
+IsScalar bool
+
+Determines, if the object contains only scalar values.
+
+ 
+
+IsComplex bool
+
+Determines, if the object contains complex values.
+
+Default Settings
+
+Examples
+
+The following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
+
+ 
+
+dim res1 as object          'Create an object with the project
+
+set res1 = Result3D("^e1")  'result file "projectName^e1.m3d"
+
+ 
+
+dim res2 as object          'Create an empty object
+
+set res2 = Result3D("")
+
+ 
+
+set res2 = res1.Copy()      'Copy the data of res1 into res2
+
+res1.Conjugate              'Calculate the complex conjugate
+
+res1.Add res2               'Add both results
+
+ 
+
+res1.Save "^MyResult"       'Save the result in a file named "projectName^MyResult.m3d"
+
+ 
+
+'Store the result into the tree
+
+res1.AddToTree "2D/3D Results\MyFolder", "MyResult"
+
+Example for Tetrahedral Mesh
+
+As above, but for tetrahedral mesh, the following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
+
+ 
+
+dim res1 as object          'Create an object with the project
+
+set res1 = Result3D("^e-field (#0001)_1(1).m3t")  'result file "projectName^e1.m3t"
+
+ 
+
+dim res2 as object          'Create an empty object
+
+set res2 = Result3D("")
+
+ 
+
+set res2 = res1.Copy()      'Copy the data of res1 into res2
+
+res1.Conjugate              'Calculate the complex conjugate
+
+res1.Add res2               'Add both results
+
+ 
+
+res1.Save "^MyResult.m3t"       'Save the result in a file named "projectName^MyResult.m3t"
+
+ 
+
+'Store the result into the tree
+
+res1.AddToTree "2D/3D Results\MyFolder", "MyResult.m3t"
+
+ 

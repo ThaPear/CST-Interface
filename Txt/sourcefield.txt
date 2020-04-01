@@ -1,0 +1,73 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Source Field
+
+SourceField Object
+
+The object is used to initialize a static magnetic H-field with a given direction of the field vector or a rotational symmetric magnetic field with the help of the tangential B-field along the w/z-axis of the active coordinate system. This source definition is considered by the magnetostatic solver to calculate the magnetostatic scatter field.
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+FieldVector (double  xcomp, double ycomp, double zcomp)
+
+Sets the orientation vector, i.e. the field components of a constant magnetic source field. The resulting total field is the sum of the specified source field and the computed  secondary field taking into account further sources and materials (e.g. jumps at material interfaces). Only the total field is available as a result.
+
+For technical reasons the constant source field has to fulfill tangential/electric boundary conditions. On normal/magnetic boundaries no restrictions exist for the source field. Note that only the secondary field is normal at these boundaries while the total field has a tangential component prescribed by the source field.
+
+Please note: The field components are always interpreted as peak values even if source value scaling RMS was activated in the low frequency solver settings.
+
+ 
+
+FieldPhase (double  xcomp, double ycomp, double zcomp)
+
+Sets the phases of the X, Y, Z field components for a time harmonic and space-constant magnetic source field. This setting is only taken into account for the low frequency solver, but ignored for the magnetostatic solver.
+
+ 
+
+FieldType (enum type)
+
+Sets the type of the field. Valid types are:
+
+type                meaning
+
+"constant vector"   Define a magnetization by a constant vector.
+
+"1d description"    Create a rotational symmetric magnetostatic field with a given 1D description of the tangential B-field along the active coordinates w/z-axis.
+
+ 
+
+ 
+
+Store
+
+Stores the defined source field.
+
+ 
+
+Delete
+
+Deletes the source field definition.
+
+Default Settings:
+
+Type          "MStatic"
+
+FieldVector   "1", "0.0", "0.0"
+
+Example:
+
+With SourceField
+
+     .Reset
+
+     .Type          "MStatic"
+
+     .FieldVector   "1", "0.0", "0.0"
+
+     .Store
+
+End With

@@ -1,0 +1,155 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Cone
+
+Cone Object
+
+This object is used to create a new cone shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name conename )
+
+Sets the name of the cone.
+
+ 
+
+Component ( name componentname  )
+
+Sets the name of the component for the new cone. The component must already exist.
+
+ 
+
+Material ( name materialname )
+
+Sets the material name for the new cone. The material must already exist.
+
+ 
+
+Axis ( enum{"x", "y", "z"} direction )
+
+Sets the axis of the cone. According to this setting, either Xrange, Yrange or Zrange need to be set for the extension of the cone along the axis.
+
+ 
+
+Topradius ( double radius )
+
+Sets the top radius of the cone. This setting may be set to zero to define a cone with an infinitely sharp cone end. Please note that the settings Topradius and Bottomradius must not both be set to zero.
+
+ 
+
+Bottomradius ( double radius )
+
+Sets the bottom radius of the cone. This setting may be set to zero to define a cone with an infinitely sharp cone end. Please note that the settings Topradius and Bottomradius must not both be set to zero.
+
+ 
+
+Xcenter ( double centercoordinate )
+
+Sets the x- or u-coordinate of the center point of the bottom face of the cone, depending on whether a local coordinate system is active or not.
+
+ 
+
+Ycenter ( double centercoordinate )
+
+Sets the y- or v-coordinate of the center point of the bottom face of the cone, depending on whether a local coordinate system is active or not.
+
+ 
+
+Zcenter ( double centercoordinate )
+
+Sets the z- or w-coordinate of the center point of the bottom face of the cone, depending on whether a local coordinate system is active or not.
+
+ 
+
+Xrange ( double xmin, double xmax )
+
+Sets the bounds for the x- or u-coordinate extensions of the new cone depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "x".
+
+ 
+
+Yrange ( double ymin, double ymax )
+
+Sets the bounds for the y- or v-coordinate extensions of the new cone depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "y".
+
+ 
+
+Zrange ( double zmin, double zmax )
+
+Sets the bounds for the z- or w-coordinate extensions of the new cone depending on whether a local coordinate system is active or not. This setting is only used if the axis is set to "z".
+
+ 
+
+Segments ( int number )
+
+This setting specifies how the cone's geometry is modelled, either as a smooth surface of by a facetted approximation. If this value is set to "0", an analytical (smooth) representation of the cone will be created. If this number is set to another value greater than 2, the cone's face will be approximated by this number of planar facets. The higher the number of segments, the better the representation of the cone will be.
+
+ 
+
+Create
+
+Creates a new cone. All necessary settings for this cone have to be made previously.
+
+Default Settings
+
+Material ("Vacuum")
+
+Topradius (0)
+
+Bottomradius (0)
+
+Xcenter (0)
+
+Ycenter (0)
+
+Zcenter (0)
+
+Xrange (0, 0)
+
+Yrange (0, 0)
+
+Zrange (0, 0)
+
+Segments (0)
+
+Example
+
+With Cone
+
+    .Reset
+
+    .Name ("cone1")
+
+    .Component ("component1")
+
+    .Material ("PEC")
+
+    .Axis ("z")
+
+    .Topradius (0.5)
+
+    .Bottomradius (2.0)
+
+    .Xcenter (2)
+
+    .Ycenter (1)
+
+    .Zcenter (0)
+
+    .Zrange (0, "a+3")
+
+    .Segments (0)
+
+    .Create
+
+End With

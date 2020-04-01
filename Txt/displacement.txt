@@ -1,0 +1,94 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Mechanics | Displacement Boundary
+
+Displacement Object
+Defines a new displacement boundary condition on one or more faces.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the new displacement boundary.
+
+ 
+
+Value ( double  valueX,  double  valueY,  double  valueZ )
+
+Sets the components of the displacement in a cartesian coordinate system.
+
+ 
+
+NormalValue ( double  value )
+
+Sets the components of the displacement oriented normally to a body's surface.
+
+ 
+
+UseValue ( bool useX,  bool useY,  bool useZ )
+
+Allows to deactivate certain components of the displacement definition, so that these deactivated components are not fixed anymore.
+
+ 
+
+AddFace ( solidname  solidname, int  faceid )
+
+Adds a face from a solid by its face id, where the source is mapped to.
+
+ 
+
+Create
+
+Creates the source with the previously made settings.
+
+ 
+
+Delete ( name  name)
+
+Deletes the specified displacement boundary.
+
+ 
+
+Rename ( name  oldname, name  newname )
+
+Renames the specified displacement boundary.
+
+Default Settings
+
+Name ("")
+
+Value ("0.0", "0.0", "0.0")
+
+UseValue ("True", "True", "True")
+
+AddFace ("", 0)
+
+Example
+
+With Displacement
+
+     .Reset
+
+     .Name "displacement1"
+
+     .Value "1.0", "0.0", "0.0"
+
+     .UseValue "True", "True", "True"
+
+     .AddFace "component1:solid1", "1"
+
+     .Create
+
+End With
+
+ 

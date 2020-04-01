@@ -1,0 +1,326 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Wire
+
+Wire Object
+
+This object is used to create a new wire. This wire may either specified by its start / end points and its height above the working plane or by a previously defined curve.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name wirename )
+
+Sets the name of the wire. (Complete global names are also allowed here, the folder name can be skipped in this case.)
+
+ 
+
+Folder ( name foldername )
+
+Sets the name of the folder for the new wire. If the name is empty, then the wire does not belong to a folder.
+
+ 
+
+Type ( enum wiretype )
+
+Specifies the type of the wire:
+
+"Bondwire"      The shape of a bondwire is specified by its start / endpoints and its height above the working plane
+
+"Curvewire"     The shape of a curvewire is specified by a previously defined curve which needs to be a single connected path
+
+ 
+
+BondWireType ( enum bondWiretype )
+
+Specifies the bond wire type. Type must be of type "Bondwire"
+
+"Spline"    The shape of the bondwire is specified by its start / endpoints (Point1/Point2) its height above the working plane and the position of its maximum height.
+
+"JEDEC4"    The shape of the bondwire is defined by the JEDEC4 norm. The shape is defined by the start/end points (Point1/Point2) and its height above the working plane.
+
+"JEDEC5"    The shape of the bondwire is defined by the JEDEC5 norm. The shape is defined by the start/end points (Point1/Point2), the angles Alpha and Beta and its height above the working plane.
+
+ 
+
+Height ( double value )
+
+Specifies the height of the bondwire's midpoint above the currently active workplane (either the x/y plane or the u/v plane, depending on whether a local coordinate system is active or not). This setting is only used for bondwires.
+
+ 
+
+RelativeCenterPosition (double center)
+
+Defines the relative position of the maximum height of the bond wire. Center must be a value between 0 - 1,
+
+ 
+
+Point1 ( double  x, double  y, double  z, bool  pick )
+
+Specifies the start point of the wire. The start point can either be specified numerically by the x/y/z coordinate settings or automatically be set to the first pickpoint in the list of picked points. If the pick flag is set to True, the picked point is used, otherwise the numerical coordinates specify the point's location. This setting is only used for bondwires.
+
+ 
+
+Point2 ( double x, double y, double z, bool pick )
+
+Specifies the end point of the wire. The end point can either be specified numerically by the x/y/z coordinate settings or automatically be set to the first pickpoint in the list of picked points. If the pick flag is set to True, the picked point is used, otherwise the numerical coordinates specify the point's location. This setting is only used for bondwires.
+
+ 
+
+Alpha (double angle)
+
+Parameter needed to define a JEDEC5 bondwire.
+
+ 
+
+Beta (double angle)
+
+Parameter needed to define a JEDEC5 bondwire.
+
+ 
+
+Curve ( name curvename )
+
+Specifies the name of the previously defined curve which should be converted into a wire. This setting is only used for curvewires.
+
+ 
+
+Radius ( double value )
+
+Specifies the radius of the wire.
+
+ 
+
+SolidWireModel ( bool  bSolidWireModel  )
+
+If set to true the bond wire is created as a solid model.
+
+ 
+
+Material ( string  materialname )
+
+Specifies a material. If the bond wire is created by a SolidWireModel any material can be selected. Otherwise only PEC or Lossy metal materials can be selected. Lossy metal will only be supported by the Integral equation solver.
+
+For ConvertToSolidShape the meaning is as follows: If left out or set to an empty name, the material of the solid wire is copied, if given this material is used for the new solid.
+
+ 
+
+ChangeMaterial ( string  wirename string  newMaterialName )
+
+Changes the material for the bond wire. Please see Method Material for supported materials.
+
+ 
+
+Termination ( enum {"natural", "rounded", "extended"} )
+
+Selects the shape of the bond wire's ends.
+
+ 
+
+AdvancedChainSelection ( bool  bFlag )
+
+Flag to activate the new chain selection algorithm, a new way to find adjacent curve items for curve wire creation. The initial value for this flag is false to be backward compatible to old project files.
+
+ 
+
+Add
+
+Creates the wire. All necessary settings for this wire have to be made previously.
+
+ 
+
+SolidName ( solidname newsolidname)
+
+Used for ConvertToSolidShape. Specifies the name (including its component name) for the new solid shape.
+
+ 
+
+KeepWire ( bool  bFlag )
+
+Used for ConvertToSolidShape. Specifies, whether the wire should be deleted after solid creation or coexist with the new solid.
+
+ 
+
+ConvertToSolidShape
+
+Creates a new solid based on a wire given by Name and Folder. If no Material has been defined, the material will also be copied from the wire. The original wire may be deleted or kept.
+
+ 
+
+Delete ( string wirename )
+
+Deletes the specified wire.
+
+ 
+
+Rename ( string oldname, string newname )
+
+Renames the existing wire name to the new name.
+
+
+SetAutomeshFixpoints ( string wirename, bool flag )
+
+This method determines if the specified wire should be considered by the automatic mesh generation or not. If the wire is unimportant for the mesh generation the setting flag =False makes sure that the wire does not have any influence on the mesh. No fix- or density points will be created for this wire.
+
+ 
+
+SetPriority ( string wirename, double priority )
+
+This method specifies how the specified wire should be treated by the automatic mesh generation. If the wire is more important than others, a priority can be given for it. Generally the priority for all objects (apart from wires, lumped elements, discrete ports) equals to zero. In the case that two fixpoints are so close to each other that the ratiolimit prohibits a mesh line for each point, the mesh lines will be merged. However if one of the fixpoints has been created by an object of higher priority the mesh lines will be placed on this fixpoint.
+
+Because wires, lumped elements and discrete ports are very sensitive to their start and endpoints, they have a priority of 1000, to ensure the connection of the wire.
+
+ 
+
+SetMaterialBasedRefinement ( string wirename,  bool flag )
+
+Use this method to activate the material based refinement to be considered by the mesh generation of the selected wire.
+
+ 
+
+SetMeshStepwidth ( string wirename, double xstep, double ystep, double zstep )
+
+For some structures it might be necessary to increase the mesh density for individual wires. To do this a maximum step width for all three directions can be given. The automatic mesh generator tries to realize these values within the bounding box of the specified wire. However, this is not an exclusive setting, it competes with other automesh settings. It might not be fulfilled exactly.
+
+If zero is specified for one coordinate direction, no further influence to the mesh generation in this direction is made.
+
+ 
+
+SetMeshStepwidthTet ( string wirename, double stepwidth )
+
+The prescribed step width is an absolute value. The automatic mesh generator will not exceed this step width for this structure element. If a zero value is specified (default), it  will be ignored and the mesh size will be controlled by the global setting.
+
+ 
+
+SetMeshStepwidthSrf ( string  wirename, double  stepwidth )
+
+The prescribed step width is an absolute value. The automatic mesh generator will not exceed this step width for this structure element. If a zero value is specified (default), it  will be ignored and the mesh size will be controlled by the global setting.
+
+ 
+
+SetMeshExtendwidth ( string wirename, double xextend, double yextend, double zextend  )
+
+Extends the mesh refinement .
+
+ 
+
+SetMeshRefinement ( string wirename, bool specialedgerefinement, double edgerefinementfactor  )
+
+Refines the mesh around wirename by edgerefinementfactor if specialedgerefinement is set to true.
+
+ 
+
+SetMeshVolumeRefinement ( string wirename, bool  specialvolumerefinement, double volumerefinementfactor )
+
+Refines the mesh within the bounding box around wirename by volumerefinementfactor if specialvolumerefinement is set to true.
+
+ 
+
+SetUseForSimulation ( string wirename, bool useForSimulation )
+
+Inserts or removes the bondwire wirename into or from the simulation.
+
+ 
+
+GetLength ( string wirename ) double length
+
+Get the exact length of the named wire.
+
+ 
+
+GetGridLength ( string wirename ) double length
+
+Get the length of the named wire in mesh representation.
+
+ 
+
+NewFolder ( string foldername )
+
+Creates a new folder with the given name.
+
+ 
+
+DeleteFolder ( string foldername )
+
+Deletes an existing folder and all the containing elements.
+
+ 
+
+RenameFolder ( string oldFoldername, string newFoldername )
+
+Changes the name of an existing folder.
+
+ 
+
+DoesFolderExist ( string name ) bool
+
+Returnes true if the name is an existing folder.
+
+Default Settings
+
+Height (0)
+
+Radius (0)
+
+BondWireType ("Spline")
+
+RelativeCenterPosition (0.5)
+
+Termination ("natural")
+
+SolidWireModel (False)
+
+AdvancedChainSelection (True)
+
+Material ("")
+
+Examples
+
+With Wire
+
+    .Reset
+
+    .Name ("bondwire1")
+
+    .Type ("Bondwire")
+
+    .Point1 (0, 0, 0, False)
+
+    .Point2 (1, 1, 0, False)
+
+    .Height (1)
+
+    .Radius (0.01)
+
+    .Add
+
+End With
+
+ 
+
+With Wire
+
+     .Reset
+
+     .SolidName "component1:wire1"
+
+     .Name "wire1"
+
+     .Folder "Folder1"
+
+     .Material "Copper (annealed)"
+
+     .KeepWire "False"
+
+     .ConvertToSolidShape
+
+End With

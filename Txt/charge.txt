@@ -1,0 +1,117 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Charge
+
+Charge Object
+
+Defines a new charge source on a solid or sheet.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets the default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the new charge source.
+
+ 
+
+Value ( double  chargevalue )
+
+Sets  the total charge or charge density, depending if valuetype "Integral" or "Density" was chosen.
+
+ 
+
+ValueType ( enum {"Integral", "Density"} type )
+
+Specify if the charge value is defined as an integral type or a density type.
+
+ 
+
+Face ( solidname  solidname, int  faceid )
+
+Selects a face from a solid by its face id, where the source is mapped to.
+
+ 
+
+Type ( int type )
+
+Select one of the following types:
+
+"PEC"       Charge source on a perfect electric conductor.
+
+"Volume"    Homogeneous volume charge on a dielectric body.
+
+"Surface"   Homogeneous suface charge on a dielectric body.
+
+ 
+
+Create
+
+Creates the source with the previously made settings.
+
+ 
+
+Delete ( name  name )
+
+Deletes the specified charge source.
+
+ 
+
+Rename ( name  oldname, name  newname )
+
+Renames the specified charge.
+
+ 
+
+GetType (name name ) type
+
+Returns the type ("PEC", "Volume" or "Surface") of a charge source with a given name.
+
+ 
+
+GetValueType (name name ) type
+
+Returns the value type ("Integral" or "Density") of a charge source with a given name.
+
+ 
+
+GetValue (name name ) chargevalue
+
+Returns the value of a charge source with a given name.
+
+Default Settings
+
+Value ("0")
+
+ValueType ("Integral")
+
+Type ("PEC")
+
+Face ("", 0)
+
+Example
+
+With Charge
+
+     .Reset
+
+     .Name ("charge1")
+
+     .Value ("0")
+
+     .Face ("component1:solid2", "1")
+
+     .Type ("PEC")
+
+     .Create
+
+End With

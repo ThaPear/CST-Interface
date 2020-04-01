@@ -1,0 +1,119 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Low Frequency | Current Path
+
+CurrentPath Object
+
+The current path object defines a current path as a source of a magnetic field.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name (name name)
+
+The name of the current path element.
+
+ 
+
+ToolType (enum  type)
+
+The type of the tool which was used to construct a current path
+
+enum type       meaning
+
+"SingleCurve"   construct a current path by picking a previously defined curve
+
+ 
+
+Type (enum  type)
+
+The type of the geometric object from which a current path is constructed.
+
+enum type       meaning
+
+"CurvePath"     construct a current path from a curve
+
+ 
+
+PathCurve (name name)
+
+The name of the curve used for the definition.
+
+ 
+
+Add
+
+Adds the current path definition to the source definitions.
+
+ 
+
+Change
+
+Changes the settings for a name specified current path.
+
+ 
+
+Import
+
+This command is used if a current path created by a subproject import - it should not be used in a macro.
+
+ 
+
+Current (double  current)
+
+Specifies the  current value which flows through the current path.
+
+ 
+
+Phase (double  phase)
+
+Specifies the  phase shift of the current.
+
+ 
+
+Rename (name oldname, name newname)
+
+Changes the name of an existing current port.
+
+ 
+
+Delete (name name)
+
+Deletes the current port  with the given name .
+
+Default Settings
+
+Type "CurvePath"
+
+Current "1"
+
+Phase "0.0"
+
+Example
+
+With CurrentPath
+
+     .Reset
+
+     .Name "path1"
+
+     .Type "CurvePath"
+
+     .Current "1"
+
+     .Phase "0.0"
+
+     .Curve "curve2:circle1"
+
+     .Add
+
+End With
