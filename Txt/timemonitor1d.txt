@@ -1,0 +1,117 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Time | TimeMonitor1D
+
+TimeMonitor1D Object
+
+Defines a functional monitor which evaluates a field along a specified chain of edges or curves.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+Rename ( name oldName, name newName )
+
+Renames the monitor named oldName to newName.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+FieldType ( enum fType )
+
+Sets what field is to be monitored.
+
+  
+
+fType can have one of the following values:
+
+”voltage”   The voltage along the prescribed path will be monitored.
+
+ 
+
+UsePickedEdges ( bool bFlag )
+
+If bFlag is True the previously picked edges will be used for monitoring. To define a valid monitor, these edges have to be connected and must not be self-intersecting.
+
+ 
+
+UsePickedEdgeFromId ( string shapeName, int edge_id , int  vertex_id )
+
+For consistency reasons you need to specify the edges to be used by a solid to which it belongs (shapeName), and identification number of the edge (edge_id) and the id of its start vertex (vertex_id). These values can be obtained from the Pick Object command PickEdgeFromId.
+
+ 
+
+UseSelectedCurves ( bool bFlag )
+
+If bFlag is True the specified curve items will be used for monitoring. To define a valid monitor, these curves have to be connected and must not be self-intersecting.
+
+ 
+
+UseCurve ( string curveitemName )
+
+Defines a curve to be used by the monitor, where curveitemName is the name of a previously defined curve item.
+
+ 
+
+InvertOrientation ( bool bFlag )
+
+The orientation of the first edge or curve in a chain specifies a direction which influences the result when the monitor is evaluated along this chain. If bFlag is True, this orientation (direction) is inverted.
+
+Default Settings
+
+UsePickedEdge (False)
+
+UseSelectedCurves (False)
+
+InvertOrientation (False)
+
+Examples
+
+' creates a time domain magnetic field monitor at the origin
+
+With TimeMonitor1D
+
+     .Reset
+
+     .Name "voltage-monitor at curves"
+
+     .FieldType "voltage"
+
+     .UseSelectedCurves "True"
+
+     .UseCurve "curve1:line1"
+
+     .UseCurve "curve1:line2"
+
+     .UseCurve "curve2:line1"
+
+     .InvertOrientation "True"
+
+     .Create
+
+End With

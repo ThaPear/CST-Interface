@@ -1,0 +1,347 @@
+
+ResultTree Object
+Offers methods to insert or delete user defined entries into the Navigation Tree . The name of the entries is defined by the Name method. Every backslash in this name creates another sub folder.
+
+Tree Operations
+
+Tree Item Methods
+
+Examples
+
+1D Result (XY-Plot)
+
+Field Monitor Result
+
+Add command / macro / external script into tree
+
+General Methods
+
+%% Tree Operations
+
+Reset
+
+ 
+
+Add
+
+Adds / deletes a previously specified tree item to / from the navigation tree.
+
+ 
+
+Delete
+
+Adds / deletes a previously specified tree item to / from the navigation tree.
+
+ 
+
+UpdateTree
+
+Updates the appearance of the tree on the screen.
+
+ 
+
+EnableTreeUpdate ( bool switch )
+
+Enable or disable the update of the tree. After enabling the tree update, this method does actually update the tree also.
+
+ 
+
+GetFirstChildName ( name sParentTreePath )
+
+Get the name including tree path of the first child item of the specified parent item. An empty string will be returned if no child exists.
+
+ 
+
+GetNextItemName ( name sCurrentTreeItem )
+
+Get the name including tree path of the item following sCurrentTreeItem in the same tree folder. sCurrentTreeItem has to specify the tree folder and the current item name. An empty string will be returned if sCurrentTreeItem is the last item in the tree folder.
+
+ 
+
+RefreshView
+
+Updates the results stored in the  tree.
+
+ 
+
+%% Tree Item Methods
+
+ 
+
+Name ( name sTreePath )
+
+Sets the navigation tree path including item name for the item.
+
+ 
+
+Type ( enum key )
+
+Defines the result type of the tree item. See the Result Type Overview.
+
+ 
+
+Subtype ( enum key )
+
+Defines the result sub type of the tree entry in case of a type = ”XYSignal”. Otherwise this setting has no effect.
+
+enum key    meaning
+
+”Linear”    Linear scaled plot
+
+”dB”        Logarithmic scaled plot
+
+"Position"  Position depended plot
+
+"Energy"    Energy over time plot
+
+"User"      User defined plot
+
+ 
+
+Title ( name name )
+
+Defines the title / x-axis / y-axis label of the item.
+
+ 
+
+Xlabel ( name name )
+
+Defines the title / x-axis / y-axis label of the item.
+
+ 
+
+Ylabel ( name name )
+
+Defines the title / x-axis / y-axis label of the item.
+
+ 
+
+File ( name sResultName )
+
+File name of the result data to be inserted into the tree . If the result name without the project name is given, the corresponding result file of the current project will be taken.
+
+ 
+
+Macro ( string sCommand )
+
+Sets the string to be evaluated by the VBA Interpreter.
+
+ 
+
+DeleteAt ( enum type )
+
+Defines the lifetime of the item.
+
+enum type           meaning
+
+"never"             The result will be never deleted.
+
+"rebuild"           Deletion during model update. (default)
+
+"solverstart"       A solver start will delete the result.
+
+"truemodelchange"   A parameter change will delete the results.
+
+ 
+
+IsResult ( bool switch )
+
+If switch is True, the item is treated like a normal solver result item.
+
+ 
+
+GetTypeFromItemName ( name sTreePath ) string
+
+Returns the result type of the tree item. See the Result Type Overview.
+
+ 
+
+GetFileFromTreeItem  ( name sTreePath ) string
+
+Returns the file name of the result file associated with this tree entry. If there is no result file, the return value will be an empty string.
+
+ 
+
+GetTableFileFromItemName ( name sTreePath ) string
+
+Get the file name of the table if the tree item represents a table or an empty string.
+
+Default Settings
+
+Examples:
+
+The ResultTree VBA Object offers very interesting possibilities to configure the Navigation Tree. It is possible to insert different simulation results as well as VBA macros. The following examples will show its functionality.
+
+ 
+
+Examples to add 1D Views into the tree
+
+The following example adds items into the folder ”My 1D Results”. If this folder does not exist it will be created.
+
+For inserting 1D results into the tree it is possible to import results from other projects. Therefore the complete result file name must be specified with the .File method. If the results of the current project shall be inserted, the project name in the result file name may be omitted.
+
+Add Adaptation Error Plot into Tree: Adds adaptation error plots from current and external project into the folder.
+
+ 
+
+Examples to add field results into the tree
+
+For results others than 1D Results only those of the current project can be inserted into the tree!
+
+Add Field Monitor Result into Tree: Adds a 3D-Vector result into the tree.
+
+ 
+
+Examples to add a VBA code into the tree
+
+Every time a macro is executed from the tree, a VBA command interpreter is started and evaluates the string that has been set by the Macro method. Therefore no variables that are defined within the script that creates the folder entry can be accessed by the macro.
+
+Add Command into Tree: Adds a command to start the time domain solver into the tree.
+
+Add Macro into Tree: Adds a macro into the tree.
+
+Add External Script into Tree: Adds an external VBA script into the tree.
+
+Example: Add Adaptation Error Plot into Tree
+
+Adds adaptation error plots from the current and an external project into one folder. Thus, the plots can be compared by clicking on the folder "My 1D Results".
+
+ 
+
+With ResultTree
+
+.Reset
+
+.Name "My 1D Results\ExtProj"   ' Entry name and its destination folder
+
+.Title "Error versus Passes"
+
+.File "ExtProj^adapt_error.sig" ' Name of external result file
+
+.Type "XYSignal"
+
+.XLabel "Pass"
+
+.Add
+
+End With
+
+With ResultTree
+
+.Reset
+
+.Name "My 1D Results\ThisProj"  ' Entry name and its destination folder
+
+.Title "Error versus Passes"
+
+.File "^adapt_error.sig"        ' Name of result file from current project
+
+.Type "XYSignal"
+
+.XLabel "Pass"
+
+.Add
+
+End With
+
+Example: Add Field Monitor Result into Tree
+
+Adds a field monitor result of the electric field from the current project into the folder ”My Field”.
+
+ 
+
+With ResultTree
+
+.Name "My Field\E_Field"   ' Entry name and destination folder
+
+.File "^e1_1.m3d"              ' Result file name
+
+.Type "Efield3D"
+
+.Add
+
+End With
+
+Example: Add Command into Tree
+
+Adds a command into the ”Userdefined” folder that starts the time domain solver.
+
+ 
+
+With ResultTree
+
+.Name "Userdefined\Macro1"   ' Entry name and its destination folder
+
+.Macro "Solver.Start"        ' String to be evaluated by VBA interpreter
+
+.Type "Macro"
+
+.Add
+
+End With
+
+Example: Add Macro into Tree
+
+Adds the previously defined control macro ”AutoTest” into the tree.
+
+ 
+
+At first a string will be defined that contains a VBA command that executes the control macro. The command is ”RunMacro” that takes a string (the name of the control macro) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
+
+ 
+
+Dim a As String
+
+a = """
+
+a = "RunMacro " & a & "AutoTest" & a
+
+' Now a contains the string: RunMacro "AutoTest"
+
+ 
+
+With ResultTree
+
+.Name "Userdefined\Macro2"   ' Entry name and its destination folder
+
+.Macro a                     ' String to be evaluated by VBA Interpreter
+
+.Type "Macro"
+
+.Add
+
+End With
+
+Example: Add External Script into Tree
+
+Adds an external VBA script into the tree. Let the name of the external macro be ”Macro1.bas” that will be located in the directory of the current project.
+
+ 
+
+At first a string will be defined that contains a VBA command that executes an external VBA script file. The command is ”MacroRun” that takes a string (the name of the script) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
+
+ 
+
+Dim a As String
+
+a = """
+
+a = "MacroRun " & a & "Macro1.bas" & a
+
+' Now a contains the string: MacroRun "Macro1.bas"
+
+ 
+
+With ResultTree
+
+.Name "Userdefined\Macro3"   ' Entry name and its destination folder
+
+.Macro a                     ' String to be evaluated by VBA Interpreter
+
+.Type "Macro"
+
+.Add
+
+End With
+
+ 

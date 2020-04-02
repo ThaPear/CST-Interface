@@ -1,0 +1,380 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | TrackingPlot
+
+TrackingPlot Object
+This object offers access and manipulation functions to the trajectory plot.
+
+Please note that a more efficient interface for accessing and post-processing trajectory data is available via the ParticleTrajectoryReader object.
+
+Methods
+
+Particle Queries
+
+Deprecated Methods
+
+Examples
+
+Methods
+
+Reset
+
+Resets the tracking plot object.
+
+ 
+
+SelectPlot (name sTrajectoryName )  bool
+
+Loads the selected trajectories' datafile.
+
+ 
+
+GetNParticles  long
+
+Returns the number of displayed particles i.e. trajectory paths.
+
+ 
+
+GetNTimeSteps  long
+
+Returns the number of displayed timesteps.
+
+ 
+
+GetTime double
+
+Returns the actual time of the displayed plot.
+
+ 
+
+%% Particle Queries
+
+ 
+
+SelectParticle  ( long index ) bool
+
+Selects a specific particle for the subsequent queries. The parameter index should be between 0 and GetNParticles()-1.
+
+ 
+
+GetCharge double
+
+Returns the macro charge of the selected particle at the selected time index. Please note that due to sheet transitions, the particles' macro charge can vary with time.
+
+ 
+
+GetMass double
+
+Returns the mass of the selected particle at the selected time index.
+
+ 
+
+GetNParticleTimes long
+
+Returns the number of timesteps of the selected particle at the selected time index.
+
+ 
+
+SelectParticleTimeIndex ( long index ) bool
+
+Selects time index for the currently selected particle. The parameter index should be between 0 and GetNParticleTimes()-1.
+
+ 
+
+SelectParticleTime ( double time ) bool
+
+Select particle at the given time.
+
+ 
+
+GetParticleTime double
+
+Returns the particle time of the selected particle at the selected time index.
+
+ 
+
+GetTimeStep  double
+
+Returns the particle timestep of the selected particle at the selected time index.
+
+ 
+
+GetPosition ( double_ref xpos, double_ref ypos, double_ref zpos )
+
+Returns the position of the selected particle at the selected time index.
+
+ 
+
+GetMomentum ( double_ref ximp, double_ref yimp, double_ref zimp )
+
+Returns the impulse of the selected particle at the selected time index.
+
+ 
+
+%% Deprecated Methods
+
+% Starting from CST STUDIO SUITE 2017, the following methods are deprecated. While they still operate on trajectories generated with older versions, they are not working on newer data. The functions are still listed here for reference and to support converting older macros. They should not be used in new projects.
+
+ 
+
+Draw
+
+Draws the selected trajectory file.
+
+ 
+
+VisualizeAlive ( bool flag )
+
+If set to true only alive trajectory paths are visualized.
+
+ 
+
+SetParticleSampling ( long samplingrate )
+
+Defines the particle sampling rate of the plot. The value is given in %.
+
+ 
+
+SetTemporalSampling ( long samplingrate )
+
+Defines the temporal sampling rate of the plot. The value is given in %.
+
+ 
+
+SetPlotType ( enum plottype )
+
+Defines the coloring type of the trajectory-paths.
+
+Plot-Type   Meaning
+
+"velocity"  colors the path in respect to the particle's velocity.
+
+"momentum"  colors the path in respect to the particle's momentum
+
+"gamma"     colors the path in respect to the particle's gamma
+
+"beta"      colors the path in respect to the particle's beta
+
+"energy"    colors the path in respect to the particle's voltage.
+
+ 
+
+SetTime ( double time )
+
+Sets the time at which the particle's trajectory is displayed.
+
+ 
+
+SetTimeIndex ( long index)
+
+Sets the time index at which the particle's trajectory is displayed.
+
+ 
+
+ASCIIExport ( name filename )
+
+Exports the trajectory data to an ASCII file with the given filename.
+
+As a replacement, please use the ASCIIExport object (see also example below).
+
+ 
+
+BitmapExport ( name filename )
+
+Exports the trajectory plot as a bitmap with the given filename.
+
+As a replacement, please use the respective function of the Plot object (see also example below).
+
+ 
+
+SetPlotMin ( double  value )
+
+Defines the minimal displayed value in the trajectory plot
+
+ 
+
+SetPlotMax ( double  value )
+
+Defines the maximal displayed value in the trajectory plot
+
+ 
+
+SetScaleToRange ( bool flag)
+
+If set to true the coloring of the trajectory is bounded by the PlotMin/PlotMax values.
+
+ 
+
+GetMinRampValue double
+
+Returns the minimal displayed value.
+
+ 
+
+GetMaxRampValue double
+
+Returns the maximal displayed value.
+
+ 
+
+GetEField ( double_ref xval, double_ref yval, double_ref zval )
+
+Returns the electric field vector at the position of the selected particle at the selected time index.
+
+ 
+
+GetBField ( double_ref xval, double_ref yval, double_ref zval )
+
+Returns the magnetic field vector at the position of the selected particle at the selected time index
+
+ 
+
+GetArea double
+
+Returns the area of the selected particle at the selected time index.
+
+ 
+
+Create ( name filename,  long nparticles,  long  ntimesteps )
+
+Creates a new trajectory plot with the given number of particles (nparticles) and each particle with the given number of timesteps (ntimesteps).
+
+ 
+
+SetParticleData ( double charge, double mass, double area )
+
+Sets the characteristic data of the selected particle (mass, charge, area).
+
+ 
+
+SetParticleTime ( double time )
+
+Sets the time of the selected particle at the selected time index.
+
+ 
+
+SetPosition ( double xpos, double ypos, double zpos )
+
+Sets the position of the selected particle at the selected time index.
+
+ 
+
+SetMomentum ( double ximp, double yimp, double zimp )
+
+Sets the impulse vector of the selected particle at the selected time index.
+
+ 
+
+Save bool
+
+Saves the constructed trajectory to file.
+
+ 
+
+Default Settings
+
+Example
+
+The following testprogram shows the application of the query commands, ASCII export and Bitmap export.
+
+ 
+
+Sub Main ()
+
+  Dim dtest As Double, itest As Integer
+
+ 
+
+  ' Query data from the trajectories
+
+  With TrackingPlot
+
+    .Reset
+
+    ' Select the trajectory data for particle source "particle1"
+
+    If .SelectPlot("particle1") Then
+
+      ' Number of all particles
+
+      itest = .GetNParticles()
+
+      ' Number of stored timesteps
+
+      itest= .GetNTimeSteps()
+
+      ' Get time of timestep 20
+
+      dtest= .GetTime(20)
+
+ 
+
+      ' Select particle with index 14 and query some information about it
+
+      If .SelectParticle(14) Then
+
+        ' Get number of timesteps
+
+        itest = .GetNParticleTimes()
+
+ 
+
+        ' Select timeindex 157 of the selected particle
+
+        If .SelectParticleTimeIndex(157) Then
+
+          ' Get mass
+
+          dtest = .GetMass()
+
+          ' Get charge
+
+          dtest = .GetCharge()
+
+          ' Get time of timeindex 157
+
+          dtest = .GetParticleTime()
+
+          ' Get timestep of timeindex 157
+
+          dtest = .GetTimeStep()
+
+          ' Get position and momentum
+
+          Dim ucomp As Double, vcomp As Double, wcomp As Double
+
+          .GetPosition (ucomp, vcomp, wcomp)
+
+          .GetMomentum (ucomp, vcomp, wcomp)
+
+        End If
+
+      End If
+
+    End If
+
+  End With
+
+ 
+
+  ' Export all trajectory data to an ASCII file in the same directory as the .cst file
+
+  SelectTreeItem("2D/3D Results\Trajectories")
+
+  With ASCIIExport
+
+    .Reset
+
+    .FileName(GetProjectPath("Root") + "\trajectories.txt")
+
+    .Execute
+
+  End With
+
+ 
+
+  ' Export trajectory picture to a bitmap file in the same directory as the .cst file and resolution 1024x768
+
+  SelectTreeItem("2D/3D Results\Trajectories")
+
+  Plot.StoreBMPHighResolution(GetProjectPath("Root") + "\trajectories.bmp", 1024, 768)
+
+End Sub

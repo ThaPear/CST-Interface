@@ -289,51 +289,36 @@ classdef Solver < handle
         function SuppressTimeSignalStorage(obj, key)
             % Selects the mode to be used for the suppression of writing time signals into the storage database. When a signal is not written into the storage database, no entry is added to the result Navigation Tree.
             % The parameter key may have one of the following values:
-            % True / All
-            % All signals will be suppressed, i.e. no signals are written to database.
-            % False / None / Reset
-            % No signals will be suppressed, i.e. all signals will be written to database. This is the default setting.
-            % Ports
-            % All port signals are suppressed, i.e. all in- and outgoing signals for all port types as well as the monitored voltage and current of discrete ports.
-            % LumpedElements
-            % The monitored voltage and current of lumped elements will be suppressed.
-            % Probes
-            % All probe signals will be suppressed. This holds for near- as well as for farfield probes.
-            % UIMonitors
-            % All 1D voltage and current monitors are suppressed.
-            % Time Domain Solver Excitation
-            % CalculateModesOnly ( bool flag )
-            % If flag is True, the solver calculates only the port modes.
-            % key: 'True'/'All'
-            %      'False'/'None'/'Reset'
-            %      'Ports'
-            %      'LumpedElements'
-            %      'Probes'
-            %      'UIMonitors'
+            % True / All              All signals will be suppressed, i.e. no signals are written to database.
+            % False / None / Reset    No signals will be suppressed, i.e. all signals will be written to database. This is the default setting.
+            % Ports                   All port signals are suppressed, i.e. all in- and outgoing signals for all port types as well as the monitored voltage and current of discrete ports.
+            % LumpedElements          The monitored voltage and current of lumped elements will be suppressed.
+            % Probes                  All probe signals will be suppressed. This holds for near- as well as for farfield probes.
+            % UIMonitors              All 1D voltage and current monitors are suppressed.
+
             obj.AddToHistory(['.SuppressTimeSignalStorage "', num2str(key, '%.15g'), '"']);
+        end
+        %% Time Domain Solver Excitation
+        function CalculateModesOnly(obj, flag)
+            % If flag is True, the solver calculates only the port modes.
+            obj.AddToHistory(['.CalculateModesOnly "', num2str(flag, '%.15g'), '"']);
         end
         function StimulationMode(obj, key)
             % Selects the mode to be used for excitation.
             obj.AddToHistory(['.StimulationMode "', num2str(key, '%.15g'), '"']);
         end
         function parameter = The(obj)
-            % All
-            % All modes will be excited once.
-            % int modeNumber
-            % The mode number to be used for excitation.
+            % All             All modes will be excited once.
+            % int modeNumber  The mode number to be used for excitation.
             parameter = obj.hSolver.invoke('The');
         end
         function StimulationPort(obj, key)
             % Selects the port(s)  to be used for excitation.
             % The parameter key may have one of the following values:
-            % All
-            % All ports will be excited once.
-            % Selected
-            % Only those ports / modes are used for excitation that have been set by ExcitationPortMode.
-            % "Plane Wave"
-            % A plane wave will be used for excitation.
-            % int portNumber
-            % The port number (port name) to be used for excitation.
+            % All             All ports will be excited once.
+            % Selected        Only those ports / modes are used for excitation that have been set by ExcitationPortMode.
+            % "Plane Wave"    A plane wave will be used for excitation.
+            % int portNumber  The port number (port name) to be used for excitation.
             obj.AddToHistory(['.StimulationPort "', num2str(key, '%.15g'), '"']);
         end
         function ResetExcitationModes(obj)
@@ -367,8 +352,8 @@ classdef Solver < handle
             % A specific accuracy value can be defined to overwrite the default value which is given on the solver dialog page. This option allows different solver runs (port excitations) with a different level of accuracy, what is useful for example to consider certain EMC standards.
             % In addition an individual frequency range can be entered per excitation (fmin and fmax), defining the valid interval for evaluating frequency based field monitors. This means that any defined field monitor is only evaluated and stored when its frequency is inside the mentioned interval, otherwise it is ignored. This helps saving time and disk space in case for example of multiband antenna setups. Using the default setting will again consider all monitors inside the global frequency interval.
             % Please note, that both settings are only available for sequential excitation, i.e. they will be ignored in case simultaneous excitation is selected.
-            % : 'portmode'
-            %   'fieldsource'
+            % key: 'portmode'
+            %      'fieldsource'
             obj.AddToHistory(['.DefineExcitationSettings "', num2str(key, '%.15g'), '", '...
                                                         '"', num2str(name, '%.15g'), '", '...
                                                         '"', num2str(mode, '%.15g'), '", '...
@@ -403,10 +388,8 @@ classdef Solver < handle
         function SetSimultaneousExcitationOffset(obj, key)
             % This method determines the time shift definition between different time signals applied for simultaneous excitation.
             % The parameter key may have one of the following values:
-            % "Timeshift"
-            % The time shift value defined with the ExcitationPortMode method is directly used to shift the signals in time.
-            % "Phaseshift"
-            % The phase shift value defined with the ExcitationPortMode method is transferred in a time shift value using the phase reference frequency (PhaseRefFrequency method). This value is then used to shift the signals in time.
+            % "Timeshift"     The time shift value defined with the ExcitationPortMode method is directly used to shift the signals in time.
+            % "Phaseshift"    The phase shift value defined with the ExcitationPortMode method is transferred in a time shift value using the phase reference frequency (PhaseRefFrequency method). This value is then used to shift the signals in time.
             obj.AddToHistory(['.SetSimultaneousExcitationOffset "', num2str(key, '%.15g'), '"']);
         end
         function ExcitationSelectionShowAdditionalSettings(obj, flag)
@@ -455,12 +438,9 @@ classdef Solver < handle
         end
         function AbsorbUnconsideredModeFields(obj, key)
             % This option indicates whether unconsidered mode fields occurring at the waveguide ports should be absorbed by a Mur open boundary. These fields can be given by slight field errors due to inhomogeneous ports (the non-broadband waveguide port operators work less accurately with increasing distance from the mode calculation frequency) or by higher order modes which are not considered by the port operator.
-            % "Automatic"
-            % When selecting this option the absorption is only active for inhomogeneous ports.
-            % "Activate"
-            % When selecting this option the absorption is always activated.
-            % "Deactivate"
-            % When selecting this option the absorption is always deactivated.
+            % "Automatic"     When selecting this option the absorption is only active for inhomogeneous ports.
+            % "Activate"      When selecting this option the absorption is always activated.
+            % "Deactivate"    When selecting this option the absorption is always deactivated.
             obj.AddToHistory(['.AbsorbUnconsideredModeFields "', num2str(key, '%.15g'), '"']);
         end
         function FullDeembedding(obj, flag)
@@ -512,10 +492,8 @@ classdef Solver < handle
             % This setting has to be understood only in connection with the processing of the time signals. Errors made by discretising a structure can only be influenced by manipulating the mesh.
             % Every simulation stops at some time. This means, that the signals that are calculated are truncated at this point, regardless to their values. If these values are non zero the Fourier Transformation will produce an error, because only a part of the whole signal with all its non zero values has been used for the transformation. So the smaller the signals are, the more accurate the frequency domain values will be. To get a value for the accuracy not the signal amplitudes itself are used, but the total energy inside of the calculation domain. During the simulation the energy is frequently calculated and related to the maximum energy that has been monitored. This value in a logarithmic scale defines the accuracy.
             % The parameter key may have one of the following representation:
-            % "accuracy_dB"
-            % where accuracy_dB is an integer value (in dB unit) for the steady state monitor. It must belong to the interval [-80 , 0] dB.
-            % "No Check"
-            % The steady state monitor is disabled. If no additional stop criteria are defined by means of the method AddStopCriterion the simulation stops after the defined NumberOfPulseWidths.
+            % "accuracy_dB"   where accuracy_dB is an integer value (in dB unit) for the steady state monitor. It must belong to the interval [-80 , 0] dB.
+            % "No Check"      The steady state monitor is disabled. If no additional stop criteria are defined by means of the method AddStopCriterion the simulation stops after the defined NumberOfPulseWidths.
             obj.AddToHistory(['.SteadyStateLimit "', num2str(key, '%.15g'), '"']);
         end
         %% With the following commands it is possible to define customized stop rules in addition to the energy criteria specified by the .SteadyStateLimit command. A combination of S-parameter, probe or radiated power convergence criteria is available. For more details on the error evaluation formula please refer to the Steady State help page.
@@ -567,10 +545,8 @@ classdef Solver < handle
         function SetTimeWindow(obj, key, smoothness, flag)
             % Because every simulation should only take finite time the resulting time signals can be thought of a multiplication by the imaginary infinite time signal and a time windowing function. In the simplest case this is a rectangular window. However rectangular windows cause the resulting frequency domain signals to be quite rough. They become smoother if cosine shaped windows are used. However in cases of steep resonance peaks these functions may broaden these peaks. The parameter smoothness is the decay time in percent of the total signal time (0 % = rectangular window / 100 % = ideal cosine window). The flag switches the time window during a transient simulation on/off .
             % The parameter key may have one of the following values:
-            % Rectangular
-            % Selects a rectangular time window.
-            % Cosine
-            % Selects a cosine shaped time window.
+            % Rectangular Selects a rectangular time window.
+            % Cosine      Selects a cosine shaped time window.
             obj.AddToHistory(['.SetTimeWindow "', num2str(key, '%.15g'), '", '...
                                              '"', num2str(smoothness, '%.15g'), '", '...
                                              '"', num2str(flag, '%.15g'), '"']);
@@ -681,16 +657,16 @@ classdef Solver < handle
         end
         function SetSubcycleState(obj, key)
             % Controls the allowance of subcycles concerning the time step calculation of the time domain algorithm.
-            % : 'Automatic'
-            %   'Activate'
-            %   'Deactivate'
+            % key: 'Automatic'
+            %      'Activate'
+            %      'Deactivate'
             obj.AddToHistory(['.SetSubcycleState "', num2str(key, '%.15g'), '"']);
         end
         function SetSubgridCycleState(obj, key)
             % In case that the Multilevel Subgridding Scheme is activated this command controls the allowance of subgrid specific cycling concerning the time step calculation of the time domain algorithm. If selected automatically or by user the different grid levels are calculated with different time steps.
-            % : 'Automatic'
-            %   'Activate'
-            %   'Deactivate'
+            % key: 'Automatic'
+            %      'Activate'
+            %      'Deactivate'
             obj.AddToHistory(['.SetSubgridCycleState "', num2str(key, '%.15g'), '"']);
         end
         function SimplifiedPBAMethod(obj, flag)
@@ -756,6 +732,15 @@ classdef Solver < handle
             % Returns the number of defined modes.
             int = obj.hSolver.invoke('AKSGetNumberOfModes');
         end
+        %% CST 2013 functions.
+        function SetBBPSamples(obj, nSamples)
+            % Sets the number of frequency points used for a broad band port (BBP). Broad band ports are used for ports at inhomogeneous waveguides. The more points are used the more accurate the port operator will be. However the simulation time will increase as well (All chosen modes have to be simulated for each frequency point).
+            obj.AddToHistory(['.SetBBPSamples "', num2str(nSamples, '%.15g'), '"']);
+        end
+        function UseOpenBoundaryForHigherModes(obj, flag)
+            % Determines whether unconsidered higher modes occurring at a waveguide port should be absorbed using a Mur open boundary (switch = True) or not (flag = False).
+            obj.AddToHistory(['.UseOpenBoundaryForHigherModes "', num2str(flag, '%.15g'), '"']);
+        end
         %% Undocumented functions.
         % Found in history list of migrated CST 2014 file in 'define solver parameters'
         function CalculationType(obj, type)
@@ -763,12 +748,10 @@ classdef Solver < handle
             obj.AddToHistory(['.CalculationType "', num2str(type, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'define solver parameters'
-        function CalculateModesOnly(obj, boolean)
-            obj.AddToHistory(['.CalculateModesOnly "', num2str(boolean, '%.15g'), '"']);
-        end
-        % Found in history list of migrated CST 2014 file in 'define solver parameters'
-        function UseSensitivityAnalysis(obj, boolean)
-            obj.AddToHistory(['.UseSensitivityAnalysis "', num2str(boolean, '%.15g'), '"']);
+        % Definition below is copied from CST.FDSolver.
+        function UseSensitivityAnalysis(obj, flag)
+            % If activated the sensitivity analysis is calculated when running the frequency domain solver with tetrahedral mesh.
+            obj.AddToHistory(['.UseSensitivityAnalysis "', num2str(flag, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'define special solver parameters'
         function SteadyStateDurationType(obj, type)
@@ -784,16 +767,10 @@ classdef Solver < handle
             obj.AddToHistory(['.SteadyStateDurationTimeAsDistance "', num2str(distance, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'define special solver parameters'
-        function WaveguideBroadband(obj, boolean)
-            obj.AddToHistory(['.WaveguideBroadband "', num2str(boolean, '%.15g'), '"']);
-        end
-        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
-        function SetBBPSamples(obj, samples)
-            obj.AddToHistory(['.SetBBPSamples "', num2str(samples, '%.15g'), '"']);
-        end
-        % Found in history list of migrated CST 2014 file in 'define special solver parameters'
-        function UseOpenBoundaryForHigherModes(obj, boolean)
-            obj.AddToHistory(['.UseOpenBoundaryForHigherModes "', num2str(boolean, '%.15g'), '"']);
+        % Definition below is copied from CST.PICSolver.
+        function WaveguideBroadband(obj, flag)
+            % Switches the broadband waveguide boundary condition (BBP) for inhomogeneous ports on/off.
+            obj.AddToHistory(['.WaveguideBroadband "', num2str(flag, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'define special solver parameters'
         function ActivateSIPowerLossyMonitor(obj, boolean)
@@ -1004,6 +981,9 @@ end
 % PrepareFarfields(1)
 % CalculateModesOnly(0)
 % StimulationMode(1)
+% SetBBPSamples(5) % CST 2013
+% WaveguideBroadband(0) % CST 2013
+% UseOpenBoundaryForHigherModes(0) % CST 2013
 % WaveguidePortGeneralized(1)
 % WaveguidePortModeTracking(0)
 % AbsorbUnconsideredModeFields('Automatic');
@@ -1015,7 +995,7 @@ end
 % AccuracyAdaptivePortMeshing(1)
 % PassesAdaptivePortMeshing(4)
 % NumberOfPulseWidths(20)
-% SteadyStateLimit('-30');
+% SteadyStateLimit('-30')
 % UseArfilter(0)
 % ArMaxEnergyDeviation(0.1)
 % ArPulseSkip(1)

@@ -19,13 +19,14 @@
 % This object offers access and manipulation functions to 0D solver results. A Result0D object can hold a real or a complex number.
 classdef Result0D < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.DS.Result0D, ?CST.DS.ResultTree})
+    methods(Access = {?CST.Project, ?CST.Result0D, ?CST.ResultTree})
         % CST.Project can create a Result0D object.
         % CST.Result0D.Copy can create a Result0D object.
-        % CST.ResultTree.GetResultFromTreeItem/GetImpedanceResultFromTreeItem can create a Result0D object.
+        % CST.ResultTree.GetResultFromTreeItem can create a Result0D object.
+        % CST.ResultTree.GetImpedanceResultFromTreeItem can create a Result0D object.
         function obj = Result0D(project, hProjectOrhResult0D, resultname)
             if(nargin == 3)
-                % Created by CST.DS.Project.
+                % Created by CST.Project.
                 hProject = hProjectOrhResult0D;
                 obj.project = project;
                 obj.hResult0D = hProject.invoke('Result0D', resultname);

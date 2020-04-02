@@ -606,16 +606,17 @@ classdef Solid < handle
             ymax = str2double(ymax);
             zmax = str2double(zmax);
         end
+        %% CST 2013 functions.
+        function FillUpSpaceAdvanced(obj, sName, componentName, materialName)
+            % Creates a brick with the size of the entire calculation domain and inserts all solids that have been defined so far into it. The new solid will have the name sName of component componentName and will have the material materialName. Both the given material and the given component must already exist.
+            obj.AddToHistory(['.FillUpSpaceAdvanced "', num2str(sName, '%.15g'), '", '...
+                                                   '"', num2str(componentName, '%.15g'), '", '...
+                                                   '"', num2str(materialName, '%.15g'), '"']);
+        end
         %% Undocumented functions.
         % Found in history list of migrated CST 2014 file around boolean operations.
         function Version(obj, version)
             obj.AddToHistory(['.Version "', num2str(version, '%.15g'), '"']);
-        end
-        function FillUpSpaceAdvanced(obj, solid1, value, materialname)
-            % value: 'structure'
-            obj.AddToHistory(['.FillUpSpaceAdvanced "', num2str(solid1, '%.15g'), '", '...
-                                                   '"', num2str(value, '%.15g'), '", '...
-                                                   '"', num2str(materialname, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

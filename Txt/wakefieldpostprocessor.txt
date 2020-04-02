@@ -1,0 +1,120 @@
+
+Show 
+Home | Visual Basic (VBA) Language | Wakefield Postprocessor
+
+WakefieldPostprocessor Object
+This Object is used to compute secondary results from previously computed wake-functions.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Resultname (name  name )
+
+Name for the new post-processing result.
+
+ 
+
+UseFFT (bool, flag)
+
+Allows to use a FFT instead of a DFT for the fourier transformation of the wake signals. The FFT is much faster but less flexible than the DFT.
+
+ 
+
+ParticleBeam (name  name )
+
+Selects a wake-function for a certain particle beam source.
+
+ 
+
+Fmin (double  value)
+
+Sets the minimum frequency value for a wake-impedance spectrum calculation. Only active if UseFFT is set to "False".
+
+ 
+
+Fmax (double  value)
+
+Sets the maximum frequency value for a wake-impedance spectrum calculation. Only active if UseFFT is set to "False".
+
+ 
+
+FrequencySteps (int  steps)
+
+Sets the number of frequency samples for a wake-impedance calculation. Only active if UseFFT is set to "False".
+
+ 
+
+Filter (enum  type)
+
+Sets the type of pre-filtering for a wake impedance calculation. Currently "None" and "Cos2" is available.
+
+ 
+
+FilterParameter (int  parameterindex, double  value)
+
+Sets the filter parameters for a certain type of pre-filter.
+
+  
+
+Filtertype  Parameters
+
+None        ---
+
+Cos2        #1: The rolloff-factor with a range from 0 to 1.
+
+Note: The parameter-index must be equal or larger than one.
+
+ 
+
+Calculate (enum  calculationtype)
+
+Sets the type of the wake post-processing step. Currently only "ImpedanceSpectrum" is available.
+
+Default Settings
+
+ResultName ""
+
+ParticleBeam ""
+
+Fmin ""
+
+Fmax ""
+
+FrequencySteps "1000"
+
+Filter "None"
+
+Examples
+
+With WakefieldPostprocessor
+
+     .Reset
+
+     .ResultName "FirstResonance"
+
+     .Fmin "1.3e9"
+
+     .Fmax "1.35e9"
+
+     .FrequencySteps "2000"
+
+     .Filter "Cos2"
+
+     .FilterParameter "1", "0.2"
+
+     .Calculate "ImpedanceSpectrum"
+
+End With
+
+ 

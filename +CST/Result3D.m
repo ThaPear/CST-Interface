@@ -348,35 +348,39 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
 % 
-% dim res1 as object          %Create an object with the project
-% set res1 = Result3D('^e1');  %result file('projectName^e1.m3d');
+% % result file('projectName^e1.m3d');
+% res1 = project.Result3D('^e1');
 % 
-% dim res2 as object          %Create an empty object
-% set res2 = Result3D('');
+% % Copy the data of res1 into res2
+% res2 = res1.Copy();
+% % Calculate the complex conjugate
+% res1.Conjugate();
+% % Add both results
+% res1.Add(res2)
 % 
-% set res2 = res1.Copy()      %Copy the data of res1 into res2
-% res1.Conjugate              %Calculate the complex conjugate
-% res1.Add res2               %Add both results
-% 
-% res1.Save('^MyResult');       %Save the result in a file named('projectName^MyResult.m3d');
+% % Save the result in a file named('projectName^MyResult.m3d');
+% res1.Save('^MyResult');
 % 
 % %Store the result into the tree
 % res1.AddToTree('2D/3D Results\MyFolder', 'MyResult');
-% Example for Tetrahedral Mesh
-% As above, but for tetrahedral mesh, the following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
 % 
-% dim res1 as object          %Create an object with the project
-% set res1 = Result3D('^e-field(#0001)_1(1).m3t');  %result file('projectName^e1.m3t');
 % 
-% dim res2 as object          %Create an empty object
-% set res2 = Result3D('');
+% % Example for Tetrahedral Mesh
+% % As above, but for tetrahedral mesh, the following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
 % 
-% set res2 = res1.Copy()      %Copy the data of res1 into res2
-% res1.Conjugate              %Calculate the complex conjugate
-% res1.Add res2               %Add both results
+% % Create an object with the project result file('projectName^e1.m3t');
+% res1 = project.Result3D('^e-field(#0001)_1(1).m3t');
 % 
-% res1.Save('^MyResult.m3t');       %Save the result in a file named('projectName^MyResult.m3t');
+% % Copy the data of res1 into res2
+% res2 = res1.Copy();
+% % Calculate the complex conjugate
+% res1.Conjugate();
+% % Add both results
+% res1.Add(res2);
 % 
-% %Store the result into the tree
+% % Save the result in a file named('projectName^MyResult.m3t');
+% res1.Save('^MyResult.m3t');
+% 
+% % Store the result into the tree
 % res1.AddToTree('2D/3D Results\MyFolder', 'MyResult.m3t');
 % 

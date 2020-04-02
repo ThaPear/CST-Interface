@@ -1,0 +1,201 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Time | TimeMonitor
+
+TimeMonitor Object
+
+Defines 3D or 2D field monitors. Each monitor stores the field values for a specified set of time samples. There are different kinds of monitors: magnetic and electric field or energy monitors.
+
+Methods
+
+Queries
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+Rename ( name oldName, name newName )
+
+Renames the monitor named oldName to newName.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+FieldType ( enum fType )
+
+Sets what field is to be monitored.
+
+  
+
+fType can have one of the following values:
+
+”B-Field”                   The magnetic flux density will be monitored.
+
+”H-Field”                   The magnetic field strength will be monitored.
+
+”E-Field”                   The electric field will be monitored.
+
+”D-Field”                   The electric displacement field will be monitored.
+
+”Cond. Current Dens.”       The conductive current density will be monitored.
+
+”Displ. Current Dens.”      The displacement current density will be monitored.
+
+”Total Current Dens.”       The total current density will be monitored.
+
+"Potential"                 The electric scalar potential will be monitored.
+
+"Material"                  The relative permeability of the materials will be monitored.
+
+"Ohmic Losses"              The Ohmic loss density will be monitored.
+
+”Averaged Ohmic Losses”     The Ohmic loss density  will be monitored and averaged over a given time period.
+
+"Magnetic Energy Density"   The magnetic energy density will be monitored.
+
+”Temperature”               The temperature will be monitored.
+
+"Heat Flow Density"         The heat flow density will be monitored.
+
+"CEM43"                     The cumulative equivalent minutes at 43°C will be monitored in the biologically active tissues.
+
+ 
+
+Tstart ( double startTime )
+
+Sets starting time for a time domain monitor to startTime.
+
+ 
+
+Tstep ( double timeStep )
+
+Sets the time increment for a time domain monitor to timeStep.
+
+ 
+
+Tend ( double stopTime )
+
+Sets the end time for a time domain monitor to stopTime.
+
+ 
+
+UseTend ( bool bFlag )
+
+If bFlag is True the time domain monitor stops storing the results when the end time set with Tend is reached. Otherwise the monitor will continue until the simulation stops.
+
+ 
+
+TimeAveraging ( double period, enum method, variant value )
+
+This setting only applies to the Averaged Ohmic Losses monitor type.
+
+period specifies the length of the time interval over which the losses are averaged.
+
+  
+
+method can have one of the following values:
+
+”Auto”  This is the default option for the time averaging. The end time will be set automatically to the simulation duration, and the start time will be given by the end time minus the specified "period".
+
+"Start" Choose this option to explicitly set the start time of the time-averaging. The end time will be given by "value + period" .
+
+"End"   Choose this option to explicitly set the end time of the time-averaging. The start time will be given by "value - period".
+
+ 
+
+%% Queries
+
+ 
+
+GetNumberOfMonitors long
+
+Returns the total number of defined time monitors in the current project.
+
+ 
+
+GetMonitorNameFromIndex ( long index ) name
+
+Returns the name of the monitor with regard to the index in the internal monitor list .
+
+ 
+
+GetMonitorTypeFromIndex ( long index ) enum  monType
+
+Returns the type of the monitor with regard to the index in the internal monitor list.
+
+  
+
+monType can have one of the following values:
+
+”B-Field”       The magnetic flux density has been monitored.
+
+"Temperature"   The temperature has been monitored.
+
+ 
+
+GetMonitorTstartFromIndex ( long index ) double
+
+Returns the start time  with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTstepFromIndex ( long index ) double
+
+Returns the time increment value with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTendFromIndex ( long index ) double
+
+Returns the end time  with regard to the index in the internal monitor list.
+
+Default Settings
+
+Tstart (0.0)
+
+Tstep (0.0)
+
+Tend (0.0)
+
+UseTend (False)
+
+Examples
+
+' creates a time domain magnetic field monitor for the entire calculation domain
+
+With TimeMonitor
+
+     .Reset
+
+     .Name "time monitor"
+
+     .FieldType "B-Field"
+
+     .Create
+
+End With
+
+ 

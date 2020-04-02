@@ -1,0 +1,180 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | SAR
+
+SAR Object
+The Specific Absorption Rate (SAR) is defined as the time derivative of the incremental energy (dW) absorbed by an incremental mass (dm) contained in a volume element (dV) of a given mass density (r). The SAR calculation is done as a post-processing step after the simulation, based on a previously defined power loss density monitor.
+
+Methods
+
+Default Settings
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+PowerlossMonitor ( name sName )
+
+Defines the power loss density monitor that is used for the SAR calculation.
+
+ 
+
+AverageWeight ( double dValue )
+
+Local SAR values refer to a certain volume element, specified by an averaged weight value. Here a cuboid volume is used to calculate the averaged tissue weight, which must be between 0.0001g and 5000g. Default is 10g.
+
+ 
+
+Volume ( double xmin, double xmax, double ymin, double ymax, double zmin, double zmax )
+
+Specifies the volume for which the SAR calculation is performed.
+
+ 
+
+SetLabel ( name sName )
+
+Sets the label for the SAR result files and tree entry.
+
+ 
+
+SetOption ( string option )
+
+Can set options before executing calculation. Available options are:
+
+- "no subvolume": does not use any subvolume specification
+
+- "use subvolume for statistics"
+
+- "subvolume only": limits the SAR calculation on the user defined volume to save execution time.
+
+- "rescale double": The results are scaled to the specified input power value in W.
+
+- "no rescale"
+
+- "scale accepted": Define accepted power as reference.
+
+- "scale stimulated": Define stimulated power as reference.
+
+- "volaccuracy <value>": Sets the fractional accuracy of the averaging volume to <value>.
+
+- "use ar results": The balance from an AR-filter calculation is used, if corresponding results are available.
+
+- "no ar results": The standard balance is used.
+
+The averaging method can be set by the name as seen in the specials dialog.
+
+ 
+
+GetValue ( string name ) double
+
+Takes the name of a SAR calculation result (as in the SAR dialog box) as a string and delivers the corresponding value. (always rms)
+
+- "stimulation"
+
+- "accepted"
+
+- "volume"
+
+- "tissue volume"
+
+- "tissue mass"
+
+- "power"
+
+- "average power"
+
+- "total sar"
+
+- "point sar"
+
+- "max sar"
+
+- "max sar x"
+
+- "max sar y"
+
+- "max sar z"
+
+- "avg vol min x"
+
+- "avg vol min y"
+
+- "avg vol min z"
+
+- "avg vol max x"
+
+- "avg vol max y"
+
+- "avg vol max z"
+
+- "sel volume"
+
+- "sel tissue volume"
+
+- "sel tissue mass"
+
+- "sel power"
+
+- "sel average power"
+
+- "sel total sar"
+
+- "sel point sar"
+
+- "sel max sar"
+
+- "sel max sar x"
+
+- "sel max sar y"
+
+- "sel max sar z"
+
+ 
+
+Create
+
+Executes the SAR calculation. All necessary settings have to be made previously.
+
+ 
+
+Load
+
+Loads the SAR result file previously specified by SetLabel. Use GetValue to query the desired result value.
+
+Default Settings
+
+AverageWeight (10)
+
+SetOption ("IEEE C95.3")
+
+SetOption ("no rescale")
+
+SetOption ("no subvolume")
+
+SetOption ("volaccuracy 0.05")
+
+Example
+
+With SAR
+
+.Reset
+
+.PowerlossMonitor ("loss (f=1.8) [pw]")
+
+.AverageWeight (8)
+
+.SetOption ("CST C95.3")
+
+.SetOption ("rescale 1.0")
+
+.SetOption ("scale accepted")
+
+.Create
+
+MsgBox Str$(.GetValue("max sar"))
+
+End With
+
+ 

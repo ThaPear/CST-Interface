@@ -1063,6 +1063,7 @@ classdef Project < handle
         catia                       CST.CATIA
         chamfercurve                CST.ChamferCurve
         charge                      CST.Charge
+        chtsolver                   CST.CHTSolver
         circle                      CST.Circle
         coil                        CST.Coil
         colorramp                   CST.ColorRamp
@@ -1070,6 +1071,7 @@ classdef Project < handle
         combineresults              CST.CombineResults
         component                   CST.Component
         cone                        CST.Cone
+        contactproperties           CST.ContactProperties
         coventorware                CST.CoventorWare
         covercurve                  CST.CoverCurve
         currentmonitor              CST.CurrentMonitor
@@ -1082,12 +1084,15 @@ classdef Project < handle
         discreteport                CST.DiscretePort
         discretizer                 CST.Discretizer
         displacement                CST.Displacement
+        drcrz                       CST.DRCRZ
         dxf                         CST.DXF
         ecylinder                   CST.ECylinder
         edaimportdefaults           CST.EDAImportDefaults
         edgecurve                   CST.EdgeCurve
         eigenmodesolver             CST.EigenmodeSolver
         ellipse                     CST.Ellipse
+        eqssolver                   CST.EQSSolver
+        estaticsolver               CST.EStaticSolver
         evaluatefieldalongcurve     CST.EvaluateFieldAlongCurve
         evaluatefieldonface         CST.EvaluateFieldOnFace
         extrude                     CST.Extrude
@@ -1109,6 +1114,7 @@ classdef Project < handle
         iges                        CST.IGES
         layerstacking               CST.LayerStacking
         layoutdb                    CST.LayoutDB
+        lfsolver                    CST.LFSolver
         line                        CST.Line
         livelink                    CST.LiveLink
         localmodification           CST.LocalModification
@@ -1124,6 +1130,8 @@ classdef Project < handle
         meshsettings                CST.MeshSettings
         monitor                     CST.Monitor
         movingmedia                 CST.MovingMedia
+        mqstdsolver                 CST.MQSTDSolver
+        mstaticsolver               CST.MStaticSolver
         nastran                     CST.NASTRAN
         networkparameterextraction  CST.NetworkParameterExtraction
         nfsfile                     CST.NFSFile
@@ -1135,6 +1143,7 @@ classdef Project < handle
         particleinterface           CST.ParticleInterface
         particlesource              CST.ParticleSource
         pick                        CST.Pick
+        picsolver                   CST.PICSolver
         planewave                   CST.PlaneWave
         plot                        CST.Plot
         plot1d                      CST.Plot1D
@@ -1152,12 +1161,16 @@ classdef Project < handle
 %         result1d                    CST.Result1D
 %         result1dcomplex             CST.Result1DComplex
 %         result3d                    CST.Result3D
+        resultdatabase              CST.ResultDatabase
+%         resultmap                   CST.ResultMap
         resulttree                  CST.ResultTree
         rotate                      CST.Rotate
+        sar                         CST.SAR
         sat                         CST.SAT
         scalarplot2d                CST.ScalarPlot2D
         scalarplot3d                CST.ScalarPlot3D
         siemensnx                   CST.SiemensNX
+        simuliacse                  CST.SimuliaCSE
         solid                       CST.Solid
         solidedge                   CST.SolidEdge
         solidworks                  CST.SolidWorks
@@ -1166,15 +1179,27 @@ classdef Project < handle
         sourcefield                 CST.SourceField
         sphere                      CST.Sphere
         spline                      CST.Spline
+        stationarycurrentsolver     CST.StationaryCurrentSolver
         step                        CST.STEP
+        structuralmechanicssolver   CST.StructuralMechanicsSolver
         sweepcurve                  CST.SweepCurve
+%         table                       CST.Table
         temperaturesource           CST.TemperatureSource
+        thermalsolver               CST.ThermalSolver
         thermalsourceparameter      CST.ThermalSourceParameter
         thermalsurfaceproperty      CST.ThermalSurfaceProperty
+        thermaltdsolver             CST.ThermalTDSolver
+        timemonitor                 CST.TimeMonitor
+        timemonitor0d               CST.TimeMonitor0D
+        timemonitor1d               CST.TimeMonitor1D
+        timemonitor2d               CST.TimeMonitor2D
+        timemonitor3d               CST.TimeMonitor3D
         timesignal                  CST.TimeSignal
         torus                       CST.Torus
         touchstone                  CST.Touchstone
         tracefromcurve              CST.TraceFromCurve
+        trackingplot                CST.TrackingPlot
+        trackingsolver              CST.TrackingSolver
         traction                    CST.Traction
         transform                   CST.Transform_
         trimcurves                  CST.TrimCurves
@@ -1184,6 +1209,7 @@ classdef Project < handle
         vectorplot3d                CST.VectorPlot3D
         voltagemonitor              CST.VoltageMonitor
         voltagewire                 CST.VoltageWire
+        wakefieldpostprocessor      CST.WakefieldPostprocessor
         wcs                         CST.WCS
         wire                        CST.Wire
     end
@@ -1297,6 +1323,12 @@ classdef Project < handle
             end
             charge = obj.charge;
         end
+        function chtsolver = CHTSolver(obj)
+            if(isempty(obj.chtsolver))
+                obj.chtsolver = CST.CHTSolver(obj, obj.hProject);
+            end
+            chtsolver = obj.chtsolver;
+        end
         function circle = Circle(obj)
             if(isempty(obj.circle))
                 obj.circle = CST.Circle(obj, obj.hProject);
@@ -1338,6 +1370,12 @@ classdef Project < handle
                 obj.cone = CST.Cone(obj, obj.hProject);
             end
             cone = obj.cone;
+        end
+        function contactproperties = ContactProperties(obj)
+            if(isempty(obj.contactproperties))
+                obj.contactproperties = CST.ContactProperties(obj, obj.hProject);
+            end
+            contactproperties = obj.contactproperties;
         end
         function coventorware = CoventorWare(obj)
             if(isempty(obj.coventorware))
@@ -1411,6 +1449,12 @@ classdef Project < handle
             end
             displacement = obj.displacement;
         end
+        function drcrz = DRCRZ(obj)
+            if(isempty(obj.drcrz))
+                obj.drcrz = CST.DRCRZ(obj, obj.hProject);
+            end
+            drcrz = obj.drcrz;
+        end
         function dxf = DXF(obj)
             if(isempty(obj.dxf))
                 obj.dxf = CST.DXF(obj, obj.hProject);
@@ -1446,6 +1490,18 @@ classdef Project < handle
                 obj.ellipse = CST.Ellipse(obj, obj.hProject);
             end
             ellipse = obj.ellipse;
+        end
+        function eqssolver = EQSSolver(obj)
+            if(isempty(obj.eqssolver))
+                obj.eqssolver = CST.EQSSolver(obj, obj.hProject);
+            end
+            eqssolver = obj.eqssolver;
+        end
+        function estaticsolver = EStaticSolver(obj)
+            if(isempty(obj.estaticsolver))
+                obj.estaticsolver = CST.EStaticSolver(obj, obj.hProject);
+            end
+            estaticsolver = obj.estaticsolver;
         end
         function evaluatefieldalongcurve = EvaluateFieldAlongCurve(obj)
             if(isempty(obj.evaluatefieldalongcurve))
@@ -1573,6 +1629,12 @@ classdef Project < handle
             end
             layoutdb = obj.layoutdb;
         end
+        function lfsolver = LFSolver(obj)
+            if(isempty(obj.lfsolver))
+                obj.lfsolver = CST.LFSolver(obj, obj.hProject);
+            end
+            lfsolver = obj.lfsolver;
+        end
         function line = Line(obj)
             if(isempty(obj.line))
                 obj.line = CST.Line(obj, obj.hProject);
@@ -1663,6 +1725,18 @@ classdef Project < handle
             end
             movingmedia = obj.movingmedia;
         end
+        function mqstdsolver = MQSTDSolver(obj)
+            if(isempty(obj.mqstdsolver))
+                obj.mqstdsolver = CST.MQSTDSolver(obj, obj.hProject);
+            end
+            mqstdsolver = obj.mqstdsolver;
+        end
+        function mstaticsolver = MStaticSolver(obj)
+            if(isempty(obj.mstaticsolver))
+                obj.mstaticsolver = CST.MStaticSolver(obj, obj.hProject);
+            end
+            mstaticsolver = obj.mstaticsolver;
+        end
         function nastran = NASTRAN(obj)
             if(isempty(obj.nastran))
                 obj.nastran = CST.NASTRAN(obj, obj.hProject);
@@ -1728,6 +1802,12 @@ classdef Project < handle
                 obj.pick = CST.Pick(obj, obj.hProject);
             end
             pick = obj.pick;
+        end
+        function picsolver = PICSolver(obj)
+            if(isempty(obj.picsolver))
+                obj.picsolver = CST.PICSolver(obj, obj.hProject);
+            end
+            picsolver = obj.picsolver;
         end
         function planewave = PlaneWave(obj)
             if(isempty(obj.planewave))
@@ -1839,6 +1919,20 @@ classdef Project < handle
             % Each result3d can be different depending on resultname, so don't store it.
             result3d = CST.Result3D(obj, obj.hProject, resultname);
         end
+        function resultdatabase = ResultDatabase(obj)
+            if(isempty(obj.resultdatabase))
+                obj.resultdatabase = CST.ResultDatabase(obj, obj.hProject);
+            end
+            resultdatabase = obj.resultdatabase;
+        end
+        function resultmap = ResultMap(obj, resultname)
+%             if(isempty(obj.resultmap))
+%                 obj.resultmap = CST.ResultMap(obj, obj.hProject, treepath);
+%             end
+%             resultmap = obj.resultmap;
+            % Each resultmap can be different depending on treepath, so don't store it.
+            resultmap = CST.ResultMap(obj, obj.hProject, resultname);
+        end
         function resulttree = ResultTree(obj)
             if(isempty(obj.resulttree))
                 obj.resulttree = CST.ResultTree(obj, obj.hProject);
@@ -1850,6 +1944,12 @@ classdef Project < handle
                 obj.rotate = CST.Rotate(obj, obj.hProject);
             end
             rotate = obj.rotate;
+        end
+        function sar = SAR(obj)
+            if(isempty(obj.sar))
+                obj.sar = CST.SAR(obj, obj.hProject);
+            end
+            sar = obj.sar;
         end
         function sat = SAT(obj)
             if(isempty(obj.sat))
@@ -1874,6 +1974,12 @@ classdef Project < handle
                 obj.siemensnx = CST.SiemensNX(obj, obj.hProject);
             end
             siemensnx = obj.siemensnx;
+        end
+        function simuliacse = SimuliaCSE(obj)
+            if(isempty(obj.simuliacse))
+                obj.simuliacse = CST.SimuliaCSE(obj, obj.hProject);
+            end
+            simuliacse = obj.simuliacse;
         end
         function solid = Solid(obj)
             if(isempty(obj.solid))
@@ -1923,11 +2029,23 @@ classdef Project < handle
             end
             spline = obj.spline;
         end
+        function stationarycurrentsolver = StationaryCurrentSolver(obj)
+            if(isempty(obj.stationarycurrentsolver))
+                obj.stationarycurrentsolver = CST.StationaryCurrentSolver(obj, obj.hProject);
+            end
+            stationarycurrentsolver = obj.stationarycurrentsolver;
+        end
         function step = STEP(obj)
             if(isempty(obj.step))
                 obj.step = CST.STEP(obj, obj.hProject);
             end
             step = obj.step;
+        end
+        function structuralmechanicssolver = StructuralMechanicsSolver(obj)
+            if(isempty(obj.structuralmechanicssolver))
+                obj.structuralmechanicssolver = CST.StructuralMechanicsSolver(obj, obj.hProject);
+            end
+            structuralmechanicssolver = obj.structuralmechanicssolver;
         end
         function sweepcurve = SweepCurve(obj)
             if(isempty(obj.sweepcurve))
@@ -1935,11 +2053,25 @@ classdef Project < handle
             end
             sweepcurve = obj.sweepcurve;
         end
+        function table = Table(obj, resultname)
+%             if(isempty(obj.table))
+%                 obj.table = CST.Table(obj, obj.hProject, tablefilename);
+%             end
+%             table = obj.table;
+            % Each table can be different depending on tablefilename, so don't store it.
+            table = CST.Table(obj, obj.hProject, resultname);
+        end
         function temperaturesource = TemperatureSource(obj)
             if(isempty(obj.temperaturesource))
                 obj.temperaturesource = CST.TemperatureSource(obj, obj.hProject);
             end
             temperaturesource = obj.temperaturesource;
+        end
+        function thermalsolver = ThermalSolver(obj)
+            if(isempty(obj.thermalsolver))
+                obj.thermalsolver = CST.ThermalSolver(obj, obj.hProject);
+            end
+            thermalsolver = obj.thermalsolver;
         end
         function thermalsourceparameter = ThermalSourceParameter(obj)
             if(isempty(obj.thermalsourceparameter))
@@ -1952,6 +2084,42 @@ classdef Project < handle
                 obj.thermalsurfaceproperty = CST.ThermalSurfaceProperty(obj, obj.hProject);
             end
             thermalsurfaceproperty = obj.thermalsurfaceproperty;
+        end
+        function thermaltdsolver = ThermalTDSolver(obj)
+            if(isempty(obj.thermaltdsolver))
+                obj.thermaltdsolver = CST.ThermalTDSolver(obj, obj.hProject);
+            end
+            thermaltdsolver = obj.thermaltdsolver;
+        end
+        function timemonitor = TimeMonitor(obj)
+            if(isempty(obj.timemonitor))
+                obj.timemonitor = CST.TimeMonitor(obj, obj.hProject);
+            end
+            timemonitor = obj.timemonitor;
+        end
+        function timemonitor0d = TimeMonitor0D(obj)
+            if(isempty(obj.timemonitor0d))
+                obj.timemonitor0d = CST.TimeMonitor0D(obj, obj.hProject);
+            end
+            timemonitor0d = obj.timemonitor0d;
+        end
+        function timemonitor1d = TimeMonitor1D(obj)
+            if(isempty(obj.timemonitor1d))
+                obj.timemonitor1d = CST.TimeMonitor1D(obj, obj.hProject);
+            end
+            timemonitor1d = obj.timemonitor1d;
+        end
+        function timemonitor2d = TimeMonitor2D(obj)
+            if(isempty(obj.timemonitor2d))
+                obj.timemonitor2d = CST.TimeMonitor2D(obj, obj.hProject);
+            end
+            timemonitor2d = obj.timemonitor2d;
+        end
+        function timemonitor3d = TimeMonitor3D(obj)
+            if(isempty(obj.timemonitor3d))
+                obj.timemonitor3d = CST.TimeMonitor3D(obj, obj.hProject);
+            end
+            timemonitor3d = obj.timemonitor3d;
         end
         function timesignal = TimeSignal(obj)
             if(isempty(obj.timesignal))
@@ -1976,6 +2144,18 @@ classdef Project < handle
                 obj.tracefromcurve = CST.TraceFromCurve(obj, obj.hProject);
             end
             tracefromcurve = obj.tracefromcurve;
+        end
+        function trackingplot = TrackingPlot(obj)
+            if(isempty(obj.trackingplot))
+                obj.trackingplot = CST.TrackingPlot(obj, obj.hProject);
+            end
+            trackingplot = obj.trackingplot;
+        end
+        function trackingsolver = TrackingSolver(obj)
+            if(isempty(obj.trackingsolver))
+                obj.trackingsolver = CST.TrackingSolver(obj, obj.hProject);
+            end
+            trackingsolver = obj.trackingsolver;
         end
         function traction = Traction(obj)
             if(isempty(obj.traction))
@@ -2030,6 +2210,12 @@ classdef Project < handle
                 obj.voltagewire = CST.VoltageWire(obj, obj.hProject);
             end
             voltagewire = obj.voltagewire;
+        end
+        function wakefieldpostprocessor = WakefieldPostprocessor(obj)
+            if(isempty(obj.wakefieldpostprocessor))
+                obj.wakefieldpostprocessor = CST.WakefieldPostprocessor(obj, obj.hProject);
+            end
+            wakefieldpostprocessor = obj.wakefieldpostprocessor;
         end
         function wcs = WCS(obj)
             if(isempty(obj.wcs))

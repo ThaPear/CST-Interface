@@ -1,0 +1,430 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Simulia Co-Simulation
+
+SimuliaCSE Object
+This object offers the possibility to run a co-simulation using Simulia Co-Simulation Engine (CSE).
+
+Connection Settings
+
+Time Settings
+
+Excitation Settings
+
+External Tools Settings
+
+Regions Settings
+
+Fields Settings
+
+Deprecated
+
+Default Settings
+
+Example
+
+General Methods
+
+%% Connection Settings
+
+SetCodeName ( string codename )
+
+Defines a code name for the co-simulation client. This name corresponds to the <codeName> attribute in the CSE configuration file.
+
+ 
+
+SetJobName ( string jobname )
+
+Defines a job name for the co-simulation client. This name corresponds to the <componentInstanceName> attribute in the CSE configuration file.
+
+ 
+
+SetDirectorName ( string hostname )
+
+This method defines a name of the host where the CSE director runs.
+
+ 
+
+SetDirectorPort ( int portno )
+
+Sets the port number which should be used for connection to the CSE director.
+
+ 
+
+SetConnectionTimeout ( int TimeInS )
+
+If during this number of seconds no connection to the CSE director could be established, the client stops and shows the time-out error message.
+
+ 
+
+%% Time Settings
+
+ 
+
+SetSimulationDuration ( double time )
+
+Defines the co-simulation duration in currently selected user units.
+
+ 
+
+SetMasterClient ( string name )
+
+Specifies, which co-simulation client should be the main responsible for the choice of transient time steps. Possible values of name:
+
+"CST"           the CST client selects the time step length based on excitation signals assigned to the solver sources.
+
+"Counterpart"   the external client is responsible for selection of the time step length. The time step settings for CST are ignored.
+
+"Both"          both CST and external clients submit their proposals for the next time step length, the shortest one is selected.
+
+ 
+
+SetTimeStepAutoSelection ( bool  autoselect )
+
+This command specifies, whether user settings for the time step length should be utilized ("False"), or automatic settings should be generated ("True").
+
+ 
+
+SetMinTimeStep ( double timestep )
+
+Select the minimum time step length in user units. This signal is ignored if the Master Client is set to "Counterpart" or Autoselection is on.
+
+ 
+
+SetMaxTimeStep ( double timestep )
+
+Select the maximum time step length in user units. This signal is ignored if the Master Client is set to "Counterpart" or Autoselection is on.
+
+ 
+
+SetMaxSignalChange ( double percent )
+
+Use this command to select the relative signal change in percent, according to which the next time step length should be selected. This signal is ignored if the Master Client is set to "Counterpart" or Autoselection is on.
+
+ 
+
+%% Excitation Settings
+
+% In this section, the VBA commands controlling the change of electromagnetic source values in the course of transient co-simulation are described. Their usage is quite similar to Transient Thermal and MQS solvers.
+
+ 
+
+ResetExcitationList
+
+Use this command to reset all the excitation signals assigned to EM sources. The option to define different excitation signals to sources at different frequencies is turned off.
+
+ 
+
+SetExcitationsFrequencyDependent ( bool  freq_dependent )
+
+For the LF frequency-domain electromagnetic solver on the CST side of co-simulation, this command defines whether the solver is started at each step of co-simulation separately for each calculation frequency (freq_dependent = true) or only once for all the frequencies (freq_dependent = false). In the former case the excitation signals can be assigned to electromagnetic sources independently for each frequency.
+
+ 
+
+ExcitationName ( string sourcename )
+
+For a new excitation being created, specify the source name the excitation signal should be assigned to (e.g.: "currentport1")
+
+ 
+
+ExcitationType ( string exctype )
+
+This command specifies the type of the source, to which the excitation signal should be assigned. In the following table, the possible values of exctype are listed:
+
+"Current"       The source is a current wire
+
+"Voltage"       The source is a voltage wire
+
+"Coil"          The source is a single coil
+
+"CoilGroup"     The source is a coil group
+
+"CurrentPort"   The source is a current port.
+
+ 
+
+ExcitationShift ( double timeshift )
+
+Use this command to specify a time shift in user units, after which the excitation signal is applied to the signal. If the timeshift has a positive value, the start value of the excitation signal is used for time instants less than timeshift.
+
+ 
+
+ExcitationSignal ( string signalname )
+
+Specify the name of the excitation signal which should be applied to the solver source.
+
+ 
+
+ExcitationActive ( bool  active )
+
+If active is false, the source is ignored.
+
+ 
+
+CreateExcitationForAllFrequencies
+
+Assign the selected excitation signal to the solver source for all the frequencies at which the calculation is performed. This command can only be used if the command SetExcitationsFrequencyDependent with parameter False has been called.
+
+ 
+
+CreateExcitationForFrequency ( double frequency )
+
+Assign the selected excitation signal to the solver source. This signal will be used for a single calculation frequency. This command can only be used if the command SetExcitationsFrequencyDependent with parameter True has been called.
+
+ 
+
+%% External Tools Settings
+
+ 
+
+ResetExternalToolsSettings
+
+Resets the settings which have been made for starting the CSE director and external CSE clients.
+
+ 
+
+RunExternalTools ( bool  run )
+
+This method defines if the CSE director and/or external CSE clients should be started automatically before the CST client is started.
+
+ 
+
+WorkingDir ( string dirname )
+
+Defines which directory should be used by the CSE director and other clients for loading and saving of information.
+
+ 
+
+CoSimJobName ( string jobname )
+
+Specifies the job name for the CSE director.
+
+ 
+
+CreateNewConfigFile (bool  bCreateNew )
+
+If the CSE director should be started, it needs an XML configuration file. This function specifies if this file should be created automatically.
+
+ 
+
+XMLConfigFile ( string filename )
+
+Provides the name of the configuration file which should be used by the CSE director. This value is ignored if .CreateNewConfigFile "True" has been specified.
+
+ 
+
+SetExternalClient (  enum {"Abaqus", "CommandLine", "None"} ext_client )
+
+Specifies which external client should be started automatically from the CST environment.
+
+Abaqus means that the client settings are defined by .SetAbaqusJobName, .SetAbaqusInputFile and .SetAbaqusCommandLineParams.
+
+If CommandLine is selected, the external client is defined by the .AddClientCommandLine setting.
+
+None means that no external client should be started automatically. In this case after the CST client and CSE director are started the co-simulation is blocked until the external client is started manually.
+
+ 
+
+SetAbaqusJobName ( string jobname )
+
+Specifies the job name for the Abaqus client (only considered for .SetExternalClient "Abaqus"). If this value is not set, an error message will be shown and no co-simulation will be started.
+
+ 
+
+SetAbaqusInputFile ( string filename )
+
+Here the Abaqus input file can be specified (only considered for .SetExternalClient "Abaqus"). If the input file is located in the working directory and its name (without ".inp") is equal to the Abaqus job name, such file will be found automatically and there's no need to call this function.
+
+ 
+
+SetAbaqusCommandLineParams ( string cl_params )
+
+With this function additional command line parameters can be specified for Abaqus (only considered for .SetExternalClient "Abaqus"), such as the number of cpus etc (please refer to Simula Abaqus documentation).
+
+ 
+
+AddClientCommandLine ( string commandline )
+
+Add a complete command line for each external co-simulation client to be started (only considered for .SetExternalClient "CommandLine").
+
+ 
+
+%% Regions Settings
+
+ 
+
+ResetRegions
+
+Removes all the regions.
+
+ 
+
+ResetRegionData
+
+Resets the settings made for creation of a new region.
+
+ 
+
+RegionFace ( string SolidName, int FaceID )
+
+Adds a solid face to the existing list of faces, for which a new region should be created. If the region dimension is 2D, the face will be used for co-simulation, otherwise the whole solid will be used.
+
+ 
+
+RegionName ( string name )
+
+Defines the name for the new region.
+
+ 
+
+RegionType ( enum {"Surface", "Volume"} type )
+
+This method specifies if the newly created region should be defined on a surface or in a volume.
+
+ 
+
+CounterpartRegionName ( string name )
+
+Defines the name for the new region in the external client. This command is useful if many different regions exist for field exchange, in this way the CSE director knows where to map the field data to in the external project.
+
+ 
+
+CreateRegion
+
+Creates a new regions with previously defined settings.
+
+ 
+
+SetCoordsUnit ( enum gUnit {"m", "cm", "mm", "in", "etc..."} )
+
+This methods allows to specify the length unit, into which the mesh node coordinates should be converted for the co-simulation. For the full list of supported values please refer to the Units Object documentation.
+
+ 
+
+%% Fields Settings
+
+ 
+
+SetCoSimulationType (  enum cs_type {"EM-Thermal", "EM-Mechanics", "Custom"} )
+
+Specifies, which co-simulation type (and the default set of exchanged fields) has been selected by the user last time.
+
+ 
+
+ResetFields
+
+Removes all the fields in the list.
+
+ 
+
+AddField ( enum direction {"In", "Out"}, enum FieldType {"Loss", "Displacement", "Force"}, double factor, string RegionName )
+
+Defines a new field to exchange. Use direction to specify, whether the field should be sent to or received from the CSE director. FieldType defines the type of the field data. factor specifies the value, by which the field values should be multiplied after receiving or before submitting to the CSE client counterpart. RegionName defines, in which region the field should be exchanged (empty string means the whole simulation domain).
+
+ 
+
+AddTemperatureField ( enum direction {"In", "Out"}, enum unit {"Celsius", "Kelvin", "Fahrenheit"}, string RegionName )
+
+Defines a new temperature field. Use direction to specify, whether the field should be sent to or received from the CSE director. Unit specifies, which temperature unit is used in the CSE client counterpart. RegionName defines, in which region the temperature field should be exchanged (empty string means the whole simulation domain).
+
+ 
+
+AddLossToSubmitWithFrequency ( double factor, string RegionName, double frequency )
+
+Defines a new loss field to be submitted to the CSE director. factor specifies the value, by which the loss field values should be multiplied before submitting to the CSE client counterpart. RegionName defines, in which region the field should be exchanged (empty string means the whole simulation domain). frequency is the frequency value in user units, determining which loss field from EM solver output should be selected. The frequency must be defined in the solver settings as well, so the solver could deliver this loss field.
+
+ 
+
+AddLossToSubmitWithMonitorName ( double factor, string RegionName, string MonitorName )
+
+Same as previous, but the loss distribution is selected by MonitorName instead of frequency value. This is relevant e.g. for the LF Time Domain Solver (MQS), where the specific time-averaged loss field is identified by its monitor name. A average loss field monitor with this name must exist, otherwise the co-simulation cannot be started.
+
+ 
+
+StartCoSimulation long
+
+Starts the co-simulation with the prescribed settings and the currently active mesh. If no mesh is available, a new mesh will be generated. Returns 0 if the co-simulation client run was successful or an error code >0 otherwise.
+
+ 
+
+%% Deprecated
+
+ 
+
+CreateExcitation
+
+Same as CreateExcitationForAllFrequencies.
+
+Default Settings
+
+With SimuliaCSE
+
+     .SetCodeName "cst_job"
+
+     .SetJobName "cst_job"
+
+     .SetDirectorName "localhost"
+
+     .SetDirectorPort "22000"
+
+     .SetConnectionTimeout "300"
+
+     .SetSimulationDuration "0"
+
+     .SetMasterClient "Both"
+
+     .SetTimeStepAutoSelection "True"
+
+     .RunExternalTools "False"
+
+     .ResetRegions
+
+     .ResetFields
+
+     .ResetExcitationList
+
+End With
+
+Example
+
+With SimuliaCSE
+
+     .SetCodeName "lf_solution"
+
+     .SetJobName "lf_solution"
+
+     .SetDirectorName "localhost"
+
+     .SetDirectorPort "22000"
+
+     .SetConnectionTimeout "120"
+
+     .SetSimulationDuration "1000"
+
+     .ResetRegions
+
+     .ResetRegionData
+
+     .RegionName "region3D"
+
+     .RegionDim "3D"
+
+     .RegionFace "default:import_1_5", "9"
+
+     .RegionFace "default:import_1_4", "19"
+
+     .RegionFace "default:import_1_2", "19"
+
+     .RegionFace "default:import_1_3", "19"
+
+     .RegionFace "default:import_1", "19"
+
+     .RegionFace "default:import_1_1", "19"
+
+     .CreateRegion
+
+     .ResetFields
+
+     .AddLossToSubmitWithFrequency "1e-3", "region3D", "10000"
+
+     .AddTemperatureField "In", "Celsius", "region3D"
+
+End With

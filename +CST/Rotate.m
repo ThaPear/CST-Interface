@@ -57,10 +57,8 @@ classdef Rotate < handle
         function Mode(obj, rotMode)
             % Selects whether a profile or a surface is to be rotated.
             % rotMode may have the following settings:
-            % ”pointlist”
-            % A profile defined by points is to be rotated
-            % ”picks”
-            % A picked face is to be rotated
+            % ”pointlist” A profile defined by points is to be rotated
+            % ”picks”     A picked face is to be rotated
             obj.AddToHistory(['.Mode "', num2str(rotMode, '%.15g'), '"']);
         end
         function StartAngle(obj, startA)
@@ -189,12 +187,16 @@ classdef Rotate < handle
         end
         %% Undocumented functions.
         % Found in history list of migrated CST 2014 file in 'define rotate'.
-        function NumberOfPickedFaces(obj, value)
-            obj.AddToHistory(['.NumberOfPickedFaces "', num2str(value, '%.15g'), '"']);
+        % Definition below is copied from CST.Extrude.
+        function NumberOfPickedFaces(obj, nCount)
+            % If the mode is "multiplepicks", the number of picked faces is set here.
+            obj.AddToHistory(['.NumberOfPickedFaces "', num2str(nCount, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'define rotate'.
-        function TaperAngle(obj, value)
-            obj.AddToHistory(['.TaperAngle "', num2str(value, '%.15g'), '"']);
+        % Definition below is copied from CST.SweepCurve/CST.ExtrudeCurve
+        function Taperangle(obj, tapervalue)
+            % Sets the angle to taper the created shape along the path curve. A negative angle will taper the shape, a positive angle will flare the shape.
+            obj.AddToHistory(['.Taperangle "', num2str(tapervalue, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'define rotate'.
         function CutEndOff(obj, boolean)

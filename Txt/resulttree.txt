@@ -1,70 +1,23 @@
-Home | Visual Basic (VBA) Language | Circuits & Systems VBA | ResultTree Object
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ResultTree
 
 ResultTree Object
-This object allows operations on the CST DESIGN STUDIO result tree.
- 
+Offers methods to insert or delete user defined entries into the Navigation Tree . The name of the entries is defined by the Name method. Every backslash in this name creates another sub folder.
 
-Instead of  ResultTree you may also use  DSResultTree, especially recommended in the schematic of a 3D project to avoid ambiguities with the 3D Navigation Tree.
+Tree Operations
+
+Tree Item Methods
+
+Examples
+
+Field Monitor Result, Farfield Monitor Result
+
+Iterate over parametric S-Parameter data
+
+List all items and folders below "1D Results"
 
 General Methods
 
-GetNextItemName  ( string treeItemName )  string
-
-Returns the next tree item name after "treeItemName". It does only return folder names in the same hierarchy level. If there is no next tree item the function returns an empty string.
-
- 
-
-GetFirstChildName  ( string treeItemName )  string
-
-Returns the first child tree item of  "treeItemName". If there is no child of the specified tree item the function returns an empty string.
-
- 
-
-GetFileFromTreeItem  ( string resultTreeItemName )  string
-
-This function only affects tree items containing results. It returns the file name of the CST MICROWAVE STUDIO compatible result file associated with this entry. If there is no result file, the return value will be an empty string.
-
- 
-
-GetTableFileFromItemName  ( string resultTreeItemName )  string
-
-If the result tree item represents a table this function returns the file name of the table, otherwise an empty string will be returned.
-
- 
-
-GetResultIDsFromTreeItem  ( string treeItemName )  variant
-
-Returns an array of Result IDs, which are strings are of the format "Schematic:RunID:1" and correspond to the existing Run IDs for the parametric data of the specified tree item. A Result ID can be resolved to a parameter combination with the command GetParameterCombination of the Project object.
-
- 
-
-GetResultFromTreeItem ( string treeItemName, string resultID ) object
-
-Returns a result object containing the data specified by 'treeItemName' and 'resultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object.  In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method returns an error, if the tree item does not exist or the Result ID is invalid.
-
- 
-
-GetImpedanceResultFromTreeItem ( string treeItemName, string resultID ) object
-
-Returns a result object containing the reference impedance data of the tree item specified by 'treeItemName' and 'resultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object. In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method also returns an error, if the tree item does not exist or the Result ID is invalid.
-
- 
-
-TreeItemHasImpedance ( string treeItemName, string resultID ) bool
-
-Returns whether the data specified by 'treeItemName' and 'resultID'  has reference impedances attached to it. This data can be accessed with GetImpedanceResultFromTreeItem. The method returns an error, if the tree item does not exist or if the Result ID is invalid.
-
- 
-
-GetTreeResults ( name rootPath, string filterType, string infoType, variant treePaths, variant resultTypes, variant fileNames, variant resultInformation ) long
-
-Get result data of all children of a parent folder in the Navigation Tree. The string rootPath specifies the Navigation Tree path to the root item which is queried (typically a tree folder). The method returns an error if no tree item exists for rootPath. The string filterType specifies which types of results should be included in the list. It can be a combination of the following types: "0D/1D", "2D/3D", "farfield", "colormap", "folder". Additionally, the string "recursive" can be used to include all sub-items recursively. If multiple types are requested, they need to be separated by white spaces, e.g. "folder 0D/1D recursive". In case the root item matches the filter, it will also be included. Please note that only Navigation Tree folders which contain 1D results are taken into account when the filter type "folder" is specified. Furthermore, please note that some Design Studio tree elements will not have an associated result type (e.g. Tasks) and therefore will not appear in the list for any filter type.
-
-The string infoType determines which additional information about the results is stored in the variant resultInformation. It can be an empty string or the string "filetype0D1D". In case "filetype0D1D" is used, the resultInfomation will contain data about the type of the 0D/1D result, which can be "complex, "real", "complex0D", "real0D" for all tree results of 0D/1D type.
-
-The return value of this method is the number of elements which are found. The variants treepaths, resultTypes, fileNames, resultInformation are filled within the method call with a list of strings which contain information about the results. The variant treepath will contain the list of Navigation Tree paths for the results. The variant fileNames will contain the list of absolute filenames normalized to the Operating System. The variant resultTypes will contain the Result Type of the result. The variant resultInfomation will contain additional information about the result as specified by infoType or empty strings. See also the corresponding example.
-
- 
+%% Tree Operations
 
 Reset
 
@@ -74,72 +27,125 @@ Resets the current result tree item definition.
 
 Add
 
-Adds a previously specified tree item to / from the Navigation Tree.
+Adds / deletes a previously specified tree item to / from the Navigation Tree.
 
  
 
 Delete
 
-Deletes a previously specified tree item to / from the Navigation Tree.
+Adds / deletes a previously specified tree item to / from the Navigation Tree.
 
  
 
-DoesTreeItemExist ( string treeItemName ) bool
+UpdateTree
 
-Checks if an item called treeItemName exists in the Navigation Tree.
+Updates the appearance of the tree on the screen.
 
  
 
-Name ( name sTreepath )
+EnableTreeUpdate ( bool switch )
 
-Sets the Navigation Tree path including item name for the item. User defined items are only allowed below the "Results" folder of the Navigation Tree.
+Enable or disable the update of the tree. After enabling the tree update, this method does actually update the tree also.
+
+ 
+
+GetFirstChildName ( name sParentTreePath )
+
+Get the name including tree path of the first child item of the specified parent item. An empty string will be returned if no child exists.
+
+ 
+
+GetNextItemName ( name sCurrentTreeItem )
+
+Get the name including tree path of the item following sCurrentTreeItem in the same tree folder. sCurrentTreeItem has to specify the tree folder and the current item name. An empty string will be returned if sCurrentTreeItem is the last item in the tree folder.
+
+ 
+
+RefreshView
+
+Updates the results stored in the  tree.
+
+ 
+
+DoesTreeItemExist( name sTreepath) bool
+
+Checks if an item called sTreepath exists in the Navigation Tree.
+
+ 
+
+GetTreeResults( name rootPath, string filterType, string infoType, variant treePaths, variant resultTypes, variant fileNames, variant resultInformation ) long
+
+Get result data of all children of a parent folder in the Navigation Tree. The string rootPath specifies the Navigation Tree path to the root item which is queried (typically a tree folder).  The method returns an error if no tree item exists for rootPath. The string filterType specifies which types of results should be included in the list. It can be a combination of the following types: "0D/1D", "2D/3D", "farfield", "colormap", "folder". Additionally, the string "recursive" can be used to include all sub-items recursively. If multiple types are requested, they need to be separated by white spaces, e.g. "folder 0D/1D recursive". In case the root item matches the filter, it will also be included.
+
+The string infoType determines which additional information about the results is stored in the variant resultInformation. It can be an empty string or the string "filetype0D1D". In case "filetype0D1D" is used, the resultInfomation will contain data about the type of the 0D/1D result, which can be "complex, "real", "complex0D", "real0D" for all tree results of 0D/1D type.
+
+The return value of this method is the number of elements which are found. The variants treepaths, resultTypes, fileNames, resultInformation are filled within the method call with a list of strings which contain information about the results. The variant treepath will contain the list of Navigation Tree paths for the results. The variant fileNames will contain the list of absolute filenames normalized to the Operating System. The variant resultTypes will contain the Result Type of the result. The variant resultInfomation will contain additional information about the result as specified by infoType or empty strings. See also the corresponding example.
+
+ 
+
+%% Tree Item Methods
+
+ 
+
+Name ( name sTreePath )
+
+Sets the Navigation Tree path including item name for the item.
 
  
 
 Type ( enum key )
 
-Defines the result type of the tree item. Supported types are:
+Defines the result type of the tree item. See the Result Type Overview.
 
-enum key	meaning
-"folder"	Folder
-"colourmap"	Color map result
-"xysignal"	1D or 1DC result
-"notefile"	Generic ASCII text file
  
 
 Subtype ( enum key )
 
-Defines the result subtype of the tree item. Supported subtypes are:
+Defines the result sub type of the tree entry in case of a type = ”XYSignal”. Otherwise this setting has no effect.
 
-enum key	meaning
-"complex"	Complex 1D data
-"linear"	Linear scaled real data
-"dB"	Logarithmically scaled real data
-"Phase"	Phase data over frequency
-"User"	User defined data
- 
+enum key    meaning
 
-Title  ( name name )
+"Complex"   Complex 1D data
 
-Defines the title label of the item.
+”Linear”    Linear scaled real data
 
- 
+”dB”        Logarithmic scaled real plot
 
-Xlabel  ( name name )
+"Phase"     Phase data over frequency
 
-Defines the x-axis label of the item.
+"Time"      Time signal data
 
- 
+"Position"  Position depended data
 
-Ylabel  ( name name )
+"Energy"    Energy over time data
 
-Defines the y-axis label of the item.
+"Balance"   Energy balance over frequency data
+
+"User"      User defined data
 
  
 
-File  ( name sResultName )
+Title ( name name )
 
-Filename associated with the tree item. Either absolute file names or file names relative to the "Result\DS" project folder are valid.
+Defines the title / x-axis / y-axis label of the item.
+
+ 
+
+Xlabel ( name name )
+
+Defines the title / x-axis / y-axis label of the item.
+
+ 
+
+Ylabel ( name name )
+
+Defines the title / x-axis / y-axis label of the item.
+
+ 
+
+File ( name sResultName )
+
+Filename associated with the tree item. Either absolute file names or file names relative to the "Result" project folder are valid.
 
  
 
@@ -147,37 +153,178 @@ DeleteAt ( enum type )
 
 Defines the lifetime of the item.
 
-enum type
+enum type           meaning
 
-meaning
+"never"             The result will be never deleted.
 
-"never"
+"rebuild"           Deletion during model update. (default)
 
-The result will be never deleted.
+"solverstart"       A solver start will delete the result.
+
+"truemodelchange"   A parameter change will delete the results.
 
  
 
-Examples
+IsResult ( bool switch )
 
-% Iterate over parametric S-Parameter data
+If switch is True, the item is treated like a normal solver result item.
 
-% This macro demonstrates access to parametric data of an S-Parameter. The access works similar for other tree items.
+ 
+
+GetResultTypeFromItemName ( name sTreePath ) string
+
+Returns the result type of the tree item. See the Result Type Overview.
+
+ 
+
+GetFileFromTreeItem ( name sTreePath ) string
+
+Returns the file name of the result file associated with this tree entry. If there is no result file, the return value will be an empty string.
+
+ 
+
+GetTableFileFromItemName ( name sTreePath ) string
+
+Get the file name of the table if the tree item represents a table or an empty string.
+
+ 
+
+GetResultIDsFromTreeItem( name sTreePath ) variant
+
+Returns an array of Result IDs, which are strings are of the format "3D:RunID:1" and correspond to the existing Run IDs for the parametric data of the specified tree item. A Result ID can be resolved to a parameter combination with the command GetParameterCombination of the Project-object.
+
+ 
+
+GetResultFromTreeItem( name sTreePath, string sResultID ) object
+
+Returns a result object containing the data specified by 'sTreePath' and 'sResultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object. In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method returns an error, if the tree item does not exist or the Result ID is invalid.
+
+ 
+
+GetImpedanceResultFromTreeItem( name sTreePath, string sResultID ) object
+
+Returns a result object containing the reference impedance data of the tree item specified by 'sTreePath' and 'sResultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object. In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method also returns an error, if the tree item does not exist or the Result ID is invalid.
+
+ 
+
+TreeItemHasImpedance ( name sTreePath, string sResultID ) bool
+
+Returns whether the data specified by 'sTreePath' and 'sResultID' has reference impedances attached to it. This data can be accessed with GetImpedanceResultFromTreeItem. The method returns an error, if the tree item does not exist or if the Result ID is invalid.
+
+Default Settings
+
+Examples:
+
+The ResultTree VBA Object offers very interesting possibilities to configure the Navigation Tree. It is possible to insert different simulation results as well as VBA macros. The following examples will show its functionality.
+
+ 
+
+General Examples to add items into the tree
+
+Add text file into tree
+
+Examples to access 1D Results
+
+Please refer to the examples section of the Result0D, Result 1D or Result 1D Complex objects to see how 1D data can be added to the Navigation Tree.
+
+Iterate over parametric S-Parameter data:  This macro demonstrates access to parametric 1D data.
+
+List all items and folders below "1D Results":  This macro demonstrates the use of GetTreeResults.
+
+Examples to add field results into the tree
+
+For results others than 1D Results only those of the current project can be inserted into the tree!
+
+Add Field Monitor Result into Tree: Adds a 3D-Vector result into the tree.
+
+Add Farfield Monitor Result into Tree: Adds a farfield monitor into the tree.
+
+Example: Add text file into tree
+
+Add a generic ASCII text file with the name "Some Information" to the tree. The file "Sometext.nfo" needs to be located in the project's sub folder "Model\3D". The file name can be arbitrary, but should have the extension ".nfo"
+
+ 
+
+With ResultTree
+
+.Name "Some Information"
+.File "Sometext.nfo"
+.Type "Notefile"
+.DeleteAt "never" ' Survive rebuilds and delete results
+.Add
+
+End With
+
+ 
+
+Delete the  tree item "Some Information"
+
+ 
+
+With ResultTree
+
+.Name "Some Information"
+.Delete
+
+End With
+
+Example: Add Field Monitor Result into Tree
+
+Adds a field monitor result of the electric field from the current project into the folder ”My Field”.
+
+ 
+
+With ResultTree
+
+.Name "My Field\E_Field"   ' Entry name and destination folder
+
+.File "e1_1.m3d"              ' Result file name
+
+.Type "Efield3D"
+
+.Add
+
+End With
+
+Example: Add Farfield Monitor Result into Tree
+
+Adds a farfield monitor result from the current project into the folder ”My Field”.
+
+ 
+
+With ResultTree
+
+' The entry name and its destination folder
+
+.Name "My Field\Farfield"   ' Entry name and destination folder
+
+.File "ff1_1.ffm"              ' Result file name
+
+.Type "Farfield"
+
+.Add
+
+End With
+
+Example: Iterate over Parametric S-Parameter Data
+
+This macro demonstrates access to parametric data of an S-Parameter. The access works similar for arbitrary tree items below the 1D Results folder.
 
  
 
 Dim TreeItem As String
 
-TreeItem = "Tasks\SPara1\S-Parameters\S1,1"
+TreeItem = "1D Results\S-Parameters\S1,1"
 
 'get an array of existing result ids for this tree item
 
 Dim IDs As Variant
 
-IDs = DSResultTree.GetResultIDsFromTreeItem(TreeItem)
+IDs = Resulttree.GetResultIDsFromTreeItem(TreeItem)
 
 If IsEmpty(IDs) Then
 
-DS.ReportInformationToWindow("No parametric data available.")
+ReportInformationToWindow("No parametric data available.")
 
 Else
 
@@ -187,23 +334,23 @@ For N = 0 To UBound(IDs)
 
 Dim spara As Object
 
-Set spara = DSResultTree.GetResultFromTreeItem(TreeItem, IDs(N))
+Set spara = Resulttree.GetResultFromTreeItem(TreeItem, IDs(N))
 
 If spara.GetResultObjectType() = "1DC" Then
 
 'access data of R1DC Object
 
-DS.ReportInformationToWindow("First data point: "+CStr(spara.GetYRe(0))+","+CStr(spara.GetYIm(0)))
+ReportInformationToWindow("First data point: "+CStr(spara.GetYRe(0))+","+CStr(spara.GetYIm(0)))
 
-If DSResultTree.TreeItemHasImpedance(TreeItem, IDs(N)) Then
+If Resulttree.TreeItemHasImpedance(TreeItem, IDs(N)) Then
 
 Dim ref_imp As Object
 
-Set ref_imp = DSResultTree.GetImpedanceResultFromTreeItem(TreeItem, IDs(N))
+Set ref_imp = Resulttree.GetImpedanceResultFromTreeItem(TreeItem, IDs(N))
 
 'access data of R1DC Object containing ref. imp.
 
-DS.ReportInformationToWindow("Ref. Imp. :" + CStr(ref_imp.GetYRe(0))+","+CStr(ref_imp.GetYIm(0)))
+ReportInformationToWindow("Ref. Imp. :" + CStr(ref_imp.GetYRe(0))+","+CStr(ref_imp.GetYIm(0)))
 
 End If
 
@@ -213,40 +360,24 @@ Next
 
 End If
 
+Example: List all items and folders below "1D Results"
 
-
-% Add a Color Map Plot into Tree
-
-With DSResultTree
-
-.Reset
-
-.Name "Results\Hotspot"  ' Entry name and its destination folder
-
-.Type "colourmap"                   
-
-.File "hotspots.dat"      ' file names are either absolute or relative to <project>\Result\DS
-
-.Add
-
-End With
-
- 
-
-% List all 1D items and 1D folders below "Tasks"
-
-This macro demonstrates the use of GetTreeResults. It recursively queries all 0D and 1D items and result folders below "Tasks" and prints the gathered data to the message window.
+This macro demonstrates the use of GetTreeResults. It recursively queries all 0D and 1D items and result folders below "1D Results" and prints the gathered data to the message window.
 
  
 
 Dim paths As Variant, types As Variant, files As Variant, info As Variant, nResults As Long
 
-nResults = DSResulttree.GetTreeResults("Tasks","folder 0D/1D recursive","",paths,types,files,info)
+nResults = Resulttree.GetTreeResults("1D Results","folder 0D/1D recursive","",paths,types,files,info)
 
 Dim n As Long
 
 For n = 0 To nResults-1
 
-ReportInformationToWindow("path: " + CStr(paths(n)) + vbCrLf + "type: " + CStr(types(n)) + vbCrLf + "file: " + CStr(files(n)))
+ReportInformationToWindow("path: " + CStr(paths(n)) + vbCrLf  + "type: " + CStr(types(n)) + vbCrLf + "file: " + CStr(files(n)))
 
 Next
+
+ 
+
+ 

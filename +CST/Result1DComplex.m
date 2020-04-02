@@ -19,10 +19,12 @@
 % This object offers access and manipulation functions to complex 1D results. A Result1DComplex object can hold a number of points ( x, y ) where x is a real number and y is a complex number. Access to the points is possible by specifying an zero-based index.
 classdef Result1DComplex < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.Result1DComplex, ?CST.ResultTree})
+    methods(Access = {?CST.Project, ?CST.Result1DComplex, ?CST.ResultTree, ?CST.Table})
         % CST.Project can create a Result1DComplex object.
         % CST.Result1DComplex.Copy can create a Result1DComplex object.
-        % CST.ResultTree.GetResultFromTreeItem can create a Result1D object.
+        % CST.ResultTree.GetResultFromTreeItem can create a Result1DComplex object.
+        % CST.ResultTree.GetImpedanceResultFromTreeItem can create a Result1DComplex object.
+        % CST.Table.Get1DDataItem can create a Result1DComplex object.
         function obj = Result1DComplex(project, hProjectOrhResult1DComplex, resultname)
             if(nargin == 3)
                 % Created by CST.Project.
@@ -163,33 +165,54 @@ classdef Result1DComplex < handle
             % Re-samples the data points of the object to a given number of samples between a minimum specified in Min and maximum value specified in Max. The new data samples are calculated using an interpolation of the original data samples. The method returns an error if less than three data points are contained in the object.
             obj.hResult1DComplex.invoke('ResampleTo', Min, Max, Samples);
         end
-        function Add(obj, Object)
+        function Add(obj, oObject)
             % Adds the complex y-values of the other object to the y-values of the current object. The number of points need to be the same in both objects. The x-values are taken from the current object.
-            obj.hResult1DComplex.invoke('Add', Object);
+            if(isa(oObject, 'CST.Result1DComplex'))
+                oObject = oObject.hResult1DComplex;
+            end
+            obj.hResult1DComplex.invoke('Add', oObject);
         end
-        function Subtract(obj, Object)
+        function Subtract(obj, oObject)
             % Subtracts the complex y-values of the other object from the y-values of the current object. The number of points need to be the same in both objects. The x-values are taken from the current object.
-            obj.hResult1DComplex.invoke('Subtract', Object);
+            if(isa(oObject, 'CST.Result1DComplex'))
+                oObject = oObject.hResult1DComplex;
+            end
+            obj.hResult1DComplex.invoke('Subtract', oObject);
         end
-        function ComponentMult(obj, Object)
+        function ComponentMult(obj, oObject)
             % Multiplies the complex y-values of the other object with the y-values of the current object. The number of points need to be the same in both objects. The x-values are taken from the current object.
-            obj.hResult1DComplex.invoke('ComponentMult', Object);
+            if(isa(oObject, 'CST.Result1DComplex'))
+                oObject = oObject.hResult1DComplex;
+            end
+            obj.hResult1DComplex.invoke('ComponentMult', oObject);
         end
-        function ComponentDiv(obj, Object)
+        function ComponentDiv(obj, oObject)
             % Divides the complex y-values of the current object by the y-values of the other object. The method returns an error if a division by zero was encountered. The number of points need to be the same in both objects. The x-values are taken from the current object.
-            obj.hResult1DComplex.invoke('ComponentDiv', Object);
+            if(isa(oObject, 'CST.Result1DComplex'))
+                oObject = oObject.hResult1DComplex;
+            end
+            obj.hResult1DComplex.invoke('ComponentDiv', oObject);
         end
         function MakeCompatibleTo(obj, result1dorresult1dcomplex)
             % Re-samples the result data of the current object to make it compatible to the sampling of the other object. The new data samples are calculated by an interpolation of the original data samples. The method returns an error if less than three data points are contained in the current object or less than two data points are contained in the other object.
+            if(isa(result1dorresult1dcomplex, 'CST.Result1D'))
+                result1dorresult1dcomplex = result1dorresult1dcomplex.hResult1D;
+            end
+            if(isa(result1dorresult1dcomplex, 'CST.Result1DComplex'))
+                result1dorresult1dcomplex = result1dorresult1dcomplex.hResult1DComplex;
+            end
             obj.hResult1DComplex.invoke('MakeCompatibleTo', result1dorresult1dcomplex);
         end
         function SortByX(obj)
             % Sorts the data contained in the result object to have monotonically increasing x-values.
             obj.hResult1DComplex.invoke('SortByX');
         end
-        function ZthPower(obj, Object)
+        function ZthPower(obj, oObject)
             % Raises each complex y-value of the current object to the complex power of the y-value of the other object at the same index. The number of points need to be the same in both objects. The x-values remain unchanged. The method returns an error if an invalid operation was encountered (e.g. zero to the power of zero).
-            obj.hResult1DComplex.invoke('ZthPower', Object);
+            if(isa(oObject, 'CST.Result1DComplex'))
+                oObject = oObject.hResult1DComplex;
+            end
+            obj.hResult1DComplex.invoke('ZthPower', oObject);
         end
         function variant = GetArray(obj, component)
             % Returns data of  the Result1DComplex object as double array . The string component can be 'x', 'yre' or 'yim' and specifies which component of the Result1DComplex object will be returned, analogous to 'GetX' and 'GetYRe' and 'GetYIm' .
@@ -267,17 +290,14 @@ classdef Result1DComplex < handle
 end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
-% Construction
-% An Result1DComplex object can be created as follows:
-% Dim result As Object
-% Set result = Result1DComplex('');
+% % Construction
+% % An Result1DComplex object can be created as follows:
+% result = Result1DComplex('');
 % 
-% This will create an empty object. Alternatively, a filename of a complex .sig-file can be given as a parameter, then the object loads the data from the .sig-file(see Example).
-% This example creates an empty object, fills it with data and adds it to the ResultTree.
+% % This will create an empty object. Alternatively, a filename of a complex .sig-file can be given as a parameter, then the object loads the data from the .sig-file(see Example).
+% % This example creates an empty object, fills it with data and adds it to the ResultTree.
 % 
-% Dim result As Object
-% Set result = Result1DComplex('');
-% result1dcomplex = project.Result1DComplex();
+% result1dcomplex = project.Result1DComplex('');
 %     result1dcomplex.AppendXY(1,1,1)
 %     result1dcomplex.AppendXY(2,2,1)
 %     result1dcomplex.AppendXY(3,2,2)
@@ -286,23 +306,20 @@ end
 %     result1dcomplex.AddToTree('1D Results\Test\complex_curve');
 % 
 % This example loads the data of a complex  S-Parameter and adds it to the ResultTree.
-% Dim sFile As String
-% sFile = Resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');
-% Dim result As Object
-% Set result = Result1DComplex(sFile)
-% result.Save('copied_s11');
-% result.AddToTree('1D Results\Copied Data\S1,1');
+% resulttree = project.ResultTree();
+% sFile = resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');
+% result1dcomplex = project.Result1DComplex(sFile)
+%     result.Save('copied_s11');
+%     result.AddToTree('1D Results\Copied Data\S1,1');
 % 
 % This example links two objects via the command SetReferenceImpedanceLink.
-% Dim refImp As Object
-% Set refImp = Result1DComplex('');
-% refImp.Appendxy(1,50,0)
-% refImp.Save('refimp_name.sig');
-% refImp.AddToTree('1D Results\Data\result-ref-imp');
+% refImp = project.Result1DComplex('');
+%     refImp.Appendxy(1,50,0)
+%     refImp.Save('refimp_name.sig');
+%     refImp.AddToTree('1D Results\Data\result-ref-imp');
 % 
-% Dim result As Object
-% Set result = Result1DComplex('');
-% result.Appendxy(1,0.4,0.6)
-% result.Save('result_name.sig');
-% result.SetReferenceImpedanceLink('1D Results\Data\result-ref-imp');
-% result.AddToTree('1D Results\Data\result');
+% result = project.Result1DComplex('');
+%     result.Appendxy(1,0.4,0.6)
+%     result.Save('result_name.sig');
+%     result.SetReferenceImpedanceLink('1D Results\Data\result-ref-imp');
+%     result.AddToTree('1D Results\Data\result');

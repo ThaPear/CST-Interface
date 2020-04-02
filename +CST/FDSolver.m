@@ -590,7 +590,6 @@ classdef FDSolver < handle
             obj.AddToHistory(['.UseDoublePrecision_ML "', num2str(bool, '%.15g'), '"']); 
         end
         % Found in history list when setting frequency domain solver settings.
-        % fdsolver.RemoveAllStopCriteria('Hex');
         function RemoveAllStopCriteria(obj, type)
             % type: 'Hex'
             %       'Tet'
@@ -612,8 +611,10 @@ classdef FDSolver < handle
                                                 '"', num2str(active_bool, '%.15g'), '"']);
         end
         % Found in history list when setting frequency domain solver settings.
-        function MPIParallelization(obj, bool)
-            obj.AddToHistory(['.MPIParallelization "', num2str(bool, '%.15g'), '"']); 
+        % Definition below is copied from CST.Solver.
+        function MPIParallelization(obj, flag)
+            % Enable or disable MPI computation for solver.  
+            obj.AddToHistory(['.MPIParallelization "', num2str(flag, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

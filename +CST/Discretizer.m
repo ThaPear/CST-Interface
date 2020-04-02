@@ -16,6 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Warning: This entire class is undocumented.
+% If a function is missing, it is likely available in CST.Mesh.
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
@@ -139,7 +140,6 @@ classdef Discretizer < handle
         end
         % Found in history list of migrated CST 2014 file in 'set mesh properties (Hexahedral)'
         function PBAFillLimit(obj, arg)
-            % arg: '99'
             obj.AddToHistory(['.PBAFillLimit "', num2str(arg, '%.15g'), '"']);
         end
         % Found in history list of migrated CST 2014 file in 'set mesh properties (Hexahedral)'

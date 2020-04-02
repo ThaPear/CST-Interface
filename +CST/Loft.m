@@ -89,7 +89,12 @@ classdef Loft < handle
         end
         % Found in history list of migrated CST 2014 file in 'define loft'.
         function Minimizetwist(obj, boolean)
-            obj.AddToHistory(['.Minimizetwist "', num2str(boolean, '%.15g'), '"']);
+            obj.MinimizeTwist(boolean);
+        end
+        % Definition below is copied from CST.LoftCurves.
+        function MinimizeTwist(obj, value)
+            % Set this option to automatically minimize the twisting of the resulting shape. If this option is true, the corresponding points on circles and ellipses will be adjusted such that the generated free form surface is not twisted at all. This option is only useful for lofts between circles and ellipses.
+            obj.AddToHistory(['.MinimizeTwist "', num2str(value, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

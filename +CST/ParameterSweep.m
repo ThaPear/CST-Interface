@@ -150,9 +150,10 @@ classdef ParameterSweep < handle
         
         %% Undocumented functions.
         % Implemented from History List.
+        % Definition below is copied from CST.ResultTree.
         function EnableTreeUpdate(obj, boolean)
-            % Possibly toggles visual updating of the parameter sweep window.
-            obj.AddToHistory(['.EnableTreeUpdate "', num2str(boolean, '%.15g'), '"']);
+            % Enable or disable the update of the tree. After enabling the tree update, this method does actually update the tree also.
+            obj.hParameterSweep.invoke('EnableTreeUpdate', boolean);
         end
         % Found in 'Library/Result Templates/S-Parameters/- Touchstone Export^+MWS+DS.rtp'
         function nparams = GetNumberOfVaryingParameters(obj)
@@ -185,10 +186,10 @@ classdef ParameterSweep < handle
             % to: Specify  the upper bound of the parameter variation.
             % steps: Specify the number of steps.
             obj.AddToHistory(['.AddParameter_Linear "', num2str(sequencename, '%.15g'), '", '...
-                                                      '"', num2str(parametername, '%.15g'), '", '...
-                                                      '"', num2str(from, '%.15g'), '", '...
-                                                      '"', num2str(to, '%.15g'), '", '...
-                                                      '"', num2str(steps, '%.15g'), '"']);
+                                                   '"', num2str(parametername, '%.15g'), '", '...
+                                                   '"', num2str(from, '%.15g'), '", '...
+                                                   '"', num2str(to, '%.15g'), '", '...
+                                                   '"', num2str(steps, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

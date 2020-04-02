@@ -1,0 +1,194 @@
+
+Show 
+Home | Visual Basic (VBA) Language | Block Types
+
+%% Block Types
+% To create a new block, one of the following block types must be specified within the Type method of the Block object.
+
+%% Field simulator block types
+% "CSTMWS"                    CST MICROWAVE STUDIO block
+% "CSTMWSFile"                CST MICROWAVE STUDIO file block
+% "CSTEMStudio"               CST EM STUDIO block
+% "CSTEMStudioFile"           CST EM STUDIO file block
+% "CSTCableStudio"            CST CABLE STUDIO block
+% "CSTCableStudioFile"        CST CABLE STUDIO file block
+% "CSTPCBStudioFile"          CST PCB STUDIO file block
+% "CSTMPhysicsStudio"         CST MPHYSICS STUDIO block
+% "CSTMPhysicsStudioFile"     CST MPHYSICS STUDIO file block
+% "CSTParticleStudio"         CST PARTICLE STUDIO block
+% "CSTParticleStudioFile"     CST PARTICLE STUDIO file block
+
+%% Data import block types
+% "Touchstone"                        Touchstone file block
+% "TouchstoneProjectInternal"         Touchstone block
+% "SPICEImport"                       SPICE file block
+% "SPICE"                             SPICE block
+% "IBISRefFile"                       IBIS reference file block
+% "IBISRefProj"                       IBIS reference project block
+% "IBIS"                              IBIS buffer block
+% "SimLabFile"                        SimLab TL/PEEC file block
+% "SimLab"                            SimLab TL/PEEC block
+% "ResistanceMatrix"                  Resistance matrix file block
+% "ResistanceMatrixProjectInternal"   Resistance matrix block
+% "InductanceMatrix"                  Inductance matrix file block
+% "InductanceMatrixProjectInternal"   Inductance matrix block
+% "ConductanceMatrix"                 Conductance matrix file block
+% "ConductanceMatrixProjectInternal"  Conductance matrix block
+% "CapacitanceMatrix"                 Capacitance matrix file block
+% "CapacitanceMatrixProjectInternal"  Capacitance matrix block
+
+%% Miscellaneous block types
+% "CSTDS"         CST DESIGN STUDIO block
+% "VisualBasic"   Visual Basic block
+% "Clone"         Clone block
+% "ModeConverter" Mode converter block
+
+%% Microwave RF block types
+% "Attenuator"            Attenuator block
+% "Isolator"              Isolator block
+% "Amplifier"             Amplifier block
+% "3dBSplitter"           3dB splitter block
+% "PowerDivider"          Power Divider block
+% "DirectionalCoupler"    Directional Coupler block
+% "IdealPhaseShifter"     Ideal phase shifter block
+% "VariableReflection"    Variable reflection block
+% "PerfectAbsorber"       Perfect absorber block
+
+%% Transmission line block types
+% "GeneralizedTransmissionLineReference"  Generalized transmission line reference block
+% "GeneralizedTransmissionLine"           Generalized transmission line block
+% "TransmissionLineReference"             Transmission line reference block
+% "ElectricalTransmissionLine"            Electrical transmission line block
+% "TransmissionLine"                      Transmission line block
+% "CoaxialLine"                           Coaxial line block
+% "CoupledTransmissionLines"              Coupled transmission lines block
+% "TransmissionLineShort"                 Transmission line short block
+% "TransmissionLineOpen"                  Transmission line open block
+% "TransmissionLineShuntShort"            Transmission line shunt short block
+% "TransmissionLineShuntOpen"             Transmission line shunt open block
+
+%% Microstrip block types
+% "MicrostripReference"               Microstrip reference block
+% "MicrostripLine"                    Microstrip line block
+% "MicrostripBend90"                  Microstrip bend block
+% "MicrostripBend90OptimalMitered"    Microstrip bend optimal mitered block
+% "MicrostripBendRadial"              Microstrip bend with radial stub block
+% "MicrostripCurvedBend"              Microstrip curved arbitrary angle bend block
+% "MicrostripTaper"                   Microstrip taper block
+% "MicrostripStep"                    Microstrip step block
+% "MicrostripStepAsymmetric"          Microstrip asymmetric step block
+% "MicrostripGap"                     Microstrip gap block
+% "MicrostripGapAsymmetric"           Microstrip asymmetric gap block
+% "MicrostripMea"                     Microstrip meander line
+% "MicrostripOpenEnd"                 Microstrip open end block
+% "MicrostripRadialOpen"              Microstrip open radial stub
+% "MicrostripShortStub"               Microstrip short stub
+% "MicrostripRadial"                  Microstrip radial shunt stub
+% "MicrostripRadial2"                 Microstrip butterfly shunt stub
+% "MicrostripTJunction"               Microstrip T-junction block
+% "MicrostripCrossJunction"           Microstrip cross-junction block
+% "MicrostripCoupledLines"            Microstrip line coupler (4 ports) block
+% "MicrostripCoupledLines2Port"       Microstrip line coupler (2 ports) block
+% "MicrostripCoupledLinesOpen"        Microstrip coupled lines open end block
+% "MicrostripCoupledMeaLine"          Microstrip coupled meander/straight lines block
+% "MicrostripCoupledLinesMea"         Microstrip coupled meander lines block
+% "MicrostripCoupledLinesRegular"     Microstrip regular coupled lines block
+% "MicrostripCoupledLinesIrregular"   Microstrip irregular coupled lines block
+% "MicrostripBranchlineCoupler"       Microstrip branchline coupler block
+% "MicrostripRatraceCoupler"          Microstrip ratrace ring coupler block
+% "MicrostripBroadsideCoupler"        Microstrip broadside coupler (4 ports) block
+% "MicrostripVia"                     Microstrip via block
+% "MicrostripVia2Port"                Microstrip two-port via block
+% "MicrostripVia2Layer"               Microstrip two-port interconnection via block
+
+%% Stripline block types
+% "StriplineReference"                        Stripline reference block
+% "Stripline"                                 Stripline line block
+% "StriplineBend90"                           Stripline bend block
+% "StriplineBend90OptimalMitered"             Stripline bend optimal mitered block
+% "StriplineBendRadial"                       Stripline bend with radial stub block
+% "StriplineCurvedBend"                       Stripline curved arbitrary angle bend block
+% "StriplineTaper"                            Stripline taper block
+% "StriplineStep"                             Stripline step block
+% "StriplineStepAsymmetric"                   Stripline asymmetric step block
+% "StriplineGap"                              Stripline gap block
+% "StriplineGapAsymmetric"                    Stripline asymmetric gap block
+% "StriplineMea"                              Stripline meander line
+% "StriplineOpenEnd"                          Stripline open end block
+% "StriplineRadialOpen"                       Stripline open radial stub
+% "StriplineShortStub"                        Stripline short stub
+% "StriplineRadial"                           Stripline radial shunt stub
+% "StriplineRadial2"                          Stripline butterfly shunt stub
+% "StriplineTJunction"                        Stripline T-junction block
+% "StriplineCrossJunction"                    Stripline cross-junction block
+% "StriplineCoupledLines"                     Stripline line coupler (4 ports) block
+% "StriplineCoupledLines2Port"                Stripline line coupler (2 ports) block
+% "StriplineCoupledLinesOpen"                 Stripline coupled lines open end block
+% "StriplineCoupledMeaLine"                   Stripline coupled meander/straight lines block
+% "StriplineCoupledLinesMea"                  Stripline coupled meander lines block
+% "StriplineCoupledLinesRegular"              Stripline regular coupled lines block
+% "StriplineCoupledLinesIrregular"            Stripline irregular coupled lines block
+% "StriplineBranchlineCoupler"                Stripline branchline coupler block
+% "StriplineRatraceCoupler"                   Stripline ratrace ring coupler block
+% "StriplineVia"                              Stripline via block
+% "StriplineVia2Port"                         Stripline two-port via block
+
+%% Waveguide block types
+% "RectangularWaveguideReference"             Rectangular waveguide reference block
+% "RectangularWaveguide"                      Rectangular waveguide block
+% "RectangularWaveguideEPlaneCorner"          Rectangular waveguide E-plane corner block (TE10)
+% "RectangularWaveguideHPlaneCorner"          Rectangular waveguide H-plane corner block (TE10)
+% "RectangularWaveguideEPlaneBend"            Rectangular waveguide E-plane bend block (TE10)
+% "RectangularWaveguideHPlaneBend"            Rectangular waveguide H-plane bend block (TE10)
+% "RectangularWaveguideEPlaneTJunction"       Rectangular waveguide E-plane T-junction block (TE10)
+% "RectangularWaveguideHPlaneTJunction"       Rectangular waveguide H-plane T-junction block (TE10)
+% "RectangularWaveguideSymIrisFinitePerp"     Rectangular waveguide finite symmetric iris perpendicular to E block (TE10)
+% "RectangularWaveguideSymIrisFinitePar"      Rectangular waveguide finite symmetric iris parallel to E block (TE10)
+% "RectangularWaveguideAsymIrisFinitePerp"    Rectangular waveguide finite asymmetric iris perpendicular to E block (TE10)
+% "RectangularWaveguideAsymIrisFinitePar"     Rectangular waveguide finite asymmetric iris parallel to E block (TE10)
+% "CircularWaveguideReference"                Circular waveguide reference block
+% "CircularWaveguide"                         Circular waveguide block
+% "HollowWaveguide"                           Hollow waveguide block
+
+%% Circuit Basic block types
+% "Ground"                                                    Ground element
+% "CircuitBasic\Resistor"                                     Resistor
+% "CircuitBasic\Capacitor"                                    Capacitor
+% "CircuitBasic\Inductor"                                     Inductor
+% "CircuitBasic\Generic 2-Pin Device"                         Generic 2-Pin Device
+% "CircuitBasic\Generic 3-Pin Device"                         Generic 3-Pin Device
+% "CircuitBasic\Generic 4-Pin Device"                         Generic 4-Pin Device
+% "CircuitBasic\Mutual Coupling"                              Mutual Coupling
+% "CircuitBasic\Voltage DC Source"                            Voltage DC Source
+% "CircuitBasic\Voltage Signal Source"                        Voltage Signal Source (AC or HB)
+% "CircuitBasic\Current Source"                               Current Source
+% "CircuitBasic\Linear Current-Controlled Current Source"     Linear Current-Controlled Current Source
+% "CircuitBasic\Linear Voltage-Controlled Current Source"     Linear Voltage-Controlled Current Source
+% "CircuitBasic\Linear Current-Controlled Voltage Source"     Linear Current-Controlled Voltage Source
+% "CircuitBasic\Linear Voltage-Controlled Voltage Source"     Linear Voltage-Controlled Voltage Source
+% "CircuitBasic\Infinite Value Capacitor"                     Infinite Value Capacitor
+% "CircuitBasic\Infinite Value Inductor"                      Infinite Value Inductor
+% "CircuitBasic\Ideal Transformer"                            Ideal Transformer
+% "CircuitBasic\Operational Amplifier"                        Operational Amplifier
+% "VoltageControlledSwitch"                                   Voltage-Controlled Switch
+% "CurrentControlledSwitch"                                   Current-Controlled Switch
+
+%% Circuit Semiconductor block types
+% "CircuitSemi\Diode"                                                     Diode
+% "CircuitSemi\Schottky Diode"                                            Schottky diode
+% "CircuitSemi\Zener Diode"                                               Zener diode
+% "CircuitSemi\NPN Bipolar Transistor"                                    NPN bipolar transistor
+% "CircuitSemi\PNP Bipolar Transistor"                                    PNP bipolar transistor
+% "CircuitSemi\N Junction Field-Effect Transistor"                        N Junction Field-Effect Transistor
+% "CircuitSemi\P Junction Field-Effect Transistor"                        P Junction Field-Effect Transistor
+% "CircuitSemi\N GaAS Metal-Schottky Field-Effect Transistor (MESFET)"    N GaAS Metal-Schottky Field-Effect Transistor (MESFET)
+% "CircuitSemi\P GaAS Metal-Schottky Field-Effect Transistor (MESFET)"    P GaAS Metal-Schottky Field-Effect Transistor (MESFET)
+% "CircuitSemi\N MOS Transistor"                                          N MOS Transistor
+% "CircuitSemi\P MOS Transistor"                                          P MOS Transistor
+% "CircuitSemi\N MOS Transistor (3 Terminal)"                             N MOS Transistor (3 Terminal)
+% "CircuitSemi\P MOS Transistor (3 Terminal)"                             P MOS Transistor (3 Terminal)
+% "CircuitSemi\NPN Darlington Transistor"                                 NPN Darlington Transistor
+% "CircuitSemi\PNP Darlington Transistor"                                 PNP Darlington Transistor
+% "CircuitSemi\N-Channel IGBT"                                            N-Channel Insulated Gate Bipolar Transistor
+% "CircuitSemi\P-Channel IGBT"                                            P-Channel Insulated Gate Bipolar Transistor
+% "CircuitSemi\Thyristor"                                                 Thyristor

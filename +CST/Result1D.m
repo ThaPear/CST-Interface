@@ -19,10 +19,12 @@
 % This object offers access and manipulation functions to 1D results.
 classdef Result1D < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.Result1D, ?CST.Result1DComplex})%, ?CST.Table})
+    methods(Access = {?CST.Project, ?CST.Result1D, ?CST.Result1DComplex, ?CST.ResultTree, ?CST.Table})
         % CST.Project can create a Result1D object.
         % CST.Result1D.Copy can create a Result1D object.
         % CST.Result1DComplex.Real/Imaginary/Magnitude/Phase can create a Result1D object.
+        % CST.ResultTree.GetResultFromTreeItem can create a Result1D object.
+        % CST.ResultTree.GetImpedanceResultFromTreeItem can create a Result1D object.
         % CST.Table.Get1DDataItem can create a Result1D object.
         function obj = Result1D(project, hProjectOrhResult1D, resultname)
             if(nargin == 3)
@@ -89,25 +91,37 @@ classdef Result1D < handle
             
             result1D = CST.Result1D(obj.project, newhResult1D);
         end
-        function Add(obj, Object)
+        function Add(obj, oObject)
             % Adds the components in oObject to the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
-            obj.hResult1D.invoke('Add', Object);
+            if(isa(oObject, 'CST.Result1D'))
+                oObject = oObject.hResult1D;
+            end
+            obj.hResult1D.invoke('Add', oObject);
         end
-        function Subtract(obj, Object)
+        function Subtract(obj, oObject)
             % Subtracts the components in oObject from the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
-            obj.hResult1D.invoke('Subtract', Object);
+            if(isa(oObject, 'CST.Result1D'))
+                oObject = oObject.hResult1D;
+            end
+            obj.hResult1D.invoke('Subtract', oObject);
         end
         function ScalarMult(obj, dFactor)
             % Scales the Result1D Object with the given factor.
             obj.hResult1D.invoke('ScalarMult', dFactor);
         end
-        function ComponentMult(obj, Object)
+        function ComponentMult(obj, oObject)
             % Multiplies the components in oObject with the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
-            obj.hResult1D.invoke('ComponentMult', Object);
+            if(isa(oObject, 'CST.Result1D'))
+                oObject = oObject.hResult1D;
+            end
+            obj.hResult1D.invoke('ComponentMult', oObject);
         end
-        function ComponentDiv(obj, Object)
+        function ComponentDiv(obj, oObject)
             % Divides the components in oObject by the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same values of the independent variable).
-            obj.hResult1D.invoke('ComponentDiv', Object);
+            if(isa(oObject, 'CST.Result1D'))
+                oObject = oObject.hResult1D;
+            end
+            obj.hResult1D.invoke('ComponentDiv', oObject);
         end
         function ApplyTimeWindow(obj, smoothness)
             % Applies a squared cosine windowing function to the result. Set smoothness to a value from 0 to 100 to specify when the cosine shape starts. At a value of 100, t0 equals to zero and at a value of zero, t0 equals to tmax, which means that it is identical to a rectangular window.
@@ -121,17 +135,23 @@ classdef Result1D < handle
             % Resample the result to a given number of samples between a minimum and maximum value. The new data samples are calculated by a linear interpolation of the original data samples.
             obj.hResult1D.invoke('ResampleTo', min, max, nSamples);
         end
-        function MakeCompatibleTo(obj, Object)
+        function MakeCompatibleTo(obj, oObject)
             % Re-samples the result in the calling object to make it compatible to the sampling of oObject. The new data samples are calculated by a linear interpolation of the original data samples.
-            obj.hResult1D.invoke('MakeCompatibleTo', Object);
+            if(isa(oObject, 'CST.Result1D'))
+                oObject = oObject.hResult1D;
+            end
+            obj.hResult1D.invoke('MakeCompatibleTo', oObject);
         end
         function SortByX(obj)
             % Sorts the data contained in the result object to have monotonically increasing x-values.
             obj.hResult1D.invoke('SortByX');
         end
-        function double = ScalarProd(obj, Object)
+        function double = ScalarProd(obj, oObject)
             % Performs a scalar product between two Result1D objects. The result will be returned as a double value.
-            double = obj.hResult1D.invoke('ScalarProd', Object);
+            if(isa(oObject, 'CST.Result1D'))
+                oObject = oObject.hResult1D;
+            end
+            double = obj.hResult1D.invoke('ScalarProd', oObject);
         end
         function long = GetGlobalMaximum(obj)
             % Returns the index of the overall maximum of the y-values.
@@ -225,7 +245,7 @@ classdef Result1D < handle
             % Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
 %             functionString = [...
 %                 'Dim xValue As Double, yValue As Double', newline, ...
-%                 'DS.Result1D.GetXYDouble(', num2str(index), ', xValue, yValue)', newline, ...
+%                 'Result1D.GetXYDouble(', num2str(index), ', xValue, yValue)', newline, ...
 %             ];
 %             returnvalues = {'xValue', 'yValue'};
 %             [xValue, yValue] = obj.project.RunVBACode(functionString, returnvalues);
@@ -275,22 +295,14 @@ classdef Result1D < handle
         end
         function Type(obj, key)
             % Define the type of the Result1D object.
-            % enum key
-            % meaning
-            % "magnitude"
-            % A linear scaled result (default)
-            % "dB"
-            % A dB scaled result
-            % "phase"
-            % A phase result
-            % "real"
-            % An arbitrary scaled real result
-            % "imaginary"
-            % An arbitrary scaled imaginary result
-            % "linear_points"
-            % A linear scaled result plotted as unconnected points
-            % "farfield:polar"
-            % A polar farfield result
+            % enum key            meaning
+            % "magnitude"         A linear scaled result (default)
+            % "dB"                A dB scaled result
+            % "phase"             A phase result
+            % "real"              An arbitrary scaled real result
+            % "imaginary"         An arbitrary scaled imaginary result
+            % "linear_points"     A linear scaled result plotted as unconnected points
+            % "farfield:polar"    A polar farfield result
             % The type "farfield:polar" is considered only if the Result1D object is created and processed within a template evaluation in the Template Based Post-Processing framework.
             obj.hResult1D.invoke('Type', key);
         end
@@ -313,65 +325,51 @@ classdef Result1D < handle
 end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
-% The following example shows how a Result1D object can be filled with data and added to the Navigation Tree.
-% Dim o As Object
-% Set o = Result1D('');
-% %fill empty object with data
-% Dim n As Long
-% For n = 0 To 1000
-% Dim x As Double
-% x = 2.0*PI*n/1000
-% o.Appendxy(x,Cos(x))
-% Next
-% %set label, save data, add it to the Navigation Tree
-% o.ylabel('cosine');
-% o.Save('cosine_curve.sig');
-% o.AddToTree('1D Results\Data\curve_1D');
+% % The following example shows how a Result1D object can be filled with data and added to the Navigation Tree.
+% result1d = project.Result1D('');
+%     % fill empty object with data
+%     for(n = 1:100)
+%         x = 2.0*PI*n/1000;
+%         result1d.Appendxy(x,Cos(x));
+%     end
+%     % set label, save data, add it to the Navigation Tree
+%     result1d.ylabel('cosine');
+%     result1d.Save('cosine_curve.sig');
+%     result1d.AddToTree('1D Results\Data\curve_1D');
 % 
-% This example shows how ASCII data from an external file can be loaded into a Result1D object and added to the Navigation Tree.
+% % This example shows how ASCII data from an external file can be loaded into a Result1D object and added to the Navigation Tree.
+% result1d = project.Result1D('');
+%     % load external ASCII file containing two data columns separated by white space or tabulator
+%     result1d.LoadPlainFile('C:\two_column_data.txt');
+%     % set labels
+%     result1d.xlabel('x-axis label');
+%     result1d.ylabel('y-axis label');
+%     % save it within the project
+%     result1d.Save('imported_curve.sig');
+%     % add it to the Navigation Tree
+%     result1d.AddToTree('1D Results\Data\curve_import');
 % 
-% Dim o As Object
-% Set o = Result1D('');
-% %load external ASCII file containing two data columns separated by white space or tabulator
-% o.LoadPlainFile('C:\two_column_data.txt');
-% %set labels
-% o.xlabel('x-axis label');
-% o.ylabel('y-axis label');
-% %save it within the project
-% o.Save('imported_curve.sig');
-% %add it to the Navigation Tree
-% o.AddToTree('1D Results\Data\curve_import');
+% % This example shows how to access all values of a time signal stored in file('o1(1)1(1).sig');.
+% result1d = project.Result1D('o1(1)1(1).sig');
+%     nPoints = result1d.GetN() %get number of points
+%     for(n = 1:nPoints-1)
+%         % read all points, index of first point is zero.
+%         x = result1d.GetX(n)
+%         y = result1d.GetY(n)
+%         % print to message window
+%         disp(['x: ', num2str(x), ' y: ', num2str(y)]);
+%     end
 % 
-% The example shows how to access all values of a time signal stored in file('o1(1)1(1).sig');.
-% 
-% Dim nPoints As Long
-% Dim n As Long
-% Dim x As Double
-% Dim y As Double
-% result1d = project.Result1D();
-% nPoints = .GetN %get number of points
-% For n = 0 To nPoints-1
-% %read all points, index of first point is zero.
-% x = .GetX(n)
-% y = .GetY(n)
-% %print to message window
-% ReportInformationToWindow('x:(' + Cstr(x) +(' y:(' + CStr(y))
-% Next n
-% 
-% This example loads S1,1 and extracts the real part of the complex-valued S-Parameter. It then determines the closest existing data point to a certain frequency(here 0.65 GHz) and prints the result to the message window. It shows how the ResultTree object, the Result1DComplex object and the Result1D object can be used together to access 1D data.
-% 
-% Dim filename As String
-% filename = Resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');
-% If filename =(''); Then
-% ReportInformationToWindow('Result does not exist.');
-% Else
-% Dim o As Object
-% Set o = Result1DComplex(filename) %load complex-valued S1,1
-% Dim realPart As Object
-% Set realPart = o.Real() %extract a Result1D-object containing the real part of S1,1
-% Dim n As Integer
-% n = realPart.GetClosestIndexFromX(0.65)
-% ReportInformationToWindow('Closest data point to frequency 0.65 Ghz:(' + Cstr(realPart.GetX(n)) + ', ' + Cstr(realPart.GetY(n)))
-% End If
-% 
-% 
+% % This example loads S1,1 and extracts the real part of the complex-valued S-Parameter. It then determines the closest existing data point to a certain frequency(here 0.65 GHz) and prints the result to the message window. It shows how the ResultTree object, the Result1DComplex object and the Result1D object can be used together to access 1D data.
+% resulttree = project.ResultTree();
+% filename = resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');
+% if(isempty(filename))
+%     disp('Result does not exist.');
+% else
+%     % load complex-valued S1,1
+%     result1dcomplex = Result1DComplex(filename);
+%     % extract a Result1D-object containing the real part of S1,1
+%     realPart = result1dcomplex.Real();
+%     n = realPart.GetClosestIndexFromX(0.65);
+%     disp(['Closest data point to frequency 0.65 Ghz: ', num2str(realPart.GetX(n)), ', ', num2str(realPart.GetY(n))]);
+% end

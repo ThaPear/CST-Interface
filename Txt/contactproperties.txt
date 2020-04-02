@@ -1,0 +1,110 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Contact Settings | ContactProperties
+
+ContactProperties Object
+This object is used to define new contact properties for Thermal Solver and Stationary Current Solver.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all the internal settings to their default values.
+
+ 
+
+Delete ( name name )
+
+Deletes the contact properties item with the given name.
+
+ 
+
+Create
+
+Creates a new contact properties item. All necessary settings for this object have to be made previously.
+
+ 
+
+Name ( name name )
+
+Sets the name of the temperature source. Each source must have a unique name.
+
+ 
+
+AddFace ( solidname solidname, int faceid, int sideid )
+
+A contact properties is created on the surfaces separating solids with sideid = "1" and solids with sideid = 2. This function can be used to identify a solid by its name solidname and face faceid, and assign a sideid to it.
+
+ 
+
+Thickness ( double  thickness )
+
+For material-based contact properties, use this function to set the thickness of the contact layer in user units.
+
+ 
+
+Material ( name  materialname )
+
+For material-based contact properties, use this function to identify the material used for the contact layer. The properties of this material together with the layer thickness described above define the integral properties of the contact layer.
+
+ 
+
+ElResistance ( double  resistance )
+
+Lumped contact properties are defined by the integral values. Use this function to define the electrical resistance (in Ohm) of the whole contact surface. If this value is zero, the stationary current solver will ignore the contact properties.
+
+ 
+
+ThermalResistance ( double  resistance )
+
+For lumped contact properties, use this function to define the absolute thermal resistance of the contact layer (in K / W). If this value is zero, this Contact Properties item is ignored by the thermal solvers. Alternatively, the thermal resistance per unit area may be defined for the contact layer by using the function ThermalResistancePerUnitArea.
+
+ 
+
+ThermalResistancePerUnitArea ( double  resistance )
+
+Alternatively to ThermalResistance, this function may be used to define the thermal resistance per unit area of the contact layer (in K m2 / W). If this value is zero, this Contact Properties item is ignored by the thermal solvers. Both of these functions determine the same property of the contact layer (namely the thermal conductivity of the layer material), so if both of them are specified, the setting of the last command in the list is really adopted.
+
+ 
+
+ThermalCapacitance ( double  capacitance )
+
+For lumped contact properties, use this function to define the thermal capacitance of the contact layer (in J / K).
+
+Default Settings
+
+.Reset
+
+.Name "contactprops1"
+
+.ElResistance "0.0"
+
+.ThermalResistance "0.0"
+
+.ThermalCapacitance "0.0"
+
+Examples
+
+With ContactProperties
+
+     .Reset
+
+     .Name "contactprops1"
+
+     .Thickness "1e-5"
+
+     .Material "Air"
+
+     .AddFace "component1:solid1", "1", "1"
+
+     .AddFace "component1:solid2", "6", "2"
+
+     .Create
+
+End With
+
+ 

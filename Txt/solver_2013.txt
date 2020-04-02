@@ -1,0 +1,27 @@
+
+Solver Object
+
+This object controls the Wakefield solver.
+
+General Methods
+
+SetBBPSamples ( int nSamples )
+
+Sets the number of frequency points used for a broad band port (BBP). Broad band ports are used for ports at inhomogeneous waveguides. The more points are used the more accurate the port operator will be. However the simulation time will increase as well (All chosen modes have to be simulated for each frequency point).
+
+ 
+
+UseOpenBoundaryForHigherModes ( bool flag )
+
+Determines whether unconsidered higher modes occurring at a waveguide port should be absorbed using a Mur open boundary (switch = True) or not (flag = False).
+
+ 
+Default Settings
+
+SetBBPSamples (5)
+
+WaveguideBroadband(0)
+
+UseOpenBoundaryForHigherModes (False)
+
+Examples

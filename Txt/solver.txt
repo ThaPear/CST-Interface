@@ -510,7 +510,7 @@ Time signals other than "default" can be chosen only if SimultaneousExcitation i
 
  
 
-DefineExcitationSettings  (enum {"portmode", "fieldsource"} key,  int name, int mode, double ampli, double phase_or_time, name signal,  double accuracy,  double fmin,  double fmax, bool flag )
+DefineExcitationSettings  (enum key {"portmode", "fieldsource"},  int name, int mode, double ampli, double phase_or_time, name signal,  double accuracy,  double fmin,  double fmax, bool flag )
 
 Similar to the VBA methods above, this method also allows different specifications of excitation settings for different ports/fieldsources. In addition to the amplitude, the phase/time delay and the signal definition, here you have also the possibility to define accuracy as well as a frequency interval for field monitoring.
 
@@ -558,13 +558,9 @@ This method determines the time shift definition between different time signals 
 
 The parameter key may have one of the following values:
 
-"Timeshift"
+"Timeshift"     The time shift value defined with the ExcitationPortMode method is directly used to shift the signals in time.
 
-The time shift value defined with the ExcitationPortMode method is directly used to shift the signals in time.
-
-"Phaseshift"
-
-The phase shift value defined with the ExcitationPortMode method is transferred in a time shift value using the phase reference frequency (PhaseRefFrequency method). This value is then used to shift the signals in time.
+"Phaseshift"    The phase shift value defined with the ExcitationPortMode method is transferred in a time shift value using the phase reference frequency (PhaseRefFrequency method). This value is then used to shift the signals in time.
 
  
 
@@ -642,17 +638,11 @@ AbsorbUnconsideredModeFields( enum key )
 
 This option indicates whether unconsidered mode fields occurring at the waveguide ports should be absorbed by a Mur open boundary. These fields can be given by slight field errors due to inhomogeneous ports (the non-broadband waveguide port operators work less accurately with increasing distance from the mode calculation frequency) or by higher order modes which are not considered by the port operator.
 
-"Automatic"
+"Automatic"     When selecting this option the absorption is only active for inhomogeneous ports.
 
-When selecting this option the absorption is only active for inhomogeneous ports.
+"Activate"      When selecting this option the absorption is always activated.
 
-"Activate"
-
-When selecting this option the absorption is always activated.
-
-"Deactivate"
-
-When selecting this option the absorption is always deactivated.
+"Deactivate"    When selecting this option the absorption is always deactivated.
 
  
 
@@ -732,13 +722,9 @@ Every simulation stops at some time. This means, that the signals that are calcu
 
 The parameter key may have one of the following representation:
 
-"accuracy_dB"
+"accuracy_dB"   where accuracy_dB is an integer value (in dB unit) for the steady state monitor. It must belong to the interval [-80 , 0] dB.
 
-where accuracy_dB is an integer value (in dB unit) for the steady state monitor. It must belong to the interval [-80 , 0] dB.
-
-"No Check"
-
-The steady state monitor is disabled. If no additional stop criteria are defined by means of the method AddStopCriterion the simulation stops after the defined NumberOfPulseWidths.
+"No Check"      The steady state monitor is disabled. If no additional stop criteria are defined by means of the method AddStopCriterion the simulation stops after the defined NumberOfPulseWidths.
 
  
 
@@ -824,13 +810,9 @@ Because every simulation should only take finite time the resulting time signals
 
 The parameter key may have one of the following values:
 
-Rectangular
+Rectangular Selects a rectangular time window.
 
-Selects a rectangular time window.
-
-Cosine
-
-Selects a cosine shaped time window.
+Cosine      Selects a cosine shaped time window.
 
  
 
@@ -986,13 +968,13 @@ Specifies if TST is used in the port region of a waveguide port (flag = True) or
 
  
 
-SetSubcycleState (enum {"Automatic", "Activate", "Deactivate"} key )
+SetSubcycleState (enum key {"Automatic", "Activate", "Deactivate"} )
 
 Controls the allowance of subcycles concerning the time step calculation of the time domain algorithm.
 
  
 
-SetSubgridCycleState (enum {"Automatic", "Activate", "Deactivate"} key )
+SetSubgridCycleState (enum key {"Automatic", "Activate", "Deactivate"} )
 
 In case that the Multilevel Subgridding Scheme is activated this command controls the allowance of subgrid specific cycling concerning the time step calculation of the time domain algorithm. If selected automatically or by user the different grid levels are calculated with different time steps.
 

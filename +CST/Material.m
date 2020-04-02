@@ -2417,7 +2417,6 @@ classdef Material < handle
             MueY = str2double(MueY);
             MueZ = str2double(MueZ);
         end
-        %% Undocumented CST 2013 functions.
         %% Undocumented functions.
         % Found in history list when background material is changed.
         function ChangeBackgroundMaterial(obj)

@@ -1,0 +1,234 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Low Frequency | LF Time Domain Solver
+
+MQSTDSolver Object
+This object is used to define the LF Time Domain solver settings for the magnetoquasistatic equation type.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Method (enum solvermethod)
+
+Specifies the method used by the LF time domain solver for discretization and solution.
+
+Currently, only "Tetrahedral Mesh" is available for the magnetoquasistatic equation type.
+
+ 
+
+TetSolverOrder (int tetorder)
+
+This option allows to specify whether the tetrahedral solver uses first- or second-order accuracy. Second-order (tetorder = "2") is the default due to its higher accuracy. However, if the structure is geometrically complex and therefore comes along with huge memory requirements, first-order (tetorder = "1") is an adequate alternative.
+
+ 
+
+SystemSolverType (enum solvertype)
+
+Specifies which solver is used to solve the linear systems of equations.
+
+enum solvertype meaning
+
+"Auto"          choose direct or iterative solver automatically depending on the problem size
+
+"Iterative"     use the iterative solver
+
+"Direct"        use the direct solver
+
+  
+
+The default setting is "Auto" which defaults to the type ”r;Iterative”. Currently other options are not supported yet.
+
+ 
+
+TimeIntegrationMethod (enum timeintmethod)
+
+Specifies which time integration method to use.
+
+enum timeintmethod  meaning
+
+"High order"        Use a high order time integration scheme with optional adaptive selection of time step size.
+
+"Low order"         Use a low order time integration scheme. Only constant time steps are supported.
+
+  
+
+The default option is "Low order".
+
+ 
+
+TimeHarmonicMethod (enum timeharmonicmethod)
+
+Specifies if a steady state special algorithm is to be used and the periodicity types of the excitation signals.
+
+enum timeharmonicmethod     meaning
+
+"Harmonic None"             A transient simulation is performed.
+
+"Harmonic"                  The solver automatically detects the periodicity of the excitation signals and applies the steady state algorithm.
+
+"Harmonic Periodic"         Periodic time signals are assumed and the steady state algorithm is applied.
+
+"Harmonic Antiperiodic"     Anti-periodic time signals are assumed and the steady state algorithm is applied.
+
+  
+
+The default option is "Harmonic None". The correct length of one period or half of a period needs to be set in the Simulation duration.
+
+ 
+
+Accuracy (double  accuracy)
+
+During the solver run, the relative residual norm is frequently checked against the specified accuracy. The solver stops when the desired accuracy or a maximum number of iteration steps has been reached.
+
+ 
+
+MaxNumIter (int  value)
+
+The number of iterations performed by the (linear or nonlinear) solver is automatically limited by a number depending on the desired solver accuracy. This is equivalent to setting the value to "0". If you would like to prescribe a fixed upper limit for number of iterations, then specify the corresponding value here.
+
+In case that nonlinear materials are defined, i.e. the nonlinear solver is running, the maximum number of iterations allowed for the linear solver steps will be determined automatically depending on the value specified here.
+
+ 
+
+SimulationDuration (double  duration)
+
+Specifies the duration of the simulation.
+
+ 
+
+StoreResultsInCache (bool  storeresultsincache)
+
+Indicates if all models and results during a  parameter sweep or optimization should be stored in subfolders or not.
+
+ 
+
+TimeAdaption (bool  enableAdaption)
+
+Determines whether the time step width is constant during the entire simulation (enableAdaption = False) or whether it is to be adapted during the simulation process (default; enableAdaption = True) according to the respective calculation results. In general, the adaptive determination of the time step width is recommended. If you should encounter problems like lengthy calculations because of seemingly small or large adaptive steps, it might be useful to disable the time adaption.
+
+ 
+
+TimeStepWidthActive (bool  enableStepwidth)
+
+This option is considered only for simulations with constant time step width. It determines whether a specified number of samples or a specified constant step width is to be taken into account during the simulation process. The respective other setting will be ignored. By default, enableStepwidth is True, enabling a time step witdh specification.
+
+ 
+
+TimeStepWidth (double  stepwidth)
+
+Specifies the constant step width to be used during the entire simulation process. This setting will be ignored when time adaption is enabled.
+
+ 
+
+TimeStepSamples (int  nsamples)
+
+Defines the total number of time steps to be performed. This setting is ignored when time adaption is enabled.
+
+ 
+
+TimeStepMin (double  tmin)
+
+Specifies lower and upper bounds for the adaptive time step width. This setting is useful to prevent the time step width from becoming arbitrarily small or inappropriately large. It will be ignored when time adaption is disabled.
+
+ 
+
+TimeStepMax (double  tmax)
+
+Specifies lower and upper bounds for the adaptive time step width. This setting is useful to prevent the time step width from becoming arbitrarily small or inappropriately large. It will be ignored when time adaption is disabled.
+
+ 
+
+TimeStepInit (double  tinit)
+
+Suggests a first time step with to be used by the solver. However, if certain error criteria are not satisfied, the solver reduces this step width.
+
+ 
+
+TimeStepTolerance (double  tol)
+
+This is a user specified tolerance for the local error and allows to decide whether the current integration step is accepted or whether a new attempt with a smaller step size is necessary. This setting will be ignored when time adaption is disabled.
+
+ 
+
+UseDistributedComputing(bool  useDC)
+
+Enables or disables distributed computing.
+
+ 
+
+UseMaxNumberOfThreads(bool  useMaxThreads)
+
+By default (useMaxThreads = False), the solver is forced to employ a particular number of threads that is defined on the basis of the current processor’s architecture and the number of the available parallel licenses. If activated (useMaxThreads = True), the solver can be forced to use less than all available threads (see MaxNumberOfThreads).
+
+ 
+
+MaxNumberOfThreads (int nThreads)
+
+If the solver is to use less than all available threads (cf. UseMaxNumberOfThreads), the desired number can be specified here. The default value ”r;8” reflects the possibility of the modern processors architecture.
+
+ 
+
+Start long
+
+Starts the LF time domain solver (MQS) with the prescribed settings and the currently active mesh. Returns 0 if the solver run was successful, an error code >0 otherwise.
+
+Default Values
+
+Accuracy "1e-6"
+
+MaxNumIter "0"
+
+SimulationDuration "0"
+
+TimeAdaption "True"
+
+TimeStepWidth "1e-2"
+
+TimeStepSamples "100"
+
+TimeStepMin "1e-6"
+
+TimeStepMax "1e-1"
+
+TimeStepInit "1e-2"
+
+TimeStepTolerance "1e-4"
+
+UseDistributedComputing "False"
+
+UseMaxNumberOfThreads "False"
+
+MaxNumberOfThreads "8"
+
+Examples
+
+With MQSTDSolver
+
+     .Reset
+
+     .Accuracy "1e-6"
+
+     .SimulationDuration "10"
+
+     .TimeStepAdaptive "True"
+
+     .TimeStepMin "1e-6"
+
+     .TimeStepMax "1e-1"
+
+     .TimeStepTolerance "1e-4"
+
+     .UseDistributedComputing "False"
+
+     .Start
+
+End With

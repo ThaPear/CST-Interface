@@ -380,37 +380,21 @@ Type ( enum key )
 
 Define the type of the Result1D object.
 
-enum key
+enum key            meaning
 
-meaning
+"magnitude"         A linear scaled result (default)
 
-"magnitude"
+"dB"                A dB scaled result
 
-A linear scaled result (default)
+"phase"             A phase result
 
-"dB"
+"real"              An arbitrary scaled real result
 
-A dB scaled result
+"imaginary"         An arbitrary scaled imaginary result
 
-"phase"
+"linear_points"     A linear scaled result plotted as unconnected points
 
-A phase result
-
-"real"
-
-An arbitrary scaled real result
-
-"imaginary"
-
-An arbitrary scaled imaginary result
-
-"linear_points"
-
-A linear scaled result plotted as unconnected points
-
-"farfield:polar"
-
-A polar farfield result
+"farfield:polar"    A polar farfield result
 
 The type "farfield:polar" is considered only if the Result1D object is created and processed within a template evaluation in the Template Based Post-Processing framework.
 

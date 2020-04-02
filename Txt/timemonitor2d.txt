@@ -1,0 +1,99 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Time | TimeMonitor2D
+
+TimeMonitor2D Object
+
+Defines a functional monitor which evaluates a field on a specified set of connected faces.  
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+Rename ( name oldName, name newName )
+
+Renames the monitor named oldName to newName.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+FieldType ( enum fType )
+
+Sets what field is to be monitored.
+
+ 
+
+fType can have one of the following values:
+
+”current”           The current flow through the prescribed faces will be monitored.
+
+"magnetic flux"     The magnetix flux through the prescribed faces will be monitored.
+
+ 
+
+UsePickedFaceFromId ( string shapeName, int face_id )
+
+For consistency reasons you need to specify the faces to be used by a solid to which it belongs (shapeName), and identification number of the face (face_id). These values can be obtained from the Pick Object command PickFaceFromId.
+
+To define a valid monitor, the chain of faces must be connected.
+
+ 
+
+InvertOrientation ( bool bFlag )
+
+The orientation of the first edge or curve in a chain specifies a direction which influences the result when the monitor is evaluated along this chain. If bFlag is True, this orientation (direction) is inverted.
+
+Default Settings
+
+InvertOrientation (False)
+
+Examples
+
+' creates a time domain magnetic field monitor at the origin
+
+With TimeMonitor0D
+
+     .Reset
+
+     .Name "current monitor"
+
+     .FieldType "current"
+
+     .UsePickedFaceFromId "component1:sold1", "1", "1"
+
+     .UsePickedFaceFromId "component1:sold1", "2", "1"
+
+     .UsePickedFaceFromId "component2:sheet", "1", "2"
+
+     .InvertOrientation "True"
+
+     .Create
+
+End With
+
+ 

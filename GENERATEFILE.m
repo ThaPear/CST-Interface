@@ -23,12 +23,13 @@
 clear;
 
 % txt = clipboard('paste');
-txt = fileread('CST-Interface/Txt/result3d.txt');
+txt = fileread('CST-Interface/Txt/drcrz_2013.txt');
 split = strsplit(txt, newline);
 % split = strrep(split, split{2}, '');
 split = strrep(split, char(13), '');
 split([cellfun(@isempty, split)]) = [];
 
+split = strrep(split, 'Default Values', 'Default Settings');
 split = strrep(split, 'Default Settings:', 'Default Settings');
 split = strrep(split, 'Example:', 'Example');
 split = strrep(split, 'Examples:', 'Example');

@@ -1,0 +1,134 @@
+
+DRCRZ Object
+
+This command offers Mafia DRC file export in a rz coordinate system.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the import options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets a name of the exported file.
+
+ 
+
+Precision ( enum precision )
+
+Specify the precision of which the data shall be written to the exported file. If you specify single precision, the extension of the file name will be taken as ”.drc”. Setting this option to double precision will imply the file extension ”.drd”.
+
+  
+
+precision can have one of  the following values:
+
+"single"    Single precision mafia file
+
+"double"    Double precision mafia file
+
+ 
+
+Platform ( enum platform )
+
+Specify whether the mafia file should be exported for a Windows PC or a Unix system.
+
+  
+
+platform can have one of  the following values:
+
+"pc"    Windows PC
+
+"unix"  Unix PC or Unix workstation
+
+ 
+
+RAxis ( enum axis )
+
+Select the coordinate axis used as the r-axis in positive or negative direction.
+
+  
+
+axis can have one of  the following values:
+
+"-x"    Negative x-direction
+
+"+x"    Positive x-direction
+
+"-y"    Negative y-direction
+
+"+y"    Positive y-direction
+
+"-z"    Negative z-direction
+
+"+z"    Positive z-direction
+
+ 
+
+ZAxis ( enum axis )
+
+Select the coordinate axis used as the z-axis in positive or negative direction.
+
+ 
+
+axis can have one of  the following values:
+
+"-x"    Negative x-direction
+
+"+x"    Positive x-direction
+
+"-y"    Negative y-direction
+
+"+y"    Positive y-direction
+
+"-z"    Negative z-direction
+
+"+z"    Positive z-direction
+
+ 
+
+Write
+
+Performs the export.
+
+Default Settings
+
+FileName ("")
+
+IncludePBA (False)
+
+Precision ("single")
+
+Platform ("pc")
+
+RAxis ("+x")
+
+ZAxis ("+z")
+
+Example
+
+With DRCRZ
+
+    .Reset
+
+    .FileName (".\example.drc")
+
+    .Precision ("single")
+
+    .Platform ("pc")
+
+    .RAxis ("+x")
+
+    .ZAxis ("+z")
+
+    .Write
+
+End With

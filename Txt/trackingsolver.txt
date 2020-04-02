@@ -1,0 +1,319 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Particles | TrackingSolver
+
+TrackingSolver Object
+
+The Object is used to define the Tracking Solver parameters.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+MaxTimeSteps  (long  timesteps)
+
+Sets the maximal number of time steps for the tracking solver. The solver stops calculating the electrons'  trajectories when the last particle leaves the calculation domain or the maximal number of time steps is reached.
+
+ 
+
+SetSpatialSamplingRate  (int  spatialsampling)
+
+Defines the number of steps the fastest particle has to stay at least within the smallest mesh cell.
+
+ 
+
+SetTemporalSamplingRate  (int  temporalsampling)
+
+Defines the rate at which the data are sampled over time. If  it is set to "1", the data for every time step is recorded. If it is set to "2", only every second time step is recorded, etc..
+
+ 
+
+SetParticleSamplingRate  (int  particlesampling)
+
+Defines the rate  at which the data are sampled over particles.  If it is set to "1", the data for every particle is recorded. If it is set to "2", only every second particle is recorded, etc..
+
+ 
+
+SetTemporalReorganizingRate  (int temporalreorganizing)
+
+It is possible to change the temporal sampling rate value after the tracking solver has finished the calculation. The time-based data format (saved in the .ttl file, if "TrackToFile" is activated) is converted into a particle-based format, saved in the .trk file. During this reorganization, (which can be recomputed if the .ttl file is present) an additional downsampling of the time steps can be performed.
+
+ 
+
+SetParticlelReorganizingRate  (int particlereorganizing)
+
+It is possible to change the particle sampling rate value after the tracking solver has finished the calculation. The time-based data format (saved in the .ttl file, if "TrackToFile" is activated) is also converted into a  particle-based format, saved in the .trk file. During this reorganization, (which can be recomputed if the .ttl file is present) an additional downsampling of the particles can be performed.
+
+ 
+
+SetReorganize (bool PEC Surface)
+
+Starts the tracking solver in the reorganizing mode, i.e. an existing ttl-file is reorganized to a trk-file with the spatial and temporal sampling rate defined by the macro commands "SetTemporalReorganizingRate" and "SetTemporalReorganizingRate".
+
+ 
+
+TrackToFile (bool tracktofile)
+
+Activates the recording of the particle data to a ttl-file instead of saving it to memory during the particle tracking process.  Activating this option slows down slightly the tracking, but prevents problems due to memory  limitations.
+
+ 
+
+SetTemporalDynamic (double dynamic)
+
+Sets the dynamic of the adaptive temporal discretization, i.e. the maximal increase or decrease of the time step size. Consider two successive time steps: a value of "2" means that the second time step size can at most twice the first time step. A value of "1" ensures an equidistant time step size.
+
+ 
+
+ConsiderSpaceCharge (bool spacecharge)
+
+When activated, the particle current and space charge are stored. If the gun-iteration is activated this setting is enabled by default and cannot be disabled.
+
+ 
+
+SetGunIteration (bool spacecharge)
+
+Activates the gun-iteration solver. When this setting is deactivated, the particles have no effect on the electrostatic field. When this setting is activated, the gun-solver takes into account the effect of the particle space charge on the electrostatic field and calculates iteratively both the particle trajectories and the electrostatic field.
+
+ 
+
+SetGunIterationMaxN (int  iteration)
+
+Sets the maximal number of iterations of the gun-solver.
+
+ 
+
+SetGunIterationAccuracy (string accuracy)
+
+Sets the termination condition of the GUN-Solver. The solver finishes its calculation when the relative difference of the computed space charge between two consecutive iteration steps is less than accuracy. Possible values are "-10 dB", "-20 dB", "-30 dB",... , "-120 dB". When accuracy is set to  "No Check", the solver will stop when the maximum number of GUN iterations is reached.
+
+For example, when "-20 dB" is entered, the solver stops when the relative difference is less than 0.1. It is also possible to enter a double value for the relative difference, such as "0.1".
+
+ 
+
+SetGunIterationRelaxation (double  relaxation)
+
+Defines the weighting factor for the update of the global space charge vector with the resulting space charge of the last tracking process. A factor of "1" results in a space charge which is directly influenced by the last tracking result, a value of "0.1" results in an only 10% modification of the global space charge vector by the last computed space charge.
+
+ 
+
+AddStaticsField  (enum fieldtype, double  factor, bool  recalculate)
+
+Adds a static field of type fieldtype, scaled by factor that will influence the particles' trajectories. If recalculate is set to true, the fields will be recalculated before the tracking solver starts.
+
+Note that a factor of "0" leaves the field unconsidered for the tracking process.
+
+enum fieldtype  meaning
+
+"E-Static"      Electrostatic field.
+
+"M-Static"      Magnetostatic field.
+
+ 
+
+AddModeField (enum fieldtype, int modenumber, double factor, double frequency,  double phase, bool recalculate)
+
+Defines an eigenmode fieldtype, which is determined by its modenumber (the fieldtype should be "Eigenmode").
+
+In addition this methods specifies the weighting factor with which the particles' trajectory is influenced by the field, the frequency, the phase of the electric field at the beginning of the simulation and the option to recalculate the field.
+
+Note that a factor of "0" leaves the field unconsidered for the tracking process.
+
+enum fieldtype  meaning
+
+"Eigenmode"     Eigenmode field.
+
+ 
+
+AddTrackingSource (name  type, name  name)
+
+Defines the particle sources that are included in the solver calculations. The argument type defines the source type and can be "all sources", "particle" or "interface". When type = "all sources", the argument name defines the particular particle source or interface that is included in the solver calculations (e.g., "particle1").
+
+ 
+
+StoreResultsInDataCache(bool  flag)
+
+Activate or deactivate the storage of the results in the data cache.
+
+ 
+
+DefaultBoundaryEstatic(enum boundarytype)
+
+When periodic boundaries are selected for the eigenmode solver setup, the electrostatic solver must use different boundary settings: here, this method sets these different settings for the electrostatic solver.
+
+enum boundarytype   meaning
+
+"electric"          Electric tangential and magnetic normal field is set to zero.
+
+"magnetic"          Electric normal and magnetic tangential field is set to zero.
+
+"normal"            Electric and magnetic normal field is set to zero.
+
+"tangential"        Electric and magnetic tangential field is set to zero.
+
+"open"              Open boundary condition
+
+"expanded open"     Open boundary condition (and extra space is added to the computational domain)
+
+"periodic"          invalid
+
+"none"              invalid
+
+"conducting wall"   invalid
+
+"unit cell"         invalid
+
+ 
+
+DefaultBoundaryMstatic(enum boundarytype)
+
+When periodic boundaries are selected for the eigenmode solver setup, the magnetostatic solver must use different boundary settings: here, this method sets these different settings for the magnetostatic solver.
+
+enum boundarytype   meaning
+
+"electric"          Electric tangential and magnetic normal field is set to zero.
+
+"magnetic"          Electric normal and magnetic tangential field is set to zero.
+
+"normal"            Electric and magnetic normal field is set to zero.
+
+"tangential"        Electric and magnetic tangential field is set to zero.
+
+"open"              Open boundary condition
+
+"expanded open"     Open boundary condition (and extra space is added to the computational domain)
+
+"periodic"          invalid
+
+"none"              invalid
+
+"conducting wall"   invalid
+
+"unit cell"         invalid
+
+ 
+
+DefaultBoundaryEigenmode(enum boundarytype)
+
+When open boundary conditions are selected for the setup of the electro- and magnetostatic solvers, the eigenmode solver must use different boundary settings: here, this method sets these different settings for the eigenmode solver.
+
+enum boundarytype   meaning
+
+"electric"          Electric tangential and magnetic normal field is set to zero.
+
+"magnetic"          Electric normal and magnetic tangential field is set to zero.
+
+"normal"            invalid
+
+"tangential"        invalid
+
+"open"              Open boundary condition
+
+"expanded open"     Open boundary condition (and extra space is added to the computational domain)
+
+"periodic"          Periodic boundary condition.
+
+"none"              invalid
+
+"conducting wall"   invalid
+
+"unit cell"         Unit cell boundary condition.
+
+ 
+
+SEEDeterministicRandom(bool flag)
+
+Enables or disables a nondeterministic random number generation process for the secondary electron generation. The default is set to deterministic, that means true.
+
+ 
+
+Start long
+
+Starts the tracking solver. Returns 0 if the solver run was successful, an error code >0 otherwise.
+
+Default Settings
+
+SetReorganize "False"
+
+MaxTimeSteps "10000"
+
+SetSpatialSamplingRate "5"
+
+SetTemporalSamplingRate "1"
+
+SetParticleSamplingRate "1"
+
+TrackToFile "False"
+
+SetTemporalDynamic "1.2"
+
+ConsiderSpacecharge "True"
+
+SetGunIteration "False"
+
+SetGunIterationMaxN "50"
+
+SetGunIterationAccuracy "1e-3"
+
+SetGunIterationRelaxation "0.35"
+
+AddTrackingSource "All sources", ""
+
+AddStaticsField "E-Static", 1.0, TRUE
+
+AddModeField "Eigenmode", 1, 1.0, 0.0, 0, TRUE
+
+DefaultBoundaryEstatic "normal"
+
+DefaultBoundaryMstatic "tangential"
+
+DefaultBoundaryEigenmode "electric"
+
+DefaultBoundaryTimedomain "electric"
+
+Example
+
+With TrackingSolver
+
+.Reset
+
+.SetReorganize "False"
+
+.MaxTimeSteps "10000"
+
+.SetSpatialSamplingRate "5"
+
+.SetTemporalSamplingRate "1"
+
+.SetParticleSamplingRate "1"
+
+.TrackToFile "False"
+
+.SetTemporalDynamic "1.2"
+
+.ConsiderSpacecharge "True"
+
+.SetGunIteration "False"
+
+.SetGunIterationMaxN "50"
+
+.SetGunIterationAccuracy "1e-3"
+
+.SetGunIterationRelaxation "0.35"
+
+.AddParticleSource "All sources"
+
+.AddField "E-Static", "1.0", "0.0", "False"
+
+End With
+
+ 
+
+ 

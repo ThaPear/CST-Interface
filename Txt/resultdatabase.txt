@@ -1,0 +1,211 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ResultDatabase
+
+ResultDatabase Object
+
+This object offers access to 0D results, which have been previously created by a simulation run or post-processing step.
+
+The ResultDatabase Object is used by certain solvers to store important results as accuracy, solver time, energies, forces etc.
+
+With the help of the following inquiry methods these results can be extracted from the database.
+
+Methods
+
+GetDoubleEntry ( string key ) double
+
+Returns the double value of a result database entry specified by it's key value.
+
+ 
+
+GetIntegerEntry ( string key ) int
+
+Returns the integer value of a result database entry specified by it's key value.
+
+ 
+
+GetStringEntry ( string key ) string
+
+Returns the string value of a result database entry specified by it's key value.
+
+ 
+
+GetNumberOfDoubleEntries int
+
+Returns the total number of double entries in the result database.
+
+ 
+
+GetDoubleKeyFromIndex ( int index ) string
+
+Returns the key-string  of a double result entry specified by it's integer index. The index value must be greater or equal zero and smaller than the total number of double result entries (can  be obtained by GetNumberOfDoubleEntries).
+
+ 
+
+GetNumberOfDoubleEntriesForDir ( string dirname ) int
+
+Returns the total number of double entries within a subfolder in the result database.
+
+ 
+
+GetDoubleEntryForDir ( string subkey, string dirname ) double
+
+Returns the double value of a result database entry specified by it's directory name and the remaining subkey value. When combined, directory name and subkey form the reference key together.
+
+ 
+
+GetDoubleKeyFromIndexForDir ( int index, string dirname ) string
+
+Returns the subkey-string  of a double result entry specified by it's integer index. The index value must be greater or equal zero and smaller than the total number of double result entries (can  be obtained by GetNumberOfDoubleEntriesForDir).
+
+  
+
+The keys values are constructed using the following solvernames as enums:
+
+enum solvername     Description
+
+"EStatic"           Electrostatic solver
+
+"JStatic"           Stationary current solver
+
+"MStatic"           Magnetostatic solver
+
+"LFSolver"          Low frequency solver
+
+  
+
+The keys for the available entries, stored in the database are:
+
+string key                                                  Description of return value                                                             Supported by
+
+"AllSolvers\\Volume\\"+solidname                            Volume of the specified solid.                                                          All available solvers
+
+solvername+"\\Solvertime"                                   Total calculation time.                                                                 EStatic
+
+solvername+"\\Maxiter"                                      Maximal number of iterations of the iterative solver                                    EStatic
+
+solvername+"\\NRuns"                                        Number of required solver runs                                                          EStatic  / LFSolver
+
+solvername+"\\Energy"                                       Energy of the computed fields.                                                          EStatic  / MStatic / LFSolver
+
+solvername+"\\"+solidname+"\\Energy"                        Energy of the computed fields in the specified solid.                                   EStatic  / MStatic / LFSolver (only for tetrahedral meshes)
+
+solvername+"\\Co-Energy"                                    Co-energy of the field                                                                  MStatic
+
+solvername+"\\"+solidname+"\\Co-Energy"                     Co-energy of the field in the specified solid                                           MStatic (only for tetrahedral meshes)
+
+solvername+"\\"+iFreqIndex+"\\Mag. Energy"                  Magnetic field energy of the requested frequency                                        LFSolver
+
+solvername+"\\"+iFreqIndex+"\\"+solidname+"\\Mag. Energy"   Magnetic field energy of the requested frequency in the specified solid                 LFSolver (only for tetrahedral meshes)
+
+solvername+"\\"iFreqIndex+"\\El. Energy"                    Electric field energy of the requested frequency                                        LFSolver
+
+solvername+"\\"iFreqIndex+"\\"+solidname+"\\El. Energy"     Electric field energy of the requested frequency in the specified solid                 LFSolver (only for tetrahedral meshes)
+
+solvername+"\\Loss Power"                                   Ohmic losses of the field (only for stationary current solver)                          JStatic
+
+solvername+"\\"+solidname+"\\Loss Power"                    Ohmic losses of the field (only for stationary current solver) in the specified solid   JStatic (only for tetrahedral meshes)
+
+solvername+"\\"+inumber+"\\Accuracy"                        Reached accuracy of the inumber'th run of the equation solver.                          EStatic
+
+solvername+"\\"+inumber+"\\NIterations"                     Used number of iterations of the inumber'th run of the equation solver.                 EStatic
+
+solvername+"\\Force\\NormalX"
+
+solvername+"\\Force\\NormalY"
+
+solvername+"\\Force\\NormalZ"                               Returns the X/Y/Z component of the torque axes normal.                                  LFSolver / EStatic  / MStatic
+
+solvername+"\\Force\\OriginX"
+
+solvername+"\\Force\\OriginY"
+
+solvername+"\\Force\\OriginZ"                               Returns the X/Y/Z coordinate of the torque axes origin.                                 LFSolver / EStatic  / MStatic
+
+solvername+"\\Force\\"+solidname+"\\ForceX"
+
+solvername+"\\Force\\"+solidname+"\\ForceY"
+
+solvername+"\\Force\\"+solidname+"\\ForceZ"                 Returns the X/Y/Z component of the total force acting on the specified solid (for static calculations only)     EStatic  / MStatic
+
+solvername+"\\Force\\"+solidname+"\\Torque"                 Returns the torque value related to the given axes on the specified solid. (for static calculations only)       EStatic  / MStatic
+
+solvername+"\\"+coilname+"\\FluxLinkage"                    Returns the flux value of the named coil.                                               MStatic (only for tetrahedral meshes)
+
+solvername+"\\Force\\"+solidname+"\\ForceXDC"
+
+solvername+"\\Force\\"+solidname+"\\ForceYDC"
+
+solvername+"\\Force\\"+solidname+"\\ForceZDC"               Returns the static part of the total force acting on the specified solid (for time-harmonic calculations).      LFSolver
+
+solvername+"\\Force\\"+solidname+"\\ForceXAC_re"
+
+solvername+"\\Force\\"+solidname+"\\ForceXAC_im"
+
+solvername+"\\Force\\"+solidname+"\\ForceYAC_re"
+
+solvername+"\\Force\\"+solidname+"\\ForceYAC_im"
+
+solvername+"\\Force\\"+solidname+"\\ForceZAC_re"
+
+solvername+"\\Force\\"+solidname+"\\ForceZAC_im"            Returns the X/Y/Z component of the real/complex total force acting on the solid.        LFSolver
+
+solvername+"\\Force\\"+solidname+"\\TorqueDC"               Returns the static part of the torque value related to the given axes on the specified solid.                   LFSolver
+
+solvername+"\\Force\\"+solidname+"\\TorqueAC_re"
+
+solvername+"\\Force\\"+solidname+"\\TorqueAC_im"            Returns the real/complex part of the torque value related to the given axes on the specified solid.             LFSolver
+
+solvername+"\\"+iFreqIndex+"\\"+SourceName+"\\Current\\Re"
+
+solvername+"\\"+iFreqIndex+"\\"+SourceName+"\\Current\\Im"  Complex Part of the current for the specified voltage path.                             LFSolver (Voltage Path)
+
+solvername+"\\"+iFreqIndex+"\\"+SourceName+"\\Impedance\\Re"
+
+solvername+"\\"+iFreqIndex+"\\"+SourceName"\\Impedance\\Im" Real and imaginary parts of the impedance for the specified voltage path.               LFSolver (Voltage Path)
+
+solvername+"\\"+iFreqIndex+SourceName+"\\CoilVRe"           
+
+solvername+"\\"+iFreqIndex+SourceName+"\\CoilVIm"           Real and imaginary parts of the coil's voltage.                                         LFSolver (Coil, Current Path)
+
+solvername+"\\"+iFreqIndex+"\\Total Losses"                 Returns the total losses for the requested frequency                                    LFSolver
+
+solvername+"\\"+iFreqIndex+"\\"+solidname+"\\Losses"        Returns the losses in the specified solid for the requested frequency                   LFSolver (only for tetrahedral meshes)
+
+solvername+"\\"+iFreqIndex+"\\Frequency"                    Returns the calculation frequency assigned to iFreqIndex                                LFSolver
+
+solvername+"\\"+iFreqIndex+SourceName+"\\CurrentPathVRe"
+
+solvername+"\\"+iFreqIndex+SourceName+"\\CurrentPathVIm"    Real and imaginary parts of the voltage along the current path.                         LFSolver (Current Path)
+
+Default Settings
+
+Examples
+
+With ResultDataBase
+
+ .GetDoubleEntry ("EStatic\Energy")
+
+ .GetIntegerEntry ("MStatic\Maxiter"
+
+ .GetDoubleEntry("LFSolver\1\Frequency") 'returns the frequency of the second defined frequency point
+
+ .GetDoubleEntry ("LFSolver\1\Total Losses")  'returns the electromagnetic field losses of the second defined frequency point
+
+End With
+
+ 
+
+Sub Main
+
+  Dim freq As Double
+
+  freq = ResultDatabase.GetDoubleEntry("LFSolver\0\Frequency")
+
+ 
+
+  Dim vcoil As Double
+
+  vcoil = ResultDatabase.GetDoubleEntry("LFSolver\0\coil1\CoilVRe")
+
+End Sub
+
+ 

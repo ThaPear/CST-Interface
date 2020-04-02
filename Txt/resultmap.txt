@@ -1,0 +1,175 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ResultMap
+
+ResultMap Object
+
+The object is used to select or browse result file map items.
+
+If <sTreePath> is empty, then the current tree selection is loaded.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their initial values.
+
+ 
+
+Load ( name sResultFileMapFile )
+
+Load the result map data.
+
+ 
+
+IsValid ( ) BOOL
+
+Checks if a valid result map data is loaded.
+
+ 
+
+GetContentDescription (  ) String
+
+Returns a description of the result map type.
+
+"Invalid"                   Result map is not valid.
+
+"Hex-Portmodes"             Port mode (hexahedral mesh)
+
+"Tet-Portmodes"             Port mode (tetrahedral mesh)
+
+"Hex-3DMonitor"             3D vector field monitor (hexahedral mesh)
+
+"Tet-3DMonitor"             3D vector field monitor (tetrahedral mesh)
+
+"Hex-ScalarMonitor"         Scalar field monitor  (hexahedral mesh)
+
+"Tet-ScalarMonitor"         Scalar field monitor (tetrahedral mesh)
+
+"Hex-SurfaceField"          Surface vector field  (hexahedral mesh)
+
+"Tet-SurfaceField"          Surface vector field  (tetrahedral mesh)
+
+"Int-SurfaceField"          Surface vector field  (surface mesh)
+
+"Hex-SurfaceScalarField"    Scalar surface field  (hexahedral mesh)
+
+"Tet-SurfaceScalarField"    Scalar surface field  (tetrahedral mesh)
+
+"Int-SurfaceScalarField"    Scalar surface field  (surface mesh)
+
+"S-Linear"                  S-Parameter result (linear scaling)
+
+"S-dB"                      S-Parameter result (log. scale)
+
+"arg(S)"                    S-Parameter result (phase)
+
+"Residual"                  Residual result
+
+ 
+
+GetItemCount ( ) Integer
+
+Returns the number of available result items.
+
+ 
+
+GetItemFilename (Integer id) String
+
+Returns the filename of item at position 'id'.
+
+ 
+
+GetItemParameters (Integer id)  String
+
+Returns the parameters and values of the item at position 'id'. The return string has the following form: 'name1=value1;name2=value2'
+
+ 
+
+BeginSearch
+
+Resets the search for the matching results.
+
+ 
+
+AddSearchParameter ( String sParam, String sValue, String sTolerance )
+
+Define the search for the result according to a specific value of the result map parameter within a given tolerance.
+
+Only result items which match all search parameters are returned.
+
+ 
+
+FindItem ( ) Integer
+
+Returns the id of the first item matching all search parameters.
+
+ 
+
+SelectItem (Integer  iItem)
+
+Selected a result item specified by the integer id given. Use FindItem to obtain the id.
+
+Default Settings
+
+Example
+
+Dim count As Long
+
+Dim i As Integer
+
+Debug.Clear
+
+With ResultMap("")
+
+If .IsValid Then
+
+ 
+
+' Write filenames and parameters to the debug output window
+
+count = .GetItemCount()
+
+ 
+
+For i = 1 To count
+
+Debug.Print .GetItemFilename(i)
+
+Debug.Print .GetItemParameters(i)
+
+Next i
+
+ 
+
+' Search for an item at 9 GHz
+
+.BeginSearch
+
+.AddSearchParameter "Frequency", 9e9, 1
+
+i = .FindItem
+
+ 
+
+If 0 < i Then
+
+.SelectItem i
+
+MsgBox "Result item was found at 9 GHz."
+
+Else
+
+MsgBox "No result item was found at 9 GHz."
+
+End If
+
+Else
+
+MsgBox "Result map is invalid, or none has been selected."
+
+End If
+
+End With

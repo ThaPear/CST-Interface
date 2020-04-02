@@ -1,0 +1,173 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Time | TimeMonitor3D
+
+TimeMonitor3D Object
+
+Defines a functional monitor which evaluates a function on a specified solid or volume.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+Rename ( name oldName, name newName )
+
+Renames the monitor named oldName to newName.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+Extend2TouchingShapes ( bool bFlag )
+
+The implemented force computation method requires that the shape, on which the force is to be computed, is completely surrounded by background. Otherwise the results will be influenced by the touching shapes and can therefore be distorted.
+
+In order to ensure reasonable results, connected sets of shapes will be detected automatically, and the force on the entire set connected to the specified shape will be computed. This feature is default and corresponds to bFlag = True. If bFlag is set False, the feature will be disabled and a warning might be printed.
+
+ 
+
+FieldType ( enum fType )
+
+Sets what value is to be monitored.
+
+  
+
+fType can have one of the following values:
+
+”Energy”            The energy will be monitored.
+
+"Losses"            Ohmic losses will be monitored.
+
+”Force”             The force on a solid will be monitored.
+
+"Coil Voltages"     Coil voltages will be monitored.
+
+"I-loss"            Iron losses will be monitored.
+
+"Mag.Mom."          Magnetic moment will be monitored.
+
+ 
+
+UseAllSolids ( bool bFlag )
+
+If bFlag is True, the specified function will be evaluated in the entire computation domain, and SolidName and SolidType settings will be ignored.
+
+ 
+
+SolidName ( name solidName )
+
+Sets the name of the solid or volume on which the specified function is to be monitored.
+
+Please note that Coil Voltages can be evaluated only on coils and Forces can be evaluated only on non-sheet and non-hybrid solids as well as on coils and solid wires. The options "Background" or "UseAllSolids" are not available for these field types.
+
+ 
+
+SolidType ( name solidType )
+
+Sets the type of the solid or volume on which the specified function is to be monitored. This will be "solid", "coil" or "wire" depending on whether SolidName specifies a solid, a coil or a solid wire.
+
+ 
+
+ComputeForceDensity ( bool bFlag )
+
+Enable the computation of the surface and volume force density fields for monitors of type "Force".
+
+ 
+
+TorqueOrigin ( double X, double Y, double Z )
+
+The torque settings are relevant only, if the "Force" type of the monitor is chosen. The X, Y and Z components of the position and the orientation of the torque axis can be specified here, respectively.
+
+ 
+
+TorqueNormal ( double X, double Y, double Z )
+
+The torque settings are relevant only, if the "Force" type of the monitor is chosen. The X, Y and Z components of the position and the orientation of the torque axis can be specified here, respectively.
+
+ 
+
+IronLossModel ( enum modeltype )
+
+The name of the model to be considered. The name can be chosen among: "Steinmetz", "Generalized Steinmetz",  "Improved Generalized Steinmetz", "Bertotti", "Improved".
+
+ 
+
+IronLossPrecalculationMethod ( enum precalculatiomethod )
+
+The name of the precalculation method to be considered. The name can be chosen among: "Remove DC", "No Action",  "Fourier Transform". The two precalculationmethods can be used together with the iron loss models: "Steinmetz", "Bertotti" and "Improved".
+
+ 
+
+IronLossTimeAveraging ( enum method, double value, double period )
+
+Uses a time range for the calculation of iron losses. The available methods for definition of the time range are "None", "Auto", "Start" and "End". The value defines for the methods "Start" and "End" the start and respectively the end time of the time range. The period is used for the methods "Auto", "Start" and "End" to determine the size of the time range. The method "None", which consider all calculated points for the computation of losses, cannot be used together with the precalculation methods "Remove DC" or "Fourier Transform".
+
+ 
+
+IronLossFrequencySamples ( long numberfrequencies )
+
+Number of frequencies to be considered.
+
+ 
+
+IronLossFrequencyRange ( double start, double stop )
+
+Values of the bounds of the frequency range.
+
+ 
+
+SetIronLossModelParameter ( enum parametertype , double value)
+
+Assign a value to the parameter knowing the name of it. "parametertype" can have one of these values: "C", "x", "y", "Alpha", "Khys", "Kedd", "Kexc", "a1", "a2", "a3", "a4", "a5".
+
+Default Settings
+
+UseAllSolids (False)
+
+Extend2TouchingShapes "True"
+
+Examples
+
+' creates a time domain energy monitor over the entire computation domain
+
+With TimeMonitor3D
+
+     .Reset
+
+     .Name "monitor on volume"
+
+     .FieldType "Energy"
+
+     .UseAllSolids "True"
+
+     .Create
+
+End With
+
+ 
+
+ 

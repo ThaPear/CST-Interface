@@ -127,12 +127,19 @@ classdef Background < handle
         end
         %% Undocumented functions.
         % Found in template: 'Planar Coupler & Divider.cfg'
-        function HeatCapacity(obj, heatcapacity)
-            obj.AddToHistory(['.HeatCapacity "', num2str(heatcapacity, '%.15g'), '"']);
+        % Definition below is copied from CST.Material.
+        function HeatCapacity(obj, dValue)
+            % (*) property shared among all available material sets
+            % This parameter defines the specific heat capacity in [kJ / (K kg)]. This setting is relevant only for transient thermal simulations.
+            obj.AddToHistory(['.HeatCapacity "', num2str(dValue, '%.15g'), '"']);
         end
         % Found in template: 'Planar Coupler & Divider.cfg'
-        function Rho(obj, rho)
-            obj.AddToHistory(['.Rho "', num2str(rho, '%.15g'), '"']);
+        % Definition below is copied from CST.Material.
+        function Rho(obj, dValue)
+            % (*) property shared among all available material sets property shared among all available material sets
+            % Sets the material density value of the material in kg/m�, i.e. used for SAR calculations.
+            % This setting is important for transient thermal simulations.
+            obj.AddToHistory(['.Rho "', num2str(dValue, '%.15g'), '"']);
         end
         % Found in history list when defining background
         function ResetBackground(obj)
