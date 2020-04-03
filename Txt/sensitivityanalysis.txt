@@ -1,0 +1,53 @@
+
+Show 
+Home | Visual Basic (VBA) Language | SensitivityAnalysis Object
+
+SensitivityAnalysis Object
+
+This object offers the possibility to calculate a sensitivity analysis for the defined parameters.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+ResetParameterList
+
+Resets the sensitivity analysis parameter list. All sensitivity analysis parameter items will be deleted from the list.
+
+ 
+
+Parameter (string parametername,  bool  active )
+
+Defines a sensitivity analysis parameter with a parametername. Acitve identifies whether the parameter is used for the sensitivity analysis.
+
+ 
+
+NumberOfFrequencySamples (string value)
+
+Sets the number of frequency values used while running the sensitivity analysis for time domain. The default is currently 21. Increasing this value might improve the accuracy of the sensitivity analysis. (This applies only to the time domain solver).
+
+ 
+
+Create
+
+Creates the sensitivity analysis parameter items and adds them to the sensitivity analysis parameter list. All necessary settings for the parameters have to be made previously.
+
+Default Settings
+
+Example
+
+With SensitivityAnalysis
+
+     .ResetParameterList
+
+     .Parameter "facedistance_1", "True"
+
+     .Parameter "faceradius_1", "True"
+
+     .Create
+
+End With

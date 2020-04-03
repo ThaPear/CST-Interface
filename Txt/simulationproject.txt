@@ -1,0 +1,268 @@
+
+Show 
+Home | Visual Basic (VBA) Language | Circuits & Systems VBA | SimulationProject Object
+
+SimulationProject Object
+Allows to manage and create simulation projects.
+
+Methods
+
+Queries
+
+Example
+
+Methods
+
+Reset
+
+Resets all settings to the default values. Call this before doing any specific settings for simulation project creation, otherwise the values of the last simulation poject created in the currently running instance will be used.
+
+ 
+
+Open ( name name )
+
+Opens an existing simulation project specified by its name.
+
+ 
+
+Close ( name name, bool discard )
+
+Closes an open simulation project specified by its name. The discard flag specifies whether potentially unsaved project modifications shall be ignored.
+
+ 
+
+Delete ( name name )
+
+Deletes an existing simulation project specified by its name. The simulation project must not be currently open.
+
+ 
+
+Rename ( name oldname,  name newname )
+
+Renames an existing simulation project.
+
+ 
+
+Run ( name name )
+
+Runs the solver associated with an existing simulation project specified by its name.
+
+ 
+
+ResetComponents
+
+Resets all stored information for component types. Components without a valid type will not be considered during the creation of a new simulation project.
+
+ 
+
+SetComponent ( name name, enum type )
+
+Sets the type of a component specified by its name. Currently, the following types are supported:
+
+"3D"            Use the 3D representation of this component when creating the simulation project. If the component does not have a 3D model associated with it, the SCHEMATIC representation will be automatically chosen.
+
+"SCHEMATIC"     Use the schematic (circuit) representation of this component when creating the simulation project.
+
+ 
+
+SetAllComponents ( enum type )
+
+Sets the type of all components. Please refer to the documentation of the SetComponent function for a description of the available types.
+
+ 
+
+SetPort ( name name, enum type )
+
+Sets the type of a port specified by its name. Currently, only the type "SCHEMATIC" is supported for ports.
+
+ 
+
+SetAllPorts ( enum type )
+
+Sets the type of all ports. Currently, only the type "SCHEMATIC" is supported for ports.
+
+ 
+
+SetSolverType ( enum type )
+
+Sets the solver type which will then be associated with the simulation project. This solver will be called whenever the simulation project gets updated as a result of a simulation task execution. In addition, this solver type will also be started by the Run function. This function is only valid during simulation project creation (in between Create and EndCreation calls).
+
+Currently, the follwing solver types are supported: CANVAS, HF_TLM, HF_EIGENMODE, HF_ASYMPTOTIC, HF_TRANSIENT, HF_FREQUENCYDOMAIN, NETWORKEXTRACTION, STATIC_ESTATIC, THERMAL_STATIONARY, THERMAL_TRANSIENT, MECHANICAL, STATIC_JSTATIC, STATIC_MSTATIC, LF_FULLWAVE, LF_EQS, LF_MQS, PARTICLE_TRACKING, LF_MQSTRANSIENT, PARTICLE_ESTATIC, PARTICLE_MSTATIC, PARTICLE_WAKEFIELD, PARTICLE_PIC, HF_INTEGRALEQUATION, HF_MULTILAYER, PARAMETERSWEEP.
+
+ 
+
+SetTemplateName ( name name )
+
+Sets the name of a project template which will be used to adjust the default settings when a new simulation project is created.
+
+ 
+
+SetUseAssemblyInformation ( bool use )
+
+Sets whether assembly (layout) placement information shall be taken into account if available when creating a new simulation project. The default setting for this flag is true which means that the assembly information will be used.
+
+ 
+
+LoadReferenceDataFromBlock ( name name )
+
+Sets the name of a schematic block which will be used for inheriting non-geometric settings to the newly created simulation project. The block name must be specified with a preceding "Block: ", for instance "Block: MWSSCHEM1". Settings can also be inherited from other simulation projects by adding a preceding  "SP: ", followed by the name of the simulation project, e.g. "SP: SP1".
+
+Please note that the reference data will only be actually used for creating a new simulation project if the SetUseReferenceData function gets called previously with the argument "true".
+
+This function must be called before Create is called.
+
+ 
+
+SetReferenceCategoryUse ( name name, bool used )
+
+Once a reference block or project has been specified by the LoadReferenceDataFromBlock function, the inheritance of a particular type of settings can be turned on or off. This function allows you to set a flag whether a category name shall be used (true) or not (false).
+
+Currently, the following categories are supported:
+
+    Analytic Source Fields
+
+    Antenna Array Settings
+
+    Background Material
+
+    Boundary Conditions
+
+    Excitation Signals
+
+    Frequency Range
+
+    Global Mesh Settings
+
+    Magnetic Source Field
+
+    Monitors
+
+    Plane Wave
+
+    Post-Processing
+
+    Project Templates
+
+    Result Templates
+
+    Sensitivity Information
+
+    Solver Settings
+
+    Subvolume Settings
+
+ 
+
+SetUseReferenceData ( bool use )
+
+Sets whether reference data which was previously loaded by calling LoadReferenceDataFromBlock shall be taken into account when creating a new simulation project. The default setting for this flag is false which means that the reference data information will not be used.
+
+This function must be called before Create is called.
+
+ 
+
+SetUseReferenceBlockCoordinateSystem ( bool use )
+
+Sets whether the reference block's coordinate system shall be used for creating the simulation project. If this option is selected, the location of the reference block's geometry will stay the same as in the original model.
+
+ 
+
+SetLinkGeometry ( bool link )
+
+This options sets whether the simulation project's geometry shall be automatically updated whenever the reference model changes. Turning off this option de-couples the corresponding simulation project from the reference model.
+
+ 
+
+Create (enum type, name name )
+
+This function creates a new simulation project of the given type and with the specified name. Once this function got called, handles to the new project's 3D modeler or the corresponding schematic can be retrieved by using the functions Get3D and GetSchematic. The simulation project creation is finally ended by calling the function EndCreation.
+
+Currently, the following project types are supported: MWS, EMS, PS, MPS, DS.
+
+ 
+
+EndCreation
+
+This function ends the creation of a new simulation project. The Get3D and GetSchematic functions are no longer valid afterwards.
+
+ 
+
+InteractiveTypeDefinitionMode bool
+
+This function starts an interactive mode for defining component types. The mode can be ended by choosing either "Cancel block type definition" (function return value = false) or by choosing "End block type definition" (function return value = true).
+
+Queries
+
+ 
+
+DoesExist ( name name ) bool
+
+Check whether a simulation project with the given name exists. The function returns true if the simulation project exists and false otherwise.
+
+ 
+
+IsOpen ( name name ) bool
+
+Check whether a simulation project with the given name is currently open. The function returns true if the simulation project is open and false otherwise.
+
+ 
+
+GetNewProjectName name
+
+Get a valid name for creating a new simulation project. The function ensures that no simulation project currently exists with the given name.
+
+ 
+
+Get3D Handle
+
+Get the COM handle to the 3D modeler for the newly created simulation project This handle can be used for sending commands to the corresponding VBA engine. This function is only valid during simulation project creation (in between Create and EndCreation calls).
+
+ 
+
+GetSchematic Handle
+
+Get the COM handle to the schematic for the newly created simulation project This handle can be used for sending commands to the corresponding VBA engine. This function is only valid during simulation project creation (in between Create and EndCreation calls).
+
+ 
+
+StartSimulationProjectIteration int
+
+This function initializes the iteration over currently available simulation projects and returns the number of simulation projects. The simulation project names can then be retrieved by subsequent calls to GetNextSimulationProjectName.
+
+ 
+
+GetNextSimulationProjectName name
+
+This function returns the next simulation project name during an iteration over all available simulation projects. The StartSimulationProjectIteration needs to be called first in order to initialize the iteration. The function indicates the end of the list of simulation projects by returning an empty string.
+
+Example
+
+Dim sName As String
+
+sName = SimulationProject.GetNewProjectName
+
+ 
+
+With SimulationProject
+
+    .ResetComponents
+
+    .SetAllComponents "3D"
+
+    .SetAllPorts "SCHEMATIC"
+
+    If (.InteractiveTypeDefinitionMode) Then
+
+        .Create "MWS", sName
+
+        .SetSolverType "HF_TRANSIENT"
+
+        .Get3D.AddToHistory "define frequency range", "Solver.FrequencyRange ""0.0"", ""10"" "
+
+    .EndCreation
+
+    End If
+
+End With
+
+ 

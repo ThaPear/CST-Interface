@@ -1,0 +1,412 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Particle | PIC2DMonitor
+
+PIC2DMonitor Object
+Defines a 2D position monitor. The monitor uses a plane to record the data of the particles of which the trajectories intersect the monitor plane.
+
+Methods
+
+Queries
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+SetDirection ( enum dir)
+
+This method defines the plane normal of the particle 2D monitor.
+
+The values for dir can be: "X", "Y" or "Z".
+
+When the plane normal is defined in the w-direction of the local uvw-coordinate system, so that the uv-plane is transverse to the plane normal, the following table applies depending on the choice of dir:
+
+dir (w-direction)   u-direction         v-direction
+
+X                   Y                   Z
+
+Y                   Z                   X
+
+Z                   X                   Y
+
+ 
+
+SetWPosition ( double wcut )
+
+Position of the 2D monitor plane along the direction of the specified plane normal (e.g. along the Z-axis when dir = "Z").
+
+ 
+
+Umin ( double umin )
+
+Value of the lower transverse u-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Umax ( double umax )
+
+Value of the upper transverse u-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Vmin ( double vmin )
+
+Value of the lower transverse v-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Vmax ( double vmax )
+
+Value of the upper transverse v-boundary. The u and v direction are defined by the plane normal (see table above).
+
+ 
+
+Tstart ( double startTime )
+
+Sets starting time for a time domain monitor to startTime.
+
+ 
+
+Tstep ( double timeStep )
+
+Sets the time increment for a time domain monitor to timeStep.
+
+ 
+
+Tend ( double stopTime )
+
+Sets the end time for a time domain monitor to stopTime.
+
+ 
+
+UseTend ( bool bFlag )
+
+If bFlag is True the time domain monitor stops storing the results when the end time set with Tend is reached. Otherwise the monitor will continue until the simulation stops.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Rename ( name oldname,  name newname )
+
+Renames the monitor named oldname to newname.
+
+ 
+
+SetElementsMaxGPU ( long number )
+
+Set the maximum number of particles that can be monitored per time step for PIC on GPU. This setting is a global setting, therefore it affects all PIC 2D monitors.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+%% Queries
+
+ 
+
+SelectMonitor  ( name monitorName )
+
+This command must be called before any of the queries below can be executed. It selects the specific monitor to be evaluated by the subsequent commands.
+
+ 
+
+GetDirection long
+
+Get the orientation (normal) of the PIC 2D monitor. The return value 0 means x, 1 means y and 2 means z-direction.
+
+ 
+
+GetWPosition double
+
+Get the pic 2D monitor plane position in normal (w-)direction.
+
+ 
+
+GetUmin double
+
+Get the left boundary (minimum value) of the pic 2D monitor plane in u-direction.
+
+ 
+
+GetUmax double
+
+Get the right boundary (maximum value) of the pic 2D monitor plane in u-direction.
+
+ 
+
+GetVmin double
+
+Get the left boundary (minimum value) of the pic 2D monitor plane in v-direction.
+
+ 
+
+GetVmax double
+
+Get the right boundary (maximum value) of the pic 2D monitor plane in v-direction.
+
+ 
+
+GetNFrames long
+
+Gets the number of frames.
+
+ 
+
+GetNParticles( long iFrame ) long
+
+Gets the number of recorded particles in one frame.
+
+ 
+
+GetCurrentPerFrame( long iFrame ) double
+
+Get the current that is monitored in one frame. The current in the monitors' normal direction is positive weighted whereas the current in the opposite direction is negative weighted.
+
+ 
+
+GetTime( long iFrame ) double
+
+Gets the time from the requested frame.
+
+ 
+
+GetTimeStep( long iFrame ) double
+
+Gets the time step from the requested frame.
+
+ 
+
+GetChargeTotal( long iFrame ) double
+
+Gets the total charge of all particles recorded in one frame. In this case all charges are just added up, the direction in that they hit the monitor's plane is not considered.
+
+ 
+
+GetChargeTotalMacro( long iFrame ) double
+
+Gets the total macro charge of all particles recorded in one frame. In this case all charges are just added up, the direction in that they hit the monitor's plane is not considered.
+
+ 
+
+GetPosition( long iFrame, long iParticle, double_ref dPosX, double_ref dPosY, double_ref dPosZ )
+
+Gets the position of one particle in one frame.
+
+ 
+
+GetMomentumNormed( long iFrame, long iParticle, double_ref dMomX, double_ref dMomY, double_ref dMomZ )
+
+Gets the normalized momentum of one particle in one frame.
+
+ 
+
+GetMomentumNormedAbs( long iFrame, long iParticle ) double
+
+Gets the absolute value of the normed momentum.
+
+ 
+
+GetMass( long iFrame, long iParticle ) double
+
+Gets the particle's mass.
+
+ 
+
+GetMassMacro( long iFrame, long iParticle ) double
+
+Gets the particle's macro mass.
+
+ 
+
+GetCharge( long iFrame, long iParticle ) double
+
+Gets the particle's charge.
+
+ 
+
+GetChargeMacro( long iFrame, long iParticle ) double
+
+Gets the particle's macro charge.
+
+ 
+
+GetCurrent( long iFrame, long iParticle ) double
+
+Gets the particle's current.
+
+ 
+
+GetMonitorEmittance( double_ref EmittanceU, double_ref EmittanceV )
+
+Calculate the transverse emittance in U and V directions for all frames. To calculate the emittance, at least two particles are required. When less than two particles are present, -1.0 is returned.
+
+ 
+
+GetFrameEmittance( long iFrame,  double_ref EmittanceU, double_ref EmittanceV )
+
+Calculate the transverse emittance in U and V directions for a given frame. To calculate the emittance, at least two particles are required. When less than two particles are present, -1.0 is returned.
+
+Default Settings
+
+Dir ("Z")
+
+Wcut (0)
+
+Umin (0)
+
+Umax (0)
+
+Vmin (0)
+
+Vmax (0)
+
+Tstart (0.0)
+
+Tstep  (0.0)
+
+Tend   (0.0)
+
+UseTend (False)
+
+Examples
+
+' creates a PIC 2D Monitor
+
+With PIC2DMonitor
+
+     .Reset
+
+     .Name "pic 2d monitor 1"
+
+     .SetDirection "Z"
+
+     .SetWPosition "-50"
+
+     .Umin "-10"
+
+     .Umax "10"
+
+     .Vmin "-10"
+
+     .Vmax "10"
+
+     .Tstart "0.0"
+
+     .Tstep "0.05"
+
+     .Tend "0.0"
+
+     .UseTend "False"
+
+     .Create
+
+End With
+
+ 
+
+' get some result data from the pic 2d monitor and prints it into a text file
+
+Sub Main
+
+Dim nFrames          As Long
+
+Dim nParticles       As Long
+
+Dim dTime            As Double
+
+Dim dX               As Double
+
+Dim dY               As Double
+
+Dim dZ               As Double
+
+Dim dChargeMacro     As Double
+
+Dim dCurrentPerFrame As Double
+
+ 
+
+With PIC2DMonitor
+
+SelectMonitor("pic 2d monitor 1")
+
+ 
+
+Open "pic 2d monitor 1.txt" For Output As #1
+
+nFrames = .GetNFrames
+
+ 
+
+Dim iFrame As Long
+
+For iFrame = 0 To nFrames - 1
+
+ 
+
+nParticles       = .GetNParticles(iFrame)
+
+dTime            = .GetTime(iFrame)
+
+dCurrentPerFrame = .GetChargeTotalMacro(iFrame) / .GetTimeStep(iFrame)
+
+ 
+
+Print #1, "Time                : "; dTime
+
+Print #1, "Number of Particles : "; nParticles
+
+Print #1, "Current per Frame   : "; dCurrentPerFrame
+
+ 
+
+Dim iParticle As Long
+
+For iParticle = 0 To nParticles - 1
+
+ 
+
+dChargeMacro = .GetChargeMacro(iFrame, iParticle)
+
+.GetPosition(iFrame, iParticle, dX, dY, dZ)
+
+Print #1, "Particle data       : "; iFrame; "  "; iParticle; "  "; dX; "  "; dY; "  "; dZ; "  "
+
+ 
+
+Next iParticle
+
+Next iFrame
+
+ 
+
+Close #1
+
+End With
+
+End Sub
+
+ 

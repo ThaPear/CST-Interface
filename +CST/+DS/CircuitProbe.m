@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  
+% Object referring to a probe. Use this object to create or to manipulate a probe.
 classdef CircuitProbe < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.DS.Project)

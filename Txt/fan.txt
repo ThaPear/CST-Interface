@@ -1,0 +1,206 @@
+
+Show 
+Home | Visual Basic (VBA) Language | Fan Object
+
+Fan Object
+This object is used to create new fan object for the Conjugated Heat Transfer Solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings of the fan source to their default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name of the fan.
+
+ 
+
+FlowType ( enum type )
+
+Selects the type of the flow description for the fan. Currently only the type "Normal" is supported.
+
+ 
+
+DeratingFactor ( doubleexpression value )
+
+Sets the derating factor for the fan.
+
+default: value = 1.0
+
+ 
+
+FlowSpecType ( enum type )
+
+Specifies whether the temperature or dissipated heat will be prescribed for the fan. Available types are "Dissipated heat" and "Temperature".
+
+default: type = "Dissipated heat"
+
+ 
+
+DissipatedHeat ( doubleexpression value )
+
+Sets the dissipated heat value for the fan in Watt. This setting will be considered by the solver only, if the flow specification type is "Dissipated heat".
+
+default: value = 0
+
+ 
+
+Temperature ( doubleexpression value, enum unit  )
+
+Sets the temperature value for the fan in the given unit.  Available units are "Celsius", "Fahrenheit" and "Kelvin". This setting will be considered by the solver only, if the flow specification type is "Temperature".
+
+default: value = 0, unit = <project temperature unit>
+
+ 
+
+FanCharacteristics ( enum type )
+
+Specifies which parameters will be provided to define the fan characteristics. Available fan characteristic types are:
+
+"FixedVolume"   The volume flow rate and the corresponding unit are taken into account.
+
+"Linear"        The volume flow rate and the stagnation pressure with respective units are taken into account.
+
+"Nonlinear"     The fan characteristics are described by a user-defined Flow rate / Pressure curve.
+
+  
+
+default: type = "FixedVolume"
+
+ 
+
+VolumeFlowRate ( doubleexpression value )
+
+Specifies the volume flow rate. This setting is ignored for the "nonlinear" fan characteristics type.
+
+default: value = 0
+
+ 
+
+VolumeFlowUnit ( enum unit )
+
+Specifies the unit in which the volume flow rate or the fan curve abscissa is given. Available units are "m3/h" and "CFM".
+
+default: unit = "m3/h"
+
+ 
+
+StagnationPressure ( doubleexpression value )
+
+Specifies the stagnation pressure for the fan. This setting is considered only for the "linear" fan characteristics type.
+
+default: value = 0
+
+ 
+
+PressureUnit ( enum unit )
+
+Specifies the unit in which the stagnation pressure or fan curve pressure is prescribed. Available units are "atm" and "bar", "Pa" and "psi". This setting is ignored for the "FixedVolume"" fan characteristics type.
+
+default: unit = "Pascal"
+
+ 
+
+AddCurveValue ( doubleexpression flow_rate, doubleexpression pressure )
+
+Adds a (flow_rate, pressure) pair to the user-defined nonlinear fan curve definition. At least two pair have to be defined to create a curve. This setting is considered only for the "nonlinear" fan characteristics type.
+
+ 
+
+AddEntryFace ( solidname solidname, int faceid  )
+
+Defines the face on which the flow enters the fan. This will be the face belonging to the specified faceid of the solid with name solidname.
+
+ 
+
+AddExitFace ( solidname solidname, int faceid  )
+
+Defines the face on which the flow leaves the fan. This will be the face belonging to the specified faceid of the solid with name solidname.
+
+ 
+
+Create
+
+Creates the fan with its previously made settings.
+
+ 
+
+Delete ( string name )
+
+Deletes the fan with the given name.
+
+ 
+
+Rename  ( string oldname,  string newname  )
+
+Renames the fan with the given oldname to the defined newname.
+
+Default Settings
+
+Name ("")
+
+FlowType ("Normal")
+
+DeratingFactor (1)
+
+FlowSpecType ("Dissipated heat")
+
+DissipatedHeat (0)
+
+Temperature (0, <project temperature unit>)
+
+FanCharacteristics ("FixedVolume")
+
+VolumeFlowRate (0)
+
+VolumeFlowUnit ("m3/h")
+
+StagnationPressure (0)
+
+PressureUnit ("Pa")
+
+Example
+
+With Fan
+
+     .Reset
+
+     .Name "myfan"
+
+     .FlowType "Normal"
+
+     .DeratingFactor "1"
+
+     .FlowSpecType "Temperature"
+
+     .Temperature "20", "Celsius"
+
+     .FanCharacteristics "Linear"
+
+     .VolumeFlowUnit "m3/h"
+
+     .PressureUnit "Pa"
+
+     .VolumeFlowRate "0"
+
+     .StagnationPressure "0.2"
+
+     .AddEntryFace "component1:solid5", "4"
+
+     .AddExitFace "component1:solid5", "6"
+
+     .Create
+
+End With
+
+ 

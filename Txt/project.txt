@@ -103,49 +103,37 @@ PositionWindow (string location,  long  handle)
 
 This functions sets the position of a window relatively to the location of the main application window. The following settings are valid locations:
 
-"center"
+"center"        Position the window in the center of the main application window
 
-Position the window in the center of the main application window
+"top left"      Position the window in the top left corner of the main application window
 
-"top left"
+"top right"     Position the window in the top right corner of the main application window
 
-Position the window in the top left corner of the main application window
+"bottom left"   Position the window in the bottom left corner of the main application window
 
-"top right"
-
-Position the window in the top right corner of the main application window
-
-"bottom left"
-
-Position the window in the bottom left corner of the main application window
-
-"bottom right"
-
-Position the window in the bottom right corner of the main application
-
- window
+"bottom right"  Position the window in the bottom right corner of the main application window
 
 The window which needs to be positioned is specified by its window handle. The typical usage of this function is in the initialization part of a user defined dialog box function as shown in the example below:
 
 Private Function DlgFunc(DlgItem$, Action%, SuppValue&) As Boolean
 
-Select Case Action%
+    Select Case Action%
 
-Case 1 ' Dialog box initialization
+        Case 1 ' Dialog box initialization
 
-PositionWindow "top right", SuppValue
+            PositionWindow "top right", SuppValue
 
-Case 2 ' Value changing or button pressed
+        Case 2 ' Value changing or button pressed
 
-Case 3 ' TextBox or ComboBox text changed
+        Case 3 ' TextBox or ComboBox text changed
 
-Case 4 ' Focus changed
+        Case 4 ' Focus changed
 
-Case 5 ' Idle
+        Case 5 ' Idle
 
-Case 6 ' Function key
+        Case 6 ' Function key
 
-End Select
+    End Select
 
 End Function
 

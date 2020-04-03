@@ -1,0 +1,156 @@
+
+Show 
+Home | Visual Basic (VBA) Language | Yield Analysis Object
+
+YieldAnalysis Object
+This object offers the possibility to calculate a yield analysis.
+
+General Methods
+
+Default Settings
+
+Examples
+
+General Methods
+
+GetYield double
+
+Returns the value of the yield after a yield analysis calculation.
+
+ 
+
+%% Methods Concerning Design Parameters
+
+ 
+
+InitDesignParameters
+
+Only the parameters which have been used for the sensitivity analysis can be considered as design parameters for the yield analysis. Though, the active sensitivity analysis parameters are initialized with the already defined design parameter.
+
+ 
+
+SelectDesignParameter ( name paraName, bool bFlag )
+
+Select the design parameter specified by its name paraName. If bFlag is True the design parameter named paraName is chosen to be used for the yield analysis.
+
+ 
+
+SetDesignParameterStatisticalDistribution( enum distributionType )
+
+Set the statistical distribution for the currently selected design parameter. You must select a design parameter using the SelectDesignParameter method before you can apply this method.
+
+distributionType can have the value "Gaussian" or "Uniform".
+
+ 
+
+SetDesignParameterStandardDeviation ( double value )
+
+Set the standard deviation value for the currently selected design parameter. You must select a design parameter using the SelectDesignParameter method before you can apply this method.
+
+ 
+
+%% Methods Concerning Performance Specifications
+
+ 
+
+AddPerformanceSpecification ( enum perfSpecificationType ) long
+
+Creates a new performance specification and adds it to the internal list of performance specifications. Upon creation an ID is created for each performance specification which is returned by this function. The newly defined performance specification is selected automatically for use with the yield analysis.
+
+perfSpecificationType can so far only have the following value "S Bound".
+
+ 
+
+SelectPerformanceSpecification ( long id, bool bFlag )
+
+Selects the performance specification specified by its ID id. The ID is returned when the performance specification is created using the AddPerformanceSpecification function. It is necessary to call this method before many other methods may be called because these other methods apply to a previously selected performance specification.
+
+ If bFlag is True the selected performance specification is used for the yield analysis else it is ignored.
+
+ 
+
+DeletePerformanceSpecification ( long id )
+
+Deletes the specified performance specification. To specify the performance specification use the ID that is returned by the AddPerformanceSpecification function when the performance specification is created.
+
+ 
+
+DeleteAllPerformanceSpecifications
+
+Deletes all performance specification that were previously created.
+
+ 
+
+SetPerformanceSpecificationType ( enum {"linear", "phase"} boundType )
+
+For a previously selected S-parameter bound, you can choose which part of the S-parameter data is used for the evaluation of this performance specification. You may choose between the S-parameter magnitude in linear representation and the S-parameter phase. You must select a previously defined performance specification using the SelectPerformanceSpecification method before you can apply this method.
+
+ 
+
+SetPerformanceSpecificationOperator ( enum operatorType  )
+
+Every performance specification needs a bound operator that indicates how to evaluate the bound function value. The operators  "<", ">" indicate that a bound function should be lowered under or raised upon a certain value.
+
+operatorType can have one of the following values:
+
+<       lower bound function value under a given target value       S-parameter bound
+
+>       raise bound function value upon a given target value        S-parameter bound
+
+ 
+
+ 
+
+SetPerformanceSpecificationBound ( double value )
+
+Sets a bound value for a previously defined performance specification. You must select a previously defined performance specification using the SelectPerformanceSpecification method before you can apply this method.
+
+ 
+
+SetPerformanceSpecificationRange ( double fmin,  double fmax )
+
+Set a frequency range for a previously selected S-parameter bound. You must select a previously defined S-parameter bound using the SelectPerformanceSpecification method before you can apply this method.
+
+ 
+
+SetPerformanceSpecificationPortModes (  long outPort, long outMode, long stimPort, long stimMode )
+
+Set the port modes used for a previously defined S-parameter bound. You must select a previously defined S-parameter bound using the SelectPerformanceSpecification method before you can apply this method.
+
+Default Settings
+
+Example
+
+With YieldAnalysis
+
+      .InitDesignParameters
+
+      .SelectDesignParameter ("face_distance", True)
+
+      .SetDesignParameterStatisticalDistribution ("Gaussian")
+
+      .SetDesignParameterStandardDeviation (1.0)
+
+      .SelectDesignParameter ("face_radius", True)
+
+      .SetDesignParameterStatisticalDistribution ("Uniform")
+
+      .SetDesignParameterStandardDeviation (2.0)
+
+      boundID = .AddPerformanceSpecification ("S Bound" )
+
+      .SelectPerformanceSpecification (boundID , True)
+
+      .SetPerformanceSpecificationType ("linear")
+
+      .SetPerformanceSpecificationOperator ("<")
+
+      .SetPerformanceSpecificationBound  (0.0)
+
+      .SetPerformanceSpecificationRange (0, 5)
+
+      .SetPerformanceSpecificationPortModes (1, 1, 2, 1)
+
+End With
+
+ 

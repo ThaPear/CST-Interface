@@ -1,0 +1,732 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Particle | ParticleMonitor (TRK, legacy)
+
+ParticleMonitor Object
+
+Definition, control and manipulation of particle monitors in the tracking solver.
+
+Please note, that this command class is deprecated as it has been replaced by the more versatile Particle2DMonitorReader object.
+
+The documentation is only kept here to support conversion of existing VBA code when necessary. This object should not be used for new projects.
+
+Methods
+
+General Queries
+
+Particle Queries
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name name )
+
+Defines a name for the particle monitor.
+
+ 
+
+AutoLabel ( bool autolabel )
+
+If autolabel=True, a name for the particle monitor is automatically generated.
+
+ 
+
+SourceName ( name name )
+
+Sets the name of the particle source of the emitted particles are monitored. To monitor all particles, name can be set to an empty string, i.e. "".
+
+ 
+
+SourceType ( name name )
+
+Sets the type of the particle sources of which the emitted particles are monitored by the monitor.  The following three types are valid entries: "ParticleSource", "ParticleInterface" and "AllSources". This setting must be in agreement with the SourceName setting.
+
+ 
+
+UsePlane ( bool useplane )
+
+If set to True, the monitor is defined on a plane, otherwise it is defined on a face.
+
+ 
+
+PlaneNormal ( double  uNorm,  double  vNorm,  double  wNorm)
+
+Defines the normal of the monitoring plane.
+
+ 
+
+PlanePoint (  double  uPos,  double  vPos,  double  wPos)
+
+Defines a point on the monitoring plane.
+
+ 
+
+PlaneLocalU (  double  uLocU,   double  vLocU,   double  wLocU)
+
+Defines the direction of the local u-axis of the plane. Note that the vector has to be parallel to the plane. The vectors Normal, LocalU und LocalV have to represent three axis of an orthogonal cartesian coordinate system.
+
+ 
+
+PlaneLocalV (  double  uLocV,   double  vLocV,   double  wLocV)
+
+Defines the direction of the local v-axis of the plane. Note that the vector has to be parallel to the plane. The vectors Normal, LocalU und LocalV have to represent three axis of an orthogonal cartesian coordinate system.
+
+ 
+
+FaceNameAndID(name  facename,  int  faceid)
+
+Specifies the solid and the faceid if the plane is defined on a face.
+
+ 
+
+TemporalBehaviour (enum  behaviour)
+
+Temporal behavior of the monitoring process.
+
+enum behaviour  meaning
+
+"once"          A particle is monitored only the first time it penetrates the monitoring face.
+
+"continuous"    A particle is monitored continuously.
+
+"timespan"      The monitor is only active during the given time-span.
+
+ 
+
+TimeSpan ( double  begintime, double  endtime)
+
+Specifies the time-span for monitoring the particles.
+
+ 
+
+Align (enum  aligntype)
+
+Defines the type of plane-alignment of the monitor.
+
+enum typename   meaning
+
+"GLOBAL"        The monitoring plane is defined with respect to the global coordinate system (GCS).
+
+"WCS"           The monitoring plane is defined with respect to the working coordinate system (WCS).
+
+"FREE"          The monitoring plane is freely defined.
+
+ 
+
+PlaneSetting (enum  axisname, double  position)
+
+Direction of the plane's normal with respect to the GCS or WCS. The position describes the plane's location along the specified axis.
+
+enum axisname   meaning
+
+"x-direction"   Plane's normal is the X/U axis.
+
+"y-direction"   Plane's normal is the Y/V axis.
+
+"z-direction"   Plane's normal is the Z/W axis.
+
+ 
+
+PlotType (enum  plottype)
+
+Specifies the type of the generated plot.
+
+Note: If a histogram-plot is chosen, the ordinate is automatically set to "probability", i.e. it shows the percentage of particles which correspond to the given abscissa value.
+
+enum plottype   meaning
+
+"phase-space"   The plot is a 2D-plot (phase-space diagram).
+
+"histogram"     The plot is a histogram.
+
+ 
+
+DensitySamples ( int  samples)
+
+Number of columns for the histogram plot.
+
+ 
+
+AbscissaSetting (enum  type, enum  direction)
+
+Definition of the physical quantity which is displayed in the diagram. Note that for the plot-type "histogram" only the abscissa setting is considered.
+
+ 
+
+OrdinateSetting (enum  type, enum  direction)
+
+Definition of the physical quantity which is displayed in the diagram. Note that for the plot-type "histogram" only the abscissa setting is considered.
+
+  
+
+enum type   meaning
+
+"position"  Position of the particles relative to the plane's origin point and local coordinate system.
+
+"velocity"  Velocity of the particles relative to the plane's local coordinate system.
+
+"angle"     Penetration Angle in local u- and v-direction.
+
+"momentum"  Momentum of the particles relative to the plane's local coordinate system.
+
+"gamma"     Gamma of the particles relative to the plane's local coordinate system.
+
+"beta"      Beta of the particles relative to the plane's local coordinate system.
+
+"current"   Current of the particles relative to the plane's local coordinate system.
+
+"charge"    Charge of the monitored particles.
+
+   
+
+enum direction  meaning
+
+"x-direction"   x-component
+
+"y-direction"   y-component
+
+"z-direction"   z-component
+
+"absolute"      absolute value
+
+ 
+
+Create
+
+Creates the particle monitor
+
+ 
+
+Delete ( name name )
+
+Deletes the specified particle monitor.
+
+ 
+
+Rename ( name oldName, name newName )
+
+Renames the particle monitor.
+
+ 
+
+%% General Queries
+
+ 
+
+SelectMonitor ( name name ) bool
+
+Selects the monitor "name" for the following operations.
+
+ 
+
+ClearMonitorData
+
+Delete the data created by SelectMonitor.
+
+ 
+
+IsPlane  bool
+
+Is true, if monitor is defined on a plane, false if it is defined on a face.
+
+ 
+
+GetAlign int
+
+Returns the align-type of the monitor (if defined on a plane).
+
+enum typename   meaning
+
+0               "GLOBAL"
+
+1               "WCS"
+
+2               "FREE"
+
+ 
+
+GetNormal ( double_ref uNorm,  double_ref vNnorm,  double_ref wNnorm)
+
+Returns the plane's normal (local W-axis)  (if defined on a plane) in global coordinates.
+
+ 
+
+GetLocalU (double_ref uLocU, double_ref vLocU,  double_ref wLocU)
+
+Returns the plane's local U-axis (if defined on a plane) in global coordinates.
+
+ 
+
+GetLocalV ( double_ref uLocV,  double_ref vLocV,  double_ref wLocV)
+
+Returns the plane's local V-axis (if defined on a plane) in global coordinates.
+
+ 
+
+GetPlaneDirection int  
+
+Returns the alignment of the plane with respect to the active coordinate system (GCS or WCS).  (Only if plane-aligned.)
+
+enum typename   meaning
+
+0               "U/X-component"
+
+1               "V/Y-component"
+
+2               "W/Z-component"
+
+ 
+
+GetPlanePosition double
+
+Offset of the plane along the normal axis of the GCS or WCS. (Only if plane-aligned.)
+
+ 
+
+GetNParticles int  
+
+Returns the number of particles which were recorded by the monitor. If a particle passes the monitor face several times it is counted only once for this query.
+
+ 
+
+GetNParticlesTotal int  
+
+Returns the number of all recorded events (or hits). If a particle passes the monitor-face several times, all events are counted.
+An application example where the number of particles and events is usually different would be a cyclotron.
+
+ 
+
+GetCurrent double
+
+Returns the amount of current flowing through the monitor's surface.
+
+ 
+
+GetEmittance ( double_ref uEmittance, double_ref vEmittance )
+
+Returns the averaged transverse emittance, i.e. u- and v-components, of the particles that move through the monitor.
+
+ 
+
+GetMeanValue ( enum type, enum direction ) double
+
+Statistical evaluation: arithmetic mean in the direction of the quantitiy type, e.g. the component of "velocity" in "x-direction". Admissible entries for the type are shown in the table of the description of AbcissaSetting.
+
+Admissible entries for direction are "x-direction", "y-direction", "z-direction" and "absolute". Here, "x", "y" and "z" represent the local coordinates of the monitor plane: "z" corresponds to the axis that is normal to the monitor plane and "x" and "y" are parallel to it. In the local coordinate system UVW, "x" is "u", "y" is "v" and "z" is "w". The table below translates the directions in the local coordinate system to those in the global coordinate system, depending on which of the principal planes of the global coordinate system the monitor plane is aligned to.
+
+  
+
+direction (local)   direction when plane normal is x (global)   direction when plane normal is y (global)   direction when plane normal is z (global)
+
+"x-direction"       y                                           z                                           x
+
+"y-direction"       z                                           x                                           y
+
+"z-direction"       x                                           y                                           z
+
+ 
+
+ 
+
+GetRMS ( enum type, enum component ) double
+
+Statistical evaluation: Get root mean square. For further information, see description of GetMeanValue.
+
+ 
+
+GetSigma ( enum type, enum component ) double
+
+Statistical evaluation: Get standard deviation. For further information, see description of GetMeanValue.
+
+ 
+
+GetMin ( enum type, enum component ) double
+
+Statistical evaluation: Get minimum value. For further information, see description of GetMeanValue.
+
+ 
+
+GetMax ( enum type, enum component ) double
+
+Statistical evaluation: Get maximum value. For further information, see description of GetMeanValue.
+
+ 
+
+%% Particle Queries
+
+ 
+
+SelectParticle ( int particleindex )
+
+Selects the particle with the index particleindex for the following operations.
+
+ 
+
+GetArea double
+
+Returns the specific area of the selected particle.
+
+ 
+
+GetCharge double
+
+Returns the specific charge of the selected particle.
+
+ 
+
+GetMass double
+
+Returns the specific mass of the selected particle.
+
+ 
+
+GetTimeStep double
+
+Returns the specific time step of the selected particle.
+
+ 
+
+GetNHits int  
+
+Returns the number of hits of the particle with the plane. (If particle has penetrated the face more than once).
+
+ 
+
+GetHitTime (int hitindex ) double
+
+Returns the time of the hit  with number hitindex.
+
+ 
+
+GetPosition (int hitindex,  double_ref uNorm,  double_ref vNnorm,  double_ref wNnorm)
+
+Returns the hit-position of the hit  with number hitindex.
+
+ 
+
+GetMomentum (int hitindex,  double_ref uNorm,  double_ref vNnorm,  double_ref wNnorm)
+
+Returns the momentum of the hit  with number hitindex.
+
+ 
+
+GetVelocity (int hitindex,  double_ref uNorm,  double_ref vNnorm,  double_ref wNnorm)
+
+Returns the velocity of the hit  with number hitindex.
+
+ 
+
+GetValue (int hitindex, enum  type, enum  direction) double
+
+Returns the specific value of type type in direction direction of the hit with the number hitindex.
+
+Default Settings
+
+    Name ("all sources_Z(0)")
+
+    AutoLabel (TRUE)
+
+    SourceName ("all sources")
+
+    TemporalBehaviour ("once")
+
+    TimeSpan (0,0)
+
+    UsePlane (TRUE)
+
+    Align ("GLOBAL")
+
+    PlotType ("phase-space")
+
+    AbscissaSetting ("position", "x-direction")
+
+    OrdinateSetting ("angle", "x-direction")
+
+    DensitySamples (100)
+
+    PlaneSetting ("z-direction", 0)
+
+Example:
+
+The following program demonstrates the application of the interrogative commands. The results of these commands are written into a text file.
+
+ 
+
+Sub Main
+
+ 
+
+With ParticleMonitor
+
+     .Reset
+
+     .Name "mymonitor"
+
+     .AutoLabel "False"
+
+     .SourceName ""
+
+     .SourceType "AllSources"
+
+     .TemporalBehaviour "continuous"
+
+     .TimeSpan "0", "0"
+
+     .UsePlane "True"
+
+     .Align "GLOBAL"  
+
+     .PlotType "phase-space"
+
+     .AbscissaSetting "position","z-direction"
+
+     .OrdinateSetting "position", "y-direction"
+
+     .DensitySamples "100"
+
+     .PlaneSetting "x-direction", "0.00"  
+
+     .Create
+
+End With
+
+ 
+
+Dim dtest As Double
+
+Dim ucomp As Double
+
+Dim vcomp As Double
+
+Dim wcomp As Double
+
+Dim btest As Boolean
+
+Dim itest As Long
+
+ 
+
+Open "trk monitor.txt" For Output As #1
+
+ 
+
+Rem Test of a Particle Monitor
+
+With ParticleMonitor
+
+Rem selection of monitor
+
+.SelectMonitor "mymonitor"
+
+ 
+
+Rem normal is 0,0,1
+
+.GetNormal (ucomp,vcomp,wcomp)
+
+Print #1, "Normal                     : "; ucomp; "; "; vcomp; "; "; wcomp
+
+Rem localU is 1,0,0
+
+.GetLocalU (ucomp,vcomp,wcomp)
+
+Print #1, "NormalU                    : "; ucomp; "; "; vcomp; "; "; wcomp
+
+Rem localV is 0,1,0
+
+.GetLocalV (ucomp,vcomp,wcomp)
+
+Print #1, "NormalV                    : "; ucomp; "; "; vcomp; "; "; wcomp
+
+Rem 0 is GCS, 1 is WCS, 2 is Free positioned cutplane
+
+itest = .GetAlign()
+
+Print #1, "Align                      : "; itest
+
+Rem TRUE is cutplane, FALSE is Face-based monitor - face based monitors only consider the GCS
+
+btest = .IsPlane
+
+Print #1, "IsPlane                    :  "; btest
+
+REM The plane direction
+
+itest = .GetPlaneDirection()
+
+Print #1, "PlaneDirection             : "; itest
+
+Rem The plane position
+
+dtest = .GetPlanePosition()
+
+Print #1, "PlanePosition              : "; dtest
+
+Rem number of particles recorded by the monitor
+
+itest = .GetNParticles()
+
+Print #1, "Number of Particles        :  "; itest
+
+Rem number of all particles recorded by the monitor (with multiple penetrated particles)
+
+itest = .GetNParticlesTotal()
+
+Print #1, "Number of all Particles    : "; itest
+
+Rem Total current of all single penetrated particles.
+
+dtest = .GetCurrent()
+
+Print #1, "Current                    : "; dtest
+
+Rem averaged values of all particles (also multiple penetrated particles) in the given direction
+
+Rem As direction, also "absolute" is considered
+
+dtest = .GetMeanValue("position", "x-direction")
+
+Print #1, "Position-X (mean)          : "; dtest
+
+dtest = .GetMeanValue("velocity", "z-direction")
+
+Print #1, "Velocity-Z (mean)          : "; dtest
+
+dtest = .GetMeanValue("angle", "x-direction")
+
+Print #1, "Angle-X    (mean)          : "; dtest
+
+dtest = .GetMeanValue("momentum", "z-direction")
+
+Print #1, "Momentum-Z (mean)          : "; dtest
+
+dtest = .GetMeanValue("beta", "z-direction")
+
+Print #1, "Beta-Z     (mean)          : "; dtest
+
+dtest = .GetMeanValue("gamma", "z-direction")
+
+Print #1, "Gamma-Z    (mean)          : "; dtest
+
+dtest = .GetMeanValue("current", "z-direction")
+
+Print #1, "Current-Z  (mean)          : "; dtest
+
+dtest = .GetMeanValue("charge", "z-direction")
+
+Print #1, "Charge-Z   (mean)          : "; dtest
+
+dtest = .GetMin("position", "x-direction")
+
+Print #1, "Position-Z (min)           : "; dtest
+
+dtest = .GetMax("position", "x-direction")
+
+Print #1, "Position-X (max)           : "; dtest
+
+Rem returns the emittance in localU and LocalV direction
+
+.GetEmittance(ucomp, vcomp)
+
+Print #1, "Emittance-U                : "; ucomp
+
+Print #1, "Emittance-V                : "; vcomp
+
+ 
+
+Rem A single particle #2 is chosen
+
+.SelectParticle(2)
+
+Print #1, ""
+
+Print #1, "Particle                   : "; 2
+
+Rem properties of particle #2
+
+dtest = .GetArea()
+
+Print #1, "   Area                    : "; dtest
+
+dtest = .GetCharge()
+
+Print #1, "   Charge                  : "; dtest
+
+dtest = .GetMass()
+
+Print #1, "   Mass                    : "; dtest
+
+Rem Initial timestep (is used for current calculation I=q/dt)
+
+dtest = .GetTimeStep()
+
+Print #1, "   Timestep                : "; dtest
+
+Rem number of particle-hits
+
+itest = .GetNHits()
+
+Print #1, "   Particle-hits           : "; itest
+
+ 
+
+Rem point of time of hit
+
+dtest = .GetHitTime(0)
+
+Print #1, ""
+
+Print #1, "Time of hit #0            : "; dtest
+
+Rem particle data of hit #0
+
+.GetPosition(0,ucomp,vcomp,wcomp)
+
+Print #1, "   Hit #0: position       : "; ucomp; "; "; vcomp; "; "; wcomp
+
+.GetMomentum(0,ucomp,vcomp,wcomp)
+
+Print #1, "   Hit #0: momentum       : "; ucomp; "; "; vcomp; "; "; wcomp
+
+.GetVelocity(0,ucomp,vcomp,wcomp)
+
+Print #1, "   Hit #0: velocity       : "; ucomp; "; "; vcomp; "; "; wcomp
+
+Rem specific data of particle for hit #0
+
+dtest = .GetValue(0,"position", "y-direction")
+
+Print #1, "   Hit #0: position-y     : "; dtest
+
+dtest = .GetValue(0,"velocity", "z-direction")
+
+Print #1, "   Hit #0: velocity-z     : "; dtest
+
+dtest = .GetValue(0,"beta", "z-direction")
+
+Print #1, "   Hit #0: beta-z         : "; dtest
+
+ 
+
+Rem delete the above created result data
+
+.ClearMonitorData
+
+ 
+
+End With
+
+ 
+
+Close #1
+
+ 
+
+End Sub

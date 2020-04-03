@@ -74,7 +74,7 @@ classdef Application < handle
             % Creates a new CST DESIGN STUDIO project.
             hCST = CST.Application.GetHandle();
             hDSProject = hCST.invoke('NewDS');
-            dsproject = CST.Project(hDSProject);
+            dsproject = CST.DS.Project(hDSProject);
         end
         function project = OpenFile(filepath)
             % Opens a project.

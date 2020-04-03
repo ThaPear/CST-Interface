@@ -1,0 +1,212 @@
+
+Show 
+Home | Visual Basic (VBA) Language | ThermalLossImport Object
+
+ThermalLossImport Object
+This object offers the possibility to import thermal loss distributions into a thermal projects. For each thermal loss import performed using the FieldSource object, an entry with the same name has to be created, containing the additional settings for this loss import.
+
+Methods
+
+Reset
+
+This command resets all the member variables of the ThermalLossImport object.
+
+ 
+
+ResetAll
+
+Resets the member variables of the ThermalLossImport object and deletes all the items in it.
+
+ 
+
+FieldName ( name name )
+
+Specifies the name of the loss field imported using the FieldSource object, for which the current ThermalLossImport entry is defined.
+
+ 
+
+Active ( bool  flag )
+
+Activate or deactivate the thermal loss import.
+
+ 
+
+PowerFactor ( double value )
+
+Specifies a factor value, by which the thermal loss field has to be multiplied.
+
+ 
+
+LossName ( name name )
+
+Specifies the name of the source setup where the losses should be imported from.
+
+ 
+
+AutoLossSelection ( bool  flag )
+
+If the flag is true, the source setup is selected automatically. In this case, the LossName setting is ignored.
+
+ 
+
+Rename ( name oldname,  name newname )
+
+Assign a new FieldName to the existing ThermalLossImport entry. The corresponding FieldSource object must also be renamed.
+
+ 
+
+SelectionParameter ( enum parameter, name value )
+
+Specifies which thermal loss should be selected in the current loss import. The following parameters can be set:
+
+Frequency       If the current loss import contains losses for several field frequencies, the loss with frequency value will be selected.
+
+Description     In this case, value is interpreted as the name of the specific loss monitor.
+
+Eigenmode       If the current loss import contains losses for several eigenmodes, the eigenmode with index equal to value will be selected.
+
+Any             Value is interpreted automatically according to the contents of the loss import.
+
+  
+
+For the first two parameter types, the value can be omitted and specified later using the corresponding command:
+
+ 
+
+Frequency ( double value )
+
+If the current loss import contains losses for several field frequencies, the loss with frequency value will be selected.
+
+ 
+
+Description ( name value )
+
+In this case, value is interpreted as the name of the specific loss monitor.
+
+ 
+
+AutoSelectSubvolume (bool flag)
+
+If the loss import contains losses with given parameter type and value defined in several different subvolumes, the flag marks, whether the subvolume should be selected automatically, or it will be defined by the following call SelectSubvolume.
+
+ 
+
+SelectSubvolume ( double xmin,   double xmax,   double ymin,   double ymax,   double zmin,   double zmax )
+
+If .AutoSelectSubvolume "True" has been specified, this call defines the subvolume, in which the loss distribution has been calculated. If the set of losses does not contain losses with given parameter type and value in this subvolume, no losses are imported.
+
+ 
+
+SelectEntireVolume
+
+This call is alternative to the previous one and allows to import the loss distribution defined in the whole solution domain.
+
+ 
+
+SurfaceCond ( double value )
+
+Specifies the surface conductivity which is used to compute thermal losses on PEC solids.
+
+ 
+
+UseElVolLoss ( bool  flag )
+
+Specify if ohmic volume losses are taken into account for the thermal simulation.
+
+ 
+
+UseMagVolLoss (bool flag)
+
+Specify if magnetic dispersive volume losses are taken into account for the thermal simulation.
+
+ 
+
+UseSurfaceLoss (bool flag)
+
+Specify if surface based losses are taken into account for the thermal simulation.
+
+ 
+
+Create
+
+Adds the previously determined loss field settings set as a new entry to ThermalLossImport object. Please note that each thermal loss import performed by FieldSource object should have a counterpart in ThermalLossImport in order to be handled properly.
+
+ 
+
+MinRelThermalCondSrf (double value)
+
+This settings defines the relative minimum thermal conductivity of a region where surface loss distributions are taken into account. The minimum conductance value is calculated by multiplying the entered relative value (between 0 and 1) with the maximum conductance value used for a certain example. This setting is applied to all the imported thermal surface losses.
+
+ 
+
+MinRelThermalCondVol (double value)
+
+This settings defines the relative minimum thermal conductivity of a region where volume based loss distributions are taken into account. The minimum conductance value is calculated by multiplying the entered relative value (between 0 and 1) with the maximum conductance value used for a certain example. This setting is applied to all the imported thermal volume losses.
+
+Default Settings
+
+PowerFactor (0.0)
+
+SelectionParameter ("Frequency", "0.0")
+
+MinRelThermalCondSrf (1e-2)
+
+Examples
+
+Applying the field of a LF frequency domain solver run as thermal source:
+
+ 
+
+With FieldSource
+
+     .Reset
+
+     .Name "thermalloss0"
+
+     .Id "0"
+
+     .ProjectPath "LF.cst"
+
+     .UseRelativePath "True"
+
+     .SourceName "Thermal Losses"
+
+     .UseCopyOnly "False"
+
+     .CreateFieldImport
+
+End With
+
+With ThermalLossImport
+
+     .Reset
+
+     .FieldName "thermalloss0"
+
+     .Active "True"
+
+     .PowerFactor "1"
+
+     .AutoLossSelection "False"
+
+     .LossName "LF Frequency Domain Solver"
+
+     .SelectionParameter "Frequency", "5"
+
+     .SurfaceCond "0"
+
+     .UseElVolLoss "True"
+
+     .UseMagVolLoss "True"
+
+     .UseSurfaceLoss "True"
+
+     .Create
+
+     .MinRelThermalCondSrf "0.01"
+
+     .MinRelThermalCondVol "0"
+
+End With
+
+ 

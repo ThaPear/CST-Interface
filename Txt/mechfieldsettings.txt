@@ -1,0 +1,80 @@
+Home | Visual Basic (VBA) Language | MechFieldSettings Object
+
+MechFieldSettings Object
+The object is used to consider imported temperature fields for the mechanical solver.
+
+ 
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+ResetAll
+
+Deletes all previously made definitions.
+
+ 
+
+Reset
+
+Resets the recently made settings for Name, Factor  and Active to the default values.
+
+ 
+
+Name ( name  name )
+
+Sets the name of the new import-definition. This name must be equal to the name of the field import.
+
+ 
+
+Factor( double  factor)
+
+Allows to scale the imported field with a constant value.
+
+ 
+
+Active( bool flag)
+
+Allows to activate or deactivate the definition for a certain field import.
+
+ 
+
+Create
+
+Creates the import-definition with the previously made settings.
+
+ 
+
+Delete ( name  name )
+
+Deletes the specified import-definition.
+
+Default Settings
+
+Name ("")
+
+Factor("1.0")
+
+Active("False")
+
+Example
+
+With MechFieldSettings
+
+     .ResetAll
+
+     .Reset
+
+     .Name ("temperature")
+
+     .Factor("1.0")
+
+     .Active("True")
+
+     .Create
+
+End With

@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  
+% The Project Object offers miscellaneous functions concerning the program in general.
 classdef Project < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Application)

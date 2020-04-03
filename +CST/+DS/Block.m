@@ -17,7 +17,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Block types are listed right before Default Settings.
 
-%  
+% Object referring to a block. Use this object to create or to manipulate a block.
 classdef Block < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.DS.Project)

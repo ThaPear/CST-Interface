@@ -1,0 +1,69 @@
+
+Show 
+Home | Visual Basic (VBA) Language | HFSS Object
+
+HFSS Object
+
+Import a HFSS project.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the import options to the default.
+
+ 
+
+FilenameHFSS ( filename  filename )
+
+Sets the name of the hfss file.
+
+ 
+
+FilenameSM3 ( filename  filename )
+
+Sets the name of the sm3 file.
+
+ 
+
+Filename ( filename  filename )
+
+Sets the name of the sat file produced by the import.
+
+ 
+
+Read
+
+Starts the import of the selected files.
+
+Default Settings
+
+FilenameHFSS ("")
+
+FilenameSM3 ("")
+
+FilenameSM3 ("")
+
+Example
+
+With HFSS
+
+     .Reset
+
+     .FilenameHFSS "*my_model.hfss"
+
+     .FilenameSM3 "*my_model.sm3"
+
+     .Filename "*my_model.sat"
+
+     .Read
+
+End With
+
+ 

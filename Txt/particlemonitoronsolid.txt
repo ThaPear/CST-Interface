@@ -1,0 +1,138 @@
+
+Show 
+Home | Visual Basic (VBA) Language | ParticleMonitorOnSolid Object
+
+ParticleMonitorOnSolid Object
+Defines a particle monitor which collects information about particles colliding with the solid.
+
+Methods
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name ( name name )
+
+Defines a name for the particle monitor. This must be consistent with the names of the model components. For the background, there are two special names: "[Background]:Boundary" and "[Background]:Material. "[Background]:Boundary" represents the bounding box defining the PIC calculation domain and "[Background]:Material" represents the interface between the background material and the rest of the structure.
+
+ 
+
+EnableCollisionInfo ( bool enable )
+
+Enables the monitoring of collision info: current vs time, power vs time and/or energy histogram.
+
+ 
+
+EnableCurrent ( bool enable )
+
+Enables the monitoring of the particle current as a function of time. The solver time step is used for the x-axis step.
+
+ 
+
+EnablePower ( bool enable )
+
+Enables the monitoring of the particle power as a function of time. The solver time step is used for the x-axis step.
+
+ 
+
+EnableEnergyHistogram ( bool enable )
+
+Enables the monitoring of the number of particles as a function of energy.
+
+ 
+
+EnergyBinSize ( double  val)
+
+Sets the energy bin size of the histogram.
+
+ 
+
+EnergyMin ( double  val)
+
+Sets the lower energy bound of the histogram.
+
+ 
+
+EnergyMax ( double  val)
+
+Sets the upper energy bound of the histogram.
+
+ 
+
+Create
+
+Creates a monitor using the settings specified with the previous methods and the default settings.
+
+ 
+
+Delete( name name )
+
+Deletes the monitor with the specified name.
+
+ 
+
+Default Settings
+
+With ParticleMonitorOnSolid
+
+     .Reset
+
+     .Name "[Background]:Boundary"
+
+     .EnableCollisionInfo "True"
+
+     .EnableCurrent "True"
+
+     .EnablePower "True"
+
+     .EnableEnergyHistogram "False"
+
+     .EnergyBinSize "1.0"
+
+     .EnergyMin "0.0"
+
+     .EnergyMax "100.0"
+
+     .Create
+
+End With
+
+ 
+
+Examples
+
+With ParticleMonitorOnSolid
+
+     .Reset
+
+     .Name "[Background]:Boundary"
+
+     .EnableCollisionInfo "True"
+
+     .EnableCurrent "True"
+
+     .EnablePower "False"
+
+     .EnableEnergyHistogram "True"
+
+     .EnergyBinSize "2.0"
+
+     .EnergyMin "100.0"
+
+     .EnergyMax "1000.0"
+
+     .Create
+
+End With
+
+ 
+
+ParticleMonitorOnSolic.Delete "[Background]:Boundary"

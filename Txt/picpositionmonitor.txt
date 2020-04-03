@@ -1,0 +1,143 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Particle | PICPositionMonitor
+
+PICPositionMonitor Object
+
+Defines a 3D particle position monitor, which records at a given sampling rate detailed data for each particle, such as position, momentum and charge.
+
+Methods
+
+Queries
+
+Default Settings
+
+Examples
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+Name ( name monitorName )
+
+Sets the name of the monitor.
+
+ 
+
+Tstart ( double startTime )
+
+Sets starting time for a time domain monitor to startTime.
+
+ 
+
+Tstep ( double timeStep )
+
+Sets the time increment for a time domain monitor to timeStep.
+
+ 
+
+Tend ( double stopTime )
+
+Sets the end time for a time domain monitor to stopTime.
+
+ 
+
+UseTend ( bool bFlag )
+
+If bFlag is True the time domain monitor stops storing the results when the end time that is set with Tend is reached. Otherwise the monitor will continue until the simulation stops.
+
+ 
+
+Delete ( name monitorName )
+
+Deletes the monitor named monitorName.
+
+ 
+
+Rename ( name oldname,  name newname )
+
+Renames the monitor named oldname to newname.
+
+ 
+
+Create
+
+Creates the monitor with the previously applied settings.
+
+ 
+
+%% Queries
+
+ 
+
+GetNumberOfMonitors long
+
+Returns the total number of defined monitors in the current project.
+
+ 
+
+GetMonitorNameFromIndex ( long index ) name
+
+Returns the name of the monitor with regard to the index in the internal monitor list .
+
+ 
+
+GetMonitorTstartFromIndex ( long index ) double
+
+Returns the start time of a particle position monitor with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTstepFromIndex ( long index ) double
+
+Returns the time increment value of a particle position monitor with regard to the index in the internal monitor list.
+
+ 
+
+GetMonitorTendFromIndex ( long index ) double
+
+Returns the end time of a particle position monitor with regard to the index in the internal monitor list.
+
+Default Settings
+
+Tstart (0.0)
+
+Tstep (0.0)
+
+Tend (0.0)
+
+UseTend (False)
+
+Examples
+
+ 
+
+' creates a PIC position monitor
+
+With PICPositionMonitor
+
+     .Reset
+
+     .Name ("ParticleMonitor 1")
+
+     .Tstart (1.0)
+
+     .Tstep (0.015)
+
+     .Tend (1.7)
+
+     .UseTend (True)
+
+     .Create
+
+End With
+
+ 
+
+ 
+
+ 

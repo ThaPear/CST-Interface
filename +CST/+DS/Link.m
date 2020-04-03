@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  
+% Object referring to a link. Use this object to create a connection of two blocks or to connect a block with an external port, or to query properties of a connection. The queries always work on exactly one link, but it is possible to create multiple connected links at once by specifying more than two link ends.
 classdef Link < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.DS.Project)

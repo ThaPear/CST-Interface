@@ -1,0 +1,116 @@
+Home | Visual Basic (VBA) Language | NearfieldScan Object
+
+NearfieldScan Object
+The cylinder scan calculates electrical field values on parametrized cylinder outside the simulation volume. A proper farfield monitor has to be defined before starting the simulation to allow the cylinder scan calculation as a post-processing step.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal values to their default settings.
+
+ 
+
+FarfieldMonitor ( name sName )
+
+Defines the farfield monitor used for the cylinder scan calculation.
+
+ 
+
+Frequency ( double frequency  )
+
+Specifies the frequency point use for the cylinder  scan evaluation. Available for broadband farfield monitors only.
+
+ 
+
+UserBase ( double x , double y , double z )
+
+Base of the scan cylinder in project units.
+
+ 
+
+Useraxis ( double x , double y , double z )
+
+Alignment axis of the scan cylinder.
+
+ 
+
+Step ( double step )
+
+Specifies the angular resolution of the scan cylinder in degrees.
+
+ 
+
+Radius ( double weight )
+
+Specifies the radius in meters of the scan cylinder
+
+ 
+
+Height ( double height )
+
+Specifies the height in meters of the scan cylinder.
+
+ 
+
+Label ( name sName )
+
+Sets the label for the cylinder scan files and tree entry. The label is automatically created from the farfield monitor name if an empty string is set.
+
+ 
+
+StoreSettings
+
+Saves all previously defined cylinder scan settings.
+
+ 
+
+Create
+
+Executes the cylinder scan calculation using the previously defined settings.
+
+Default Settings
+
+UserBase (0,0,0)
+
+Useraxis (0,0,1)
+
+Step(1)
+
+Radius (1)
+
+Height (1)
+
+Label ("")
+
+Example
+
+With NearfieldScan
+
+.Reset
+
+.FarfieldMonitor ("farfield (f=5) [1]")
+
+.UserBase (0,0,0)
+
+.Useraxis (0,1,0)
+
+.Step(1)
+
+.Radius (1)
+
+.Height (0.5)
+
+.Label ("")
+
+.Create
+
+End With
+
+ 

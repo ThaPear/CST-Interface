@@ -1,0 +1,201 @@
+
+Show 
+Home | Visual Basic (VBA) Language | RigidBodyMotion Object
+
+RigidBodyMotion Object
+
+Defines a new rigid body motion object.
+
+Methods
+
+Reset
+
+Resets all internal settings to their default values.
+
+ 
+
+Name (name  name )
+
+Sets the name of the new rigid body motion object that will be edited or created. Each rigid body motion object name must have a unique name.
+
+ 
+
+Rename (name  oldname, name  newname)
+
+Rename the specified rigid body motion object.
+
+ 
+
+Set (string keyword, variant value)
+
+The following keywords are supported:
+
+Keyword                             Arguments
+
+Type                                string type ("Rotation" or "Translation")
+
+                                    Sets the motion type.
+
+Active                              bool state (True or False)
+
+                                    Activates or deactivates the object for further calculations.
+
+AxisOrigin                          double x, double y, double z
+
+                                    A point found on the rotation axis (is ignored for translation)
+
+AxisNormal                          double x, double y, double z
+
+                                    The direction of the rotation axis (for rotation) or the moving direction (for translation)
+
+UVector                             double x, double y, double z
+
+                                    The direction of the normal to the polygon definition plane for rotation and of the U Axis in the gap polygon definition plane for translation
+
+MotionSamples                       double from, double to, int samples
+
+                                    Specifies the motion details. For rotations, the start and stop angle should be specified in the from and to values. The number of samples describes the number of positions that will be calculated.
+
+MotionDefType                       string type ("Constant speed", "Signal" or "Equation")
+
+                                    Sets movement definition motion type.
+
+MotionSignal                        name signal
+
+                                    The name of the signal used to define the movement
+
+MotionSpeed                         double speed
+
+                                    The constant motion angular speed (in rpm) or the velocity (in m/s)
+
+MotionShift                         double shift
+
+                                    The constant motion initial shift (angle in degree for rotation, distance in m for translation)
+
+PeriodicityType                     string type  ("Periodic" or "Antiperiodic")
+
+                                    Defines the periodicity type of the touched boundaries for the translation
+
+MotionEquationCoefficientMass       double mass
+
+                                    The mass (translation) or the moment of inertia (rotation) for the motion type "Equation"
+
+MotionEquationCoefficientDamping    double damping
+
+                                    The damping constant for the motion type "Equation"
+
+MotionEquationCoefficientSpring     double spring
+
+                                    The spring constant for the motion type "Equation"
+
+MotionEquationCoefficientExtForce   double external_force
+
+                                    The external force (translation) or torque (rotation) for the motion type "Equation"
+
+MotionEquationInitialPosition       double initial_position
+
+                                    The initial gap position (angle or displacement) for the motion type "Equation"
+
+MotionEquationInitialSpeed          double initial_speed
+
+                                    The initial speed (velocity or rotational speed) for the motion type "Equation"
+
+ 
+
+Create
+
+Creates the rigid body motion object with the previously made settings.
+
+ 
+
+Delete (name  name)
+
+Deletes the specified rigid body motion object.
+
+ 
+
+SetActiveGapItem (name  name)
+
+The specified name must be composed of the corresponding rigid body motion object name, a colon, and the name of the gap item that shall be deleted. Then the named gap item of the given motion object will be selected as the active one. Each motion object can have only one active gap item. However, it could be meaningful, e.g. for testing purposes like mesh generation, to define multiple gap items. If not gap item is set active, then the first one will be set active automatically.
+
+ 
+
+DeleteGapItem (name  name)
+
+The specified name must be composed of the corresponding rigid body motion object name, a colon, and the name of the gap item that shall be deleted. For example, the command
+
+RigidBodyMotion.DeleteGapItem "MyRotation:MyGap"
+
+deletes the gap item MyGap from the rigid body motion object MyRotation.
+
+ 
+
+RenameGapItem (name  oldname, name  newname )
+
+Renames the specified gap item. Either name (oldname and newname) must be composed of the corresponding rigid body motion object name, a colon, and the name of the gap item that shall be renamed. For example, the command
+
+RigidBodyMotion.RenameGapItem "MyRotation:MyGap", "MyRotation:Gap2"  
+
+renames the gap item MyGap of the rigid body motion object MyRotation to Gap2. The rigid body motion object name must be identical for the new and the old name.
+
+ 
+
+Get (string keyword )
+
+Returns the value of the setting specified by keyword for the rigid body motion object which is previously declared with the Name command. Available keywords are listed above in the description of the Set command.
+
+ 
+
+GetStr (string keyword )
+
+Returns the string value of the setting specified by keyword for the rigid body motion object which is previously declared with the Name command. Available keywords are listed above in the description of the Set command.
+
+ 
+
+Example
+
+With RigidBodyMotion
+
+     .Reset
+
+     .Name "Rotation1"
+
+     .Set "Type", "Rotation"
+
+     .Set "AxisOrigin",  "0.0",  "0.0",  "0.0"
+
+     .Set "AxisNormal",  "0.0",  "0.0",  "1.0"
+
+     .Set "UVector",  "1.0",  "0.0",  "0.0"
+
+     .Set "Active",  True
+
+     .Set "MotionSamples",  "0",  "0",  "2"
+
+     .Set "MotionDefType",  "Constant Speed"
+
+     .Set "MotionSignal",  "[Reference]"
+
+     .Set "MotionSpeed",  "1.0"
+
+     .Set "MotionShift",  "0.0"
+
+     .Set "PeriodicityType",  "periodic"
+
+     .Set "MotionEquationCoefficientMass",  "1.0"
+
+     .Set "MotionEquationCoefficientDamping",  "0.0"
+
+     .Set "MotionEquationCoefficientSpring",  "0.0"
+
+     .Set "MotionEquationCoefficientExtForce",  "0.0"
+
+     .Set "MotionEquationInitialPosition",  "0.0"
+
+     .Set "MotionEquationInitialSpeed",  "0.0"
+
+     .Create
+
+End With
+
+ 

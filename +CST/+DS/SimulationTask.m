@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  
+% Object referring to a simulation task. Use this object to create or to manipulate a simulation task.
 classdef SimulationTask < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.DS.Project)

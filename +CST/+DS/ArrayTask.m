@@ -23,7 +23,7 @@ classdef ArrayTask < handle
         % Only CST.DS.Project can create a ArrayTask object.
         function obj = ArrayTask(dsproject, hDSProject)
             obj.dsproject = dsproject;
-            obj.hArrayTask = hDSProject.invoke('ArrayTask');
+            obj.hArrayTask = hDSProject.invoke('PhasedArrayTask');
         end
     end
     %% CST Object functions.

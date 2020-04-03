@@ -1,0 +1,103 @@
+
+Show 
+Home | Visual Basic (VBA) Language | MotionGap Object
+
+MotionGap Object
+
+Defines a new gap item for an existing rigid body motion object.
+
+Methods
+
+Reset
+
+Resets all internal settings for a gap definition to their default values.
+
+ 
+
+Name (name  name )
+
+Sets the name of the new gap item that will be edited or created. Each gap item within one rigid body motion object must have a unique name.
+
+ 
+
+MotionObject (name  name)
+
+Sets the name of the rigid body motion object to which the gap item belongs.
+
+ 
+
+Tool (string  name)
+
+Sets the type of the tool used for the gap definition to an extruded polygon (name="PolygonExtrude") or an extruded circle (name="CircleExtrude") .
+
+ 
+
+StartPointState (string state)
+
+Specifies whether the start point coordinate is to be used as the first point (state = "coordinate") or its projection on the rotation axis (state = "axis").
+
+ 
+
+EndPointState(string state)
+
+Specifies whether the end point coordinate is to be used as the last point (state = "coordinate") or its projection on the rotation axis (state = "axis").
+
+ 
+
+Point (double  x, double  y)
+
+Sets the first point in the local uv plane of the profile that will be rotated (for rotations) or extruded (for translations) to define the gap or the center of the circle which will be extruded (for tool="CircleExtrude").
+
+ 
+
+LineTo (double  x, double  y, double  z)
+
+Sets further points in the local uv plane of the profile that will be rotated (for rotations) or extruded (for translations) to define the gap.
+
+ 
+
+Radius (double  radius)
+
+Sets the radius of the extruded circle for tool = "CircleExtrude".
+
+ 
+
+Create
+
+For rotations: Creates a rotation gap by rotating the defined profile around the specified rotation axis.
+
+For translations: Creates a translation gap by extruding the defined profile along the specified translation axis through the entire calculation domain.
+
+Example
+
+With MotionGap
+
+     .Reset
+
+     .Name "Gap1"
+
+     .MotionObject "Rotation1"
+
+     .Active "True"
+
+     .Orientation "Inside"
+
+     .StartPointState "coordinate"
+
+     .EndPointState "coordinate"
+
+     .Point "0", "0"
+
+     .LineTo "0", "1"
+
+     .LineTo "1", "1"
+
+     .LineTo "1", "0"
+
+     .LineTo "0", "0"
+
+     .Create
+
+End With
+
+ 

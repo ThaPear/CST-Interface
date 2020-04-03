@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  
+% Object referring to an external port. Use this object to create or to manipulate an external port.
 classdef ExternalPort < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.DS.Project)

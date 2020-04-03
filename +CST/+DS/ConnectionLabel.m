@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%  
+% Object referring to a connection label. Use this object to create or to manipulate a connection label.
 classdef ConnectionLabel < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.DS.Project)

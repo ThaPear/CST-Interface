@@ -19,8 +19,9 @@
 % The Project Object offers miscellaneous functions concerning the program in general.
 classdef Project < handle
     %% CST Interface specific functions.
-    methods(Access = ?CST.Application)
-        % Only CST.Application can create a Project object.
+    methods(Access = {?CST.Application, ?CST.SimulationProject})
+        % CST.Application can create a Project object.
+        % CST.SimulationTask.Get3D can create a Project object.
         function obj = Project(hProject)
             obj.hProject = hProject;
         end
@@ -86,28 +87,22 @@ classdef Project < handle
         end
         function PositionWindow(obj, location, handle)
             % This functions sets the position of a window relatively to the location of the main application window. The following settings are valid locations:
-            % "center"
-            % Position the window in the center of the main application window
-            % "top left"
-            % Position the window in the top left corner of the main application window
-            % "top right"
-            % Position the window in the top right corner of the main application window
-            % "bottom left"
-            % Position the window in the bottom left corner of the main application window
-            % "bottom right"
-            % Position the window in the bottom right corner of the main application
-            %  window
+            % "center"        Position the window in the center of the main application window
+            % "top left"      Position the window in the top left corner of the main application window
+            % "top right"     Position the window in the top right corner of the main application window
+            % "bottom left"   Position the window in the bottom left corner of the main application window
+            % "bottom right"  Position the window in the bottom right corner of the main application window
             % The window which needs to be positioned is specified by its window handle. The typical usage of this function is in the initialization part of a user defined dialog box function as shown in the example below:
-            % Private Function DlgFunc(DlgItem$, Action%, SuppValue&) As Boolean
-            % Select Case Action%
-            % Case 1 ' Dialog box initialization
-            % PositionWindow "top right", SuppValue
-            % Case 2 ' Value changing or button pressed
-            % Case 3 ' TextBox or ComboBox text changed
-            % Case 4 ' Focus changed
-            % Case 5 ' Idle
-            % Case 6 ' Function key
-            % End Select
+            % Private Function DlgFunc(DlgItem$, Action, SuppValue&) As Boolean
+            %     Select Case Action
+            %         Case 1 ' Dialog box initialization
+            %             PositionWindow "top right", SuppValue
+            %         Case 2 ' Value changing or button pressed
+            %         Case 3 ' TextBox or ComboBox text changed
+            %         Case 4 ' Focus changed
+            %         Case 5 ' Idle
+            %         Case 6 ' Function key
+            %     End Select
             % End Function
             obj.hProject.invoke('PositionWindow', location, handle);
         end
@@ -218,7 +213,7 @@ classdef Project < handle
         function StoreParameters(obj, names, values)
             % Adds or modifies an arbitrary number of parameters in one go. For bulk changes of many parameters this method can be considerably faster than changing parameters one after another in a loop.
             % The parameters are allowed to arbitrarily depend on each other or on other already existing parameters.
-            % Example:
+            % MATLAB Example:
             % names = {'param1', 'param2'};
             % values = {5, 30};
             % project.StoreParameters(names, values)
@@ -1098,6 +1093,7 @@ classdef Project < handle
         extrude                     CST.Extrude
         extrudecurve                CST.ExtrudeCurve
         face                        CST.Face
+        fan                         CST.Fan
         farfieldarray               CST.FarfieldArray
         farfieldplot                CST.FarfieldPlot
         farfieldsource              CST.FarfieldSource
@@ -1109,6 +1105,7 @@ classdef Project < handle
         gerber                      CST.GERBER
         group                       CST.Group
         heatsource                  CST.HeatSource
+        hfss                        CST.HFSS
         humanmodel                  CST.HumanModel
         iesolver                    CST.IESolver
         iges                        CST.IGES
@@ -1125,24 +1122,36 @@ classdef Project < handle
         magnet                      CST.Magnet
         material                    CST.Material
         mecadtron                   CST.Mecadtron
+        mechfieldsettings           CST.MechFieldSettings
         mesh                        CST.Mesh
         meshadaption3d              CST.MeshAdaption3D
         meshsettings                CST.MeshSettings
         monitor                     CST.Monitor
+        motiongap                   CST.MotionGap
         movingmedia                 CST.MovingMedia
         mqstdsolver                 CST.MQSTDSolver
         mstaticsolver               CST.MStaticSolver
         nastran                     CST.NASTRAN
+        nearfieldscan               CST.NearfieldScan
         networkparameterextraction  CST.NetworkParameterExtraction
         nfsfile                     CST.NFSFile
         obj_                        CST.OBJ
         optimizer                   CST.Optimizer
         parametersweep              CST.ParameterSweep
         parasolid                   CST.Parasolid
+        particle2dmonitorreader     CST.Particle2DMonitorReader
         particlebeam                CST.ParticleBeam
         particleinterface           CST.ParticleInterface
+        particlemonitor             CST.ParticleMonitor
+        particlemonitoronsolid      CST.ParticleMonitorOnSolid
         particlesource              CST.ParticleSource
+        particletrajectoryreader    CST.ParticleTrajectoryReader
+        pic2dmonitor                CST.PIC2DMonitor
+        pic2dmonitorreader          CST.PIC2DMonitorReader
         pick                        CST.Pick
+        picphasespacemonitor        CST.PICPhaseSpaceMonitor
+        picpositionmonitor          CST.PICPositionMonitor
+        picpositionmonitorreader    CST.PICPositionMonitorReader
         picsolver                   CST.PICSolver
         planewave                   CST.PlaneWave
         plot                        CST.Plot
@@ -1157,19 +1166,22 @@ classdef Project < handle
         proe                        CST.PROE
         qfactor                     CST.QFactor
         rectangle                   CST.Rectangle
-%         result0d                    CST.Result0D
-%         result1d                    CST.Result1D
-%         result1dcomplex             CST.Result1DComplex
-%         result3d                    CST.Result3D
+%       result0d                    CST.Result0D
+%       result1d                    CST.Result1D
+%       result1dcomplex             CST.Result1DComplex
+%       result3d                    CST.Result3D
         resultdatabase              CST.ResultDatabase
-%         resultmap                   CST.ResultMap
+%       resultmap                   CST.ResultMap
         resulttree                  CST.ResultTree
+        rigidbodymotion             CST.RigidBodyMotion
         rotate                      CST.Rotate
         sar                         CST.SAR
         sat                         CST.SAT
         scalarplot2d                CST.ScalarPlot2D
         scalarplot3d                CST.ScalarPlot3D
+        sensitivityanalysis         CST.SensitivityAnalysis
         siemensnx                   CST.SiemensNX
+        simulationproject           CST.SimulationProject
         simuliacse                  CST.SimuliaCSE
         solid                       CST.Solid
         solidedge                   CST.SolidEdge
@@ -1183,8 +1195,9 @@ classdef Project < handle
         step                        CST.STEP
         structuralmechanicssolver   CST.StructuralMechanicsSolver
         sweepcurve                  CST.SweepCurve
-%         table                       CST.Table
+%       table                       CST.Table
         temperaturesource           CST.TemperatureSource
+        thermallossimport           CST.ThermalLossImport
         thermalsolver               CST.ThermalSolver
         thermalsourceparameter      CST.ThermalSourceParameter
         thermalsurfaceproperty      CST.ThermalSurfaceProperty
@@ -1212,1022 +1225,206 @@ classdef Project < handle
         wakefieldpostprocessor      CST.WakefieldPostprocessor
         wcs                         CST.WCS
         wire                        CST.Wire
+        yieldanalysis               CST.YieldAnalysis
     end
-
     methods
-        function adscomponentexport = ADSComponentExport(obj)
-            if(isempty(obj.adscomponentexport))
-                obj.adscomponentexport = CST.ADSComponentExport(obj, obj.hProject);
-            end
-            adscomponentexport = obj.adscomponentexport;
-        end
-        function adscosimulation = ADSCosimulation(obj)
-            if(isempty(obj.adscosimulation))
-                obj.adscosimulation = CST.ADSCosimulation(obj, obj.hProject);
-            end
-            adscosimulation = obj.adscosimulation;
-        end
-        function align = Align(obj)
-            if(isempty(obj.align))
-                obj.align = CST.Align_(obj, obj.hProject);
-            end
-            align = obj.align;
-        end
-        function analyticalcurve = AnalyticalCurve(obj)
-            if(isempty(obj.analyticalcurve))
-                obj.analyticalcurve = CST.AnalyticalCurve(obj, obj.hProject);
-            end
-            analyticalcurve = obj.analyticalcurve;
-        end
-        function analyticalface = AnalyticalFace(obj)
-            if(isempty(obj.analyticalface))
-                obj.analyticalface = CST.AnalyticalFace(obj, obj.hProject);
-            end
-            analyticalface = obj.analyticalface;
-        end
-        function arc = Arc(obj)
-            if(isempty(obj.arc))
-                obj.arc = CST.Arc(obj, obj.hProject);
-            end
-            arc = obj.arc;
-        end
-        function arfilter = Arfilter(obj)
-            if(isempty(obj.arfilter))
-                obj.arfilter = CST.Arfilter(obj, obj.hProject);
-            end
-            arfilter = obj.arfilter;
-        end
-        function asciiexport = ASCIIExport(obj)
-            if(isempty(obj.asciiexport))
-                obj.asciiexport = CST.ASCIIExport(obj, obj.hProject);
-            end
-            asciiexport = obj.asciiexport;
-        end
-        function asymptoticsolver = AsymptoticSolver(obj)
-            if(isempty(obj.asymptoticsolver))
-                obj.asymptoticsolver = CST.AsymptoticSolver(obj, obj.hProject);
-            end
-            asymptoticsolver = obj.asymptoticsolver;
-        end
-        function autodeskinventor = AutodeskInventor(obj)
-            if(isempty(obj.autodeskinventor))
-                obj.autodeskinventor = CST.AutodeskInventor(obj, obj.hProject);
-            end
-            autodeskinventor = obj.autodeskinventor;
-        end
-        function background = Background(obj)
-            if(isempty(obj.background))
-                obj.background = CST.Background(obj, obj.hProject);
-            end
-            background = obj.background;
-        end
-        function bending = Bending(obj)
-            if(isempty(obj.bending))
-                obj.bending = CST.Bending(obj, obj.hProject);
-            end
-            bending = obj.bending;
-        end
-        function blendcurve = BlendCurve(obj)
-            if(isempty(obj.blendcurve))
-                obj.blendcurve = CST.BlendCurve(obj, obj.hProject);
-            end
-            blendcurve = obj.blendcurve;
-        end
-        function boundary = Boundary(obj)
-            if(isempty(obj.boundary))
-                obj.boundary = CST.Boundary(obj, obj.hProject);
-            end
-            boundary = obj.boundary;
-        end
-        function brick = Brick(obj)
-            if(isempty(obj.brick))
-                obj.brick = CST.Brick(obj, obj.hProject);
-            end
-            brick = obj.brick;
-        end
-        function catia = CATIA(obj)
-            if(isempty(obj.catia))
-                obj.catia = CST.CATIA(obj, obj.hProject);
-            end
-            catia = obj.catia;
-        end
-        function chamfercurve = ChamferCurve(obj)
-            if(isempty(obj.chamfercurve))
-                obj.chamfercurve = CST.ChamferCurve(obj, obj.hProject);
-            end
-            chamfercurve = obj.chamfercurve;
-        end
-        function charge = Charge(obj)
-            if(isempty(obj.charge))
-                obj.charge = CST.Charge(obj, obj.hProject);
-            end
-            charge = obj.charge;
-        end
-        function chtsolver = CHTSolver(obj)
-            if(isempty(obj.chtsolver))
-                obj.chtsolver = CST.CHTSolver(obj, obj.hProject);
-            end
-            chtsolver = obj.chtsolver;
-        end
-        function circle = Circle(obj)
-            if(isempty(obj.circle))
-                obj.circle = CST.Circle(obj, obj.hProject);
-            end
-            circle = obj.circle;
-        end
-        function coil = Coil(obj)
-            if(isempty(obj.coil))
-                obj.coil = CST.Coil(obj, obj.hProject);
-            end
-            coil = obj.coil;
-        end
-        function colorramp = ColorRamp(obj)
-            if(isempty(obj.colorramp))
-                obj.colorramp = CST.ColorRamp(obj, obj.hProject);
-            end
-            colorramp = obj.colorramp;
-        end
-        function colourmapplot = ColourMapPlot(obj)
-            if(isempty(obj.colourmapplot))
-                obj.colourmapplot = CST.ColourMapPlot(obj, obj.hProject);
-            end
-            colourmapplot = obj.colourmapplot;
-        end
-        function combineresults = CombineResults(obj)
-            if(isempty(obj.combineresults))
-                obj.combineresults = CST.CombineResults(obj, obj.hProject);
-            end
-            combineresults = obj.combineresults;
-        end
-        function component = Component(obj)
-            if(isempty(obj.component))
-                obj.component = CST.Component(obj, obj.hProject);
-            end
-            component = obj.component;
-        end
-        function cone = Cone(obj)
-            if(isempty(obj.cone))
-                obj.cone = CST.Cone(obj, obj.hProject);
-            end
-            cone = obj.cone;
-        end
-        function contactproperties = ContactProperties(obj)
-            if(isempty(obj.contactproperties))
-                obj.contactproperties = CST.ContactProperties(obj, obj.hProject);
-            end
-            contactproperties = obj.contactproperties;
-        end
-        function coventorware = CoventorWare(obj)
-            if(isempty(obj.coventorware))
-                obj.coventorware = CST.CoventorWare(obj, obj.hProject);
-            end
-            coventorware = obj.coventorware;
-        end
-        function covercurve = CoverCurve(obj)
-            if(isempty(obj.covercurve))
-                obj.covercurve = CST.CoverCurve(obj, obj.hProject);
-            end
-            covercurve = obj.covercurve;
-        end
-        function currentmonitor = CurrentMonitor(obj)
-            if(isempty(obj.currentmonitor))
-                obj.currentmonitor = CST.CurrentMonitor(obj, obj.hProject);
-            end
-            currentmonitor = obj.currentmonitor;
-        end
-        function currentpath = CurrentPath(obj)
-            if(isempty(obj.currentpath))
-                obj.currentpath = CST.CurrentPath(obj, obj.hProject);
-            end
-            currentpath = obj.currentpath;
-        end
-        function currentport = CurrentPort(obj)
-            if(isempty(obj.currentport))
-                obj.currentport = CST.CurrentPort(obj, obj.hProject);
-            end
-            currentport = obj.currentport;
-        end
-        function curve = Curve(obj)
-            if(isempty(obj.curve))
-                obj.curve = CST.Curve(obj, obj.hProject);
-            end
-            curve = obj.curve;
-        end
-        function cylinder = Cylinder(obj)
-            if(isempty(obj.cylinder))
-                obj.cylinder = CST.Cylinder(obj, obj.hProject);
-            end
-            cylinder = obj.cylinder;
-        end
-        function dimension = Dimension(obj)
-            if(isempty(obj.dimension))
-                obj.dimension = CST.Dimension(obj, obj.hProject);
-            end
-            dimension = obj.dimension;
-        end
-        function discretefaceport = DiscreteFacePort(obj)
-            if(isempty(obj.discretefaceport))
-                obj.discretefaceport = CST.DiscreteFacePort(obj, obj.hProject);
-            end
-            discretefaceport = obj.discretefaceport;
-        end
-        function discreteport = DiscretePort(obj)
-            if(isempty(obj.discreteport))
-                obj.discreteport = CST.DiscretePort(obj, obj.hProject);
-            end
-            discreteport = obj.discreteport;
-        end
-        function discretizer = Discretizer(obj)
-            if(isempty(obj.discretizer))
-                obj.discretizer = CST.Discretizer(obj, obj.hProject);
-            end
-            discretizer = obj.discretizer;
-        end
-        function displacement = Displacement(obj)
-            if(isempty(obj.displacement))
-                obj.displacement = CST.Displacement(obj, obj.hProject);
-            end
-            displacement = obj.displacement;
-        end
-        function drcrz = DRCRZ(obj)
-            if(isempty(obj.drcrz))
-                obj.drcrz = CST.DRCRZ(obj, obj.hProject);
-            end
-            drcrz = obj.drcrz;
-        end
-        function dxf = DXF(obj)
-            if(isempty(obj.dxf))
-                obj.dxf = CST.DXF(obj, obj.hProject);
-            end
-            dxf = obj.dxf;
-        end
-        function ecylinder = ECylinder(obj)
-            if(isempty(obj.ecylinder))
-                obj.ecylinder = CST.ECylinder(obj, obj.hProject);
-            end
-            ecylinder = obj.ecylinder;
-        end
-        function edaimportdefaults = EDAImportDefaults(obj)
-            if(isempty(obj.edaimportdefaults))
-                obj.edaimportdefaults = CST.EDAImportDefaults(obj, obj.hProject);
-            end
-            edaimportdefaults = obj.edaimportdefaults;
-        end
-        function edgecurve = EdgeCurve(obj)
-            if(isempty(obj.edgecurve))
-                obj.edgecurve = CST.EdgeCurve(obj, obj.hProject);
-            end
-            edgecurve = obj.edgecurve;
-        end
-        function eigenmodesolver = EigenmodeSolver(obj)
-            if(isempty(obj.eigenmodesolver))
-                obj.eigenmodesolver = CST.EigenmodeSolver(obj, obj.hProject);
-            end
-            eigenmodesolver = obj.eigenmodesolver;
-        end
-        function ellipse = Ellipse(obj)
-            if(isempty(obj.ellipse))
-                obj.ellipse = CST.Ellipse(obj, obj.hProject);
-            end
-            ellipse = obj.ellipse;
-        end
-        function eqssolver = EQSSolver(obj)
-            if(isempty(obj.eqssolver))
-                obj.eqssolver = CST.EQSSolver(obj, obj.hProject);
-            end
-            eqssolver = obj.eqssolver;
-        end
-        function estaticsolver = EStaticSolver(obj)
-            if(isempty(obj.estaticsolver))
-                obj.estaticsolver = CST.EStaticSolver(obj, obj.hProject);
-            end
-            estaticsolver = obj.estaticsolver;
-        end
-        function evaluatefieldalongcurve = EvaluateFieldAlongCurve(obj)
-            if(isempty(obj.evaluatefieldalongcurve))
-                obj.evaluatefieldalongcurve = CST.EvaluateFieldAlongCurve(obj, obj.hProject);
-            end
-            evaluatefieldalongcurve = obj.evaluatefieldalongcurve;
-        end
-        function evaluatefieldonface = EvaluateFieldOnFace(obj)
-            if(isempty(obj.evaluatefieldonface))
-                obj.evaluatefieldonface = CST.EvaluateFieldOnFace(obj, obj.hProject);
-            end
-            evaluatefieldonface = obj.evaluatefieldonface;
-        end
-        function extrude = Extrude(obj)
-            if(isempty(obj.extrude))
-                obj.extrude = CST.Extrude(obj, obj.hProject);
-            end
-            extrude = obj.extrude;
-        end
-        function extrudecurve = ExtrudeCurve(obj)
-            if(isempty(obj.extrudecurve))
-                obj.extrudecurve = CST.ExtrudeCurve(obj, obj.hProject);
-            end
-            extrudecurve = obj.extrudecurve;
-        end
-        function face = Face(obj)
-            if(isempty(obj.face))
-                obj.face = CST.Face(obj, obj.hProject);
-            end
-            face = obj.face;
-        end
-        function farfieldarray = FarfieldArray(obj)
-            if(isempty(obj.farfieldarray))
-                obj.farfieldarray = CST.FarfieldArray(obj, obj.hProject);
-            end
-            farfieldarray = obj.farfieldarray;
-        end
-        function farfieldplot = FarfieldPlot(obj)
-            if(isempty(obj.farfieldplot))
-                obj.farfieldplot = CST.FarfieldPlot(obj, obj.hProject);
-            end
-            farfieldplot = obj.farfieldplot;
-        end
-        function farfieldsource = FarfieldSource(obj)
-            if(isempty(obj.farfieldsource))
-                obj.farfieldsource = CST.FarfieldSource(obj, obj.hProject);
-            end
-            farfieldsource = obj.farfieldsource;
-        end
-        function fdsolver = FDSolver(obj)
-            if(isempty(obj.fdsolver))
-                obj.fdsolver = CST.FDSolver(obj, obj.hProject);
-            end
-            fdsolver = obj.fdsolver;
-        end
-        function fieldsource = FieldSource(obj)
-            if(isempty(obj.fieldsource))
-                obj.fieldsource = CST.FieldSource(obj, obj.hProject);
-            end
-            fieldsource = obj.fieldsource;
-        end
-        function floquetport = FloquetPort(obj)
-            if(isempty(obj.floquetport))
-                obj.floquetport = CST.FloquetPort(obj, obj.hProject);
-            end
-            floquetport = obj.floquetport;
-        end
-        function force = Force(obj)
-            if(isempty(obj.force))
-                obj.force = CST.Force(obj, obj.hProject);
-            end
-            force = obj.force;
-        end
-        function gdsii = GDSII(obj)
-            if(isempty(obj.gdsii))
-                obj.gdsii = CST.GDSII(obj, obj.hProject);
-            end
-            gdsii = obj.gdsii;
-        end
-        function gerber = GERBER(obj)
-            if(isempty(obj.gerber))
-                obj.gerber = CST.GERBER(obj, obj.hProject);
-            end
-            gerber = obj.gerber;
-        end
-        function group = Group(obj)
-            if(isempty(obj.group))
-                obj.group = CST.Group(obj, obj.hProject);
-            end
-            group = obj.group;
-        end
-        function heatsource = HeatSource(obj)
-            if(isempty(obj.heatsource))
-                obj.heatsource = CST.HeatSource(obj, obj.hProject);
-            end
-            heatsource = obj.heatsource;
-        end
-        function humanmodel = HumanModel(obj)
-            if(isempty(obj.humanmodel))
-                obj.humanmodel = CST.HumanModel(obj, obj.hProject);
-            end
-            humanmodel = obj.humanmodel;
-        end
-        function iesolver = IESolver(obj)
-            if(isempty(obj.iesolver))
-                obj.iesolver = CST.IESolver(obj, obj.hProject);
-            end
-            iesolver = obj.iesolver;
-        end
-        function iges = IGES(obj)
-            if(isempty(obj.iges))
-                obj.iges = CST.IGES(obj, obj.hProject);
-            end
-            iges = obj.iges;
-        end
-        function layerstacking = LayerStacking(obj)
-            if(isempty(obj.layerstacking))
-                obj.layerstacking = CST.LayerStacking(obj, obj.hProject);
-            end
-            layerstacking = obj.layerstacking;
-        end
-        function layoutdb = LayoutDB(obj)
-            if(isempty(obj.layoutdb))
-                obj.layoutdb = CST.LayoutDB(obj, obj.hProject);
-            end
-            layoutdb = obj.layoutdb;
-        end
-        function lfsolver = LFSolver(obj)
-            if(isempty(obj.lfsolver))
-                obj.lfsolver = CST.LFSolver(obj, obj.hProject);
-            end
-            lfsolver = obj.lfsolver;
-        end
-        function line = Line(obj)
-            if(isempty(obj.line))
-                obj.line = CST.Line(obj, obj.hProject);
-            end
-            line = obj.line;
-        end
-        function livelink = LiveLink(obj)
-            if(isempty(obj.livelink))
-                obj.livelink = CST.LiveLink(obj, obj.hProject);
-            end
-            livelink = obj.livelink;
-        end
-        function localmodification = LocalModification(obj)
-            if(isempty(obj.localmodification))
-                obj.localmodification = CST.LocalModification(obj, obj.hProject);
-            end
-            localmodification = obj.localmodification;
-        end
-        function loft = Loft(obj)
-            if(isempty(obj.loft))
-                obj.loft = CST.Loft(obj, obj.hProject);
-            end
-            loft = obj.loft;
-        end
-        function loftcurves = LoftCurves(obj)
-            if(isempty(obj.loftcurves))
-                obj.loftcurves = CST.LoftCurves(obj, obj.hProject);
-            end
-            loftcurves = obj.loftcurves;
-        end
-        function lumpedelement = LumpedElement(obj)
-            if(isempty(obj.lumpedelement))
-                obj.lumpedelement = CST.LumpedElement(obj, obj.hProject);
-            end
-            lumpedelement = obj.lumpedelement;
-        end
-        function lumpedfaceelement = LumpedFaceElement(obj)
-            if(isempty(obj.lumpedfaceelement))
-                obj.lumpedfaceelement = CST.LumpedFaceElement(obj, obj.hProject);
-            end
-            lumpedfaceelement = obj.lumpedfaceelement;
-        end
-        function magnet = Magnet(obj)
-            if(isempty(obj.magnet))
-                obj.magnet = CST.Magnet(obj, obj.hProject);
-            end
-            magnet = obj.magnet;
-        end
-        function material = Material(obj)
-            if(isempty(obj.material))
-                obj.material = CST.Material(obj, obj.hProject);
-            end
-            material = obj.material;
-        end
-        function mecadtron = Mecadtron(obj)
-            if(isempty(obj.mecadtron))
-                obj.mecadtron = CST.Mecadtron(obj, obj.hProject);
-            end
-            mecadtron = obj.mecadtron;
-        end
-        function mesh = Mesh(obj)
-            if(isempty(obj.mesh))
-                obj.mesh = CST.Mesh(obj, obj.hProject);
-            end
-            mesh = obj.mesh;
-        end
-        function meshadaption3d = MeshAdaption3D(obj)
-            if(isempty(obj.meshadaption3d))
-                obj.meshadaption3d = CST.MeshAdaption3D(obj, obj.hProject);
-            end
-            meshadaption3d = obj.meshadaption3d;
-        end
-        function meshsettings = MeshSettings(obj)
-            if(isempty(obj.meshsettings))
-                obj.meshsettings = CST.MeshSettings(obj, obj.hProject);
-            end
-            meshsettings = obj.meshsettings;
-        end
-        function monitor = Monitor(obj)
-            if(isempty(obj.monitor))
-                obj.monitor = CST.Monitor(obj, obj.hProject);
-            end
-            monitor = obj.monitor;
-        end
-        function movingmedia = MovingMedia(obj)
-            if(isempty(obj.movingmedia))
-                obj.movingmedia = CST.MovingMedia(obj, obj.hProject);
-            end
-            movingmedia = obj.movingmedia;
-        end
-        function mqstdsolver = MQSTDSolver(obj)
-            if(isempty(obj.mqstdsolver))
-                obj.mqstdsolver = CST.MQSTDSolver(obj, obj.hProject);
-            end
-            mqstdsolver = obj.mqstdsolver;
-        end
-        function mstaticsolver = MStaticSolver(obj)
-            if(isempty(obj.mstaticsolver))
-                obj.mstaticsolver = CST.MStaticSolver(obj, obj.hProject);
-            end
-            mstaticsolver = obj.mstaticsolver;
-        end
-        function nastran = NASTRAN(obj)
-            if(isempty(obj.nastran))
-                obj.nastran = CST.NASTRAN(obj, obj.hProject);
-            end
-            nastran = obj.nastran;
-        end
-        function networkparameterextraction = NetworkParameterExtraction(obj)
-            if(isempty(obj.networkparameterextraction))
-                obj.networkparameterextraction = CST.NetworkParameterExtraction(obj, obj.hProject);
-            end
-            networkparameterextraction = obj.networkparameterextraction;
-        end
-        function nfsfile = NFSFile(obj)
-            if(isempty(obj.nfsfile))
-                obj.nfsfile = CST.NFSFile(obj, obj.hProject);
-            end
-            nfsfile = obj.nfsfile;
-        end
-        function obj_ = OBJ(obj)
-            if(isempty(obj.obj_))
-                obj.obj_ = CST.OBJ(obj, obj.hProject);
-            end
-            obj_ = obj.obj_;
-        end
-        function optimizer = Optimizer(obj)
-            if(isempty(obj.optimizer))
-                obj.optimizer = CST.Optimizer(obj, obj.hProject);
-            end
-            optimizer = obj.optimizer;
-        end
-        function parametersweep = ParameterSweep(obj)
-            if(isempty(obj.parametersweep))
-                obj.parametersweep = CST.ParameterSweep(obj, obj.hProject);
-            end
-            parametersweep = obj.parametersweep;
-        end
-        function parasolid = Parasolid(obj)
-            if(isempty(obj.parasolid))
-                obj.parasolid = CST.Parasolid(obj, obj.hProject);
-            end
-            parasolid = obj.parasolid;
-        end
-        function particlebeam = ParticleBeam(obj)
-            if(isempty(obj.particlebeam))
-                obj.particlebeam = CST.ParticleBeam(obj, obj.hProject);
-            end
-            particlebeam = obj.particlebeam;
-        end
-        function particleinterface = ParticleInterface(obj)
-            if(isempty(obj.particleinterface))
-                obj.particleinterface = CST.ParticleInterface(obj, obj.hProject);
-            end
-            particleinterface = obj.particleinterface;
-        end
-        function particlesource = ParticleSource(obj)
-            if(isempty(obj.particlesource))
-                obj.particlesource = CST.ParticleSource(obj, obj.hProject);
-            end
-            particlesource = obj.particlesource;
-        end
-        function pick = Pick(obj)
-            if(isempty(obj.pick))
-                obj.pick = CST.Pick(obj, obj.hProject);
-            end
-            pick = obj.pick;
-        end
-        function picsolver = PICSolver(obj)
-            if(isempty(obj.picsolver))
-                obj.picsolver = CST.PICSolver(obj, obj.hProject);
-            end
-            picsolver = obj.picsolver;
-        end
-        function planewave = PlaneWave(obj)
-            if(isempty(obj.planewave))
-                obj.planewave = CST.PlaneWave(obj, obj.hProject);
-            end
-            planewave = obj.planewave;
-        end
-        function plot = Plot(obj)
-            if(isempty(obj.plot))
-                obj.plot = CST.Plot(obj, obj.hProject);
-            end
-            plot = obj.plot;
-        end
-        function plot1d = Plot1D(obj)
-            if(isempty(obj.plot1d))
-                obj.plot1d = CST.Plot1D(obj, obj.hProject);
-            end
-            plot1d = obj.plot1d;
-        end
-        function polygon = Polygon(obj)
-            if(isempty(obj.polygon))
-                obj.polygon = CST.Polygon(obj, obj.hProject);
-            end
-            polygon = obj.polygon;
-        end
-        function polygon3d = Polygon3D(obj)
-            if(isempty(obj.polygon3d))
-                obj.polygon3d = CST.Polygon3D(obj, obj.hProject);
-            end
-            polygon3d = obj.polygon3d;
-        end
-        function port = Port(obj)
-            if(isempty(obj.port))
-                obj.port = CST.Port(obj, obj.hProject);
-            end
-            port = obj.port;
-        end
-        function postprocess1d = PostProcess1D(obj)
-            if(isempty(obj.postprocess1d))
-                obj.postprocess1d = CST.PostProcess1D(obj, obj.hProject);
-            end
-            postprocess1d = obj.postprocess1d;
-        end
-        function potential = Potential(obj)
-            if(isempty(obj.potential))
-                obj.potential = CST.Potential(obj, obj.hProject);
-            end
-            potential = obj.potential;
-        end
-        function predefinedfield = PredefinedField(obj)
-            if(isempty(obj.predefinedfield))
-                obj.predefinedfield = CST.PredefinedField(obj, obj.hProject);
-            end
-            predefinedfield = obj.predefinedfield;
-        end
-        function probe = Probe(obj)
-            if(isempty(obj.probe))
-                obj.probe = CST.Probe(obj, obj.hProject);
-            end
-            probe = obj.probe;
-        end
-        function proe = PROE(obj)
-            if(isempty(obj.proe))
-                obj.proe = CST.PROE(obj, obj.hProject);
-            end
-            proe = obj.proe;
-        end
-        function qfactor = QFactor(obj)
-            if(isempty(obj.qfactor))
-                obj.qfactor = CST.QFactor(obj, obj.hProject);
-            end
-            qfactor = obj.qfactor;
-        end
-        function rectangle = Rectangle(obj)
-            if(isempty(obj.rectangle))
-                obj.rectangle = CST.Rectangle(obj, obj.hProject);
-            end
-            rectangle = obj.rectangle;
-        end
-        function result0d = Result0D(obj, resultname)
-%             if(isempty(obj.result0d))
-%                 obj.result0d = CST.Result0D(obj, obj.hProject, resultname);
-%             end
-%             result0d = obj.result0d;
-            % Each result0d can be different depending on resultname, so don't store it.
-            result0d = CST.Result0D(obj, obj.hProject, resultname);
-        end
-        function result1d = Result1D(obj, resultname)
-%             if(isempty(obj.result1d))
-%                 obj.result1d = CST.Result1D(obj, obj.hProject, resultname);
-%             end
-%             result1d = obj.result1d;
-            % Each result1d can be different depending on resultname, so don't store it.
-            result1d = CST.Result1D(obj, obj.hProject, resultname);
-        end
-        function result1dcomplex = Result1DComplex(obj, resultname)
-%             if(isempty(obj.result1dcomplex))
-%                 obj.result1dcomplex = CST.Result1DComplex(obj, obj.hProject, resultname);
-%             end
-%             result1dcomplex = obj.result1dcomplex;
-            % Each result1dcomplex can be different depending on resultname, so don't store it.
-            result1dcomplex = CST.Result1DComplex(obj, obj.hProject, resultname);
-        end
-        function result3d = Result3D(obj, resultname)
-%             if(isempty(obj.result3d))
-%                 obj.result3d = CST.Result3D(obj, obj.hProject, resultname);
-%             end
-%             result3d = obj.result3d;
-            % Each result3d can be different depending on resultname, so don't store it.
-            result3d = CST.Result3D(obj, obj.hProject, resultname);
-        end
-        function resultdatabase = ResultDatabase(obj)
-            if(isempty(obj.resultdatabase))
-                obj.resultdatabase = CST.ResultDatabase(obj, obj.hProject);
-            end
-            resultdatabase = obj.resultdatabase;
-        end
-        function resultmap = ResultMap(obj, resultname)
-%             if(isempty(obj.resultmap))
-%                 obj.resultmap = CST.ResultMap(obj, obj.hProject, treepath);
-%             end
-%             resultmap = obj.resultmap;
-            % Each resultmap can be different depending on treepath, so don't store it.
-            resultmap = CST.ResultMap(obj, obj.hProject, resultname);
-        end
-        function resulttree = ResultTree(obj)
-            if(isempty(obj.resulttree))
-                obj.resulttree = CST.ResultTree(obj, obj.hProject);
-            end
-            resulttree = obj.resulttree;
-        end
-        function rotate = Rotate(obj)
-            if(isempty(obj.rotate))
-                obj.rotate = CST.Rotate(obj, obj.hProject);
-            end
-            rotate = obj.rotate;
-        end
-        function sar = SAR(obj)
-            if(isempty(obj.sar))
-                obj.sar = CST.SAR(obj, obj.hProject);
-            end
-            sar = obj.sar;
-        end
-        function sat = SAT(obj)
-            if(isempty(obj.sat))
-                obj.sat = CST.SAT(obj, obj.hProject);
-            end
-            sat = obj.sat;
-        end
-        function scalarplot2d = ScalarPlot2D(obj)
-            if(isempty(obj.scalarplot2d))
-                obj.scalarplot2d = CST.ScalarPlot2D(obj, obj.hProject);
-            end
-            scalarplot2d = obj.scalarplot2d;
-        end
-        function scalarplot3d = ScalarPlot3D(obj)
-            if(isempty(obj.scalarplot3d))
-                obj.scalarplot3d = CST.ScalarPlot3D(obj, obj.hProject);
-            end
-            scalarplot3d = obj.scalarplot3d;
-        end
-        function siemensnx = SiemensNX(obj)
-            if(isempty(obj.siemensnx))
-                obj.siemensnx = CST.SiemensNX(obj, obj.hProject);
-            end
-            siemensnx = obj.siemensnx;
-        end
-        function simuliacse = SimuliaCSE(obj)
-            if(isempty(obj.simuliacse))
-                obj.simuliacse = CST.SimuliaCSE(obj, obj.hProject);
-            end
-            simuliacse = obj.simuliacse;
-        end
-        function solid = Solid(obj)
-            if(isempty(obj.solid))
-                obj.solid = CST.Solid(obj, obj.hProject);
-            end
-            solid = obj.solid;
-        end
-        function solidedge = SolidEdge(obj)
-            if(isempty(obj.solidedge))
-                obj.solidedge = CST.SolidEdge(obj, obj.hProject);
-            end
-            solidedge = obj.solidedge;
-        end
-        function solidworks = SolidWorks(obj)
-            if(isempty(obj.solidworks))
-                obj.solidworks = CST.SolidWorks(obj, obj.hProject);
-            end
-            solidworks = obj.solidworks;
-        end
-        function solver = Solver(obj)
-            if(isempty(obj.solver))
-                obj.solver = CST.Solver(obj, obj.hProject);
-            end
-            solver = obj.solver;
-        end
-        function solverparameter = SolverParameter(obj)
-            if(isempty(obj.solverparameter))
-                obj.solverparameter = CST.SolverParameter(obj, obj.hProject);
-            end
-            solverparameter = obj.solverparameter;
-        end
-        function sourcefield = SourceField(obj)
-            if(isempty(obj.sourcefield))
-                obj.sourcefield = CST.SourceField(obj, obj.hProject);
-            end
-            sourcefield = obj.sourcefield;
-        end
-        function sphere = Sphere(obj)
-            if(isempty(obj.sphere))
-                obj.sphere = CST.Sphere(obj, obj.hProject);
-            end
-            sphere = obj.sphere;
-        end
-        function spline = Spline(obj)
-            if(isempty(obj.spline))
-                obj.spline = CST.Spline(obj, obj.hProject);
-            end
-            spline = obj.spline;
-        end
-        function stationarycurrentsolver = StationaryCurrentSolver(obj)
-            if(isempty(obj.stationarycurrentsolver))
-                obj.stationarycurrentsolver = CST.StationaryCurrentSolver(obj, obj.hProject);
-            end
-            stationarycurrentsolver = obj.stationarycurrentsolver;
-        end
-        function step = STEP(obj)
-            if(isempty(obj.step))
-                obj.step = CST.STEP(obj, obj.hProject);
-            end
-            step = obj.step;
-        end
-        function structuralmechanicssolver = StructuralMechanicsSolver(obj)
-            if(isempty(obj.structuralmechanicssolver))
-                obj.structuralmechanicssolver = CST.StructuralMechanicsSolver(obj, obj.hProject);
-            end
-            structuralmechanicssolver = obj.structuralmechanicssolver;
-        end
-        function sweepcurve = SweepCurve(obj)
-            if(isempty(obj.sweepcurve))
-                obj.sweepcurve = CST.SweepCurve(obj, obj.hProject);
-            end
-            sweepcurve = obj.sweepcurve;
-        end
-        function table = Table(obj, resultname)
-%             if(isempty(obj.table))
-%                 obj.table = CST.Table(obj, obj.hProject, tablefilename);
-%             end
-%             table = obj.table;
-            % Each table can be different depending on tablefilename, so don't store it.
-            table = CST.Table(obj, obj.hProject, resultname);
-        end
-        function temperaturesource = TemperatureSource(obj)
-            if(isempty(obj.temperaturesource))
-                obj.temperaturesource = CST.TemperatureSource(obj, obj.hProject);
-            end
-            temperaturesource = obj.temperaturesource;
-        end
-        function thermalsolver = ThermalSolver(obj)
-            if(isempty(obj.thermalsolver))
-                obj.thermalsolver = CST.ThermalSolver(obj, obj.hProject);
-            end
-            thermalsolver = obj.thermalsolver;
-        end
-        function thermalsourceparameter = ThermalSourceParameter(obj)
-            if(isempty(obj.thermalsourceparameter))
-                obj.thermalsourceparameter = CST.ThermalSourceParameter(obj, obj.hProject);
-            end
-            thermalsourceparameter = obj.thermalsourceparameter;
-        end
-        function thermalsurfaceproperty = ThermalSurfaceProperty(obj)
-            if(isempty(obj.thermalsurfaceproperty))
-                obj.thermalsurfaceproperty = CST.ThermalSurfaceProperty(obj, obj.hProject);
-            end
-            thermalsurfaceproperty = obj.thermalsurfaceproperty;
-        end
-        function thermaltdsolver = ThermalTDSolver(obj)
-            if(isempty(obj.thermaltdsolver))
-                obj.thermaltdsolver = CST.ThermalTDSolver(obj, obj.hProject);
-            end
-            thermaltdsolver = obj.thermaltdsolver;
-        end
-        function timemonitor = TimeMonitor(obj)
-            if(isempty(obj.timemonitor))
-                obj.timemonitor = CST.TimeMonitor(obj, obj.hProject);
-            end
-            timemonitor = obj.timemonitor;
-        end
-        function timemonitor0d = TimeMonitor0D(obj)
-            if(isempty(obj.timemonitor0d))
-                obj.timemonitor0d = CST.TimeMonitor0D(obj, obj.hProject);
-            end
-            timemonitor0d = obj.timemonitor0d;
-        end
-        function timemonitor1d = TimeMonitor1D(obj)
-            if(isempty(obj.timemonitor1d))
-                obj.timemonitor1d = CST.TimeMonitor1D(obj, obj.hProject);
-            end
-            timemonitor1d = obj.timemonitor1d;
-        end
-        function timemonitor2d = TimeMonitor2D(obj)
-            if(isempty(obj.timemonitor2d))
-                obj.timemonitor2d = CST.TimeMonitor2D(obj, obj.hProject);
-            end
-            timemonitor2d = obj.timemonitor2d;
-        end
-        function timemonitor3d = TimeMonitor3D(obj)
-            if(isempty(obj.timemonitor3d))
-                obj.timemonitor3d = CST.TimeMonitor3D(obj, obj.hProject);
-            end
-            timemonitor3d = obj.timemonitor3d;
-        end
-        function timesignal = TimeSignal(obj)
-            if(isempty(obj.timesignal))
-                obj.timesignal = CST.TimeSignal(obj, obj.hProject);
-            end
-            timesignal = obj.timesignal;
-        end
-        function torus = Torus(obj)
-            if(isempty(obj.torus))
-                obj.torus = CST.Torus(obj, obj.hProject);
-            end
-            torus = obj.torus;
-        end
-        function touchstone = Touchstone(obj)
-            if(isempty(obj.touchstone))
-                obj.touchstone = CST.Touchstone(obj, obj.hProject);
-            end
-            touchstone = obj.touchstone;
-        end
-        function tracefromcurve = TraceFromCurve(obj)
-            if(isempty(obj.tracefromcurve))
-                obj.tracefromcurve = CST.TraceFromCurve(obj, obj.hProject);
-            end
-            tracefromcurve = obj.tracefromcurve;
-        end
-        function trackingplot = TrackingPlot(obj)
-            if(isempty(obj.trackingplot))
-                obj.trackingplot = CST.TrackingPlot(obj, obj.hProject);
-            end
-            trackingplot = obj.trackingplot;
-        end
-        function trackingsolver = TrackingSolver(obj)
-            if(isempty(obj.trackingsolver))
-                obj.trackingsolver = CST.TrackingSolver(obj, obj.hProject);
-            end
-            trackingsolver = obj.trackingsolver;
-        end
-        function traction = Traction(obj)
-            if(isempty(obj.traction))
-                obj.traction = CST.Traction(obj, obj.hProject);
-            end
-            traction = obj.traction;
-        end
-        function transform = Transform(obj)
-            if(isempty(obj.transform))
-                obj.transform = CST.Transform_(obj, obj.hProject);
-            end
-            transform = obj.transform;
-        end
-        function trimcurves = TrimCurves(obj)
-            if(isempty(obj.trimcurves))
-                obj.trimcurves = CST.TrimCurves(obj, obj.hProject);
-            end
-            trimcurves = obj.trimcurves;
-        end
-        function units = Units(obj)
-            if(isempty(obj.units))
-                obj.units = CST.Units(obj, obj.hProject);
-            end
-            units = obj.units;
-        end
-        function vdafs = VDAFS(obj)
-            if(isempty(obj.vdafs))
-                obj.vdafs = CST.VDAFS(obj, obj.hProject);
-            end
-            vdafs = obj.vdafs;
-        end
-        function vectorplot2d = VectorPlot2D(obj)
-            if(isempty(obj.vectorplot2d))
-                obj.vectorplot2d = CST.VectorPlot2D(obj, obj.hProject);
-            end
-            vectorplot2d = obj.vectorplot2d;
-        end
-        function vectorplot3d = VectorPlot3D(obj)
-            if(isempty(obj.vectorplot3d))
-                obj.vectorplot3d = CST.VectorPlot3D(obj, obj.hProject);
-            end
-            vectorplot3d = obj.vectorplot3d;
-        end
-        function voltagemonitor = VoltageMonitor(obj)
-            if(isempty(obj.voltagemonitor))
-                obj.voltagemonitor = CST.VoltageMonitor(obj, obj.hProject);
-            end
-            voltagemonitor = obj.voltagemonitor;
-        end
-        function voltagewire = VoltageWire(obj)
-            if(isempty(obj.voltagewire))
-                obj.voltagewire = CST.VoltageWire(obj, obj.hProject);
-            end
-            voltagewire = obj.voltagewire;
-        end
-        function wakefieldpostprocessor = WakefieldPostprocessor(obj)
-            if(isempty(obj.wakefieldpostprocessor))
-                obj.wakefieldpostprocessor = CST.WakefieldPostprocessor(obj, obj.hProject);
-            end
-            wakefieldpostprocessor = obj.wakefieldpostprocessor;
-        end
-        function wcs = WCS(obj)
-            if(isempty(obj.wcs))
-                obj.wcs = CST.WCS(obj, obj.hProject);
-            end
-            wcs = obj.wcs;
-        end
-        function wire = Wire(obj)
-            if(isempty(obj.wire))
-                obj.wire = CST.Wire(obj, obj.hProject);
-            end
-            wire = obj.wire;
-        end
+        function adscomponentexport          = ADSComponentExport(obj);          if(isempty(obj.adscomponentexport));          obj.adscomponentexport          = CST.ADSComponentExport(obj, obj.hProject);          end; adscomponentexport          = obj.adscomponentexport;          end
+        function adscosimulation             = ADSCosimulation(obj);             if(isempty(obj.adscosimulation));             obj.adscosimulation             = CST.ADSCosimulation(obj, obj.hProject);             end; adscosimulation             = obj.adscosimulation;             end
+        function align                       = Align(obj);                       if(isempty(obj.align));                       obj.align                       = CST.Align_(obj, obj.hProject);                       end; align                       = obj.align;                       end
+        function analyticalcurve             = AnalyticalCurve(obj);             if(isempty(obj.analyticalcurve));             obj.analyticalcurve             = CST.AnalyticalCurve(obj, obj.hProject);             end; analyticalcurve             = obj.analyticalcurve;             end
+        function analyticalface              = AnalyticalFace(obj);              if(isempty(obj.analyticalface));              obj.analyticalface              = CST.AnalyticalFace(obj, obj.hProject);              end; analyticalface              = obj.analyticalface;              end
+        function arc                         = Arc(obj);                         if(isempty(obj.arc));                         obj.arc                         = CST.Arc(obj, obj.hProject);                         end; arc                         = obj.arc;                         end
+        function arfilter                    = Arfilter(obj);                    if(isempty(obj.arfilter));                    obj.arfilter                    = CST.Arfilter(obj, obj.hProject);                    end; arfilter                    = obj.arfilter;                    end
+        function asciiexport                 = ASCIIExport(obj);                 if(isempty(obj.asciiexport));                 obj.asciiexport                 = CST.ASCIIExport(obj, obj.hProject);                 end; asciiexport                 = obj.asciiexport;                 end
+        function asymptoticsolver            = AsymptoticSolver(obj);            if(isempty(obj.asymptoticsolver));            obj.asymptoticsolver            = CST.AsymptoticSolver(obj, obj.hProject);            end; asymptoticsolver            = obj.asymptoticsolver;            end
+        function autodeskinventor            = AutodeskInventor(obj);            if(isempty(obj.autodeskinventor));            obj.autodeskinventor            = CST.AutodeskInventor(obj, obj.hProject);            end; autodeskinventor            = obj.autodeskinventor;            end
+        function background                  = Background(obj);                  if(isempty(obj.background));                  obj.background                  = CST.Background(obj, obj.hProject);                  end; background                  = obj.background;                  end
+        function bending                     = Bending(obj);                     if(isempty(obj.bending));                     obj.bending                     = CST.Bending(obj, obj.hProject);                     end; bending                     = obj.bending;                     end
+        function blendcurve                  = BlendCurve(obj);                  if(isempty(obj.blendcurve));                  obj.blendcurve                  = CST.BlendCurve(obj, obj.hProject);                  end; blendcurve                  = obj.blendcurve;                  end
+        function boundary                    = Boundary(obj);                    if(isempty(obj.boundary));                    obj.boundary                    = CST.Boundary(obj, obj.hProject);                    end; boundary                    = obj.boundary;                    end
+        function brick                       = Brick(obj);                       if(isempty(obj.brick));                       obj.brick                       = CST.Brick(obj, obj.hProject);                       end; brick                       = obj.brick;                       end
+        function catia                       = CATIA(obj);                       if(isempty(obj.catia));                       obj.catia                       = CST.CATIA(obj, obj.hProject);                       end; catia                       = obj.catia;                       end
+        function chamfercurve                = ChamferCurve(obj);                if(isempty(obj.chamfercurve));                obj.chamfercurve                = CST.ChamferCurve(obj, obj.hProject);                end; chamfercurve                = obj.chamfercurve;                end
+        function charge                      = Charge(obj);                      if(isempty(obj.charge));                      obj.charge                      = CST.Charge(obj, obj.hProject);                      end; charge                      = obj.charge;                      end
+        function chtsolver                   = CHTSolver(obj);                   if(isempty(obj.chtsolver));                   obj.chtsolver                   = CST.CHTSolver(obj, obj.hProject);                   end; chtsolver                   = obj.chtsolver;                   end
+        function circle                      = Circle(obj);                      if(isempty(obj.circle));                      obj.circle                      = CST.Circle(obj, obj.hProject);                      end; circle                      = obj.circle;                      end
+        function coil                        = Coil(obj);                        if(isempty(obj.coil));                        obj.coil                        = CST.Coil(obj, obj.hProject);                        end; coil                        = obj.coil;                        end
+        function colorramp                   = ColorRamp(obj);                   if(isempty(obj.colorramp));                   obj.colorramp                   = CST.ColorRamp(obj, obj.hProject);                   end; colorramp                   = obj.colorramp;                   end
+        function colourmapplot               = ColourMapPlot(obj);               if(isempty(obj.colourmapplot));               obj.colourmapplot               = CST.ColourMapPlot(obj, obj.hProject);               end; colourmapplot               = obj.colourmapplot;               end
+        function combineresults              = CombineResults(obj);              if(isempty(obj.combineresults));              obj.combineresults              = CST.CombineResults(obj, obj.hProject);              end; combineresults              = obj.combineresults;              end
+        function component                   = Component(obj);                   if(isempty(obj.component));                   obj.component                   = CST.Component(obj, obj.hProject);                   end; component                   = obj.component;                   end
+        function cone                        = Cone(obj);                        if(isempty(obj.cone));                        obj.cone                        = CST.Cone(obj, obj.hProject);                        end; cone                        = obj.cone;                        end
+        function contactproperties           = ContactProperties(obj);           if(isempty(obj.contactproperties));           obj.contactproperties           = CST.ContactProperties(obj, obj.hProject);           end; contactproperties           = obj.contactproperties;           end
+        function coventorware                = CoventorWare(obj);                if(isempty(obj.coventorware));                obj.coventorware                = CST.CoventorWare(obj, obj.hProject);                end; coventorware                = obj.coventorware;                end
+        function covercurve                  = CoverCurve(obj);                  if(isempty(obj.covercurve));                  obj.covercurve                  = CST.CoverCurve(obj, obj.hProject);                  end; covercurve                  = obj.covercurve;                  end
+        function currentmonitor              = CurrentMonitor(obj);              if(isempty(obj.currentmonitor));              obj.currentmonitor              = CST.CurrentMonitor(obj, obj.hProject);              end; currentmonitor              = obj.currentmonitor;              end
+        function currentpath                 = CurrentPath(obj);                 if(isempty(obj.currentpath));                 obj.currentpath                 = CST.CurrentPath(obj, obj.hProject);                 end; currentpath                 = obj.currentpath;                 end
+        function currentport                 = CurrentPort(obj);                 if(isempty(obj.currentport));                 obj.currentport                 = CST.CurrentPort(obj, obj.hProject);                 end; currentport                 = obj.currentport;                 end
+        function curve                       = Curve(obj);                       if(isempty(obj.curve));                       obj.curve                       = CST.Curve(obj, obj.hProject);                       end; curve                       = obj.curve;                       end
+        function cylinder                    = Cylinder(obj);                    if(isempty(obj.cylinder));                    obj.cylinder                    = CST.Cylinder(obj, obj.hProject);                    end; cylinder                    = obj.cylinder;                    end
+        function dimension                   = Dimension(obj);                   if(isempty(obj.dimension));                   obj.dimension                   = CST.Dimension(obj, obj.hProject);                   end; dimension                   = obj.dimension;                   end
+        function discretefaceport            = DiscreteFacePort(obj);            if(isempty(obj.discretefaceport));            obj.discretefaceport            = CST.DiscreteFacePort(obj, obj.hProject);            end; discretefaceport            = obj.discretefaceport;            end
+        function discreteport                = DiscretePort(obj);                if(isempty(obj.discreteport));                obj.discreteport                = CST.DiscretePort(obj, obj.hProject);                end; discreteport                = obj.discreteport;                end
+        function discretizer                 = Discretizer(obj);                 if(isempty(obj.discretizer));                 obj.discretizer                 = CST.Discretizer(obj, obj.hProject);                 end; discretizer                 = obj.discretizer;                 end
+        function displacement                = Displacement(obj);                if(isempty(obj.displacement));                obj.displacement                = CST.Displacement(obj, obj.hProject);                end; displacement                = obj.displacement;                end
+        function drcrz                       = DRCRZ(obj);                       if(isempty(obj.drcrz));                       obj.drcrz                       = CST.DRCRZ(obj, obj.hProject);                       end; drcrz                       = obj.drcrz;                       end
+        function dxf                         = DXF(obj);                         if(isempty(obj.dxf));                         obj.dxf                         = CST.DXF(obj, obj.hProject);                         end; dxf                         = obj.dxf;                         end
+        function ecylinder                   = ECylinder(obj);                   if(isempty(obj.ecylinder));                   obj.ecylinder                   = CST.ECylinder(obj, obj.hProject);                   end; ecylinder                   = obj.ecylinder;                   end
+        function edaimportdefaults           = EDAImportDefaults(obj);           if(isempty(obj.edaimportdefaults));           obj.edaimportdefaults           = CST.EDAImportDefaults(obj, obj.hProject);           end; edaimportdefaults           = obj.edaimportdefaults;           end
+        function edgecurve                   = EdgeCurve(obj);                   if(isempty(obj.edgecurve));                   obj.edgecurve                   = CST.EdgeCurve(obj, obj.hProject);                   end; edgecurve                   = obj.edgecurve;                   end
+        function eigenmodesolver             = EigenmodeSolver(obj);             if(isempty(obj.eigenmodesolver));             obj.eigenmodesolver             = CST.EigenmodeSolver(obj, obj.hProject);             end; eigenmodesolver             = obj.eigenmodesolver;             end
+        function ellipse                     = Ellipse(obj);                     if(isempty(obj.ellipse));                     obj.ellipse                     = CST.Ellipse(obj, obj.hProject);                     end; ellipse                     = obj.ellipse;                     end
+        function eqssolver                   = EQSSolver(obj);                   if(isempty(obj.eqssolver));                   obj.eqssolver                   = CST.EQSSolver(obj, obj.hProject);                   end; eqssolver                   = obj.eqssolver;                   end
+        function estaticsolver               = EStaticSolver(obj);               if(isempty(obj.estaticsolver));               obj.estaticsolver               = CST.EStaticSolver(obj, obj.hProject);               end; estaticsolver               = obj.estaticsolver;               end
+        function evaluatefieldalongcurve     = EvaluateFieldAlongCurve(obj);     if(isempty(obj.evaluatefieldalongcurve));     obj.evaluatefieldalongcurve     = CST.EvaluateFieldAlongCurve(obj, obj.hProject);     end; evaluatefieldalongcurve     = obj.evaluatefieldalongcurve;     end
+        function evaluatefieldonface         = EvaluateFieldOnFace(obj);         if(isempty(obj.evaluatefieldonface));         obj.evaluatefieldonface         = CST.EvaluateFieldOnFace(obj, obj.hProject);         end; evaluatefieldonface         = obj.evaluatefieldonface;         end
+        function extrude                     = Extrude(obj);                     if(isempty(obj.extrude));                     obj.extrude                     = CST.Extrude(obj, obj.hProject);                     end; extrude                     = obj.extrude;                     end
+        function extrudecurve                = ExtrudeCurve(obj);                if(isempty(obj.extrudecurve));                obj.extrudecurve                = CST.ExtrudeCurve(obj, obj.hProject);                end; extrudecurve                = obj.extrudecurve;                end
+        function face                        = Face(obj);                        if(isempty(obj.face));                        obj.face                        = CST.Face(obj, obj.hProject);                        end; face                        = obj.face;                        end
+        function fan                         = Fan(obj);                         if(isempty(obj.fan));                         obj.fan                         = CST.Fan(obj, obj.hProject);                         end; fan                         = obj.fan;                         end
+        function farfieldarray               = FarfieldArray(obj);               if(isempty(obj.farfieldarray));               obj.farfieldarray               = CST.FarfieldArray(obj, obj.hProject);               end; farfieldarray               = obj.farfieldarray;               end
+        function farfieldplot                = FarfieldPlot(obj);                if(isempty(obj.farfieldplot));                obj.farfieldplot                = CST.FarfieldPlot(obj, obj.hProject);                end; farfieldplot                = obj.farfieldplot;                end
+        function farfieldsource              = FarfieldSource(obj);              if(isempty(obj.farfieldsource));              obj.farfieldsource              = CST.FarfieldSource(obj, obj.hProject);              end; farfieldsource              = obj.farfieldsource;              end
+        function fdsolver                    = FDSolver(obj);                    if(isempty(obj.fdsolver));                    obj.fdsolver                    = CST.FDSolver(obj, obj.hProject);                    end; fdsolver                    = obj.fdsolver;                    end
+        function fieldsource                 = FieldSource(obj);                 if(isempty(obj.fieldsource));                 obj.fieldsource                 = CST.FieldSource(obj, obj.hProject);                 end; fieldsource                 = obj.fieldsource;                 end
+        function floquetport                 = FloquetPort(obj);                 if(isempty(obj.floquetport));                 obj.floquetport                 = CST.FloquetPort(obj, obj.hProject);                 end; floquetport                 = obj.floquetport;                 end
+        function force                       = Force(obj);                       if(isempty(obj.force));                       obj.force                       = CST.Force(obj, obj.hProject);                       end; force                       = obj.force;                       end
+        function gdsii                       = GDSII(obj);                       if(isempty(obj.gdsii));                       obj.gdsii                       = CST.GDSII(obj, obj.hProject);                       end; gdsii                       = obj.gdsii;                       end
+        function gerber                      = GERBER(obj);                      if(isempty(obj.gerber));                      obj.gerber                      = CST.GERBER(obj, obj.hProject);                      end; gerber                      = obj.gerber;                      end
+        function group                       = Group(obj);                       if(isempty(obj.group));                       obj.group                       = CST.Group(obj, obj.hProject);                       end; group                       = obj.group;                       end
+        function heatsource                  = HeatSource(obj);                  if(isempty(obj.heatsource));                  obj.heatsource                  = CST.HeatSource(obj, obj.hProject);                  end; heatsource                  = obj.heatsource;                  end
+        function hfss                        = HFSS(obj);                        if(isempty(obj.hfss));                        obj.hfss                        = CST.HFSS(obj, obj.hProject);                        end; hfss                        = obj.hfss;                        end
+        function humanmodel                  = HumanModel(obj);                  if(isempty(obj.humanmodel));                  obj.humanmodel                  = CST.HumanModel(obj, obj.hProject);                  end; humanmodel                  = obj.humanmodel;                  end
+        function iesolver                    = IESolver(obj);                    if(isempty(obj.iesolver));                    obj.iesolver                    = CST.IESolver(obj, obj.hProject);                    end; iesolver                    = obj.iesolver;                    end
+        function iges                        = IGES(obj);                        if(isempty(obj.iges));                        obj.iges                        = CST.IGES(obj, obj.hProject);                        end; iges                        = obj.iges;                        end
+        function layerstacking               = LayerStacking(obj);               if(isempty(obj.layerstacking));               obj.layerstacking               = CST.LayerStacking(obj, obj.hProject);               end; layerstacking               = obj.layerstacking;               end
+        function layoutdb                    = LayoutDB(obj);                    if(isempty(obj.layoutdb));                    obj.layoutdb                    = CST.LayoutDB(obj, obj.hProject);                    end; layoutdb                    = obj.layoutdb;                    end
+        function lfsolver                    = LFSolver(obj);                    if(isempty(obj.lfsolver));                    obj.lfsolver                    = CST.LFSolver(obj, obj.hProject);                    end; lfsolver                    = obj.lfsolver;                    end
+        function line                        = Line(obj);                        if(isempty(obj.line));                        obj.line                        = CST.Line(obj, obj.hProject);                        end; line                        = obj.line;                        end
+        function livelink                    = LiveLink(obj);                    if(isempty(obj.livelink));                    obj.livelink                    = CST.LiveLink(obj, obj.hProject);                    end; livelink                    = obj.livelink;                    end
+        function localmodification           = LocalModification(obj);           if(isempty(obj.localmodification));           obj.localmodification           = CST.LocalModification(obj, obj.hProject);           end; localmodification           = obj.localmodification;           end
+        function loft                        = Loft(obj);                        if(isempty(obj.loft));                        obj.loft                        = CST.Loft(obj, obj.hProject);                        end; loft                        = obj.loft;                        end
+        function loftcurves                  = LoftCurves(obj);                  if(isempty(obj.loftcurves));                  obj.loftcurves                  = CST.LoftCurves(obj, obj.hProject);                  end; loftcurves                  = obj.loftcurves;                  end
+        function lumpedelement               = LumpedElement(obj);               if(isempty(obj.lumpedelement));               obj.lumpedelement               = CST.LumpedElement(obj, obj.hProject);               end; lumpedelement               = obj.lumpedelement;               end
+        function lumpedfaceelement           = LumpedFaceElement(obj);           if(isempty(obj.lumpedfaceelement));           obj.lumpedfaceelement           = CST.LumpedFaceElement(obj, obj.hProject);           end; lumpedfaceelement           = obj.lumpedfaceelement;           end
+        function magnet                      = Magnet(obj);                      if(isempty(obj.magnet));                      obj.magnet                      = CST.Magnet(obj, obj.hProject);                      end; magnet                      = obj.magnet;                      end
+        function material                    = Material(obj);                    if(isempty(obj.material));                    obj.material                    = CST.Material(obj, obj.hProject);                    end; material                    = obj.material;                    end
+        function mecadtron                   = Mecadtron(obj);                   if(isempty(obj.mecadtron));                   obj.mecadtron                   = CST.Mecadtron(obj, obj.hProject);                   end; mecadtron                   = obj.mecadtron;                   end
+        function mechfieldsettings           = MechFieldSettings(obj);           if(isempty(obj.mechfieldsettings));           obj.mechfieldsettings           = CST.MechFieldSettings(obj, obj.hProject);           end; mechfieldsettings           = obj.mechfieldsettings;           end
+        function mesh                        = Mesh(obj);                        if(isempty(obj.mesh));                        obj.mesh                        = CST.Mesh(obj, obj.hProject);                        end; mesh                        = obj.mesh;                        end
+        function meshadaption3d              = MeshAdaption3D(obj);              if(isempty(obj.meshadaption3d));              obj.meshadaption3d              = CST.MeshAdaption3D(obj, obj.hProject);              end; meshadaption3d              = obj.meshadaption3d;              end
+        function meshsettings                = MeshSettings(obj);                if(isempty(obj.meshsettings));                obj.meshsettings                = CST.MeshSettings(obj, obj.hProject);                end; meshsettings                = obj.meshsettings;                end
+        function monitor                     = Monitor(obj);                     if(isempty(obj.monitor));                     obj.monitor                     = CST.Monitor(obj, obj.hProject);                     end; monitor                     = obj.monitor;                     end
+        function motiongap                   = MotionGap(obj);                   if(isempty(obj.motiongap));                   obj.motiongap                   = CST.MotionGap(obj, obj.hProject);                   end; motiongap                   = obj.motiongap;                   end
+        function movingmedia                 = MovingMedia(obj);                 if(isempty(obj.movingmedia));                 obj.movingmedia                 = CST.MovingMedia(obj, obj.hProject);                 end; movingmedia                 = obj.movingmedia;                 end
+        function mqstdsolver                 = MQSTDSolver(obj);                 if(isempty(obj.mqstdsolver));                 obj.mqstdsolver                 = CST.MQSTDSolver(obj, obj.hProject);                 end; mqstdsolver                 = obj.mqstdsolver;                 end
+        function mstaticsolver               = MStaticSolver(obj);               if(isempty(obj.mstaticsolver));               obj.mstaticsolver               = CST.MStaticSolver(obj, obj.hProject);               end; mstaticsolver               = obj.mstaticsolver;               end
+        function nastran                     = NASTRAN(obj);                     if(isempty(obj.nastran));                     obj.nastran                     = CST.NASTRAN(obj, obj.hProject);                     end; nastran                     = obj.nastran;                     end
+        function nearfieldscan               = NearfieldScan(obj);               if(isempty(obj.nearfieldscan));               obj.nearfieldscan               = CST.NearfieldScan(obj, obj.hProject);               end; nearfieldscan               = obj.nearfieldscan;               end
+        function networkparameterextraction  = NetworkParameterExtraction(obj);  if(isempty(obj.networkparameterextraction));  obj.networkparameterextraction  = CST.NetworkParameterExtraction(obj, obj.hProject);  end; networkparameterextraction  = obj.networkparameterextraction;  end
+        function nfsfile                     = NFSFile(obj);                     if(isempty(obj.nfsfile));                     obj.nfsfile                     = CST.NFSFile(obj, obj.hProject);                     end; nfsfile                     = obj.nfsfile;                     end
+        function obj_                        = OBJ(obj);                        if(isempty(obj.obj_));                        obj.obj_                        = CST.OBJ(obj, obj.hProject);                        end; obj_                        = obj.obj_;                        end
+        function optimizer                   = Optimizer(obj);                   if(isempty(obj.optimizer));                   obj.optimizer                   = CST.Optimizer(obj, obj.hProject);                   end; optimizer                   = obj.optimizer;                   end
+        function parametersweep              = ParameterSweep(obj);              if(isempty(obj.parametersweep));              obj.parametersweep              = CST.ParameterSweep(obj, obj.hProject);              end; parametersweep              = obj.parametersweep;              end
+        function parasolid                   = Parasolid(obj);                   if(isempty(obj.parasolid));                   obj.parasolid                   = CST.Parasolid(obj, obj.hProject);                   end; parasolid                   = obj.parasolid;                   end
+        function particle2dmonitorreader     = Particle2DMonitorReader(obj);     if(isempty(obj.particle2dmonitorreader));     obj.particle2dmonitorreader     = CST.Particle2DMonitorReader(obj, obj.hProject);     end; particle2dmonitorreader     = obj.particle2dmonitorreader;     end
+        function particlebeam                = ParticleBeam(obj);                if(isempty(obj.particlebeam));                obj.particlebeam                = CST.ParticleBeam(obj, obj.hProject);                end; particlebeam                = obj.particlebeam;                end
+        function particleinterface           = ParticleInterface(obj);           if(isempty(obj.particleinterface));           obj.particleinterface           = CST.ParticleInterface(obj, obj.hProject);           end; particleinterface           = obj.particleinterface;           end
+        function particlemonitor             = ParticleMonitor(obj);             if(isempty(obj.particlemonitor));             obj.particlemonitor             = CST.ParticleMonitor(obj, obj.hProject);             end; particlemonitor             = obj.particlemonitor;             end
+        function particlemonitoronsolid      = ParticleMonitorOnSolid(obj);      if(isempty(obj.particlemonitoronsolid));      obj.particlemonitoronsolid      = CST.ParticleMonitorOnSolid(obj, obj.hProject);      end; particlemonitoronsolid      = obj.particlemonitoronsolid;      end
+        function particlesource              = ParticleSource(obj);              if(isempty(obj.particlesource));              obj.particlesource              = CST.ParticleSource(obj, obj.hProject);              end; particlesource              = obj.particlesource;              end
+        function particletrajectoryreader    = ParticleTrajectoryReader(obj);    if(isempty(obj.particletrajectoryreader));    obj.particletrajectoryreader    = CST.ParticleTrajectoryReader(obj, obj.hProject);    end; particletrajectoryreader    = obj.particletrajectoryreader;    end
+        function pic2dmonitor                = PIC2DMonitor(obj);                if(isempty(obj.pic2dmonitor));                obj.pic2dmonitor                = CST.PIC2DMonitor(obj, obj.hProject);                end; pic2dmonitor                = obj.pic2dmonitor;                end
+        function pic2dmonitorreader          = PIC2DMonitorReader(obj);          if(isempty(obj.pic2dmonitorreader));          obj.pic2dmonitorreader          = CST.PIC2DMonitorReader(obj, obj.hProject);          end; pic2dmonitorreader          = obj.pic2dmonitorreader;          end
+        function pick                        = Pick(obj);                        if(isempty(obj.pick));                        obj.pick                        = CST.Pick(obj, obj.hProject);                        end; pick                        = obj.pick;                        end
+        function picphasespacemonitor        = PICPhaseSpaceMonitor(obj);        if(isempty(obj.picphasespacemonitor));        obj.picphasespacemonitor        = CST.PICPhaseSpaceMonitor(obj, obj.hProject);        end; picphasespacemonitor        = obj.picphasespacemonitor;        end
+        function picpositionmonitor          = PICPositionMonitor(obj);          if(isempty(obj.picpositionmonitor));          obj.picpositionmonitor          = CST.PICPositionMonitor(obj, obj.hProject);          end; picpositionmonitor          = obj.picpositionmonitor;          end
+        function picpositionmonitorreader    = PICPositionMonitorReader(obj);    if(isempty(obj.picpositionmonitorreader));    obj.picpositionmonitorreader    = CST.PICPositionMonitorReader(obj, obj.hProject);    end; picpositionmonitorreader    = obj.picpositionmonitorreader;    end
+        function picsolver                   = PICSolver(obj);                   if(isempty(obj.picsolver));                   obj.picsolver                   = CST.PICSolver(obj, obj.hProject);                   end; picsolver                   = obj.picsolver;                   end
+        function planewave                   = PlaneWave(obj);                   if(isempty(obj.planewave));                   obj.planewave                   = CST.PlaneWave(obj, obj.hProject);                   end; planewave                   = obj.planewave;                   end
+        function plot                        = Plot(obj);                        if(isempty(obj.plot));                        obj.plot                        = CST.Plot(obj, obj.hProject);                        end; plot                        = obj.plot;                        end
+        function plot1d                      = Plot1D(obj);                      if(isempty(obj.plot1d));                      obj.plot1d                      = CST.Plot1D(obj, obj.hProject);                      end; plot1d                      = obj.plot1d;                      end
+        function polygon                     = Polygon(obj);                     if(isempty(obj.polygon));                     obj.polygon                     = CST.Polygon(obj, obj.hProject);                     end; polygon                     = obj.polygon;                     end
+        function polygon3d                   = Polygon3D(obj);                   if(isempty(obj.polygon3d));                   obj.polygon3d                   = CST.Polygon3D(obj, obj.hProject);                   end; polygon3d                   = obj.polygon3d;                   end
+        function port                        = Port(obj);                        if(isempty(obj.port));                        obj.port                        = CST.Port(obj, obj.hProject);                        end; port                        = obj.port;                        end
+        function postprocess1d               = PostProcess1D(obj);               if(isempty(obj.postprocess1d));               obj.postprocess1d               = CST.PostProcess1D(obj, obj.hProject);               end; postprocess1d               = obj.postprocess1d;               end
+        function potential                   = Potential(obj);                   if(isempty(obj.potential));                   obj.potential                   = CST.Potential(obj, obj.hProject);                   end; potential                   = obj.potential;                   end
+        function predefinedfield             = PredefinedField(obj);             if(isempty(obj.predefinedfield));             obj.predefinedfield             = CST.PredefinedField(obj, obj.hProject);             end; predefinedfield             = obj.predefinedfield;             end
+        function probe                       = Probe(obj);                       if(isempty(obj.probe));                       obj.probe                       = CST.Probe(obj, obj.hProject);                       end; probe                       = obj.probe;                       end
+        function proe                        = PROE(obj);                        if(isempty(obj.proe));                        obj.proe                        = CST.PROE(obj, obj.hProject);                        end; proe                        = obj.proe;                        end
+        function qfactor                     = QFactor(obj);                     if(isempty(obj.qfactor));                     obj.qfactor                     = CST.QFactor(obj, obj.hProject);                     end; qfactor                     = obj.qfactor;                     end
+        function rectangle                   = Rectangle(obj);                   if(isempty(obj.rectangle));                   obj.rectangle                   = CST.Rectangle(obj, obj.hProject);                   end; rectangle                   = obj.rectangle;                   end
+%       function result0d                    = Result0D(obj, resultname);        if(isempty(obj.result0d));                    obj.result0d                    = CST.Result0D(obj, obj.hProject, resultname);        end; result0d                    = obj.result0d;                    end
+        % Each result0d can be different depending on resultname, so don't store it.
+        function result0d                    = Result0D(obj, resultname);                                                          result0d                    = CST.Result0D(obj, obj.hProject, resultname);                                                                            end
+%       function result1d                    = Result1D(obj, resultname);        if(isempty(obj.result1d));                    obj.result1d                    = CST.Result1D(obj, obj.hProject, resultname);        end; result1d                    = obj.result1d;                    end
+        % Each result1d can be different depending on resultname, so don't store it.
+        function result1d                    = Result1D(obj, resultname);                                                          result1d                    = CST.Result1D(obj, obj.hProject, resultname);                                                                            end
+%       function result1dcomplex             = Result1DComplex(obj, resultname); if(isempty(obj.result1dcomplex));             obj.result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname); end; result1dcomplex             = obj.result1dcomplex;             end
+        % Each result1dcomplex can be different depending on resultname, so don't store it.
+        function result1dcomplex             = Result1DComplex(obj, resultname);                                                   result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname);                                                                     end
+%       function result3d                    = Result3D(obj, resultname);        if(isempty(obj.result3d));                    obj.result3d                    = CST.Result3D(obj, obj.hProject, resultname);        end; result3d                    = obj.result3d;                    end
+        % Each result3d can be different depending on resultname, so don't store it.
+        function result3d                    = Result3D(obj, resultname);                                                          result3d                    = CST.Result3D(obj, obj.hProject, resultname);                                                                            end
+        function resultdatabase              = ResultDatabase(obj);              if(isempty(obj.resultdatabase));              obj.resultdatabase              = CST.ResultDatabase(obj, obj.hProject);              end; resultdatabase              = obj.resultdatabase;              end
+%       function resultmap                   = ResultMap(obj, treepath);         if(isempty(obj.resultmap));                   obj.resultmap                   = CST.ResultMap(obj, obj.hProject, treepath);         end; resultmap                   = obj.resultmap;                   end
+        % Each resultmap can be different depending on treepath, so don't store it.
+        function resultmap                   = ResultMap(obj, treepath);                                                           resultmap                   = CST.ResultMap(obj, obj.hProject, treepath);                                                                             end
+        function resulttree                  = ResultTree(obj);                  if(isempty(obj.resulttree));                  obj.resulttree                  = CST.ResultTree(obj, obj.hProject);                  end; resulttree                  = obj.resulttree;                  end
+        function rigidbodymotion             = RigidBodyMotion(obj);             if(isempty(obj.rigidbodymotion));             obj.rigidbodymotion             = CST.RigidBodyMotion(obj, obj.hProject);             end; rigidbodymotion             = obj.rigidbodymotion;             end
+        function rotate                      = Rotate(obj);                      if(isempty(obj.rotate));                      obj.rotate                      = CST.Rotate(obj, obj.hProject);                      end; rotate                      = obj.rotate;                      end
+        function sar                         = SAR(obj);                         if(isempty(obj.sar));                         obj.sar                         = CST.SAR(obj, obj.hProject);                         end; sar                         = obj.sar;                         end
+        function sat                         = SAT(obj);                         if(isempty(obj.sat));                         obj.sat                         = CST.SAT(obj, obj.hProject);                         end; sat                         = obj.sat;                         end
+        function scalarplot2d                = ScalarPlot2D(obj);                if(isempty(obj.scalarplot2d));                obj.scalarplot2d                = CST.ScalarPlot2D(obj, obj.hProject);                end; scalarplot2d                = obj.scalarplot2d;                end
+        function scalarplot3d                = ScalarPlot3D(obj);                if(isempty(obj.scalarplot3d));                obj.scalarplot3d                = CST.ScalarPlot3D(obj, obj.hProject);                end; scalarplot3d                = obj.scalarplot3d;                end
+        function sensitivityanalysis         = SensitivityAnalysis(obj);         if(isempty(obj.sensitivityanalysis));         obj.sensitivityanalysis         = CST.SensitivityAnalysis(obj, obj.hProject);         end; sensitivityanalysis         = obj.sensitivityanalysis;         end
+        function siemensnx                   = SiemensNX(obj);                   if(isempty(obj.siemensnx));                   obj.siemensnx                   = CST.SiemensNX(obj, obj.hProject);                   end; siemensnx                   = obj.siemensnx;                   end
+        function simulationproject           = SimulationProject(obj);           if(isempty(obj.simulationproject));           obj.simulationproject           = CST.SimulationProject(obj, obj.hProject);           end; simulationproject           = obj.simulationproject;           end
+        function simuliacse                  = SimuliaCSE(obj);                  if(isempty(obj.simuliacse));                  obj.simuliacse                  = CST.SimuliaCSE(obj, obj.hProject);                  end; simuliacse                  = obj.simuliacse;                  end
+        function solid                       = Solid(obj);                       if(isempty(obj.solid));                       obj.solid                       = CST.Solid(obj, obj.hProject);                       end; solid                       = obj.solid;                       end
+        function solidedge                   = SolidEdge(obj);                   if(isempty(obj.solidedge));                   obj.solidedge                   = CST.SolidEdge(obj, obj.hProject);                   end; solidedge                   = obj.solidedge;                   end
+        function solidworks                  = SolidWorks(obj);                  if(isempty(obj.solidworks));                  obj.solidworks                  = CST.SolidWorks(obj, obj.hProject);                  end; solidworks                  = obj.solidworks;                  end
+        function solver                      = Solver(obj);                      if(isempty(obj.solver));                      obj.solver                      = CST.Solver(obj, obj.hProject);                      end; solver                      = obj.solver;                      end
+        function solverparameter             = SolverParameter(obj);             if(isempty(obj.solverparameter));             obj.solverparameter             = CST.SolverParameter(obj, obj.hProject);             end; solverparameter             = obj.solverparameter;             end
+        function sourcefield                 = SourceField(obj);                 if(isempty(obj.sourcefield));                 obj.sourcefield                 = CST.SourceField(obj, obj.hProject);                 end; sourcefield                 = obj.sourcefield;                 end
+        function sphere                      = Sphere(obj);                      if(isempty(obj.sphere));                      obj.sphere                      = CST.Sphere(obj, obj.hProject);                      end; sphere                      = obj.sphere;                      end
+        function spline                      = Spline(obj);                      if(isempty(obj.spline));                      obj.spline                      = CST.Spline(obj, obj.hProject);                      end; spline                      = obj.spline;                      end
+        function stationarycurrentsolver     = StationaryCurrentSolver(obj);     if(isempty(obj.stationarycurrentsolver));     obj.stationarycurrentsolver     = CST.StationaryCurrentSolver(obj, obj.hProject);     end; stationarycurrentsolver     = obj.stationarycurrentsolver;     end
+        function step                        = STEP(obj);                        if(isempty(obj.step));                        obj.step                        = CST.STEP(obj, obj.hProject);                        end; step                        = obj.step;                        end
+        function structuralmechanicssolver   = StructuralMechanicsSolver(obj);   if(isempty(obj.structuralmechanicssolver));   obj.structuralmechanicssolver   = CST.StructuralMechanicsSolver(obj, obj.hProject);   end; structuralmechanicssolver   = obj.structuralmechanicssolver;   end
+        function sweepcurve                  = SweepCurve(obj);                  if(isempty(obj.sweepcurve));                  obj.sweepcurve                  = CST.SweepCurve(obj, obj.hProject);                  end; sweepcurve                  = obj.sweepcurve;                  end
+%       function table                       = Table(obj, tablefilename);        if(isempty(obj.table));                       obj.table                       = CST.Table(obj, obj.hProject, tablefilename);        end; table                       = obj.table;                       end
+        % Each table can be different depending on tablefilename, so don't store it.
+        function table                       = Table(obj, tablefilename);                                                          table                       = CST.Table(obj, obj.hProject, tablefilename);                                                                            end
+        function temperaturesource           = TemperatureSource(obj);           if(isempty(obj.temperaturesource));           obj.temperaturesource           = CST.TemperatureSource(obj, obj.hProject);           end; temperaturesource           = obj.temperaturesource;           end
+        function thermallossimport           = ThermalLossImport(obj);           if(isempty(obj.thermallossimport));           obj.thermallossimport           = CST.ThermalLossImport(obj, obj.hProject);           end; thermallossimport           = obj.thermallossimport;           end
+        function thermalsolver               = ThermalSolver(obj);               if(isempty(obj.thermalsolver));               obj.thermalsolver               = CST.ThermalSolver(obj, obj.hProject);               end; thermalsolver               = obj.thermalsolver;               end
+        function thermalsourceparameter      = ThermalSourceParameter(obj);      if(isempty(obj.thermalsourceparameter));      obj.thermalsourceparameter      = CST.ThermalSourceParameter(obj, obj.hProject);      end; thermalsourceparameter      = obj.thermalsourceparameter;      end
+        function thermalsurfaceproperty      = ThermalSurfaceProperty(obj);      if(isempty(obj.thermalsurfaceproperty));      obj.thermalsurfaceproperty      = CST.ThermalSurfaceProperty(obj, obj.hProject);      end; thermalsurfaceproperty      = obj.thermalsurfaceproperty;      end
+        function thermaltdsolver             = ThermalTDSolver(obj);             if(isempty(obj.thermaltdsolver));             obj.thermaltdsolver             = CST.ThermalTDSolver(obj, obj.hProject);             end; thermaltdsolver             = obj.thermaltdsolver;             end
+        function timemonitor                 = TimeMonitor(obj);                 if(isempty(obj.timemonitor));                 obj.timemonitor                 = CST.TimeMonitor(obj, obj.hProject);                 end; timemonitor                 = obj.timemonitor;                 end
+        function timemonitor0d               = TimeMonitor0D(obj);               if(isempty(obj.timemonitor0d));               obj.timemonitor0d               = CST.TimeMonitor0D(obj, obj.hProject);               end; timemonitor0d               = obj.timemonitor0d;               end
+        function timemonitor1d               = TimeMonitor1D(obj);               if(isempty(obj.timemonitor1d));               obj.timemonitor1d               = CST.TimeMonitor1D(obj, obj.hProject);               end; timemonitor1d               = obj.timemonitor1d;               end
+        function timemonitor2d               = TimeMonitor2D(obj);               if(isempty(obj.timemonitor2d));               obj.timemonitor2d               = CST.TimeMonitor2D(obj, obj.hProject);               end; timemonitor2d               = obj.timemonitor2d;               end
+        function timemonitor3d               = TimeMonitor3D(obj);               if(isempty(obj.timemonitor3d));               obj.timemonitor3d               = CST.TimeMonitor3D(obj, obj.hProject);               end; timemonitor3d               = obj.timemonitor3d;               end
+        function timesignal                  = TimeSignal(obj);                  if(isempty(obj.timesignal));                  obj.timesignal                  = CST.TimeSignal(obj, obj.hProject);                  end; timesignal                  = obj.timesignal;                  end
+        function torus                       = Torus(obj);                       if(isempty(obj.torus));                       obj.torus                       = CST.Torus(obj, obj.hProject);                       end; torus                       = obj.torus;                       end
+        function touchstone                  = Touchstone(obj);                  if(isempty(obj.touchstone));                  obj.touchstone                  = CST.Touchstone(obj, obj.hProject);                  end; touchstone                  = obj.touchstone;                  end
+        function tracefromcurve              = TraceFromCurve(obj);              if(isempty(obj.tracefromcurve));              obj.tracefromcurve              = CST.TraceFromCurve(obj, obj.hProject);              end; tracefromcurve              = obj.tracefromcurve;              end
+        function trackingplot                = TrackingPlot(obj);                if(isempty(obj.trackingplot));                obj.trackingplot                = CST.TrackingPlot(obj, obj.hProject);                end; trackingplot                = obj.trackingplot;                end
+        function trackingsolver              = TrackingSolver(obj);              if(isempty(obj.trackingsolver));              obj.trackingsolver              = CST.TrackingSolver(obj, obj.hProject);              end; trackingsolver              = obj.trackingsolver;              end
+        function traction                    = Traction(obj);                    if(isempty(obj.traction));                    obj.traction                    = CST.Traction(obj, obj.hProject);                    end; traction                    = obj.traction;                    end
+        function transform                   = Transform(obj);                   if(isempty(obj.transform));                   obj.transform                   = CST.Transform_(obj, obj.hProject);                   end; transform                   = obj.transform;                   end
+        function trimcurves                  = TrimCurves(obj);                  if(isempty(obj.trimcurves));                  obj.trimcurves                  = CST.TrimCurves(obj, obj.hProject);                  end; trimcurves                  = obj.trimcurves;                  end
+        function units                       = Units(obj);                       if(isempty(obj.units));                       obj.units                       = CST.Units(obj, obj.hProject);                       end; units                       = obj.units;                       end
+        function vdafs                       = VDAFS(obj);                       if(isempty(obj.vdafs));                       obj.vdafs                       = CST.VDAFS(obj, obj.hProject);                       end; vdafs                       = obj.vdafs;                       end
+        function vectorplot2d                = VectorPlot2D(obj);                if(isempty(obj.vectorplot2d));                obj.vectorplot2d                = CST.VectorPlot2D(obj, obj.hProject);                end; vectorplot2d                = obj.vectorplot2d;                end
+        function vectorplot3d                = VectorPlot3D(obj);                if(isempty(obj.vectorplot3d));                obj.vectorplot3d                = CST.VectorPlot3D(obj, obj.hProject);                end; vectorplot3d                = obj.vectorplot3d;                end
+        function voltagemonitor              = VoltageMonitor(obj);              if(isempty(obj.voltagemonitor));              obj.voltagemonitor              = CST.VoltageMonitor(obj, obj.hProject);              end; voltagemonitor              = obj.voltagemonitor;              end
+        function voltagewire                 = VoltageWire(obj);                 if(isempty(obj.voltagewire));                 obj.voltagewire                 = CST.VoltageWire(obj, obj.hProject);                 end; voltagewire                 = obj.voltagewire;                 end
+        function wakefieldpostprocessor      = WakefieldPostprocessor(obj);      if(isempty(obj.wakefieldpostprocessor));      obj.wakefieldpostprocessor      = CST.WakefieldPostprocessor(obj, obj.hProject);      end; wakefieldpostprocessor      = obj.wakefieldpostprocessor;      end
+        function wcs                         = WCS(obj);                         if(isempty(obj.wcs));                         obj.wcs                         = CST.WCS(obj, obj.hProject);                         end; wcs                         = obj.wcs;                         end
+        function wire                        = Wire(obj);                        if(isempty(obj.wire));                        obj.wire                        = CST.Wire(obj, obj.hProject);                        end; wire                        = obj.wire;                        end
+        function yieldanalysis               = YieldAnalysis(obj);               if(isempty(obj.yieldanalysis));               obj.yieldanalysis               = CST.YieldAnalysis(obj, obj.hProject);               end; yieldanalysis               = obj.yieldanalysis;               end
     end
 end
