@@ -68,7 +68,7 @@ classdef Application < handle
             % Creates a new CST PCB STUDIO project.
             hCST = CST.Application.GetHandle();
             hProject = hCST.invoke('NewPCBS');
-            project = CST.Project(hProject);
+            project = CST.CS.Project(hProject);
         end
         function dsproject = NewDS()
             % Creates a new CST DESIGN STUDIO project.
@@ -107,34 +107,51 @@ classdef Application < handle
         %% Undocumented functions.
         % Found in 'methodsview(CST.Application.GetHandle())'
         function hProject = FileNew()
-            warning('\nCST.Application.FileNew is undocumented.\nReturning raw activeX handle.');
+            warning([newline, ...
+                'CST.Application.FileNew is undocumented.', newline, ...
+                'Returning raw activeX handle.', newline, ...
+                'Recommend using CST.Application.NewMWS.']);
             hCST = CST.Application.GetHandle();
             hProject = hCST.invoke('FileNew');
         end
         % Found in 'methodsview(CST.Application.GetHandle())'
         function hProject = NewSystemsimulator()
-            warning('\nCST.Application.NewSystemsimulator is undocumented.\nReturning raw activeX handle.');
+            warning([newline, ...
+                'CST.Application.NewSystemsimulator is undocumented.', newline, ...
+                'Returning raw activeX handle.']);
             hCST = CST.Application.GetHandle();
             hProject = hCST.invoke('NewSystemsimulator');
         end
         % Found in 'methodsview(CST.Application.GetHandle())'
         function hProject = NewDesign()
-            warning('\nCST.Application.NewDesign is undocumented.\nReturning raw activeX handle.\nRecommend using CST.Application.NewDS.%s', '');
+            warning([newline, ...
+                'CST.Application.NewDesign is undocumented.', newline, ...
+                'Returning raw activeX handle.', newline, ...
+                'Recommend using CST.Application.NewDS.']);
             hCST = CST.Application.GetHandle();
             hProject = hCST.invoke('NewDesign');
         end
         % Found in 'methodsview(CST.Application.GetHandle())'
-        function hProject = NewProject(id)
+        function project = NewProject(id)
             % Creates a new project based on the given id.
-            % id: 0,6 = DS
-            %     1   = MWS
-            %     2   = EM
-            %     3   = PS
-            %     4   = MPS
-            %     5   = CS
+            % id: 0 = DS
+            %     1 = MWS
+            %     2 = EM
+            %     3 = PS
+            %     4 = MPS
+            %     5 = CS
+            %     6 = DS, Assembly
             % Other values = error: 'No manager implemented so far. Be patient.'
             hCST = CST.Application.GetHandle();
             hProject = hCST.invoke('NewProject', id);
+            switch(id)
+                case {0,6}
+                    project = CST.DS.Project(hProject);
+                case {1,2,3,4,5}
+                    project = CST.Project(hProject);
+                otherwise
+                    error('Provided id (%i) is not supported.', id);
+            end
         end
         % Found in 'methodsview(CST.Application.GetHandle())'
         function OpenDesign(filepath)

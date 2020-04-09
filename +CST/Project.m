@@ -349,18 +349,14 @@ classdef Project < handle
         end
         function double = ATn2(obj, value1, value2)
             % Returns the arc tangent of the relation of value1 to value2 as a radian value.
-            % value1
-            % Numerator of the arc tangent calculation.
-            % value2
-            % Denominator of the arc tangent calculation.
+            % value1  Numerator of the arc tangent calculation.
+            % value2  Denominator of the arc tangent calculation.
             double = obj.hProject.invoke('ATn2', value1, value2);
         end
         function double = ATn2D(obj, value1, value2)
             % Returns the arc tangent of the relation of value1 to value2 in degree.
-            % value1
-            % Numerator of the arc tangent calculation.
-            % value2
-            % Denominator of the arc tangent calculation.
+            % value1  Numerator of the arc tangent calculation.
+            % value2  Denominator of the arc tangent calculation.
             double = obj.hProject.invoke('ATn2D', value1, value2);
         end
         function double = CLight(obj)
@@ -659,20 +655,13 @@ classdef Project < handle
         function CalculateFourierComplex(obj, Input, InputUnit, Output, OutputUnit, isign, normalization, vMin, vMax, vSamples)
             % This VBA command computes the integral:
             % f(u) represents an arbitrarily sampled input signal Input. The meaning of u and v abscissas depends on the values specified via InputUnit and OutputUnit. Allowed values and the corresponding project units are:
-            % Unit string value
-            % Unit
-            % "time"
-            % TIME UNIT
-            % "frequency"
-            % FREQUENCY UNIT
-            % "angularfrequency"
-            % RADIAN x FREQUENCY UNIT
-            % "space"
-            % LENGTH UNIT
-            % "wavenumber"
-            % 1/LENGTH UNIT
-            % "angularwavenumber"
-            % RADIAN/LENGTH UNIT
+            % Unit string value   Unit
+            % "time"              TIME UNIT
+            % "frequency"         FREQUENCY UNIT
+            % "angularfrequency"  RADIAN x FREQUENCY UNIT
+            % "space"             LENGTH UNIT
+            % "wavenumber"        1/LENGTH UNIT
+            % "angularwavenumber" RADIAN/LENGTH UNIT
             % vMin and vMax speficy the desired data interval in transformed coordinates and vSamples defines the desired number of equidistant samples. Only time-frequency and space-wavenumber space transforms are supported. Frequency and wavenumber functions are related as follows to their angular frequency/wavenumber counterparts:
             % No further scaling is applied. isign controls the sign of the exponent to affect a forward or a backward transform. The argument normalization may assume any value, depending on the employed normalization convention. However, forward and backward transform normalizations must always guarantee:
             % Fourier transform conventions adopted by  CST MICROWAVE STUDIO® are:
@@ -806,20 +795,13 @@ classdef Project < handle
         end
         function string = GetProjectPath(obj, type)
             % Gets the project path. If the name of the current project is Try and its location is in c:\MySolvedProblems, the result of this function will be
-            % type
-            % Path returned
-            % Root
-            % c:\MySolvedProblems
-            % Project
-            % c:\MySolvedProblems\Try
-            % Model3D
-            % c:\MySolvedProblems\Try\Model\3D
-            % ModelCache
-            % c:\MySolvedProblems\Try\ModelCache
-            % Result
-            % c:\MySolvedProblems\Try\Result
-            % Temp
-            % c:\MySolvedProblems\Try\Temp
+            % type        Path returned
+            % Root        c:\MySolvedProblems
+            % Project     c:\MySolvedProblems\Try
+            % Model3D     c:\MySolvedProblems\Try\Model\3D
+            % ModelCache  c:\MySolvedProblems\Try\ModelCache
+            % Result      c:\MySolvedProblems\Try\Result
+            % Temp        c:\MySolvedProblems\Try\Temp
             string = obj.hProject.invoke('GetProjectPath', type);
         end
         function object = GetOwnProject(obj)
@@ -855,38 +837,26 @@ classdef Project < handle
         end
         function double = dist2d(obj, id, x, y)
             % Returns the spatial distance in 2d of a pickpoint to a specified position.
-            % id
-            % Number of the requested point in the pickpoint list.
-            % x
-            % x-coordinate of the specific position.
-            % y
-            % y-coordinate of the specific position.
+            % id  Number of the requested point in the pickpoint list.
+            % x   x-coordinate of the specific position.
+            % y   y-coordinate of the specific position.
             double = obj.hProject.invoke('dist2d', id, x, y);
         end
         function double = dist3d(obj, id, x, y, z)
             % Returns the spatial distance in 3d of a pickpoint to a specified position.
-            % id
-            % Number of the requested point in the pickpoint list.
-            % x
-            % x-coordinate of the specific position.
-            % y
-            % y-coordinate of the specific position.
-            % z
-            % z-coordinate of the specific position.
+            % id  Number of the requested point in the pickpoint list.
+            % x   x-coordinate of the specific position.
+            % y   y-coordinate of the specific position.
+            % z   z-coordinate of the specific position.
             double = obj.hProject.invoke('dist3d', id, x, y, z);
         end
         function double = ldist2D(obj, id, x1, y1, x2, y2)
             % Returns the spatial distance in 2d of a pickpoint to a line defined by two points.
-            % id
-            % Number of the requested point in the pickpoint list.
-            % x1
-            % x-coordinate of the start point of the specific line.
-            % y1
-            % y-coordinate of the start point of the specific line.
-            % x2
-            % x-coordinate of the end point of the specific line.
-            % y2
-            % y-coordinate of the end point of the specific line.
+            % id  Number of the requested point in the pickpoint list.
+            % x1  x-coordinate of the start point of the specific line.
+            % y1  y-coordinate of the start point of the specific line.
+            % x2  x-coordinate of the end point of the specific line.
+            % y2  y-coordinate of the end point of the specific line.
             double = obj.hProject.invoke('ldist2D', id, x1, y1, x2, y2);
         end
         function bool = Rebuild(obj)
