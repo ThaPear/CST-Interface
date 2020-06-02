@@ -90,28 +90,17 @@ classdef Monitor < handle
         function FieldType(obj, fType)
             % Sets what field is to be monitored.
             % fType can have one of the following values:
-            % �Efield�
-            % The electric field will be monitored.
-            % �Hfield�
-            % The magnetic field and the surface current will be monitored.
-            % �Powerflow�
-            % The Pointing vector will be monitored.
-            % �Current�
-            % The current density will be monitored.
-            % �Powerloss�
-            % The power loss density will be monitored.
-            % �Eenergy�
-            % The electric energy density will be monitored.
-            % �Henergy�
-            % The magnetic energy density will be monitored.
-            % �Farfield�
-            % A monitor for the farfield will be created.
-            % �Fieldsource�
-            % A monitor for the field source will be created.
-            % "Spacecharge"
-            % The space charge density, e.g. due to charged particles, will be monitored.
-            % "Particlecurrentdensity"
-            % The particle current density will be monitored.
+            % 'Efield'                    The electric field will be monitored.
+            % 'Hfield'                    The magnetic field and the surface current will be monitored.
+            % 'Powerflow'                 The Pointing vector will be monitored.
+            % 'Current'                   The current density will be monitored.
+            % 'Powerloss'                 The power loss density will be monitored.
+            % 'Eenergy'                   The electric energy density will be monitored.
+            % 'Henergy'                   The magnetic energy density will be monitored.
+            % 'Farfield'                  A monitor for the farfield will be created.
+            % 'Fieldsource'               A monitor for the field source will be created.
+            % 'Spacecharge'               The space charge density, e.g. due to charged particles, will be monitored.
+            % 'Particlecurrentdensity'    The particle current density will be monitored.
             obj.AddToHistory(['.FieldType "', num2str(fType, '%.15g'), '"']);
             obj.fieldtype = fType;
         end
@@ -199,12 +188,9 @@ classdef Monitor < handle
         function Origin(obj, originType)
             % The broadband farfield monitor is based on an expansion of the farfield in terms of spherical waves. By default the origin of the spherical wave expansion is the center of the bounding box.
             % originType can have one of the following values:
-            % bbox
-            % The center of the bounding box of the structure.
-            % zero
-            % Origin of coordinate system.
-            % free
-            % Any desired point defined by UserOrigin
+            % 'bbox'  The center of the bounding box of the structure.
+            % 'zero'  Origin of coordinate system.
+            % 'free'  Any desired point defined by UserOrigin
             obj.AddToHistory(['.Origin "', num2str(originType, '%.15g'), '"']);
         end
         function UserOrigin(obj, x, y, z)
@@ -253,32 +239,19 @@ classdef Monitor < handle
         function monType = GetMonitorTypeFromIndex(obj, index)
             % Returns the type of the monitor with regard to the index in the internal monitor list.
             % monType can have one of the following values; depending on 2D or 3D monitors a suffix is added to the string in format of  " 2D" or " 3D", respectively:
-            % �E-Field 3D�, �E-Field 2D�
-            % The electric field has been monitored.
-            % �H-Field 3D�, �H-Field 2D�
-            % The magnetic field and the surface current has been monitored.
-            % �Powerflow 3D�
-            % The Pointing vector has been monitored.
-            % �Current 3D�
-            % The current density has been monitored.
-            % �Loss density 3D�
-            % The power loss density has been monitored.
-            % �E-Energy 3D�
-            % The electric energy density has been monitored.
-            % �H-Energy 3D�
-            % The magnetic energy density has been monitored.
-            % �SAR 3D�
-            % A monitor for the SAR calculation has been created.
-            % �Farfield�
-            % A farfield monitor has been created.
-            % �Fieldsource�
-            % A field source monitor has been created.
-            % �Adaption 3D�
-            % A monitor for the grid adaption has been created.
-            % "Spcace charge density 3D"
-            % A monitor for the space charge density has been created.
-            % �Particle current density 3D�
-            % A monitor for the particle current density has been created.
+            % 'E-Field 3D', 'E-Field 2D'      The electric field has been monitored.
+            % 'H-Field 3D', 'H-Field 2D'      The magnetic field and the surface current has been monitored.
+            % 'Powerflow 3D'                  The Pointing vector has been monitored.
+            % 'Current 3D'                    The current density has been monitored.
+            % 'Loss density 3D'               The power loss density has been monitored.
+            % 'E-Energy 3D'                   The electric energy density has been monitored.
+            % 'H-Energy 3D'                   The magnetic energy density has been monitored.
+            % 'SAR 3D'                        A monitor for the SAR calculation has been created.
+            % 'Farfield'                      A farfield monitor has been created.
+            % 'Fieldsource'                   A field source monitor has been created.
+            % 'Adaption 3D'                   A monitor for the grid adaption has been created.
+            % 'Spcace charge density 3D'      A monitor for the space charge density has been created.
+            % 'Particle current density 3D'   A monitor for the particle current density has been created.
             monType = obj.hMonitor.invoke('GetMonitorTypeFromIndex', index);
         end
         function domain = GetMonitorDomainFromIndex(obj, index)
@@ -393,6 +366,11 @@ classdef Monitor < handle
         function SetSubvolumeOffsetType(obj, type)
             % type: 'FractionOfWavelength'
             obj.AddToHistory(['.SetSubvolumeOffsetType "', num2str(type, '%.15g'), '"']);
+        end
+        % Found in history list in 'define farfield monitor: farfield (broadband)'
+        function Samples(obj, samples)
+            % Appears to give the number of samples of the broadband monitor.
+            obj.AddToHistory(['.Samples "', num2str(samples, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

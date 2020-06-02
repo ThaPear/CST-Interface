@@ -24,6 +24,9 @@ classdef Project < handle
         % CST.SimulationTask.Get3D can create a Project object.
         function obj = Project(hProject)
             obj.hProject = hProject;
+            obj.captionhistory = {};
+            obj.contenthistory = {};
+            obj.bulkmode = 0;
         end
     end
     %% CST Object functions.
@@ -80,9 +83,14 @@ classdef Project < handle
             if(nargin == 2)
                 contents = caption;
             end
-            bool = obj.hProject.invoke('AddToHistory', caption, contents);
-            if(~bool)
-                error(['Could not execute command ', newline, '''', caption, ''', ', newline, '''', contents, '''']);
+            if(obj.bulkmode)
+                obj.captionhistory = [obj.captionhistory, {caption}];
+                obj.contenthistory = [obj.contenthistory, {contents}];
+            else
+                bool = obj.hProject.invoke('AddToHistory', caption, contents);
+                if(~bool)
+                    error(['Could not execute command ', newline, '''', caption, ''', ', newline, '''', contents, '''']);
+                end
             end
         end
         function PositionWindow(obj, location, handle)
@@ -929,7 +937,6 @@ classdef Project < handle
             % Example: MinDistributedComputingMemoryLimit (1024)
             obj.hProject.invoke('MinDistributedComputingMemoryLimit', lowerLimit);
         end
-        
         %% Undocumented functions.
         % Found at https://www.researchgate.net/post/How_to_export_all_tables_obtained_from_parameter_sweep_in_CST_together
         function ExportPlotData(obj, filename)
@@ -950,7 +957,7 @@ classdef Project < handle
             % returnvalues specifies the VBA names of the values to be returned to MATLAB.
             %     This must match the number of output arguments nargout.
             %     An empty array causes returns to be ignored.
-            if(~isempty(returnvalues) && (nargout ~= 0 || nargin >= 3))
+            if((nargout ~= 0 || nargin >= 3) && ~isempty(returnvalues))
                 if(nargout ~= length(returnvalues))
                     error('Invalid number of return values specified.');
                 end
@@ -966,7 +973,7 @@ classdef Project < handle
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
             obj.RunScript(GetFullPath('CST-Interface\Bas\RunVBACode.bas'));
             
-            if(~isempty(returnvalues))
+            if(nargin >= 3 && ~isempty(returnvalues))
                 % Retrieve return arguments.
                 varargout = cell(1, nargout);
                 for(i = 1:nargout)
@@ -1002,11 +1009,45 @@ classdef Project < handle
             end
             obj.StoreParameters(names, values);
         end
+        function StartBulkMode(obj)
+            if(obj.bulkmode)
+                error('Bulkmode already active.');
+            end
+            obj.bulkmode = 1;
+        end
+        function EndBulkMode(obj)
+            vba = ['ScreenUpdating "False"', newline];
+            % Translate caption & content history.
+            for(i = 1:length(obj.captionhistory))
+                caption = obj.captionhistory{i};
+                
+                content = obj.contenthistory{i};
+                % Double the double quotes
+                vbacaption = strrep(caption, '"', '""'); 
+                vbacontent = strrep(content, '"', '""'); 
+                % Add the right newlines
+                vbacaption = strrep(vbacaption, newline, ['" + vbNewLine + _', newline, '"']);
+                vbacontent = strrep(vbacontent, newline, ['" + vbNewLine + _', newline, '"']);
+                
+                vba = [vba, newline, ...
+                    'AddToHistory("', vbacaption, '", _', newline, '"', vbacontent, '")', newline, ...
+                    ]; %#ok<AGROW>
+            end
+            
+            obj.RunVBACode(vba);
+            
+            obj.captionhistory = {};
+            obj.contenthistory = {};
+            obj.bulkmode = 0;
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
     properties(SetAccess = protected)
         hProject
+        captionhistory
+        contenthistory
+        bulkmode
     end
     %% Matlab interface Project functions.
     properties(Access = protected)

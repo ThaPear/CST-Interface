@@ -154,9 +154,11 @@ classdef WCS < handle
         % Those methods need special care in case of being used within macros that are added to the History List. During fast opening and Rebuilds, not all information is generally available that is queried by those methods. To improve the situation, it might be necessary to add some of the following commands to the macro or the beginning of the history:
         % ResultTree.UpdateTree()
         % FastModelLoad ("False")
-        % IsWCSActive (  ) string <"local","global">
-        
-        % This method queries whether global or local coordinates are active
+        function active = IsWCSActive(obj)
+            % This method queries whether global or local coordinates are active
+            % active: 'local', 'global'
+            active = obj.hWCS.invoke('IsWCSActive');
+        end
         function bool = DoesExist(obj, WCSName)
             % Checks if the WCS with the given name does exist.
             bool = obj.hWCS.invoke('DoesExist', WCSName);
@@ -167,6 +169,9 @@ classdef WCS < handle
             % 
             % *If you don't specify a WCSName for the commands above (use an empty string instead),
             % the current local coordinates system is queried instead.
+            if(nargin < 2)
+                WCSName = '""';
+            end
             functionString = [...
                 'Dim bool As Boolean', newline, ...
                 'Dim x As Double, y As Double, z As Double', newline, ...
@@ -186,6 +191,9 @@ classdef WCS < handle
             % 
             % *If you don't specify a WCSName for the commands above (use an empty string instead),
             % the current local coordinates system is queried instead.
+            if(nargin < 2)
+                WCSName = '""';
+            end
             functionString = [...
                 'Dim bool As Boolean', newline, ...
                 'Dim x As Double, y As Double, z As Double', newline, ...
@@ -205,6 +213,9 @@ classdef WCS < handle
             % 
             % *If you don't specify a WCSName for the commands above (use an empty string instead),
             % the current local coordinates system is queried instead.
+            if(nargin < 2)
+                WCSName = '""';
+            end
             functionString = [...
                 'Dim bool As Boolean', newline, ...
                 'Dim x As Double, y As Double, z As Double', newline, ...
