@@ -1220,7 +1220,7 @@ classdef Project < handle
         timemonitor3d               CST.TimeMonitor3D
         timesignal                  CST.TimeSignal
         torus                       CST.Torus
-        touchstone                  CST.Touchstone
+        touchstone                  CST.TOUCHSTONE
         tracefromcurve              CST.TraceFromCurve
         trackingplot                CST.TrackingPlot
         trackingsolver              CST.TrackingSolver
@@ -1420,7 +1420,7 @@ classdef Project < handle
         function timemonitor3d               = TimeMonitor3D(obj);               if(isempty(obj.timemonitor3d));               obj.timemonitor3d               = CST.TimeMonitor3D(obj, obj.hProject);               end; timemonitor3d               = obj.timemonitor3d;               end
         function timesignal                  = TimeSignal(obj);                  if(isempty(obj.timesignal));                  obj.timesignal                  = CST.TimeSignal(obj, obj.hProject);                  end; timesignal                  = obj.timesignal;                  end
         function torus                       = Torus(obj);                       if(isempty(obj.torus));                       obj.torus                       = CST.Torus(obj, obj.hProject);                       end; torus                       = obj.torus;                       end
-        function touchstone                  = Touchstone(obj);                  if(isempty(obj.touchstone));                  obj.touchstone                  = CST.Touchstone(obj, obj.hProject);                  end; touchstone                  = obj.touchstone;                  end
+        function touchstone                  = TOUCHSTONE(obj);                  if(isempty(obj.touchstone));                  obj.touchstone                  = CST.TOUCHSTONE(obj, obj.hProject);                  end; touchstone                  = obj.touchstone;                  end
         function tracefromcurve              = TraceFromCurve(obj);              if(isempty(obj.tracefromcurve));              obj.tracefromcurve              = CST.TraceFromCurve(obj, obj.hProject);              end; tracefromcurve              = obj.tracefromcurve;              end
         function trackingplot                = TrackingPlot(obj);                if(isempty(obj.trackingplot));                obj.trackingplot                = CST.TrackingPlot(obj, obj.hProject);                end; trackingplot                = obj.trackingplot;                end
         function trackingsolver              = TrackingSolver(obj);              if(isempty(obj.trackingsolver));              obj.trackingsolver              = CST.TrackingSolver(obj, obj.hProject);              end; trackingsolver              = obj.trackingsolver;              end

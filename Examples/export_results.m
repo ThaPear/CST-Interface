@@ -4,7 +4,7 @@ fdsolver.Start();
 
 %% Export results as Touchstone.
 exportfilename = [cd, '\Export\sparameters'];
-touchstone = project.Touchstone();
+touchstone = project.TOUCHSTONE();
     touchstone.Reset();
     touchstone.Impedance(50);
     touchstone.Renormalize(1);
