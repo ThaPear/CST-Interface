@@ -27,6 +27,7 @@ classdef Project < handle
             obj.captionhistory = {};
             obj.contenthistory = {};
             obj.bulkmode = 0;
+            obj.nextcommandmodifiers = {};
         end
     end
     %% CST Object functions.
@@ -82,6 +83,41 @@ classdef Project < handle
             % If the previous history block has the same caption, it is assumed that it has the same content, it will be removed, in order to keep the history slim.
             if(nargin == 2)
                 contents = caption;
+            end
+            if(~isempty(obj.nextcommandmodifiers))
+                for(i = length(obj.nextcommandmodifiers):-1:1)
+                    modifier = obj.nextcommandmodifiers{i};
+                    switch(modifier{1})
+                        case 'Conditional'
+                            % If condition Then [ statements ]
+                            condition = modifier{2};
+                            contents = [...
+                                'If ', condition, ' Then', newline, ...
+                                    contents, newline, ...
+                                'End If', newline]; %#ok<AGROW>
+                        case 'Loop'
+                            % For counter = startval To endval [ Step stepval ]
+                            %     [ history list item ]
+                            % Next [ counter ]
+                            counter = modifier{2};
+                            startval = modifier{3};
+                            endval = modifier{4};
+                            if(length(modifier) > 4)
+                                stepval = modifier{5};
+                                stepstr = [' Step ', stepval];
+                            else
+                                stepstr = '';
+                            end
+                            contents = [...
+                                'Dim ', counter, newline, ...
+                                'For ', counter, ' = ', startval, ' To ', endval, stepstr, newline, ...
+                                    contents, newline, ...
+                                'Next ', counter, newline]; %#ok<AGROW>
+                        otherwise
+                            error('Unknown next command modifier ''%s''.', obj.nextcommandmodifier{i});
+                    end
+                end
+                obj.nextcommandmodifiers = {};
             end
             if(obj.bulkmode)
                 obj.captionhistory = [obj.captionhistory, {caption}];
@@ -1040,6 +1076,28 @@ classdef Project < handle
             obj.contenthistory = {};
             obj.bulkmode = 0;
         end
+        function NextCommandConditional(obj, conditionString)
+            % Make next command conditional by inserting If conditionString Then and End If
+            obj.nextcommandmodifiers{end+1} = {'Conditional', conditionString};
+        end
+        function NextCommandLoop(obj, counter, startval, endval, stepval)
+            % Make next command loop by inserting the following code around the history list item.
+            % Step is an optional argument.
+            % NOTE: Parameters are case insensitive, be aware of CST project parameters.
+            % For counter = startval To endval [ Step stepval ]
+            %     [ history list item ]
+            % Next [ counter ]
+            if(nargin < 5)
+                obj.nextcommandmodifiers{end+1} = {'Loop', counter, ...
+                                                           num2str(startval, '%.15g'), ...
+                                                           num2str(endval, '%.15g')};
+            else
+                obj.nextcommandmodifiers{end+1} = {'Loop', counter, ...
+                                                           num2str(startval, '%.15g'), ...
+                                                           num2str(endval, '%.15g'), ...
+                                                           num2str(stepval, '%.15g')}; 
+            end
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
@@ -1048,6 +1106,7 @@ classdef Project < handle
         captionhistory
         contenthistory
         bulkmode
+        nextcommandmodifiers
     end
     %% Matlab interface Project functions.
     properties(Access = protected)
