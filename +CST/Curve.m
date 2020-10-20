@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % This object is used to apply operations on curves and curve items.
 classdef Curve < handle
     %% CST Interface specific functions.
@@ -25,11 +29,31 @@ classdef Curve < handle
             obj.project = project;
             obj.hCurve = hProject.invoke('Curve');
             obj.history = [];
+			obj.bulkmode = 0;
         end
     end
     methods
+        function StartBulkMode(obj)
+            % Buffers all commands instead of sending them to CST
+            % immediately.
+            obj.bulkmode = 1;
+        end
+        function EndBulkMode(obj)
+            % Flushes all commands since StartBulkMode to CST.
+            obj.bulkmode = 0;
+            % Prepend With Curve and append End With
+            obj.history = [ 'With Curve', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Curve settings'], obj.history);
+            obj.history = [];
+        end
         function AddToHistory(obj, command)
-            obj.project.AddToHistory(['Curve', command]);
+            if(obj.bulkmode)
+                obj.history = [obj.history, '     ', command, newline];
+            else
+                obj.project.AddToHistory(['Curve', command]);
+            end
         end
     end
     %% CST Object functions.
@@ -114,6 +138,7 @@ classdef Curve < handle
         project
         hCurve
         history
+        bulkmode
 
     end
 end

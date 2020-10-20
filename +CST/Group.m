@@ -29,11 +29,31 @@ classdef Group < handle
             obj.project = project;
             obj.hGroup = hProject.invoke('Group');
             obj.history = [];
+			obj.bulkmode = 0;
         end
     end
     methods
+        function StartBulkMode(obj)
+            % Buffers all commands instead of sending them to CST
+            % immediately.
+            obj.bulkmode = 1;
+        end
+        function EndBulkMode(obj)
+            % Flushes all commands since StartBulkMode to CST.
+            obj.bulkmode = 0;
+            % Prepend With Group and append End With
+            obj.history = [ 'With Group', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Group settings'], obj.history);
+            obj.history = [];
+        end
         function AddToHistory(obj, command)
-            obj.project.AddToHistory(['Group', command]);
+            if(obj.bulkmode)
+                obj.history = [obj.history, '     ', command, newline];
+            else
+                obj.project.AddToHistory(['Group', command]);
+            end
         end
     end
     %% CST Object functions.
@@ -88,6 +108,7 @@ classdef Group < handle
         project
         hGroup
         history
+        bulkmode
 
     end
 end
@@ -95,18 +116,18 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % Create a new group
 % Group.Add('group1', 'mesh');
-% 
+%
 % % Rename an existing group
 % Group.Rename('group1', 'MyGroup');
-% 
+%
 % % Add a solid to a group
 % Group.AddItem('solid$component1:solid1', 'MyGroup');
-% 
+%
 % % Add a port to a group
 % Group.AddItem('port$port1', 'MyGroup');
-% 
+%
 % % Remove a solid from group
 % Group.RemoveItem('solid$component1:solid1', 'MyGroup');
-% 
+%
 % % Delete group
 % Group.Delete('MyGroup');

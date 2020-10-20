@@ -29,11 +29,31 @@ classdef Solid < handle
             obj.project = project;
             obj.hSolid = hProject.invoke('Solid');
             obj.history = [];
+			obj.bulkmode = 0;
         end
     end
     methods
+        function StartBulkMode(obj)
+            % Buffers all commands instead of sending them to CST
+            % immediately.
+            obj.bulkmode = 1;
+        end
+        function EndBulkMode(obj)
+            % Flushes all commands since StartBulkMode to CST.
+            obj.bulkmode = 0;
+            % Prepend With Solid and append End With
+            obj.history = [ 'With Solid', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Solid settings'], obj.history);
+            obj.history = [];
+        end
         function AddToHistory(obj, command)
-            obj.project.AddToHistory(['Solid', command]);
+            if(obj.bulkmode)
+                obj.history = [obj.history, '     ', command, newline];
+            else
+                obj.project.AddToHistory(['Solid', command]);
+            end
         end
     end
     %% CST Object functions.
@@ -625,6 +645,7 @@ classdef Solid < handle
         project
         hSolid
         history
+        bulkmode
 
     end
 end

@@ -26,10 +26,36 @@
 classdef Pick < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
-        % Only CST.Project can create a Pick object.
+        % Only CST.Project can create a CST.Pick object.
         function obj = Pick(project, hProject)
             obj.project = project;
             obj.hPick = hProject.invoke('Pick');
+            obj.history = [];
+            obj.bulkmode = 0;
+        end
+    end
+    methods
+        function StartBulkMode(obj)
+            % Buffers all commands instead of sending them to CST
+            % immediately.
+            obj.bulkmode = 1;
+        end
+        function EndBulkMode(obj)
+            % Flushes all commands since StartBulkMode to CST.
+            obj.bulkmode = 0;
+            % Prepend With Pick and append End With
+            obj.history = [ 'With Pick', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Pick settings'], obj.history);
+            obj.history = [];
+        end
+        function AddToHistory(obj, command)
+            if(obj.bulkmode)
+                obj.history = [obj.history, '     ', command, newline];
+            else
+                obj.project.AddToHistory(['Pick', command]);
+            end
         end
     end
     %% CST Object functions.
@@ -456,6 +482,8 @@ classdef Pick < handle
     properties(SetAccess = protected)
         project
         hPick
+        history
+        bulkmode
 
     end
 end

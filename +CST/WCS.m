@@ -29,11 +29,31 @@ classdef WCS < handle
             obj.project = project;
             obj.hWCS = hProject.invoke('WCS');
             obj.history = [];
+			obj.bulkmode = 0;
         end
     end
     methods
+        function StartBulkMode(obj)
+            % Buffers all commands instead of sending them to CST
+            % immediately.
+            obj.bulkmode = 1;
+        end
+        function EndBulkMode(obj)
+            % Flushes all commands since StartBulkMode to CST.
+            obj.bulkmode = 0;
+            % Prepend With WCS and append End With
+            obj.history = [ 'With WCS', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define WCS settings'], obj.history);
+            obj.history = [];
+        end
         function AddToHistory(obj, command)
-            obj.project.AddToHistory(['WCS', command]);
+            if(obj.bulkmode)
+                obj.history = [obj.history, '     ', command, newline];
+            else
+                obj.project.AddToHistory(['WCS', command]);
+            end
         end
     end
     %% CST Object functions.
@@ -330,6 +350,7 @@ classdef WCS < handle
         project
         hWCS
         history
+        bulkmode
 
     end
 end
