@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -65,61 +65,61 @@ classdef Units < handle
             % ft: Feet
             % in: Inch
             % mil: A Thousandth Inch
-            
+
             obj.AddToHistory(['.Geometry "', unit, '"']);
         end
         function Frequency(obj, unit)
             % Default Hz.
             % Hz, KHz, MHz, GHz, THz, PHz
-            
+
             obj.AddToHistory(['.Frequency "', unit, '"']);
         end
         function Voltage(obj, unit)
             % Default V.
             % V, ???
-            
+
             obj.AddToHistory(['.Voltage "', unit, '"']);
         end
         function Resistance(obj, unit)
             % Default Ohm.
             % Ohm, ???
-            
+
             obj.AddToHistory(['.Resistance "', unit, '"']);
         end
         function Inductance(obj, unit)
             % Default NanoH.
             % H, NanoH, ???
-            
+
             obj.AddToHistory(['.Inductance "', unit, '"']);
         end
         function TemperatureUnit(obj, unit)
             % Default Kelvin.
             % Kelvin, Celcius, Fahrenheit
-            
+
             obj.AddToHistory(['.TemperatureUnit "', unit, '"']);
         end
         function Time(obj, unit)
             % Default s.
             % s, ms, us, ns, ps, fs
-            
+
             obj.AddToHistory(['.Time "', unit, '"']);
         end
         function Current(obj, unit)
             % Default A.
             % A, ???
-            
+
             obj.AddToHistory(['.Current "', unit, '"']);
         end
         function Conductance(obj, unit)
             % Default Siemens.
             % Siemens, ???
-            
+
             obj.AddToHistory(['.Conductance "', unit, '"']);
         end
         function Capacitance(obj, unit)
             % Default PikoF. (With a k)
             % F, PikoF, ???
-            
+
             obj.AddToHistory(['.Capacitance "', unit, '"']);
         end
         %% Utility functions.

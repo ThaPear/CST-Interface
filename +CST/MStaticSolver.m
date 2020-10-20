@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object is used to define the magnetostatic solver settings.
 classdef MStaticSolver < handle
@@ -94,7 +94,7 @@ classdef MStaticSolver < handle
             % enum gridlocation   meaning
             % "normal"            The magnetic field H is allocated on the edges of the normal grid.
             % "dual"              The magnetic field H is allocated on the edges of the dual grid.
-            %   
+            %
             % This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
             obj.AddToHistory(['.GridLocation "', num2str(gridlocation, '%.15g'), '"']);
         end
@@ -109,14 +109,14 @@ classdef MStaticSolver < handle
             % "Auto"          choose direct or iterative solver automatically depending on the problem size
             % "Iterative"     use the iterative solver
             % "Direct"        use the direct solver
-            %   
+            %
             % The default setting is "Auto". The solvertype setting is of interest only for the tetrahedral solver method and will be ignored otherwise.
             obj.AddToHistory(['.LSESolverType "', num2str(solvertype, '%.15g'), '"']);
         end
         function MaxNumIter(obj, value)
             % The number of iterations performed by the (linear or nonlinear) solver is automatically limited by a number depending on the desired solver accuracy. This is equivalent to setting the value to "0". If you would like to prescribe a fixed upper limit for number of iterations, then specify the corresponding value here.
             % In case that nonlinear materials are defined, i.e. the nonlinear solver is running, the maximum number of iterations allowed for the linear solver steps will be determined automatically depending on the value specified here.
-            % 
+            %
             % NOTE: This method is defined twice in the documentation. The other one has the following description:
             % Specifies the maximum number of nonlinear iteration cycles when nonlinear materials are defined.
             obj.AddToHistory(['.MaxNumIter "', num2str(value, '%.15g'), '"']);
@@ -244,4 +244,4 @@ end
 %     mstaticsolver.StoreResultsInCache('0');
 %     mstaticsolver.MeshAdaption('0');
 %     mstaticsolver.GridLocation('Dual');
-% 
+%

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object controls the mesh generation. Several methods/functions to control the automatic mesh generation as well as to define a manual mesh can be found here.
 classdef Mesh < handle
@@ -163,15 +163,15 @@ classdef Mesh < handle
             obj.AddToHistory(['.FastPBAAccuracy "', num2str(value, '%.15g'), '"']);
         end
         function FastPBAGapDetection(obj, bFlag)
-            % Enables or disables a more accurate internal geometry representation of non-PEC gaps if the FPBA mesher is used.  
+            % Enables or disables a more accurate internal geometry representation of non-PEC gaps if the FPBA mesher is used.
             obj.AddToHistory(['.FastPBAGapDetection "', num2str(bFlag, '%.15g'), '"']);
         end
         function FPBAGapTolerance(obj, value)
-            % Sets a tolerance value to skip the accuracy enhancement for non-PEC gaps that are smaller than the given value.  
+            % Sets a tolerance value to skip the accuracy enhancement for non-PEC gaps that are smaller than the given value.
             obj.AddToHistory(['.FPBAGapTolerance "', num2str(value, '%.15g'), '"']);
         end
         function AreaFillLimit(obj, dValue)
-            % Sets the area fill limit for PBA.  
+            % Sets the area fill limit for PBA.
             obj.AddToHistory(['.AreaFillLimit "', num2str(dValue, '%.15g'), '"']);
         end
         function ConvertGeometryDataAfterMeshing(obj, bFlag)
@@ -510,7 +510,7 @@ classdef Mesh < handle
             % The method can be called as soon as the solid and the curve are defined and must be executed as a control macro with the VBA macro editor. It will automatically - and adequately - sample the axis curve and will insert in the history list AddSpatialVariationCenterForShape commands evaluated on the sampling points (p1, p2 ... pn).
             % The inner and outer radius are stored in the history with the command SetSpatialVariationInnerRadiusForShape and SetSpatialVariationOuterRadiusForShape and acts as scaling factor for the material function .
             % Globally the macro will generate and store in the history list the following VBA commands:
-            % 
+            %
             % With Mesh
             % .ClearSpatialVariationForShape("shapeName")
             % .SetSpatialVariationTypeForShape("shapeName", "curve")
@@ -707,13 +707,13 @@ end
 % UseCellAspectRatio(0)
 % CellAspectRatio(50.0)
 % SelfIntersectionCheck(1 )
-%  
+%
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % Dim refinePEC As Integer
-% 
+%
 % refinePEC = 6
-% 
+%
 % mesh = project.Mesh();
 %     mesh.AutomeshStraightLines(1)
 %     mesh.AutomeshEllipticalLines(1)

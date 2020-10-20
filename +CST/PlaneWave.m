@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines a plane wave excited at an open boundary of the calculation domain. Unlike discrete ports or waveguide ports no S-parameters will be calculated. Instead the stimulation amplitude (unit is V/m) is recorded. To obtain further information you might specify probes or different types of field monitors. Combined with farfield monitors the plane wave source can be used to compute the radar cross section (RCS).
 classdef PlaneWave < handle
@@ -45,7 +45,7 @@ classdef PlaneWave < handle
         function Store(obj)
             % This method stores the settings concerning the definition of a plane wave excitation after checking their validity.
             obj.AddToHistory(['.Store']);
-            
+
             % Prepend With PlaneWave and append End With
             obj.history = [ 'With PlaneWave', newline, ...
                                 obj.history, ...

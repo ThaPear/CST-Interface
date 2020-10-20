@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -33,16 +33,16 @@ classdef Table < handle
         % From within CST MICROWAVE STUDIOCST EM STUDIOCST PARTICLE STUDIO:CST MPHYSICS STUDIO
         % dim objName as object
         % set objName = Table("adapt_error.tab")
-        % 
+        %
         % From an external progam
         % dim objName as object
         % set objName = CreateObject("CSTStudio.Table")
         % objName.Load("adapt_error.tab")
         % Where ”adapt_error.tab” is the name of the result table which should be loaded into the Table object.
-        % 
+        %
         % From MATLAB
         % objName = project.Table('adapt_error.tab');
-        % 
+        %
         %% Initialization, File Operation
         function Load(obj, sTableFileName)
             % Loads a result table file named sTableFileName into the current Table object.
@@ -109,13 +109,13 @@ classdef Table < handle
         function result1D = Get1DDataItem(obj, index)
             % This method is only available when the type of the data item is "1d". The return value is a Result1D object containing the xy data curve of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
             hResult1D = obj.hTable.invoke('Get1DDataItem', index);
-            
+
             result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1Dcomplex = Get1DComplexDataItem(obj, index)
             % This method is only available when the type of the data item is "1d complex". The return value is a Result1DComplex object containing the complex data curve of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1.
             hResult1DComplex = obj.hTable.invoke('Get1DComplexDataItem', index);
-            
+
             result1Dcomplex = CST.Result1DComplex(obj.project, hResult1DComplex);
         end
     end

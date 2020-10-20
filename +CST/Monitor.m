@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines 3D or 2D field monitors. Each monitor stores the field values either for a specified frequency or for a set of time samples. There are different kinds of monitors: magnetic and electric field or energy monitors as well as farfield, power flow and current monitors.
 classdef Monitor < handle
@@ -41,7 +41,7 @@ classdef Monitor < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
             obj.fieldtype = [];
             obj.domain = [];
@@ -75,9 +75,9 @@ classdef Monitor < handle
                     obj.Name([obj.fieldtype, ' (f=', num2str(obj.frequency), ')']);
                 end
             end
-            
+
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With and append End With
             obj.history = ['With Monitor', newline, obj.history, 'End With'];
             if(strcmp(obj.domain, 'Time'))
@@ -315,7 +315,7 @@ classdef Monitor < handle
             obj.AddToHistory(['.CreateUsingLinearStep "', num2str(fmin, '%.15g'), '", '...
                                                      '"', num2str(fmax, '%.15g'), '", '...
                                                      '"', num2str(step, '%.15g'), '"']);
-            
+
             % Prepend With and append End With
             obj.history = ['With Monitor', newline, obj.history, 'End With'];
             obj.project.AddToHistory(['define monitors (using linear step)'], obj.history);
@@ -326,7 +326,7 @@ classdef Monitor < handle
             obj.AddToHistory(['.CreateUsingLinearSamples "', num2str(fmin, '%.15g'), '", '...
                                                         '"', num2str(fmax, '%.15g'), '", '...
                                                         '"', num2str(nsamples, '%.15g'), '"']);
-            
+
             % Prepend With and append End With
             obj.history = ['With Monitor', newline, obj.history, 'End With'];
             obj.project.AddToHistory(['define monitors (using linear samples)'], obj.history);
@@ -337,19 +337,19 @@ classdef Monitor < handle
             obj.AddToHistory(['.CreateUsingLogSamples "', num2str(fmin, '%.15g'), '", '...
                                                      '"', num2str(fmax, '%.15g'), '", '...
                                                      '"', num2str(nsamples, '%.15g'), '"']);
-            
+
             % Prepend With and append End With
             obj.history = ['With Monitor', newline, obj.history, 'End With'];
             obj.project.AddToHistory(['define monitors (using logarithmic samples)'], obj.history);
             obj.history = [];
         end
         % Found in history list.
-        function Coordinates(obj, coordinates) 
+        function Coordinates(obj, coordinates)
             % coordinates: structure, calculation, ???
             obj.AddToHistory(['.Coordinates "', num2str(coordinates, '%.15g'), '"']);
         end
         % Found in history list.
-        function MonitorValue(obj, monitorvalue) 
+        function MonitorValue(obj, monitorvalue)
             % Is used to set frequency when creating a single-frequency monitor.
             obj.AddToHistory(['.MonitorValue "', num2str(monitorvalue, '%.15g'), '"']);
         end
@@ -420,7 +420,7 @@ end
 %     monitor.FieldType('Efield');
 %     monitor.Frequency(2.5)
 %     monitor.Create
-% 
+%
 % % creates a time domain magnetic field monitor for the plane y=37.3
 %     monitor.Reset
 %     monitor.Name('My magnetic field monitor');
@@ -434,7 +434,7 @@ end
 %     monitor.PlaneNormal('y');
 %     monitor.PlanePosition('37.3');
 %     monitor.Create
-% 
+%
 % % creates a 2D subvolume frequency domain electric field monitor(with sub sampling for I-, A- and M-Solver)
 %     monitor.Reset
 %     monitor.Name('e-field(f=0.80;z=30)');
@@ -450,13 +450,13 @@ end
 %     monitor.PlanePosition('0');
 %     monitor.SetSubVolumeSampling('10', '6', '6');
 %     monitor.Create
-% 
+%
 % %Example for getting the sub volume sampling rate
 % Dim V As Variant
 % V = Monitor.GetSubVolumeSampling('e-field(f=0.80;z=30)');
-% 
+%
 % Debug.Print V(0)
 % Debug.Print V(1)
 % Debug.Print V(2)
-% 
-% 
+%
+%

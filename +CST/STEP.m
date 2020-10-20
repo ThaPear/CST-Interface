@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -19,7 +19,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Import Step CAD data.
 classdef STEP < handle
@@ -42,7 +42,7 @@ classdef STEP < handle
         function Reset(obj)
             % Resets the import options to the default.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.filename = [];
         end
         function FileName(obj, filename)
@@ -93,7 +93,7 @@ classdef STEP < handle
         function Read(obj)
             % Starts the actual import of the file.
             obj.AddToHistory(['.Read']);
-            
+
             % Prepend With STEP and append End With
             obj.history = [ 'With STEP', newline, ...
                                 obj.history, ...
@@ -105,7 +105,7 @@ classdef STEP < handle
             % Warning: Untested, might not work as expected.
             % Performs the export.
             obj.AddToHistory(['.Write']);
-            
+
             % Prepend With STEP and append End With
             obj.history = [ 'With STEP', newline, ...
                                 obj.history, ...
@@ -117,7 +117,7 @@ classdef STEP < handle
             % Warning: Untested, might not work as expected.
             % Exports all data.
             obj.AddToHistory(['.WriteAll']);
-            
+
             % Prepend With STEP and append End With
             obj.history = [ 'With STEP', newline, ...
                                 obj.history, ...

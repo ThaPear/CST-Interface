@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -77,15 +77,15 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % Storing currently calculated S-parameters in the data file for later use within the component. The data is stored together with the current parameter settings which allows for a parametric data access from within the ADS schematic.
-% 
+%
 % adscomponentexport = project.ADSComponentExport();
 %     adscomponentexport.AddCurrentSparameterToMdifFile
-% 
+%
 % Automatically creating an ADS component from within a VBA script:
-% 
+%
 %  With ADSComponentExport
 %     adscomponentexport.SetDescription('Magic Tee 4 Port Rectangular Waveguide');
 %     adscomponentexport.SetParameterType('waveguide_width', 'Length');
 %     adscomponentexport.SetParameterType('waveguide_height', 'Length');
 %     adscomponentexport.ExportADSComponent
-% 
+%

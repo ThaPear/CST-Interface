@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % The object is used to initialize predefined electric and magnetic fields for tracking- or PIC-simulations.
 % Two distinct possibilities exist. One is to define analytical magnetic fields, which can be homogeneous or rotational symmetric. The other possibility is to import fields from external files or from external CST projects.
@@ -132,7 +132,7 @@ classdef PredefinedField < handle
         function Create(obj)
             % Creates the defined source field.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With PredefinedField and append End With
             obj.history = [ 'With PredefinedField', newline, ...
                                 obj.history, ...

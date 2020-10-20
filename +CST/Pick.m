@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Offers a set of tools to find or set specific points, edges or areas.
 % Some methods/functions specify the objects that have to be picked by an id number. This id number is unique for every object. If not specified otherwise, the numbering starts with 0. Please note: If a solid changes such that new faces/edges/points are created, the id number might change!
@@ -63,7 +63,7 @@ classdef Pick < handle
                                                     '"', num2str(keep, '%.15g'), '"']);
         end
         function MoveEdgeInPlane(obj, index, offset, keep)
-            % Moves the edge - defined from the latest picked face - tangential to the plane. Offset specifies how much the edge is moved from edge’s origin. Keep indicates weather the picked original edge will be kept (true) or deleted (false).
+            % Moves the edge - defined from the latest picked face - tangential to the plane. Offset specifies how much the edge is moved from edgeï¿½s origin. Keep indicates weather the picked original edge will be kept (true) or deleted (false).
             obj.project.AddToHistory(['Pick.MoveEdgeInPlane "', num2str(index, '%.15g'), '", '...
                                                            '"', num2str(offset, '%.15g'), '", '...
                                                            '"', num2str(keep, '%.15g'), '"']);
@@ -141,7 +141,7 @@ classdef Pick < handle
                                                           '"', num2str(vertex_id, '%.15g'), '"']);
         end
         function PickEdgeFromPoint(obj, shapeName, xpoint, ypoint, zpoint)
-            % Pick’s an edge of a solid - using a point on the edge - whereby the point is always defined
+            % Pickï¿½s an edge of a solid - using a point on the edge - whereby the point is always defined
             % in global coordinates. The method so represents the Modeling: Picks > Picks  > Absolute Pick Positioning  mode
             obj.project.AddToHistory(['Pick.PickEdgeFromPoint "', num2str(shapeName, '%.15g'), '", '...
                                                              '"', num2str(xpoint, '%.15g'), '", '...
@@ -166,7 +166,7 @@ classdef Pick < handle
                                                           '"', num2str(id, '%.15g'), '"']);
         end
         function PickFaceFromPoint(obj, shapeName, xpoint, ypoint, zpoint)
-            % Pick’s a face - using a point on the face - whereby the point is always defined in global coordinates. The method so represents the Modeling: Picks > Picks  > Absolute Pick Positioning  mode.
+            % Pickï¿½s a face - using a point on the face - whereby the point is always defined in global coordinates. The method so represents the Modeling: Picks > Picks  > Absolute Pick Positioning  mode.
             obj.project.AddToHistory(['Pick.PickFaceFromPoint "', num2str(shapeName, '%.15g'), '", '...
                                                              '"', num2str(xpoint, '%.15g'), '", '...
                                                              '"', num2str(ypoint, '%.15g'), '", '...
@@ -385,8 +385,7 @@ classdef Pick < handle
             int = obj.hPick.invoke('GetNumberOfPickedFaces');
         end
         function [bool, x, y, z] = GetPickpointCoordinatesByIndex(obj, index)
-            % Returns the coordinates of a picked point through the argument list. The picked point
-            % is specified by index starting with 0.
+            % Returns the coordinates of a picked point through the argument list. The picked point is specified by index starting with 0.
             functionString = [...
                 'Dim bool As Boolean', newline, ...
                 'Dim x As Double, y As Double, z As Double', newline, ...
@@ -401,8 +400,7 @@ classdef Pick < handle
             z = str2double(z);
         end
         function [shapename, edgeid, vertexid] = GetPickedEdgeByIndex(obj, index)
-            % Returns the shapename of a picked edge. The edge id  and the vertex id is returned
-            % through the argument list. The picked edge is specified by index starting with 0.
+            % Returns the shapename of a picked edge. The edge id  and the vertex id is returned through the argument list. The picked edge is specified by index starting with 0.
             functionString = [...
                 'Dim shapename As String', newline, ...
                 'Dim edgeid As Long, vertexid As Long', newline, ...
@@ -415,8 +413,7 @@ classdef Pick < handle
             vertexid = str2double(vertexid);
         end
         function [shapename, faceid] = GetPickedFaceByIndex(obj, index)
-            % Returns the shapename of a picked face. The face id is returned through the argument
-            % list. The picked face is specified by index starting with 0.
+            % Returns the shapename of a picked face. The face id is returned through the argument list. The picked face is specified by index starting with 0.
             functionString = [...
                 'Dim shapename As String', newline, ...
                 'Dim faceid As Long', newline, ...

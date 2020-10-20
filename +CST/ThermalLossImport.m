@@ -1,20 +1,24 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
 
 % This object offers the possibility to import thermal loss distributions into a thermal projects. For each thermal loss import performed using the FieldSource object, an entry with the same name has to be created, containing the additional settings for this loss import.
 classdef ThermalLossImport < handle
@@ -37,7 +41,7 @@ classdef ThermalLossImport < handle
         function Reset(obj)
             % This command resets all the member variables of the ThermalLossImport object.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function ResetAll(obj)
@@ -76,7 +80,7 @@ classdef ThermalLossImport < handle
             % Description     In this case, value is interpreted as the name of the specific loss monitor.
             % Eigenmode       If the current loss import contains losses for several eigenmodes, the eigenmode with index equal to value will be selected.
             % Any             Value is interpreted automatically according to the contents of the loss import.
-            %   
+            %
             % For the first two parameter types, the value can be omitted and specified later using the corresponding command:
             obj.AddToHistory(['.SelectionParameter "', num2str(parameter, '%.15g'), '", '...
                                                   '"', num2str(value, '%.15g'), '"']);
@@ -125,7 +129,7 @@ classdef ThermalLossImport < handle
         function Create(obj)
             % Adds the previously determined loss field settings set as a new entry to ThermalLossImport object. Please note that each thermal loss import performed by FieldSource object should have a counterpart in ThermalLossImport in order to be handled properly.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With ThermalLossImport and append End With
             obj.history = [ 'With ThermalLossImport', newline, ...
                                 obj.history, ...
@@ -160,7 +164,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % Applying the field of a LF frequency domain solver run as thermal source:
-% 
+%
 % thermallossimport = project.ThermalLossImport();
 %     thermallossimport.Reset
 %     thermallossimport.Name('thermalloss0');
@@ -184,4 +188,4 @@ end
 %     thermallossimport.Create
 %     thermallossimport.MinRelThermalCondSrf('0.01');
 %     thermallossimport.MinRelThermalCondVol('0');
-% 
+%

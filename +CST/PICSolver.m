@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % The PICSolver object defines all the settings that control the simulations with the Particle-in-cell (PIC) solver.
 classdef PICSolver < handle
@@ -191,7 +191,7 @@ classdef PICSolver < handle
         end
         function StimulationMode(obj, key)
             % Selects the mode to be used for excitation.
-            %   
+            %
             % The parameter key may have one of the following values:
             % All             All modes will be excited once.
             % int modeNumber  The mode number to be used for excitation.
@@ -199,7 +199,7 @@ classdef PICSolver < handle
         end
         function StimulationPort(obj, key)
             % Selects the port(s)  to be used for excitation.
-            %   
+            %
             % The parameter key may have one of the following values:
             % All             All ports will be excited once.
             % Selected        Only those ports / modes are used for excitation that have been set by ExcitationPortMode.
@@ -309,7 +309,7 @@ classdef PICSolver < handle
             obj.AddToHistory(['.TimestepReduction "', num2str(factor, '%.15g'), '"']);
         end
         function UseTSTAtPort(obj, flag)
-            % Specifies if TST is used in the port region of a waveguide port (flag = True) or not (flag = False).  
+            % Specifies if TST is used in the port region of a waveguide port (flag = True) or not (flag = False).
             obj.AddToHistory(['.UseTSTAtPort "', num2str(flag, '%.15g'), '"']);
         end
         function SetSubcycleState(obj, key)
@@ -443,4 +443,4 @@ end
 %     picsolver.CalculateModesOnly('0');
 %     picsolver.StoreTDResultsInCache('0');
 %     picsolver.UseDistributedComputing('0');
-% 
+%

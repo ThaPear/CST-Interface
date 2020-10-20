@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This is the object that controls the high frequency solvers. A corresponding FDSolver Object allows to manipulate the settings for the Frequency Domain and Integral Equation solvers. The EigenmodeSolver Object is the specialized object for the calculation of Eigenmodes. Please note that the AKS Eigenmode solver method is still configured by the Solver Object.
 classdef Solver < handle
@@ -94,7 +94,7 @@ classdef Solver < handle
         end
         %% MPI Computation
         function MPIParallelization(obj, flag)
-            % Enable or disable MPI computation for solver.  
+            % Enable or disable MPI computation for solver.
             obj.AddToHistory(['.MPIParallelization "', num2str(flag, '%.15g'), '"']);
         end
         %% Queries
@@ -232,7 +232,7 @@ classdef Solver < handle
         end
         function SetBroadBandPhaseShiftLowerBound(obj, value)
             % Method for the broadband phase shift functionality defined either for a simultaneous excitation or for a circular/elliptical plane wave excitation (UseBroadBandPhaseShift).
-            % The broadband phase shift filter is computed by means of an Hilbert filter which guarantees accurate results in the frequency range [ lower bound factor * fMax, fMax ] where fMax is the upper simulation frequency range. Reducing the lower bound factor allows to enlarge the accuracy frequency range at the expense of higher complexity and computational costs for the filter evaluation.  
+            % The broadband phase shift filter is computed by means of an Hilbert filter which guarantees accurate results in the frequency range [ lower bound factor * fMax, fMax ] where fMax is the upper simulation frequency range. Reducing the lower bound factor allows to enlarge the accuracy frequency range at the expense of higher complexity and computational costs for the filter evaluation.
             obj.AddToHistory(['.SetBroadBandPhaseShiftLowerBound "', num2str(value, '%.15g'), '"']);
         end
         function SParaAdjustment(obj, flag)
@@ -652,7 +652,7 @@ classdef Solver < handle
         end
         %% Time Domain Solver Mesh
         function UseTSTAtPort(obj, flag)
-            % Specifies if TST is used in the port region of a waveguide port (flag = True) or not (flag = False).  
+            % Specifies if TST is used in the port region of a waveguide port (flag = True) or not (flag = False).
             obj.AddToHistory(['.UseTSTAtPort "', num2str(flag, '%.15g'), '"']);
         end
         function SetSubcycleState(obj, key)
@@ -1045,7 +1045,7 @@ end
 % Function ExcitationFunction(dtime As Double) As Double
 % ExcitationFunction = Sin(2*3.141*30*10^6*dtime)
 % End Function
-% 
+%
 % % S-Parameter symmetry setup for a 3 port structure where all ports are symmetric to each other
 % solver = project.Solver();
 %     solver.ResetSParaSymm

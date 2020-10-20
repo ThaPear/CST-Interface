@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines a working coordinate system which will be the base for the next new solids.
 classdef WCS < handle
@@ -166,7 +166,7 @@ classdef WCS < handle
         function [bool, x, y, z] = GetOrigin(obj, WCSName)
             % Stores the origin of the specified* working coordinate system in x, y and z, returns
             % True if successful.
-            % 
+            %
             % *If you don't specify a WCSName for the commands above (use an empty string instead),
             % the current local coordinates system is queried instead.
             if(nargin < 2)
@@ -188,7 +188,7 @@ classdef WCS < handle
         function [bool, x, y, z] = GetNormal(obj, WCSName)
             % Stores the normal of the specified* working coordinate system in x, y and z, returns
             % True if successful.
-            % 
+            %
             % *If you don't specify a WCSName for the commands above (use an empty string instead),
             % the current local coordinates system is queried instead.
             if(nargin < 2)
@@ -210,7 +210,7 @@ classdef WCS < handle
         function [bool, x, y, z] = GetUVector(obj, WCSName)
             % Stores the u-vector of the specified* working coordinate system in x, y and z, returns
             % True if successful.
-            % 
+            %
             % *If you don't specify a WCSName for the commands above (use an empty string instead),
             % the current local coordinates system is queried instead.
             if(nargin < 2)
@@ -343,4 +343,4 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % wcs = project.WCS();
 %     wcs.MoveWCS('local', 0.0, 'b+5', 10)
-% 
+%

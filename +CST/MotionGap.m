@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines a new gap item for an existing rigid body motion object.
 classdef MotionGap < handle
@@ -41,7 +41,7 @@ classdef MotionGap < handle
         function Reset(obj)
             % Resets all internal settings for a gap definition to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -84,7 +84,7 @@ classdef MotionGap < handle
             % For rotations: Creates a rotation gap by rotating the defined profile around the specified rotation axis.
             % For translations: Creates a translation gap by extruding the defined profile along the specified translation axis through the entire calculation domain.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With MotionGap and append End With
             obj.history = [ 'With MotionGap', newline, ...
                                 obj.history, ...
@@ -119,4 +119,4 @@ end
 %     motiongap.LineTo('1', '0');
 %     motiongap.LineTo('0', '0');
 %     motiongap.Create
-% 
+%

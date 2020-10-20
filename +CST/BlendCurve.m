@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object enables a blend operation on a curve item. The edge produced
 % by two segments of the item will be smoothed by use of a circular shape
@@ -50,7 +50,7 @@ classdef BlendCurve < handle
             % Creates a new curve item. All necessary settings for it have
             % to be made previously.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With and append End With
             obj.history = [ 'With BlendCurve', newline, ...
                                 obj.history, ...
@@ -62,10 +62,10 @@ classdef BlendCurve < handle
             % Creates a new curve item. All necessary settings for it have
             % to be made previously.
             %
-            % condition: An string of an expression that evaluates to True 
+            % condition: An string of an expression that evaluates to True
             %            or False
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With and append End With
             obj.history = [ 'If ', condition, ' Then', newline, ...
                                 'With BlendCurve', newline, ...
@@ -75,12 +75,12 @@ classdef BlendCurve < handle
             obj.project.AddToHistory(['define conditional curve blend: ', obj.curve, ':', obj.name, 'on: ', obj.curveitem1, ',', obj.curveitem2], obj.history);
             obj.history = [];
         end
-        
+
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.history = [];
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
             obj.curve = [];
             obj.curveitem1 = [];
@@ -140,7 +140,7 @@ classdef BlendCurve < handle
         project
         hBlendCurve
         history
-        
+
         name
         curve
         curveitem1

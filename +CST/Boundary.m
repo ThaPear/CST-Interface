@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Represents the boundary condition of the calculation domain for each
 % boundary plane. You may either have a magnetic, electric or an open
@@ -41,7 +41,7 @@ classdef Boundary < handle
         function EndBulkMode(obj)
             % Flushes all commands since StartBulkMode to CST.
             obj.bulkmode = 0;
-            
+
             % Prepend With and append End With
             obj.history = [ 'With Boundary', newline, ...
                                 obj.history, ...
@@ -211,7 +211,7 @@ classdef Boundary < handle
             % all the other directions.
             obj.AddToHistory(['.ApplyInAllDirections "', num2str(boolean, '%.15g'), '"']);
         end
-        % TODO: 
+        % TODO:
         % PotentialType
         % Potential
         % Thermal
@@ -351,7 +351,7 @@ classdef Boundary < handle
             % SetPeriodicBoundaryAngles refers to an inward or outward
             % (with respect to the radial unit vector in the spherical
             % coordinate system) propagating plane wave
-            % direction: 'inward' - The phase is set for an outward traveling plane wave. 
+            % direction: 'inward' - The phase is set for an outward traveling plane wave.
             %                       Floquet modes should be excited at Zmin.
             %            'outward' - The phase is set for an inward traveling plane wave.
             %                        Floquet modes should be excited at Zmax.
@@ -631,7 +631,7 @@ classdef Boundary < handle
                 zmin = xmin;
                 zmax = xmin;
             end
-            
+
             obj.Xmin(xmin);
             obj.Xmax(xmax);
             obj.Ymin(ymin);
@@ -658,7 +658,7 @@ classdef Boundary < handle
         hBoundary
         history
         bulkmode
-        
+
     end
 end
 

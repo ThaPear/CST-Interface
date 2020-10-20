@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -331,7 +331,7 @@ classdef Project < handle
             ];
             returnvalues = {}; % Handle returns ourselves.
             obj.RunVBACode(functionString, returnvalues);
-            
+
             % Extract returns.
             bool = obj.RestoreGlobalDataValue('matlab1');
             bool = str2double(bool);
@@ -468,14 +468,14 @@ classdef Project < handle
             % This method returns the last 1D result of the selected result template. 'name' is the
             % name of a previously defined result template.
             hResult1D = obj.hProject.invoke('GetLast1DResult', name);
-            
+
             result1D = CST.Result1D(obj, hResult1D);
         end
         function result1DComplex = GetLast1DComplexResult(obj, name)
             % This method returns the last complex 1D result of the selected result template. 'name'
             % is the name of a previously defined result template.
             hResult1DComplex = obj.hProject.invoke('GetLast1DComplexResult', name);
-            
+
             result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetLastResultID(obj)
@@ -563,7 +563,7 @@ classdef Project < handle
         function result1DComplex = GetImpedanceFromTreeItem(obj, treename)
             % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this method returns a Result1DComplex object filled with the corresponding impedance data. If no impedance data is available, this method returns an empty Result1DComplex object.
             hResult1DComplex = obj.hProject.invoke('GetImpedanceFromTreeItem', treename);
-            
+
             result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetFirstTableResult(obj, resultname)
@@ -944,7 +944,7 @@ classdef Project < handle
             % The request "reset selection" resets the selection state of the Result Navigator to default behavior (similar to "Reset Selection" in the context menu). The variable parameter is ignored and the return value of the function will be an empty string. The following example shows how to reset the selection in the Result Navigator:
             % SelectTreeItem("1D Results\S-Parameters")
             % ResultNavigatorRequest("reset selection","") 'reset Result Navigator selection state to default behavior
-            
+
             % Convert all double spaces into single spaces.
             % This is added because num2str converts an array into a double-space separated string.
             while(contains(parameter, '  '))
@@ -1004,11 +1004,11 @@ classdef Project < handle
                     'StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
                 end
             end
-            
+
             % Run the code in CST.
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
             obj.RunScript(GetFullPath('CST-Interface\Bas\RunVBACode.bas'));
-            
+
             if(nargin >= 3 && ~isempty(returnvalues))
                 % Retrieve return arguments.
                 varargout = cell(1, nargout);
@@ -1056,22 +1056,22 @@ classdef Project < handle
             % Translate caption & content history.
             for(i = 1:length(obj.captionhistory))
                 caption = obj.captionhistory{i};
-                
+
                 content = obj.contenthistory{i};
                 % Double the double quotes
-                vbacaption = strrep(caption, '"', '""'); 
-                vbacontent = strrep(content, '"', '""'); 
+                vbacaption = strrep(caption, '"', '""');
+                vbacontent = strrep(content, '"', '""');
                 % Add the right newlines
                 vbacaption = strrep(vbacaption, newline, ['" + vbNewLine + _', newline, '"']);
                 vbacontent = strrep(vbacontent, newline, ['" + vbNewLine + _', newline, '"']);
-                
+
                 vba = [vba, newline, ...
                     'AddToHistory("', vbacaption, '", _', newline, '"', vbacontent, '")', newline, ...
                     ]; %#ok<AGROW>
             end
-            
+
             obj.RunVBACode(vba);
-            
+
             obj.captionhistory = {};
             obj.contenthistory = {};
             obj.bulkmode = 0;
@@ -1095,7 +1095,7 @@ classdef Project < handle
                 obj.nextcommandmodifiers{end+1} = {'Loop', counter, ...
                                                            num2str(startval, '%.15g'), ...
                                                            num2str(endval, '%.15g'), ...
-                                                           num2str(stepval, '%.15g')}; 
+                                                           num2str(stepval, '%.15g')};
             end
         end
     end

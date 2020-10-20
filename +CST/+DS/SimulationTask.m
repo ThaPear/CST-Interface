@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -143,7 +143,7 @@ classdef SimulationTask < handle
             % AC                        "block"
             % Spectral lines            none
             % Mixer                     "vswr", "spectrum", "isolation", "gain"
-            % Amplifier                 "s-param", "group delay", "linear gain", "stability", 
+            % Amplifier                 "s-param", "group delay", "linear gain", "stability",
             %                           "spectrum", "distortion", "power", "gain"
             obj.hSimulationTask.invoke('EnableResult', resultname, enable);
         end
@@ -242,7 +242,7 @@ classdef SimulationTask < handle
         end
         function SetPortSignal(obj, portname, type, array)
             % Sets the signal type associated with the given port for the selected simulation task. The possible types are the same that are returned by GetPortSignalType. Values is an array of expressions that define the signal.
-            % 
+            %
             % Type/Values pairs for Transient tasks:
             % Signal name                           Parameters to be given in the values array
             % "Gaussian"                            Fmin, Fmax, Vampl
@@ -258,7 +258,7 @@ classdef SimulationTask < handle
             % "Random"                              N, Vpulse, Trise, Tfall, TPulse
             % "Pulse Sequence"                      Vinit, Vpulse, Trise, Tfall, TdelayR, TdelayF, Ttotal, Initbit, Bitsequence (e.g. "100110") , Periodic ("true" or "false")
             % "Import"                              Filename
-            % 
+            %
             % Type/Values pairs for AC-tasks:
             % Signal name           Parameters to be given in the values array
             % "Constant"            Amplitude, Phase (in degree)
@@ -406,13 +406,13 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % %Creates a simulation task
-% 
+%
 % simulationtask = dsproject.SimulationTask();
 % .Reset
 % .Type('S-Parameters');
 % .Name('MyTask');
 % .Create
-% 
+%
 % .reset
 % .name('AC1');
 % .type('AC');
@@ -422,27 +422,27 @@ end
 % .create
 % .SetComplexPortExcitation('1', '1', '45');
 % .SetPortSourceType('1', 'CURRENT');
-% 
+%
 % %Modifies an existing simulation task
-% 
+%
 % .Reset
 % .Name('MyTask');
 % .SetProperty('maximum frequency range', '0');
 % .SetLocalUnit('Frequency', 'GHz');
 % .SetSweepData(1.0e-5, 10.0, 101)
 % .SetProperty('logarithmic sweep', '1');
-% 
+%
 % %Tests if a simulation task with a given name exists
-% 
+%
 %     simulationtask.Name('Sweep1\SPara1');
 % If SimulationTask.DoesExist Then
 % ReportInformationToWindow('Task exists.');
 % Else
 % ReportInformationToWindow('Task doesn%t exist.');
 % End If
-% 
+%
 % % Update all tasks (UpdateAllTasks)
-% 
+%
 % UpdateResults
-% 
-% 
+%
+%

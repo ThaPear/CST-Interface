@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -92,7 +92,7 @@ classdef Project < handle
             % opMode:
             % "all" - All component types are considered
             % "no labels" - Only components but labels are considered
-            % 
+            %
             % NOTE: The positive coordinate directions of the schematic go like this: from Left to Right and from Top to Bottom. However, nYmin specifies the bottom of the bounding box and nYmax specifies the top of the bounding box.
             functionString = [...
                 'Dim nXMin As Double, nXMax As Double, nYMin As Double, nYMax As Double', newline, ...
@@ -210,10 +210,10 @@ classdef Project < handle
             % "Schematic:RunID:1." Existing Result IDs can be queried using the command
             % GetResultIDsFromTreeItem of the ResultTree Object. The method returns an error for
             % Result IDs of invalid format.
-            % 
+            %
             % The following example prints parameter names and parameter values to the message
             % window:
-            % 
+            %
             % Dim names As Variant, values As Variant, exists As Boolean
             % exists = DS.GetParameterCombination( "Schematic:RunID:1", names, values )
             % If Not exists Then
@@ -243,7 +243,7 @@ classdef Project < handle
             ];
             returnvalues = {}; % Handle returns ourselves.
             obj.RunVBACode(functionString, returnvalues);
-            
+
             % Extract returns.
             bool = obj.RestoreGlobalDataValue('matlab1');
             if(str2double(bool))
@@ -426,14 +426,14 @@ classdef Project < handle
             % This method returns the last 1D result of the selected result template. 'name' is the
             % name of a previously defined result template.
             hResult1D = obj.hDSProject.invoke('GetLast1DResult', name);
-            
+
             result1D = CST.DS.Result1D(obj, hResult1D);
         end
         function result1DComplex = GetLast1DComplexResult(obj, name)
             % This method returns the last complex 1D result of the selected result template. 'name'
             % is the name of a previously defined result template.
             hResult1DComplex = obj.hDSProject.invoke('GetLast1DComplexResult', name);
-            
+
             result1DComplex = CST.DS.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetLastResultID(obj)
@@ -528,7 +528,7 @@ classdef Project < handle
             % returns the data of templates that match the filter. If the end of the template list
             % is reached or no more templates are present that meet the defined filter, the method
             % returns false. The method requires ResetTemplateIterator to be called in advance.
-            % 
+            %
             % The following example shows all defined 0D Templates:
                 % Dim Resultname As String, Templatetype As String, Templatename As String, Folder As String
                 % ResetTemplateIterator
@@ -561,7 +561,7 @@ classdef Project < handle
             % If no impedance data is available, this method returns an empty Result1DComplex
             % object.
             hResult1DComplex = obj.hDSProject.invoke('GetImpedanceFromTreeItem', treename);
-            
+
             result1DComplex = CST.DS.Result1DComplex(obj, hResult1DComplex);
         end
         function string = GetFirstTableResult(obj, resultname)
@@ -772,12 +772,12 @@ classdef Project < handle
             % Example: StoreViewInBmpFile ("MyPicture.bmp")
             obj.hDSProject.invoke('StoreViewInBmpFile', file_name);
         end
-        
+
         function StoreViewInClipboard(obj)
             % Stores the contents of the main window to the clipboard as a bitmap.
             obj.hDSProject.invoke('StoreViewInClipboard');
         end
-        
+
         %% Utility functions.
         function varargout = RunVBACode(obj, functionstring, returnvalues)
             % functionstring specifies the VBA code to be run.
@@ -786,17 +786,17 @@ classdef Project < handle
             if(nargout ~= length(returnvalues))
                 error('Invalid number of return values specified.');
             end
-            
+
             % Append the code to return the values to MATLAB.
             for(i = 1:length(returnvalues))
                 functionstring = [functionstring, newline, ...
                 'DS.StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
             end
-            
+
             % Run the code in CST.
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
             obj.RunScript(GetFullPath('CST Interface\Bas\RunVBACode_DS.bas'));
-            
+
             % Retrieve return arguments.
             varargout = cell(1, nargout);
             for(i = 1:nargout)
@@ -835,63 +835,63 @@ classdef Project < handle
             end
             arraytask = obj.arraytask;
         end
-        
+
         function block = Block(obj)
             if(isempty(obj.block))
                 obj.block = CST.DS.Block(obj, obj.hDSProject);
             end
             block = obj.block;
         end
-        
+
         function circuitprobe = CircuitProbe(obj)
             if(isempty(obj.circuitprobe))
                 obj.circuitprobe = CST.DS.CircuitProbe(obj, obj.hDSProject);
             end
             circuitprobe = obj.circuitprobe;
         end
-        
+
         function connectionlabel = ConnectionLabel(obj)
             if(isempty(obj.connectionlabel))
                 obj.connectionlabel = CST.DS.ConnectionLabel(obj, obj.hDSProject);
             end
             connectionlabel = obj.connectionlabel;
         end
-        
+
         function externalport = ExternalPort(obj)
             if(isempty(obj.externalport))
                 obj.externalport = CST.DS.ExternalPort(obj, obj.hDSProject);
             end
             externalport = obj.externalport;
         end
-        
+
         function link = Link(obj)
             if(isempty(obj.link))
                 obj.link = CST.DS.Link(obj, obj.hDSProject);
             end
             link = obj.link;
         end
-        
+
         function networkparameterextraction = NetworkParameterExtraction(obj)
             if(isempty(obj.networkparameterextraction))
                 obj.networkparameterextraction = CST.DS.NetworkParameterExtraction(obj, obj.hDSProject);
             end
             networkparameterextraction = obj.networkparameterextraction;
         end
-        
+
         function optimizer = Optimizer(obj)
             if(isempty(obj.optimizer))
                 obj.optimizer = CST.DS.Optimizer(obj, obj.hDSProject);
             end
             optimizer = obj.optimizer;
         end
-        
+
         function parametersweep = ParameterSweep(obj)
             if(isempty(obj.parametersweep))
                 obj.parametersweep = CST.DS.ParameterSweep(obj, obj.hDSProject);
             end
             parametersweep = obj.parametersweep;
         end
-        
+
         function result0d = Result0D(obj, resultname)
 %             if(isempty(obj.result0d))
 %                 obj.result0d = CST.Result0D(obj, obj.hDSProject, resultname);
@@ -902,7 +902,7 @@ classdef Project < handle
             % So don't store it.
             result0d = CST.DS.Result0D(obj, obj.hDSProject, resultname);
         end
-        
+
         function result1d = Result1D(obj, resultname)
 %             if(isempty(obj.result1d))
 %                 obj.result1d = CST.Result1D(obj, obj.hDSProject, resultname);
@@ -913,7 +913,7 @@ classdef Project < handle
             % So don't store it.
             result1d = CST.DS.Result1D(obj, obj.hDSProject, resultname);
         end
-        
+
         function result1dcomplex = Result1DComplex(obj, resultname)
 %             if(isempty(obj.result1dcomplex))
 %                 obj.result1dcomplex = CST.Result1DComplex(obj, obj.hDSProject, resultname);
@@ -924,21 +924,21 @@ classdef Project < handle
             % So don't store it.
             result1dcomplex = CST.DS.Result1DComplex(obj, obj.hDSProject, resultname);
         end
-        
+
         function resulttree = ResultTree(obj)
             if(isempty(obj.resulttree))
                 obj.resulttree = CST.DS.ResultTree(obj, obj.hDSProject);
             end
             resulttree = obj.resulttree;
         end
-        
+
         function simulationtask = SimulationTask(obj)
             if(isempty(obj.simulationtask))
                 obj.simulationtask = CST.DS.SimulationTask(obj, obj.hDSProject);
             end
             simulationtask = obj.simulationtask;
         end
-        
+
         function table = Table(obj, path)
 %             if(isempty(obj.table))
 %                 obj.table = CST.Table(obj, obj.hDSProject, path);
@@ -948,7 +948,7 @@ classdef Project < handle
             % Each table can be different depending on path, so don't store it.
             table = CST.Table(obj, obj.hDSProject, path);
         end
-        
+
         function units = Units(obj)
             if(isempty(obj.units))
                 obj.units = CST.DS.Units(obj, obj.hDSProject);
@@ -959,6 +959,6 @@ classdef Project < handle
 end
 
 %% Default Settings
-%  
+%
 
 %% Example - Taken from CST documentation and translated to MATLAB.

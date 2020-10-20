@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines a particle monitor which collects information about particles colliding with the solid.
 classdef ParticleMonitorOnSolid < handle
@@ -41,7 +41,7 @@ classdef ParticleMonitorOnSolid < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
- 
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -80,7 +80,7 @@ classdef ParticleMonitorOnSolid < handle
         function Create(obj)
             % Creates a monitor using the settings specified with the previous methods and the default settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With ParticleMonitorOnSolid and append End With
             obj.history = [ 'With ParticleMonitorOnSolid', newline, ...
                                 obj.history, ...
@@ -117,7 +117,7 @@ end
 %      .EnergyMax('100.0');
 %      .Create
 % End With
-%  
+%
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % particlemonitoronsolid = project.ParticleMonitorOnSolid();
@@ -131,5 +131,5 @@ end
 %     particlemonitoronsolid.EnergyMin('100.0');
 %     particlemonitoronsolid.EnergyMax('1000.0');
 %     particlemonitoronsolid.Create
-% 
+%
 % particlemonitoronsolid.Delete('[Background]:Boundary');

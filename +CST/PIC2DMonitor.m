@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -37,7 +37,7 @@ classdef PIC2DMonitor < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, monitorName)
@@ -107,7 +107,7 @@ classdef PIC2DMonitor < handle
         function Create(obj)
             % Creates the monitor with the previously applied settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With PIC2DMonitor and append End With
             obj.history = [ 'With PIC2DMonitor', newline, ...
                                 obj.history, ...
@@ -286,7 +286,7 @@ end
 %     pic2dmonitor.Tend('0.0');
 %     pic2dmonitor.UseTend('0');
 %     pic2dmonitor.Create
-% 
+%
 % % get some result data from the pic 2d monitor and prints it into a text file
 % Sub Main
 % Dim nFrames          As Long
@@ -297,33 +297,33 @@ end
 % Dim dZ               As Double
 % Dim dChargeMacro     As Double
 % Dim dCurrentPerFrame As Double
-% 
+%
 % SelectMonitor('pic 2d monitor 1');
-% 
+%
 % Open('pic 2d monitor 1.txt'); For Output As #1
 % nFrames = .GetNFrames
-% 
+%
 % Dim iFrame As Long
 % For iFrame = 0 To nFrames - 1
-% 
+%
 % nParticles       = .GetNParticles(iFrame)
 % dTime            = .GetTime(iFrame)
 % dCurrentPerFrame = .GetChargeTotalMacro(iFrame) / .GetTimeStep(iFrame)
-% 
+%
 % Print #1, 'Time                :('; dTime
 % Print #1, 'Number of Particles :('; nParticles
 % Print #1, 'Current per Frame   :('; dCurrentPerFrame
-% 
+%
 % Dim iParticle As Long
 % For iParticle = 0 To nParticles - 1
-% 
+%
 % dChargeMacro = .GetChargeMacro(iFrame, iParticle)
 % .GetPosition(iFrame, iParticle, dX, dY, dZ)
 % Print #1, 'Particle data       :('; iFrame;('('; iParticle;('('; dX;('('; dY;('('; dZ;('('
-% 
+%
 % Next iParticle
 % Next iFrame
-% 
+%
 % Close #1
 % End Sub
-% 
+%

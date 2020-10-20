@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -88,7 +88,7 @@ classdef Result1D < handle
         function result1D = Copy(obj)
             % Returns a copy of the object.
             newhResult1D = obj.hResult1D.invoke('Copy');
-            
+
             result1D = CST.Result1D(obj.project, newhResult1D);
         end
         function Add(obj, oObject)
@@ -336,7 +336,7 @@ end
 %     result1d.ylabel('cosine');
 %     result1d.Save('cosine_curve.sig');
 %     result1d.AddToTree('1D Results\Data\curve_1D');
-% 
+%
 % % This example shows how ASCII data from an external file can be loaded into a Result1D object and added to the Navigation Tree.
 % result1d = project.Result1D('');
 %     % load external ASCII file containing two data columns separated by white space or tabulator
@@ -348,7 +348,7 @@ end
 %     result1d.Save('imported_curve.sig');
 %     % add it to the Navigation Tree
 %     result1d.AddToTree('1D Results\Data\curve_import');
-% 
+%
 % % This example shows how to access all values of a time signal stored in file('o1(1)1(1).sig');.
 % result1d = project.Result1D('o1(1)1(1).sig');
 %     nPoints = result1d.GetN() %get number of points
@@ -359,7 +359,7 @@ end
 %         % print to message window
 %         disp(['x: ', num2str(x), ' y: ', num2str(y)]);
 %     end
-% 
+%
 % % This example loads S1,1 and extracts the real part of the complex-valued S-Parameter. It then determines the closest existing data point to a certain frequency(here 0.65 GHz) and prints the result to the message window. It shows how the ResultTree object, the Result1DComplex object and the Result1D object can be used together to access 1D data.
 % resulttree = project.ResultTree();
 % filename = resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');

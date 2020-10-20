@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object is used to calculate conjugated heat transfer problems. The corresponding models can be excited by different source types: fan, heat or  temperature sources or as well by special thermal boundary settings. Thermal surface properties enable the definition of radiation or convection of certain shape faces.
 classdef CHTSolver < handle
@@ -157,7 +157,7 @@ classdef CHTSolver < handle
             % "Velocity"              Velocity                                    -200                    200                     m/s             True
             % "PressureDensityRatio"  Ratio pressure / background density         -5000                   5000                    m²/s²           True
             % "Temperature"           Temperature                                 0                       5000                    Kelvin          True
-            % "Viscosity"             Turbulence viscosity ratio 
+            % "Viscosity"             Turbulence viscosity ratio
             %                         (turbulence viscosity / laminar viscosity)  0                       1e5                                     False
             if(nargin < 6)
                 obj.AddToHistory(['.SetSolutionLimit "', num2str(type, '%.15g'), '", '...
@@ -213,7 +213,7 @@ classdef CHTSolver < handle
             obj.AddToHistory(['.FreezeFlow "', num2str(flag, '%.15g'), '"']);
         end
         function ThermalConductionOnly(obj, flag)
-            % If this setting is activated (flag=True), only heat conduction/diffusion in fluids and solids will be simulated, but no heat and flow advection. In this case, the FlowOnly and FreezeFlow flags will be set to False, internally. Radiation can be defined in addition.  
+            % If this setting is activated (flag=True), only heat conduction/diffusion in fluids and solids will be simulated, but no heat and flow advection. In this case, the FlowOnly and FreezeFlow flags will be set to False, internally. Radiation can be defined in addition.
             % Please note that a later command wins over previous settings.
             % default: flag = False
             obj.AddToHistory(['.ThermalConductionOnly "', num2str(flag, '%.15g'), '"']);
@@ -251,8 +251,8 @@ classdef CHTSolver < handle
             % enum coeffN_type    meaning
             % "Intensity"         The following coeff_value will specify the turbulent intensity I in %.
             %                     A positive number between 0 and 100 is expected for coeff_value.
-            % "Length"            The following coeff_value  will specify the eddy length L in % as a percentage of the 
-            %                     characteristic dimension of the inlet, which depends on the geometry and computes from 
+            % "Length"            The following coeff_value  will specify the eddy length L in % as a percentage of the
+            %                     characteristic dimension of the inlet, which depends on the geometry and computes from
             %                     the ratio of inlet area and inlet perimeter multiplied by a factor 4.
             %                     A positive number between 0 and 100 is expected for coeff_value.
             % "Energy"            The following coeff_value will specify .the turbulent kinetic energy K in J/kg.
@@ -278,7 +278,7 @@ classdef CHTSolver < handle
             %                     - no velocity-based boundary is defined and
             %                     - boundary has the highest gauge pressure value
             %                     - but not all pressure-based boundaries have the same value
-            %   
+            %
             % If the inlet_type is "Fan",  the inlet_name is the fan name. If the inlet_type is "Boundary", the inlet_name should be "Xmin", "Xmax", "Ymin", "YMax", "Zmin" or "Zmax" depending on the position of the boundary in the calculation domain.
             % Please note that depending on the geometry and setup of the model, the validity of an inlet can change. It is possible to define parameters for all boundaries and fans. Only the settings for the valid ones (according to the above table) will be taken into account for the calculation.
             % For each inlet, the default setting can be overwritten by specifying a pair of coefficient types (coeff1_type, coeff2_type) each followed by the corresponding value (coeff1_value, coeff2_value). Valid coefficient types and values are explained for the TurbulenceDefault command.
@@ -434,4 +434,4 @@ end
 %     chtsolver.UseDistributedComputing('0');
 %     chtsolver.HardwareAcceleration('0');
 %     chtsolver.MaximumNumberOfGPUs('1');
-% 
+%

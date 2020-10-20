@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Offers a set of tools that change a solid by transformations.
 classdef Align_ < handle
@@ -41,7 +41,7 @@ classdef Align_ < handle
         function Reset(obj)
             % Resets all internal values to their defaults.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, sObjectName)
@@ -57,13 +57,13 @@ classdef Align_ < handle
         end
         function Align(obj, what, how)
             % This execute a specified alignment onto the given type of objects (named via Name and AddName).
-            % 
+            %
             % enum what   description
             % Shape       this aligns solids
             % Subproject  this aligns a previously imported subproject or a previously pasted structure
             % Part        this aligns a complete block in the 3D Layout View
             % Mixed       if a multi selection encompasses different kind of objects (e.g. wires and solids), this type of alignment is used. In this case, global names need to be used for .Name and .AddName
-            % 
+            %
             % enum how        description
             % Faces           This transforms the objects by rotation and translation so that two selected "faces" touch afterwards. One "face" is selected on the objects to be moved, another "face" is selected at some target object.
             % Rotate          This rotates the objects around a center of a picked "target" "face", having two picks that specify an angle, as input. For the angle, two directions need to be given: you can either pick a straight edge for a direction, or a point that will be pointed to from the center of rotation.
@@ -71,7 +71,7 @@ classdef Align_ < handle
 
             obj.AddToHistory(['.Align "', num2str(what, '%.15g'), '", '...
                                      '"', num2str(how, '%.15g'), '"']);
-            
+
             % Prepend With Align and append End With
             obj.history = [ 'With Align', newline, ...
                                 obj.history, ...
@@ -81,14 +81,14 @@ classdef Align_ < handle
         end
         function SetKindOfPickFor(obj, what, kind)
             % This defines what is used to determine the information for calculating an alignment step. Different steps allow a different subset of kinds of information.
-            % 
+            %
             % enum what   description                                                                         allowed kinds
-            % SourcePlane This defines a normal and a center from where the object is going to be aligned.    Face        
+            % SourcePlane This defines a normal and a center from where the object is going to be aligned.    Face
             % TargetPlane This defines a normal and a center on which the object will be aligned.             Face
             % ZeroAngle   This is used to determine a direction that defines the angle zero for rotation.
             %             For the point, the direction is taken from TargetPlane center to the point.         Edge, Point
             % FinalAngle  This defines a direction to which the angle is measured to. (From ZeroAngle)        Edge, Point
-            % 
+            %
             % enum kind   description
             % Face        A previously picked planar face is expected.
             % Edge        A picked linear edge is expected

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -19,7 +19,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines the antenna array pattern for a farfieldplot based on a single antenna element.
 classdef FarfieldArray < handle
@@ -177,7 +177,7 @@ classdef FarfieldArray < handle
                                                '"', num2str(phase, '%.15g'), '"']);
         end
         function ClearAntennaItems(obj)
-            % Clears the antenna combine list.   
+            % Clears the antenna combine list.
             obj.AddToHistory(['.ClearAntennaItems']);
         end
         function SetNormalizeAntennas(obj, bflag)
@@ -236,7 +236,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % The first example defines a linear antenna array:
-% 
+%
 %  With FarfieldArray
 %     farfieldarray.Reset
 %     farfieldarray.UseArray(1)
@@ -246,9 +246,9 @@ end
 %     farfieldarray.Arraytype('edit');
 %     farfieldarray.Antenna(0, 0, 0, 1.0, 0.0)
 %  End With
-% 
+%
 % % The second example combines two antennas with different orientation and position:
-% 
+%
 % farfieldarray = project.FarfieldArray();
 % ResultPath = GetProjectPath('Result');                 % Assume that the farfield files are in the result folder
 % .ClearAntennaItems()
@@ -257,32 +257,32 @@ end
 % .AddAntennaItem(ResultPath +('farfield_2.ffp', 0.0,  1.0, 0.0, 0, -30,  0.0, 1.0,  0.0)
 % .ExecuteCombine(ResultPath +('combined_ff.ffp', 5.0)  % Store the combined antenna in the result folder
 % MsgBox('Actual Power / Power Sum =(' & .GetCombinePowerRatio()
-% 
+%
 % % The third example combines antennas to a finite-size array of unit cells with seven times seven elements:
-% 
+%
 % .SetCombineFrequency(100.0)
 % .SetNormalizeAntennas(0)
 % .SetUnitCellArray('farfield_1.ffp', 7, 7)
 % .ExecuteCombine('combined_ff.ffp', 5.0)
-% 
-% 
+%
+%
 % % The fourth example sets the farfield origin:
-% 
+%
 % NewOriginX = -100
 % NewOriginY = 300
 % NewOriginZ = 400
-% 
+%
 % Frequency = 30.0
-% 
+%
 % MonitorName =('farfield(f=30)');
-% 
+%
 % ResultPath = GetProjectPath('Result');
 % .ClearAntennaItems()
 % .SetCombineFrequency(Frequency)
 % .AddAntennaItemA(ResultPath + MonitorName +('2D_1.ffp', 0,0,0, 0,0,1,1,0,0, 1, 0)
 % .SetCombineReferenceOrigin( NewOriginX, NewOriginY ,NewOriginZ )
 % .ExecuteCombine(ResultPath +('MovedOrigin.ffp', 1.0)
-% 
+%
 % % Add to result tree
 % .Name('Farfields\MovedOrigin');
 % .File ResultPath +('MovedOrigin.ffp');

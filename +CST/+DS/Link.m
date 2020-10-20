@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -125,16 +125,16 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % %Connect two blocks with an external port
-% 
+%
 % link = dsproject.Link();
 % .Reset
 % .SetConnection(1, 'B', 'R1', '2');
 % .SetConnection(2, 'B', 'L1', '1');
 % .SetConnection(3, 'P', '1', '');
 % .Create
-% 
+%
 % %Set a manual route with five points in total
-% 
+%
 % Dim points(0 To 5) As String
 % points(0) =('50670'); % x(1)
 % points(1) =('50200'); % y(1)

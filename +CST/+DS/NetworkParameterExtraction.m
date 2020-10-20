@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -109,7 +109,7 @@ classdef NetworkParameterExtraction < handle
 end
 
 %% Default Settings
-%  
+%
 % ' defaults for model order reduction based network parameter extraction
 % EnsureOutOfBandPassivity(1)
 % UseARFilterResults(0)
@@ -119,7 +119,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % start a MOR based network extraction
-% 
+%
 % networkparameterextraction = dsproject.NetworkParameterExtraction();
 % .TaskName('SParam1');
 % .CircuitFileName('my_netlist.net');
@@ -130,4 +130,4 @@ end
 % .DifferentialNetlist(1)
 % .NetlistFormat('HSPICE');
 % .Calculate
-% 
+%

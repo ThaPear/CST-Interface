@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -59,7 +59,7 @@ classdef Result0D < handle
         function result0D = Copy(obj)
             % Returns a copy of the Result0D object. Please note that in case a filename was specified, the filename will not be copied.
             newhResult0D = obj.hResult0D.invoke('Copy');
-            
+
             result0D = CST.Result0D(obj.project, newhResult0D);
         end
         %% Local Operations:
@@ -105,7 +105,7 @@ classdef Result0D < handle
         end
         %% General Settings
         function Title(obj, Name)
-            % Defines the title of the result.  
+            % Defines the title of the result.
             obj.hResult0D.invoke('Title', Name);
         end
         function string = GetTitle(obj)
@@ -133,13 +133,13 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % Construction
 % An Result0DComplex object can be created as follows:
-% 
+%
 % Dim result As Object
 % Set result = Result0D('');
-% 
+%
 % This will create an empty object. Alternatively, a file or database name can be given as a parameter, then the object loads the data from the hard disc.
 % This example creates an empty object, fills it with data and adds it to the ResultTree.
-% 
+%
 % Dim result As Object
 % Set result = Result0D('');
 % result0d = project.Result0D();
@@ -148,4 +148,4 @@ end
 %   .SetFileName('my_result');
 %   .Save()
 %   .AddToTree('Results\Test\complex_i');
-% 
+%

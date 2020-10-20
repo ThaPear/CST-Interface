@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -109,20 +109,20 @@ end
 % Debug.Clear
 % resultmap = project.ResultMap();
 % If .IsValid Then
-% 
+%
 % % Write filenames and parameters to the debug output window
 % count = .GetItemCount()
-% 
+%
 % For i = 1 To count
 % Debug.Print .GetItemFilename(i)
 % Debug.Print .GetItemParameters(i)
 % Next i
-% 
+%
 % % Search for an item at 9 GHz
 % .BeginSearch
 % .AddSearchParameter('Frequency', 9e9, 1
 % i = .FindItem
-% 
+%
 % If 0 < i Then
 % .SelectItem i
 % MsgBox('Result item was found at 9 GHz.');

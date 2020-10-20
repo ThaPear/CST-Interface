@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This is the object that controls the time-harmonic high frequency solver and its methods, as well as the integral equation solver (see also IESolver Object). Every setting concerning a frequency domain or integral equation solver simulation run may be defined with this object. Mesh and solver method can be chosen by calling SetMethod. Use the Start command to run the solver.
 classdef FDSolver < handle
@@ -279,10 +279,10 @@ classdef FDSolver < handle
             % S-Parameters are always normalized to a reference impedance. You may either select to norm them to the calculated impedance of the stimulation port or you may specify a number of your choice.  If flag is False the reference impedance will be the calculated impedance of the input port.
             obj.AddToHistory(['.AutoNormImpedance "', num2str(flag, '%.15g'), '"']);
         end
-        function NormingImpedance(obj, value) 
+        function NormingImpedance(obj, value)
             % Specifies the impedance to be used as reference impedance for the scattering parameters. This setting will only be considered if AutoNormImpedance is set to True.
-            obj.AddToHistory(['.NormingImpedance "', num2str(value, '%.15g'), '"']); 
-        end 
+            obj.AddToHistory(['.NormingImpedance "', num2str(value, '%.15g'), '"']);
+        end
         function Stimulation(obj, port, mode)
             % Selects the source type to be used for excitation, such as port and mode for waveguide ports.
             % The parameter port and mode may have one of the following values:
@@ -583,18 +583,18 @@ classdef FDSolver < handle
         %% Undocumented functions.
         % Found in history list when setting frequency domain solver settings.
         function NewIterativeSolver(obj, bool)
-            obj.AddToHistory(['.NewIterativeSolver "', num2str(bool, '%.15g'), '"']); 
+            obj.AddToHistory(['.NewIterativeSolver "', num2str(bool, '%.15g'), '"']);
         end
         % Found in history list when setting frequency domain solver settings.
         function UseDoublePrecision_ML(obj, bool)
-            obj.AddToHistory(['.UseDoublePrecision_ML "', num2str(bool, '%.15g'), '"']); 
+            obj.AddToHistory(['.UseDoublePrecision_ML "', num2str(bool, '%.15g'), '"']);
         end
         % Found in history list when setting frequency domain solver settings.
         function RemoveAllStopCriteria(obj, type)
             % type: 'Hex'
             %       'Tet'
             %       'Srf'
-            obj.AddToHistory(['.RemoveAllStopCriteria "', num2str(type, '%.15g'), '"']); 
+            obj.AddToHistory(['.RemoveAllStopCriteria "', num2str(type, '%.15g'), '"']);
         end
         % Found in history list when setting frequency domain solver settings.
         % fdsolver.AddStopCriterion('All S-Parameters', '0.01', '2', 'Hex', 'True');
@@ -613,7 +613,7 @@ classdef FDSolver < handle
         % Found in history list when setting frequency domain solver settings.
         % Definition below is copied from CST.Solver.
         function MPIParallelization(obj, flag)
-            % Enable or disable MPI computation for solver.  
+            % Enable or disable MPI computation for solver.
             obj.AddToHistory(['.MPIParallelization "', num2str(flag, '%.15g'), '"']);
         end
     end

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -34,7 +34,7 @@ classdef ScalarPlot2D < handle
             % "contour"       The field values of the chosen scalar field will be plotted on the chosen cutting plane in different colors.
             % "isoline"       Lines of equal value of the chosen scalar field will be plotted on the chosen cutting plane.
             % "carpet"        Plots a carpet or a surface where the distance of a point on the cutting plane to the surface represents the field value at this point.
-            % "carpetcolor"   The same as ”carpet”, but additionally it is colored in relation to the field values.
+            % "carpetcolor"   The same as ï¿½carpetï¿½, but additionally it is colored in relation to the field values.
             obj.hScalarPlot2D.invoke('Type', key);
         end
         function PlotAmplitude(obj, boolean)
@@ -84,7 +84,7 @@ classdef ScalarPlot2D < handle
             % "y"             The y component of the vector result
             % "z"             The z component of the vector result
             % "abs"           The absolute value of the vector result
-            % "normal"        The normal part of the vector field is the scalar product of the surface’s normal vector and the field vector on the surface.
+            % "normal"        The normal part of the vector field is the scalar product of the surfaceï¿½s normal vector and the field vector on the surface.
             % "tangential"    The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
             obj.hScalarPlot2D.invoke('SetComponent', component);
         end
@@ -143,17 +143,17 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following script plots surfaces of equal amplitude of the vector field component Y of the electric field('e1');.
-% 
+%
 % % Plot only a wire frame of the structure to be able to look inside
 % Plot.wireframe(1)
-% 
+%
 % % Select the Y-Component of the electric field e1 in the tree
 % SelectTreeItem('2D/3D Results\E-Field\e1');
 % SetComponent('Y');
-% 
+%
 % % Enables plotting of 3D fields on 2D planes
 % Plot3DPlotsOn2DPlane(1)
-% 
+%
 % % Plot the scalar field of the selected monitor
 % scalarplot2d = project.ScalarPlot2D();
 %     scalarplot2d.Type('isoline');

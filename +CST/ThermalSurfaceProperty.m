@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object offers the possibility to create a thermal surface with its radiation and convection properties. A thermal surface can consist of several different shape faces and is used by the Thermal Solver.
 classdef ThermalSurfaceProperty < handle
@@ -41,7 +41,7 @@ classdef ThermalSurfaceProperty < handle
         function Reset(obj)
             % Resets all internal settings of the thermal surface to its default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -108,7 +108,7 @@ classdef ThermalSurfaceProperty < handle
         function Create(obj)
             % Creates the thermal surface with its previously made settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With ThermalSurfaceProperty and append End With
             obj.history = [ 'With ThermalSurfaceProperty', newline, ...
                                 obj.history, ...
@@ -150,7 +150,7 @@ end
 %     thermalsurfaceproperty.Name('surfaceprops1');
 %     thermalsurfaceproperty.AddFace('component1:solid1', '5');
 %     thermalsurfaceproperty.Emissivity('0.1');
-%     thermalsurfaceproperty.ConvectiveHeatTransferCoefficient('2', 'W/m^2/K');  
-%     thermalsurfaceproperty.ReferenceTemperatureType('UserDefined');  
-%     thermalsurfaceproperty.ReferenceTemperatureValue('293.15', 'Kelvin');  
+%     thermalsurfaceproperty.ConvectiveHeatTransferCoefficient('2', 'W/m^2/K');
+%     thermalsurfaceproperty.ReferenceTemperatureType('UserDefined');
+%     thermalsurfaceproperty.ReferenceTemperatureValue('293.15', 'Kelvin');
 %     thermalsurfaceproperty.Create

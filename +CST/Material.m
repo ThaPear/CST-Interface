@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % The Material Object lets you define or change materials. Each material defines the material constants of the associated solids.
 classdef Material < handle
@@ -42,14 +42,14 @@ classdef Material < handle
         function Reset(obj)
             % Sets all internal settings to their defaults.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
             obj.folder = [];
         end
         function Create(obj)
             % Creates a new material. All necessary settings have to be made previously.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With Material and append End With
             obj.history = [ 'With Material', newline, ...
                                 obj.history, ...
@@ -72,7 +72,7 @@ classdef Material < handle
             obj.folder = foldername;
         end
         function Type(obj, key)
-            % Sets the type for the material to be defined.  
+            % Sets the type for the material to be defined.
             % key: 'PEC'
             %      'Normal'
             %      'Anisotropic'
@@ -149,11 +149,11 @@ classdef Material < handle
         function ChangeColour(obj)
             % Changes the appearance for an existing material specified by the .Name method to the settings given by the .Colour, .Transparency or .Wireframe method. Changes to other parameters will not be taken. The execution of this method will - in contrast to .Create - not be regarded as a structural change and though not require the deletion of results.
             obj.AddToHistory(['.ChangeColour']);
-            
-            % Prepend With and append End With 
-            obj.history = ['With Material', newline, obj.history, 'End With']; 
-            obj.project.AddToHistory(['define material colour: ', obj.name], obj.history); 
-            obj.history = []; 
+
+            % Prepend With and append End With
+            obj.history = ['With Material', newline, obj.history, 'End With'];
+            obj.project.AddToHistory(['define material colour: ', obj.name], obj.history);
+            obj.history = [];
         end
         %% Basic Material Parameters
         function Epsilon(obj, dValue)
@@ -2192,7 +2192,7 @@ classdef Material < handle
             % Debye 2nd order         Static value 1      Static value  2     Relaxation time 1       Relaxation time 2
             % Drude                   Plasma freq.        Collision freq.     -                       -
             % Lorentz                 Static epsilon      Resonance freq.     Damping freq.           -
-            % Gyrotropic Gauss        Landé factor        Sat. magnetization  Resonance line width    Magnetic field vector
+            % Gyrotropic Gauss        Landï¿½ factor        Sat. magnetization  Resonance line width    Magnetic field vector
             % Gyrotropic SI           Larmor freq.        Gyrotropic freq.    Damping factor          Biasing direction
             % General 1st order       Alpha0              Beta0               -                       -
             % General 2nd order       Alpha0              Alpha1              Beta0                   Beta1
@@ -2420,12 +2420,12 @@ classdef Material < handle
         %% Undocumented functions.
         % Found in history list when background material is changed.
         function ChangeBackgroundMaterial(obj)
-            obj.AddToHistory(['.ChangeBackgroundMaterial']); 
-            
-            % Prepend With and append End With 
-            obj.history = ['With Material', newline, obj.history, 'End With']; 
-            obj.project.AddToHistory(['define background'], obj.history); 
-            obj.history = []; 
+            obj.AddToHistory(['.ChangeBackgroundMaterial']);
+
+            % Prepend With and append End With
+            obj.history = ['With Material', newline, obj.history, 'End With'];
+            obj.project.AddToHistory(['define background'], obj.history);
+            obj.history = [];
         end
         % Found in history list when defining a new material.
         function FrqType(obj, frqtype)
@@ -2491,10 +2491,10 @@ classdef Material < handle
         %% Utility Functions.
         function CreateConditional(obj, condition)
             % Creates a new material. All necessary settings for this material have to be made previously.
-            % 
+            %
             % condition: A string of a VBA expression that evaluates to True or False
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With and append End With
             obj.history = [ 'If ', condition, ' Then', newline, ...
                                 'With Material', newline, ...
@@ -2552,5 +2552,5 @@ end
 % .DispCoeff4Mu('0.0');
 % .AddDispEpsPole1stOrder('0.0', '0.0');
 % .AddDispEpsPole2ndOrder('0.0', '0.0', '0.0', '0.0');
-%  
-%  
+%
+%

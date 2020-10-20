@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object enables a loft operation on a several number of curve items. A plane is fitted over the items comparable with some kind of stretched skin. The resulting structure can be created as a hollow or solid shape. As soon as the new shape is created it will appear in the main plot window and on the Navigation Tree. Note: All profile curves and the path curve must be located on different curves.
 classdef LoftCurves < handle
@@ -41,7 +41,7 @@ classdef LoftCurves < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
             obj.component = [];
         end
@@ -78,7 +78,7 @@ classdef LoftCurves < handle
         function Create(obj)
             % Creates a new solid. All necessary settings for this solid have to be made previously.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With LoftCurves and append End With
             obj.history = [ 'With LoftCurves', newline, ...
                                 obj.history, ...

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,9 +18,9 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
-% Defines a functional monitor which evaluates a field on a specified set of connected faces.  
+% Defines a functional monitor which evaluates a field on a specified set of connected faces.
 classdef TimeMonitor2D < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
@@ -41,7 +41,7 @@ classdef TimeMonitor2D < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, monitorName)
@@ -61,7 +61,7 @@ classdef TimeMonitor2D < handle
         function Create(obj)
             % Creates the monitor with the previously applied settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With TimeMonitor2D and append End With
             obj.history = [ 'With TimeMonitor2D', newline, ...
                                 obj.history, ...
@@ -114,4 +114,4 @@ end
 %     timemonitor2d.UsePickedFaceFromId('component2:sheet', '1', '2');
 %     timemonitor2d.InvertOrientation('1');
 %     timemonitor2d.Create
-% 
+%

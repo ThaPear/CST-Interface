@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -60,7 +60,7 @@ classdef TimeSignal < handle
         function Create(obj)
             % Creates the time signal with the previously applied settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With TimeSignal and append End With
             obj.history = [ 'With TimeSignal', newline, ...
                                 obj.history, ...
@@ -219,7 +219,7 @@ end
 %     timesignal.Fmin('0.0');
 %     timesignal.Fmax('1000.0');
 %     timesignal.Create
-% 
+%
 % % creates a(rectangular) step function
 %     timesignal.Reset
 %     timesignal.Name('signal1');
@@ -230,7 +230,7 @@ end
 %     timesignal.Thold('1.0');
 %     timesignal.Tfall('0.0');
 %     timesignal.Create
-% 
+%
 % % creates a sine function with frequency f=3.0 and vertical offset v=1.0
 %     timesignal.Reset
 %     timesignal.Name('sine_signal');
@@ -240,7 +240,7 @@ end
 %     timesignal.Voffset('1.0');
 %     timesignal.Frequency('3.0');
 %     timesignal.Create
-% 
+%
 % % creates a sine step function with frequency f=3.0
 %     timesignal.Reset
 %     timesignal.Name('mysignal');
@@ -251,7 +251,7 @@ end
 %     timesignal.Frequency('3.0');
 %     timesignal.RiseFactor('5');
 %     timesignal.Create
-% 
+%
 % % creates a smoothed step function with 80% rise amplitude
 %     timesignal.Reset
 %     timesignal.Name('mysignal');
@@ -261,7 +261,7 @@ end
 %     timesignal.AmplitudeRisePercent('80.0');
 %     timesignal.RiseFactor('2');
 %     timesignal.Create
-% 
+%
 % % creates a user-defined excitation function
 %     timesignal.Reset
 %     timesignal.Name('mysignal');
@@ -269,11 +269,11 @@ end
 %     timesignal.ProblemType('Low Frequency');
 %     timesignal.Ttotal('2.0');
 %     timesignal.Create
-% 
+%
 % % creates an imported excitation function
 %     timesignal.Reset
 %     timesignal.Name('imported_signal');
 %     timesignal.SignalType('Import');
 %     timesignal.ProblemType('High Frequency');
 %     timesignal.Create
-% 
+%

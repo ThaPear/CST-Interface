@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -362,13 +362,13 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % Optimize a RLC circuit
 % This macro demonstrates how do define an optimization task on the S-Parameters of a simple RLC circuit, which is previously  generated from scratch
-% 
+%
 % %define parameters that will later on be used for the optimization
 % DS.StoreDoubleParameter(('Ind1', 1.0 )
 % DS.StoreDoubleParameter(('Cap1', 1.0 )
-% 
+%
 % Units.Frequency('GHz');
-% 
+%
 % %define a very simple RLC circuit
 % optimizer = dsproject.Optimizer();
 % .Reset
@@ -393,14 +393,14 @@ end
 % .Position(4900, 4000)
 % .Create
 % .SetDoubleProperty('Inductance', 'Ind1'); )
-% 
+%
 % .Reset
 % .Number(1)
 % .Position(4000, 4000)
 % .Create
 % .SetImpedanceType 1
 % .SetImpedance 50
-% 
+%
 % .Reset
 % .SetPortFromBlockPort(1, 'GND', '1', 0)
 % .SetPortFromBlockPort(2, 'Inductor', '2', 0)
@@ -417,15 +417,15 @@ end
 % .SetPortFromBlockPort(1, 'Resistor', '1', 0)
 % .SetPortFromExternalPort(2, '1', 0)
 % .Create
-% 
+%
 % %define the optimization task and the S-Parameter task
 % .Reset
 % .Name('Opt');
-% 
+%
 % If Not .DoesExist Then
 % .Type('Optimization');
 % .Create
-% 
+%
 % .Reset
 % .Type('S-Parameters');
 % .Name('Opt\SPar');
@@ -434,12 +434,12 @@ end
 % .SetProperty('maximum frequency range', '0');
 % .Create
 % End If
-% 
+%
 % %set up the optimization settings and start the optimizer
 % .SetSimulationType(('Opt'); )
 % .SetOptimizerType('Trust_Region');
 % .SetAlwaysStartFromCurrent(0)
-% 
+%
 % .InitParameterList
 % .SelectParameter('Ind1', 1)
 % .SetParameterInit(2.0)
@@ -450,7 +450,7 @@ end
 % .SetParameterMin(1.0)
 % .SetParameterMax(3.0)
 % .DeleteAllGoals
-% 
+%
 % %define a goal on the S-Parameters
 % Dim gid As Integer
 % gid = .AddGoal('1DC Primary Result');
@@ -461,6 +461,6 @@ end
 % .SetGoalTarget(-30)
 % .SetGoalRangeType('range');
 % .SetGoalRange(3.9,4.1)
-% 
+%
 % .Start %actually start the optimization process
-% 
+%

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Changes Solids in several ways and offers tools for the reparation of imported solids.
 classdef Solid < handle
@@ -58,7 +58,7 @@ classdef Solid < handle
                                               '"', num2str(newName, '%.15g'), '"']);
         end
         function SetUseIndividualColor(obj, SolidName, flag)
-            % Enables the use of the individual color for a solid. The RGB values of the material will be ignored if enabled and replaced by the one from the solid.   
+            % Enables the use of the individual color for a solid. The RGB values of the material will be ignored if enabled and replaced by the one from the solid.
             obj.AddToHistory(['.SetUseIndividualColor "', num2str(SolidName, '%.15g'), '", '...
                                                      '"', num2str(flag, '%.15g'), '"']);
         end
@@ -639,16 +639,16 @@ end
 % % performs the boolean operation solid1 = solid1 - solid2
 % solid = project.Solid();
 %     solid.Subtract('component1:solid1', 'component1:solid2');
-% 
+%
 % % Renames solid1 to struct1
 %     solid.Rename('component1:solid1', 'struct1');
-% 
+%
 % % Creates the new component('part1');
 % Component.New('part1');
-% 
+%
 % % Moves struct1 into part1
 %     solid.ChangeComponent('component1:struct1', 'part1');
-% 
+%
 % % Creates a new material of name('diel');
 %     solid.Reset
 %     solid.Name('diel');
@@ -658,6 +658,6 @@ end
 %     solid.Mu('1.0');
 %     solid.Colour('0', '0.501961', '0.501961');
 %     solid.Create
-% 
+%
 % % Changes the material for struct1
 %     solid.ChangeMaterial('part1:struct1', 'diel');

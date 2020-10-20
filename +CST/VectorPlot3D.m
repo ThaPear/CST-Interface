@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -35,9 +35,9 @@ classdef VectorPlot3D < handle
             % "cone"              The field vectors will be plotted as cones.
             % "thinarrows"        The field vectors will be plotted as thin arrows.
             % "bubble"            The field vectors will be plotted as bubble.
-            % "hedgehog”          The field vectors will be plotted as ”lines”.
-            % "streamline”        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
-            % "thinstreamline”    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+            % "hedgehogï¿½          The field vectors will be plotted as ï¿½linesï¿½.
+            % "streamlineï¿½        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+            % "thinstreamlineï¿½    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
             obj.hVectorPlot3D.invoke('Type', key);
         end
         function PhaseValue(obj, phase)
@@ -167,16 +167,16 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following script plots the electric field('e1');(if available) in a linear scale by using  thin arrows with density 30%.
-% 
+%
 % % Plot only a wire frame of the structure to be able to look inside
 % Plot.wireframe(1)
-% 
+%
 % % Select the desired monitor in the tree.
 % SelectTreeItem('2D/3D Results\E-Field\e1');
-% 
+%
 % % Plot the field of the selected monitor
 % vectorplot3d = project.VectorPlot3D();
 %     vectorplot3d.Type('thinarrows');
 %     vectorplot3d.SetDensityInPercent(30)
-% End With 
-% 
+% End With
+%

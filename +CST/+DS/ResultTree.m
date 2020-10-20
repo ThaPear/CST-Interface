@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -165,7 +165,7 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % Example: Iterate over parametric S-Parameter data
 % % This macro demonstrates access to parametric data of an S-Parameter. The access works similar for other tree items.
-% 
+%
 % Dim TreeItem As String
 % TreeItem =('Tasks\SPara1\S-Parameters\S1,1');
 % %get an array of existing result ids for this tree item
@@ -194,13 +194,13 @@ end
 % resulttree = dsproject.ResultTree();
 % .Reset
 % .Name('Results\Hotspot');  % Entry name and its destination folder
-% .Type('colourmap');                   
+% .Type('colourmap');
 % .File('hotspots.dat');      % file names are either absolute or relative to <project>\Result\DS
 % .Add
-% 
+%
 % % Example: List all 1D items and 1D folders below('Tasks');
 % % This macro demonstrates the use of GetTreeResults. It recursively queries all 0D and 1D items and result folders below('Tasks'); and prints the gathered data to the message window.
-% 
+%
 % Dim paths As Variant, types As Variant, files As Variant, info As Variant, nResults As Long
 % nResults = DSResulttree.GetTreeResults('Tasks', 'folder 0D/1D recursive', '', paths,types,files,info)
 % Dim n As Long

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines 3D or 2D field monitors. Each monitor stores the field values for a specified set of time samples. There are different kinds of monitors: magnetic and electric field or energy monitors.
 classdef TimeMonitor < handle
@@ -41,7 +41,7 @@ classdef TimeMonitor < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, monitorName)
@@ -61,7 +61,7 @@ classdef TimeMonitor < handle
         function Create(obj)
             % Creates the monitor with the previously applied settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With TimeMonitor and append End With
             obj.history = [ 'With TimeMonitor', newline, ...
                                 obj.history, ...
@@ -71,7 +71,7 @@ classdef TimeMonitor < handle
         end
         function FieldType(obj, fType)
             % Sets what field is to be monitored.
-            %   
+            %
             % fType can have one of the following values:
             % ”B-Field”                   The magnetic flux density will be monitored.
             % ”H-Field”                   The magnetic field strength will be monitored.
@@ -109,7 +109,7 @@ classdef TimeMonitor < handle
         function TimeAveraging(obj, period, method, value)
             % This setting only applies to the Averaged Ohmic Losses monitor type.
             % period specifies the length of the time interval over which the losses are averaged.
-            %   
+            %
             % method can have one of the following values:
             % ”Auto”  This is the default option for the time averaging. The end time will be set automatically to the simulation duration, and the start time will be given by the end time minus the specified "period".
             % "Start" Choose this option to explicitly set the start time of the time-averaging. The end time will be given by "value + period" .
@@ -129,7 +129,7 @@ classdef TimeMonitor < handle
         end
         function enum = GetMonitorTypeFromIndex(obj, index)
             % Returns the type of the monitor with regard to the index in the internal monitor list.
-            %   
+            %
             % monType can have one of the following values:
             % ”B-Field”       The magnetic flux density has been monitored.
             % "Temperature"   The temperature has been monitored.
@@ -172,4 +172,4 @@ end
 %     timemonitor.Name('time monitor');
 %     timemonitor.FieldType('B-Field');
 %     timemonitor.Create
-% 
+%

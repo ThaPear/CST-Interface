@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -19,7 +19,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This command offers 2D DXF file import. With this feature you can import data from CAD systems which provide the famous DXF file format from Autodesk Inc. as an export option.
 classdef DXF < handle
@@ -42,7 +42,7 @@ classdef DXF < handle
         function Reset(obj)
             % Resets the import options to the default.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.filename = [];
         end
         function FileName(obj, filename)
@@ -190,7 +190,7 @@ classdef DXF < handle
         function Read(obj)
             % Starts the import of the file.
             obj.AddToHistory(['.Read']);
-            
+
             % Prepend With DXF and append End With
             obj.history = [ 'With DXF', newline, ...
                                 obj.history, ...
@@ -202,7 +202,7 @@ classdef DXF < handle
             % Warning: Untested, might not work as expected.
             % Starts the export of the file.
             obj.AddToHistory(['.Write']);
-            
+
             % Prepend With DXF and append End With
             obj.history = [ 'With DXF', newline, ...
                                 obj.history, ...
@@ -268,7 +268,7 @@ end
 %     dxf.ModelTolerance('0.0001');
 %     dxf.AddLayer('rf_circuit', 'rf_circuit', '0.0', '0.0', '0.0');
 %     dxf.Read
-% 
+%
 %     dxf.Reset
 %     dxf.FileName('.\example.dxf');
 %     dxf.Write

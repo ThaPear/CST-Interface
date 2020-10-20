@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Use this object to define a field source for the simulation.
 classdef FieldSource < handle
@@ -41,7 +41,7 @@ classdef FieldSource < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -77,7 +77,7 @@ classdef FieldSource < handle
         function Read(obj)
             % Activates the import, which has to be previously specified using the FileName method. This method is used for the following file types:  *.rsd, *.fsm, and *.nfd.
             obj.AddToHistory(['.Read']);
-            
+
             % Prepend With FieldSource and append End With
             obj.history = [ 'With FieldSource', newline, ...
                                 obj.history, ...
@@ -138,25 +138,25 @@ classdef FieldSource < handle
 end
 
 %% Default Settings
-%  
+%
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % Obtain a free unique ID for('test.rsd');
 % Dim sID as String
-% 
+%
 % fieldsource = project.FieldSource();
 %     fieldsource.Reset
 %     fieldsource.FileName('test.rsd');
 %     fsID = .GetNextId
 %     fieldsource.Reset
-% 
+%
 % % Define a field source with an evaluated ID
 %     fieldsource.Reset
 %     fieldsource.Name('CD1');
 %     fieldsource.FileName('test.rsd');
 %     fieldsource.Id('42');
 %     fieldsource.Read
-% 
+%
 % % Import a single(final) temperature distribution from a transient thermal project
 %     fieldsource.Reset
 %     fieldsource.Name('field1');
@@ -168,6 +168,6 @@ end
 %     fieldsource.UseLastTimeFrame('1');
 %     fieldsource.UseCopyOnly('0');
 %     fieldsource.CreateFieldImport
-% 
+%
 % %Delete the FieldSource
 %     fieldsource .Delete('CD1');

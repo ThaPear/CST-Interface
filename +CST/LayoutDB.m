@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object is used to conduct the import of PCB models from 3rd-party EDA tools. To work correctly, the command methods must be executed in the order shown below.
 classdef LayoutDB < handle
@@ -54,7 +54,7 @@ classdef LayoutDB < handle
             %       By default it is not added.
             % Creates the CST layout data base file (.ldb), by importing a PCB from some 3rd-party data base format.
             obj.AddToHistory(['.CreateDB']);
-            
+
             if(nargin < 2 || ~addtohistory)
                 % Prepend With LayoutDB and append End With
                 obj.history = [ 'With LayoutDB', newline, ...
@@ -74,7 +74,7 @@ classdef LayoutDB < handle
         function LoadDB(obj)
             % Loads the CST layout data base file (.ldb) and creates the 3D model for it, including materials, lumped elements, and ports.
             obj.AddToHistory(['.LoadDB']);
-            
+
             % Prepend With LayoutDB and append End With
             obj.history = [ 'With LayoutDB', newline, ...
                                 obj.history, ...

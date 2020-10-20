@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -38,7 +38,7 @@ classdef DRCRZ < handle
         end
         function Precision(obj, precision)
             % Specify the precision of which the data shall be written to the exported file. If you specify single precision, the extension of the file name will be taken as ”.drc”. Setting this option to double precision will imply the file extension ”.drd”.
-            %   
+            %
             % precision can have one of  the following values:
             % "single"    Single precision mafia file
             % "double"    Double precision mafia file
@@ -46,7 +46,7 @@ classdef DRCRZ < handle
         end
         function Platform(obj, platform)
             % Specify whether the mafia file should be exported for a Windows PC or a Unix system.
-            %   
+            %
             % platform can have one of  the following values:
             % "pc"    Windows PC
             % "unix"  Unix PC or Unix workstation
@@ -54,7 +54,7 @@ classdef DRCRZ < handle
         end
         function RAxis(obj, axis)
             % Select the coordinate axis used as the r-axis in positive or negative direction.
-            %   
+            %
             % axis can have one of  the following values:
             % "-x"    Negative x-direction
             % "+x"    Positive x-direction

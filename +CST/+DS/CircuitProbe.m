@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -132,31 +132,31 @@ end
 % .Reset
 % .EndComponents('P', '1', '1', 'B', 'Block1', '1'); % link between external port 1 and Block1-Pin1
 % sLinkName1 = .GetName()
-% 
+%
 % .Reset
 % .EndComponents('P', '2', '1', 'B', 'Block1', '2'); % link between external port 2 and Block1-Pin2
 % sLinkName2 = .GetName()
-% 
+%
 % .Reset
 % .EndComponents('P', '3', '1', 'B', 'Block1', '3'); % link between external port 3 and Block1-Pin3
 % sLinkName3 = .GetName()
-% 
+%
 % %Create a new normal probe
 % .Reset
 % .Name('Probe1');
 % .LinkName sLinkName1
 % .Create % Create normal probe %Probe1% on link sLinkName1
-% 
+%
 % %Create a new differential probe
 % .Reset
 % .Name('DiffProbe');
 % .LinkName sLinkName2
 % .ReferenceLinkName sLinkName3
 % .Create % Create differential probe %DiffProbe% between links sLinkName2 and sLinkName3
-% 
+%
 % %Modify an existing probe
 % .Reset
 % .Name('Probe1');
 % .SetName('NormalProbe'); % Rename
 % .ChangeDirection % Change probe direction
-% 
+%

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -34,7 +34,7 @@ classdef VectorPlot2D < handle
             % "arrows"        The field vectors will be plotted as arrows.
             % "cone"          The field vectors will be plotted as cones.
             % "thinarrows"    The field vectors will be plotted as thin arrows.
-            % "hedgehog”      The field vectors will be plotted as ”lines”.
+            % "hedgehogï¿½      The field vectors will be plotted as ï¿½linesï¿½.
             obj.hVectorPlot2D.invoke('Type', key);
         end
         function PhaseValue(obj, phase)
@@ -129,16 +129,16 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following script plots the electric field('e1');(if available) in a linear scale by using arrows with density equal 30% . The y-z-plane is defined as cutting plane.
-% 
+%
 % % Plot only a wire frame of the structure to be able to look inside
 % Plot.wireframe(1)
-% 
+%
 % % Select the desired monitor in the tree.
 % SelectTreeItem('2D/3D Results\E-Field\e1');
-% 
+%
 % % Enables plotting of 3D fields on 2D planes
 % Plot3DPlotsOn2DPlane(1)
-% 
+%
 % % Plot the field of the selected monitor
 % vectorplot2d = project.VectorPlot2D();
 %     vectorplot2d.SetDensityInPercent(30)
@@ -146,6 +146,6 @@ end
 %     vectorplot2d.PlaneNormal('x');
 %     vectorplot2d.PlaneCoordinate(0.0)
 %     vectorplot2d.LogScale(0)
-% End With 
-% 
-% 
+% End With
+%
+%

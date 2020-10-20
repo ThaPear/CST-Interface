@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % The current path object defines a current path as a source of a magnetic field.
 classdef CurrentPath < handle
@@ -41,7 +41,7 @@ classdef CurrentPath < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -68,7 +68,7 @@ classdef CurrentPath < handle
         function Add(obj)
             % Adds the current path definition to the source definitions.
             obj.AddToHistory(['.Add']);
-            
+
             % Prepend With CurrentPath and append End With
             obj.history = [ 'With CurrentPath', newline, ...
                                 obj.history, ...
@@ -79,7 +79,7 @@ classdef CurrentPath < handle
         function Change(obj)
             % Changes the settings for a name specified current path.
             obj.AddToHistory(['.Change']);
-            
+
             % Prepend With CurrentPath and append End With
             obj.history = [ 'With CurrentPath', newline, ...
                                 obj.history, ...
@@ -90,7 +90,7 @@ classdef CurrentPath < handle
         function Import(obj)
             % This command is used if a current path created by a subproject import - it should not be used in a macro.
             obj.AddToHistory(['.Import']);
-            
+
             % Prepend With CurrentPath and append End With
             obj.history = [ 'With CurrentPath', newline, ...
                                 obj.history, ...

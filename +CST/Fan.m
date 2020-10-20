@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object is used to create new fan object for the Conjugated Heat Transfer Solver.
 classdef Fan < handle
@@ -41,7 +41,7 @@ classdef Fan < handle
         function Reset(obj)
             % Resets all internal settings of the fan source to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -79,7 +79,7 @@ classdef Fan < handle
             % "FixedVolume"   The volume flow rate and the corresponding unit are taken into account.
             % "Linear"        The volume flow rate and the stagnation pressure with respective units are taken into account.
             % "Nonlinear"     The fan characteristics are described by a user-defined Flow rate / Pressure curve.
-            %   
+            %
             % default: type = "FixedVolume"
             obj.AddToHistory(['.FanCharacteristics "', num2str(type, '%.15g'), '"']);
         end
@@ -121,7 +121,7 @@ classdef Fan < handle
         function Create(obj)
             % Creates the fan with its previously made settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With Fan and append End With
             obj.history = [ 'With Fan', newline, ...
                                 obj.history, ...
@@ -179,4 +179,4 @@ end
 %     fan.AddEntryFace('component1:solid5', '4');
 %     fan.AddExitFace('component1:solid5', '6');
 %     fan.Create
-% 
+%

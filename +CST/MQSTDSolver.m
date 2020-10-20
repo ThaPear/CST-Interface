@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object is used to define the LF Time Domain solver settings for the magnetoquasistatic equation type.
 classdef MQSTDSolver < handle
@@ -77,7 +77,7 @@ classdef MQSTDSolver < handle
             % "Auto"          choose direct or iterative solver automatically depending on the problem size
             % "Iterative"     use the iterative solver
             % "Direct"        use the direct solver
-            %   
+            %
             % The default setting is "Auto" which defaults to the type ”r;Iterative”. Currently other options are not supported yet.
             obj.AddToHistory(['.SystemSolverType "', num2str(solvertype, '%.15g'), '"']);
         end
@@ -86,7 +86,7 @@ classdef MQSTDSolver < handle
             % enum timeintmethod  meaning
             % "High order"        Use a high order time integration scheme with optional adaptive selection of time step size.
             % "Low order"         Use a low order time integration scheme. Only constant time steps are supported.
-            %   
+            %
             % The default option is "Low order".
             obj.AddToHistory(['.TimeIntegrationMethod "', num2str(timeintmethod, '%.15g'), '"']);
         end
@@ -97,7 +97,7 @@ classdef MQSTDSolver < handle
             % "Harmonic"                  The solver automatically detects the periodicity of the excitation signals and applies the steady state algorithm.
             % "Harmonic Periodic"         Periodic time signals are assumed and the steady state algorithm is applied.
             % "Harmonic Antiperiodic"     Anti-periodic time signals are assumed and the steady state algorithm is applied.
-            %   
+            %
             % The default option is "Harmonic None". The correct length of one period or half of a period needs to be set in the Simulation duration.
             obj.AddToHistory(['.TimeHarmonicMethod "', num2str(timeharmonicmethod, '%.15g'), '"']);
         end

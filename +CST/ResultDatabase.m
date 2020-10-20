@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -34,7 +34,7 @@ classdef ResultDatabase < handle
         % "JStatic"           Stationary current solver
         % "MStatic"           Magnetostatic solver
         % "LFSolver"          Low frequency solver
-        %   
+        %
         %% The keys for the available entries, stored in the database are:
         % string key                                                  Description of return value                                                             Supported by
         % "AllSolvers\\Volume\\"+solidname                            Volume of the specified solid.                                                          All available solvers
@@ -80,7 +80,7 @@ classdef ResultDatabase < handle
         % solvername+"\\"+iFreqIndex+"\\"+SourceName+"\\Current\\Im"  Complex Part of the current for the specified voltage path.                             LFSolver (Voltage Path)
         % solvername+"\\"+iFreqIndex+"\\"+SourceName+"\\Impedance\\Re"
         % solvername+"\\"+iFreqIndex+"\\"+SourceName"\\Impedance\\Im" Real and imaginary parts of the impedance for the specified voltage path.               LFSolver (Voltage Path)
-        % solvername+"\\"+iFreqIndex+SourceName+"\\CoilVRe"           
+        % solvername+"\\"+iFreqIndex+SourceName+"\\CoilVRe"
         % solvername+"\\"+iFreqIndex+SourceName+"\\CoilVIm"           Real and imaginary parts of the coil's voltage.                                         LFSolver (Coil, Current Path)
         % solvername+"\\"+iFreqIndex+"\\Total Losses"                 Returns the total losses for the requested frequency                                    LFSolver
         % solvername+"\\"+iFreqIndex+"\\"+solidname+"\\Losses"        Returns the losses in the specified solid for the requested frequency                   LFSolver (only for tetrahedral meshes)
@@ -139,4 +139,4 @@ end
 %     v = resultdatabase.GetDoubleEntry('LFSolver\1\Total Losses');  %returns the electromagnetic field losses of the second defined frequency point
 %     v = resultdatabase.GetDoubleEntry('LFSolver\0\Frequency');
 %     v = ResultDatabase.GetDoubleEntry('LFSolver\0\coil1\CoilVRe');
-% 
+%

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -71,7 +71,7 @@ classdef Result3D < handle
         function result3D = Copy(obj)
             % Returns a new Result3D object as copy. Usage: set res2 = res1.Copy(). Be aware to use set when assigning vba objects.
             newhResult3D = obj.hResult3D.invoke('Copy');
-            
+
             result3D = CST.Result3D(obj.project, newhResult3D);
         end
         function ScalarMult(obj, dFactor)
@@ -347,40 +347,40 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
-% 
+%
 % % result file('projectName^e1.m3d');
 % res1 = project.Result3D('^e1');
-% 
+%
 % % Copy the data of res1 into res2
 % res2 = res1.Copy();
 % % Calculate the complex conjugate
 % res1.Conjugate();
 % % Add both results
 % res1.Add(res2)
-% 
+%
 % % Save the result in a file named('projectName^MyResult.m3d');
 % res1.Save('^MyResult');
-% 
+%
 % %Store the result into the tree
 % res1.AddToTree('2D/3D Results\MyFolder', 'MyResult');
-% 
-% 
+%
+%
 % % Example for Tetrahedral Mesh
 % % As above, but for tetrahedral mesh, the following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
-% 
+%
 % % Create an object with the project result file('projectName^e1.m3t');
 % res1 = project.Result3D('^e-field(#0001)_1(1).m3t');
-% 
+%
 % % Copy the data of res1 into res2
 % res2 = res1.Copy();
 % % Calculate the complex conjugate
 % res1.Conjugate();
 % % Add both results
 % res1.Add(res2);
-% 
+%
 % % Save the result in a file named('projectName^MyResult.m3t');
 % res1.Save('^MyResult.m3t');
-% 
+%
 % % Store the result into the tree
 % res1.AddToTree('2D/3D Results\MyFolder', 'MyResult.m3t');
-% 
+%

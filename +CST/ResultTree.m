@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -176,7 +176,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The ResultTree VBA Object offers very interesting possibilities to configure the Navigation Tree. It is possible to insert different simulation results as well as VBA macros. The following examples will show its functionality.
-% 
+%
 % General Example to add items into the tree
 % Add text file into tree
 % Example to access 1D Results
@@ -187,42 +187,42 @@ end
 % For results others than 1D Results only those of the current project can be inserted into the tree!
 % Add Field Monitor Result into Tree: Adds a 3D-Vector result into the tree.
 % Add Farfield Monitor Result into Tree: Adds a farfield monitor into the tree.
-% 
+%
 %% Example Add text file into tree
 % Add a generic ASCII text file with the name('Some Information'); to the tree. The file('Sometext.nfo'); needs to be located in the project%s sub folder('Model\3D');. The file name can be arbitrary, but should have the extension('.nfo');
-% 
+%
 % resulttree = project.ResultTree();
 % resulttree.Name('Some Information');
 % resulttree.File('Sometext.nfo');
 % resulttree.Type('Notefile');
 % resulttree.DeleteAt('never'); % Survive rebuilds and delete results
 % resulttree.Add();
-% 
+%
 % Delete the  tree item('Some Information');
-% 
+%
 % resulttree.Name('Some Information');
 % resulttree.Delete();
-% 
+%
 %% Example Add Field Monitor Result into Tree
 % Adds a field monitor result of the electric field from the current project into the folder ”My Field”.
-% 
+%
 % resulttree.Name('My Field\E_Field');   % Entry name and destination folder
 % resulttree.File('e1_1.m3d');              % Result file name
 % resulttree.Type('Efield3D');
 % resulttree.Add();
-% 
+%
 %% Example Add Farfield Monitor Result into Tree
 % Adds a farfield monitor result from the current project into the folder ”My Field”.
-% 
+%
 % % The entry name and its destination folder
 % resulttree.Name('My Field\Farfield');   % Entry name and destination folder
 % resulttree.File('ff1_1.ffm');              % Result file name
 % resulttree.Type('Farfield');
 % resulttree.Add();
-% 
+%
 %% Example Iterate over Parametric S-Parameter Data
 % This macro demonstrates access to parametric data of an S-Parameter. The access works similar for arbitrary tree items below the 1D Results folder.
-% 
+%
 % TreeItem = '1D Results\S-Parameters\S1,1';
 % %get an array of existing result ids for this tree item
 % IDs = resulttree.GetResultIDsFromTreeItem(TreeItem)
@@ -242,20 +242,20 @@ end
 %         end
 %     end
 % end
-% 
+%
 %% Example List all items and folders below('1D Results');
 % This macro demonstrates the use of GetTreeResults. It recursively queries all 0D and 1D items and result folders below('1D Results'); and prints the gathered data to the message window.
-% 
+%
 % nResults = resulttree.GetTreeResults('1D Results', 'folder 0D/1D recursive', '', paths, types, files, info)
 % for(n = 0:nResults-1)
 %     disp('path: ', num2str(paths(n)), vbCrLf, 'type: ',  num2str(types(n)),  vbCrLf, 'file: ' + CStr(files(n)))
 % end
-% 
-% 
+%
+%
 %% CST 2013 Examples - Taken from CST 2013 documentation and translated to MATLAB.
 %% Example Add Adaptation Error Plot into Tree
 % Adds adaptation error plots from the current and an external project into one folder. Thus, the plots can be compared by clicking on the folder('My 1D Results');.
-% 
+%
 % resulttree = project.ResultTree();
 % resulttree.Reset();
 % resulttree.Name('My 1D Results\ExtProj');   % Entry name and its destination folder
@@ -271,34 +271,34 @@ end
 % resulttree.Type('XYSignal');
 % resulttree.XLabel('Pass');
 % resulttree.Add();
-% 
+%
 %% Example Add Command into Tree
 % Adds a command into the ”Userdefined” folder that starts the time domain solver.
-% 
+%
 % resulttree.Name('Userdefined\Macro1');   % Entry name and its destination folder
 % resulttree.Macro('Solver.Start');        % String to be evaluated by VBA interpreter
 % resulttree.Type('Macro');
 % resulttree.Add();
-% 
+%
 %% Example Add Macro into Tree
 % Adds the previously defined control macro ”AutoTest” into the tree.
-% 
+%
 % At first a string will be defined that contains a VBA command that executes the control macro. The command is ”RunMacro” that takes a string(the name of the control macro) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
-% 
+%
 % a = 'RunMacro "AutoTest"'
-% 
+%
 % resulttree.Name('Userdefined\Macro2');   % Entry name and its destination folder
 % resulttree.Macro(a)                      % String to be evaluated by VBA Interpreter
 % resulttree.Type('Macro');
 % resulttree.Add();
-% 
+%
 %% Example Add External Script into Tree
 % Adds an external VBA script into the tree. Let the name of the external macro be ”Macro1.bas” that will be located in the directory of the current project.
-% 
+%
 % At first a string will be defined that contains a VBA command that executes an external VBA script file. The command is ”MacroRun” that takes a string(the name of the script) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
-% 
+%
 % a = 'MacroRun "Macro1.bas"'
-% 
+%
 % resulttree.Name('Userdefined\Macro3');   % Entry name and its destination folder
 % resulttree.Macro(a)                      % String to be evaluated by VBA Interpreter
 % resulttree.Type('Macro');

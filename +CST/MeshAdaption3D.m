@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object allows you to change the parameters used for the three dimensional adaptive mesh refinement. This procedure is an automatic scheme which uses the results of a performed calculation to estimate a mesh better suited for the given problem. With the refined mesh a new calculation pass will then be started. The whole procedure will be repeated until a convergence is met.
 classdef MeshAdaption3D < handle
@@ -60,7 +60,7 @@ classdef MeshAdaption3D < handle
     methods
         function Errorlimit(obj, value)
             % If the relative deviation of the energy between two passes is smaller than the errorlimit the mesh adaption will terminate.
-            %     
+            %
             % AccuracyFactor ( double value )
             % Specifies an additional factor for the current accuracy setting made in the transient solver control dialog box. The change of the S-parameters between two subsequent passes must not differ by more than the given accuracy level multiplied with the defined accuracy factor.
             obj.AddToHistory(['.Errorlimit "', num2str(value, '%.15g'), '"']);
@@ -275,7 +275,7 @@ classdef MeshAdaption3D < handle
 end
 
 %% Default Settings
-%  
+%
 % Errorlimit(0.005)
 % MinPasses(2)
 % MaxPasses(6)
@@ -319,10 +319,10 @@ end
 % EnableLinearGrowthLimitation(1)
 % SetLinearGrowthLimitation('');
 % SingularEdgeRefinement(2)
-%  
+%
 
 %% Example - Taken from CST documentation and translated to MATLAB.
-% 
+%
 % meshadaption3d = project.MeshAdaption3D();
 %     meshadaption3d.SetType('Time');
 %     meshadaption3d.SetAdaptionStrategy('ExpertSystem');

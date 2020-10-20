@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines the settings for the farfield plots and recalculates the farfield plot if necessary.
 classdef FarfieldPlot < handle
@@ -159,7 +159,7 @@ classdef FarfieldPlot < handle
         function StoreSettings(obj)
             % Applies all farfield plot specific settings without refreshing the plot window.
             obj.AddToHistory(['.StoreSettings']);
-            
+
             % Prepend With FarfieldPlot and append End With
             obj.history = [ 'With FarfieldPlot', newline, ...
                                 obj.history, ...
@@ -761,7 +761,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % This example demonstrate some general settings for a farfield plot:
-% 
+%
 % farfieldplot = project.FarfieldPlot();
 %     farfieldplot.Reset
 %     farfieldplot.Plottype('3d');
@@ -794,15 +794,15 @@ end
 %     farfieldplot.SetPhaseCenterAngularLimit(36.3)
 %     farfieldplot.SetPhaseCenterComponent('Theta');
 %     farfieldplot.SetPhaseCenterPlane('both');
-% 
+%
 % SelectTreeItem('Farfields\farfield(f=16) [1]');
 %     farfieldplot.Plot
 % SelectTreeItem('Farfields\farfield(f=30) [1]');
 %     farfieldplot.Plot
-% 
-% 
+%
+%
 % % The second example calculates theta and phi component and the phases along a user defined path:
-% 
+%
 %     farfieldplot.Reset
 % n = 0
 % dFrequency = 2
@@ -811,7 +811,7 @@ end
 %      FarfieldPlot.AddListEvaluationPoint(theta, phi, 0, 'spherical', 'frequency', dFrequency)
 %      n = n + 1
 % Next phi
-% 
+%
 %     farfieldplot.CalculateList('');
 % theta_am_list = FarfieldPlot.GetList('Spherical linear theta abs');
 % theta_ph_list = FarfieldPlot.GetList('Spherical linear theta phase');
@@ -819,6 +819,6 @@ end
 % phi_ph = FarfieldPlot.GetList('Spherical linear phi phase');
 % position_theta = FarfieldPlot.GetList('Point_T');
 % position_phi   = FarfieldPlot.GetList('Point_P');
-% 
+%
 % % further process your results here
-% 
+%

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -79,7 +79,7 @@ classdef ScalarPlot3D < handle
             % "abs"
             % The absolute value of the vector result
             % "normal"
-            % The normal part of the vector field is the scalar product of the surface’s normal vector and the field vector on the surface.
+            % The normal part of the vector field is the scalar product of the surfaceï¿½s normal vector and the field vector on the surface.
             % "tangential"
             % The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
             obj.hScalarPlot3D.invoke('SetComponent', component);
@@ -137,14 +137,14 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following script plots surfaces of equal amplitude of the vector field component Y of the electric field('e1');.
-% 
+%
 % % Plot only a wire frame of the structure to be able to look inside
 % Plot.wireframe(1)
-% 
+%
 % % Select the Y-Component of the electric field e1 in the tree
 % SelectTreeItem('2D/3D Results\E-Field\e1');
 % SetComponent('Y');
-% 
+%
 % % Plot the scalar field of the selected monitor
 % scalarplot3d = project.ScalarPlot3D();
 %     scalarplot3d.Type('isosurfaces');

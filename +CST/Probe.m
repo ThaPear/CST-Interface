@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -21,7 +21,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines probes within your structure that store one field component at that location. The field values during time as well as the corresponding S-Parameter are stored. You may have either electric or magnetic field probes in nearfield as well as in farfield region.
 classdef Probe < handle
@@ -44,7 +44,7 @@ classdef Probe < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.id = [];
         end
         function ID(obj, id)
@@ -77,7 +77,7 @@ classdef Probe < handle
         function Create(obj)
             % Creates the probe.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With Probe and append End With
             obj.history = [ 'With Probe', newline, ...
                                 obj.history, ...
@@ -344,4 +344,4 @@ end
 % .Orientation('Theta');
 % .Origin('zero');
 % .Create
-% 
+%

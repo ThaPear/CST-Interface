@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % The Object is used to create a new Particle Source for the tracking and the PIC solvers.
 classdef ParticleSource < handle
@@ -41,7 +41,7 @@ classdef ParticleSource < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -52,7 +52,7 @@ classdef ParticleSource < handle
         function Create(obj)
             % Creates a new particle source. All necessary settings for this object have to be made previously.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With ParticleSource and append End With
             obj.history = [ 'With ParticleSource', newline, ...
                                 obj.history, ...
@@ -381,10 +381,10 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % To illustrate the use of the particle source VBA commands, the following VBA-script is provided. Prior to the particle source creation, a PEC cylinder is created inside a vacuum box. The particle source is defined on one of the faces of the PEC cylinder and the fixed emission model of the tracking solver is used. To test it, open a new CST PARTICLE STUDIO module in the CST STUDIO SUITE, create a new VBA macro, copy the script into it and run the macro.
-% 
+%
 % % new component: component1
 % Component.New('component1');
-% 
+%
 % % define brick: component1:vacuum_box
 % particlesource = project.ParticleSource();
 %     particlesource.Reset
@@ -395,7 +395,7 @@ end
 %     particlesource.Yrange('-1', '1');
 %     particlesource.Zrange('-1', '1');
 %     particlesource.Create
-% 
+%
 % % define cylinder: component1:pec_cylinder
 %     particlesource.Reset
 %     particlesource.Name('pec_cylinder');
@@ -409,10 +409,10 @@ end
 %     particlesource.Ycenter('0');
 %     particlesource.Segments('0');
 %     particlesource.Create
-% 
+%
 % % pick face
 % Pick.PickFaceFromId('component1:pec_cylinder', '3');
-% 
+%
 % % define particle source: particle1
 %     particlesource.Reset
 %     particlesource.Name('particle1');

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -150,7 +150,7 @@ classdef Plot < handle
         %% View Options
         function DrawBox(obj, boolean)
             % Shows or hides the bounding box of the whole structure.
-            
+
             % For some reason this function does not accept numerical booleans.
             numboolean = str2double(boolean);
             if(~isnan(numboolean))
@@ -163,14 +163,14 @@ classdef Plot < handle
                     boolean = 'false';
                 end
             end
-            
+
             obj.project.AddToHistory(['Plot.DrawWorkplane "', num2str(boolean, '%.15g'), '"']);
         end
         function DrawWorkplane(obj, boolean)
             % Shows or hides the working plane.
             % switch: 'TRUE'
             %         'FALSE'
-            
+
             % For some reason this function does not accept numerical booleans.
             numboolean = str2double(boolean);
             if(~isnan(numboolean))
@@ -183,7 +183,7 @@ classdef Plot < handle
                     boolean = 'false';
                 end
             end
-            
+
             obj.project.AddToHistory(['Plot.DrawWorkplane "', boolean, '"']);
         end
         function InnerSurfaces(obj, boolean)
@@ -246,4 +246,4 @@ end
 %     plot.StoreImage('D:\image.bmp', 1024, 768)
 %     plot.StoreImage('D:\image.png', 1024, 768)
 %     plot.StoreImage('D:\image.jpeg', 800, 600)
-% 
+%

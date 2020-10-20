@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object offers the possibility to define a thermal source based on a given field monitor of a previously performed calculation. These fields are used as a thermal source by the Thermal Solver and can be calculated by stationary current solvers as well as low or high frequency solvers. Moreover this VBA object allows to compute all or selected loss distributions of the current project in order to import them in another project.
 classdef ThermalSourceParameter < handle
@@ -161,7 +161,7 @@ classdef ThermalSourceParameter < handle
             % Adds the previously determined current field as a source to the thermal source definition.
             % Please note, that momentarily only one current field can be used as thermal source.
             obj.AddToHistory(['.AddSource']);
-            
+
             % Prepend With ThermalSourceParameter and append End With
             obj.history = [ 'With ThermalSourceParameter', newline, ...
                                 obj.history, ...
@@ -195,12 +195,12 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % Create all loss distributions for an export to another .cst project.
-% 
+%
 % thermalsourceparameter = project.ThermalSourceParameter();
 %     thermalsourceparameter.CreateThermalDistributions
-% 
+%
 % Applying the field of a stationary current solver run as thermal source:
-% 
+%
 %     thermalsourceparameter.ResetLossFieldSettings
 %     thermalsourceparameter.LossDistDefActive('1');
 %     thermalsourceparameter.ExternalProjectPath('J-Statics.cst');
@@ -215,9 +215,9 @@ end
 %     thermalsourceparameter.MinRelThermConductanceForSurfaceLosses('0.01');
 %     thermalsourceparameter.MinRelThermConductanceForVolumeLosses('0.0');
 %     thermalsourceparameter.AddSource
-% 
+%
 % Applying the losses of a transient solver run as thermal source:
-% 
+%
 %     thermalsourceparameter.ResetLossFieldSettings
 %     thermalsourceparameter.LossDistDefActive('1');
 %     thermalsourceparameter.ExternalProjectPath('HFTD Seq.cst');
@@ -232,4 +232,4 @@ end
 %     thermalsourceparameter.MinRelThermConductanceForSurfaceLosses('0.01');
 %     thermalsourceparameter.MinRelThermConductanceForVolumeLosses('0.0');
 %     thermalsourceparameter.AddSource
-% 
+%

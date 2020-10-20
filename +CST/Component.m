@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -25,7 +25,7 @@ classdef Component < handle
         function obj = Component(project, hProject)
             obj.project = project;
             obj.hComponent = hProject.invoke('Component');
-            
+
             obj.components = [];
         end
     end
@@ -35,7 +35,7 @@ classdef Component < handle
             % Creates a new component with the given name.
             %
             % Subcomponents are specified using 'parent/subcomp'
-            
+
             % Delete the old one first.
             try
                 if(obj.Exists(name))
@@ -92,7 +92,7 @@ classdef Component < handle
     properties(SetAccess = protected)
         project
         hComponent
-        
+
         components % List of existing components.
     end
 end
@@ -101,7 +101,7 @@ end
 % % Create a new component
 % component = project.Component();
 %     component.New('component1')
-% 
+%
 % % Rename an existing component
 % component = project.Component();
 %     component.Rename(;component1', 'MyComponent');

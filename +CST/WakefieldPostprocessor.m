@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This Object is used to compute secondary results from previously computed wake-functions.
 classdef WakefieldPostprocessor < handle
@@ -73,7 +73,7 @@ classdef WakefieldPostprocessor < handle
         end
         function FilterParameter(obj, parameterindex, value)
             % Sets the filter parameters for a certain type of pre-filter.
-            %   
+            %
             % Filtertype  Parameters
             % None        ---
             % Cos2        #1: The rolloff-factor with a range from 0 to 1.
@@ -84,7 +84,7 @@ classdef WakefieldPostprocessor < handle
         function Calculate(obj, calculationtype)
             % Sets the type of the wake post-processing step. Currently only "ImpedanceSpectrum" is available.
             obj.AddToHistory(['.Calculate "', num2str(calculationtype, '%.15g'), '"']);
-            
+
             % Prepend With WakefieldPostprocessor and append End With
             obj.history = [ 'With WakefieldPostprocessor', newline, ...
                                 obj.history, ...
@@ -121,4 +121,4 @@ end
 %     wakefieldpostprocessor.Filter('Cos2');
 %     wakefieldpostprocessor.FilterParameter('1', '0.2');
 %     wakefieldpostprocessor.Calculate('ImpedanceSpectrum');
-% 
+%

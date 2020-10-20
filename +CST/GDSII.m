@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This command offers GDSII stream file import. With this feature you can import data from any IC package system providing the GDSII stream format.
 % The GDSII data is imported relative to the current coordinate system and extruded with a profile height to a 3D solid. Use this import option to import printed circuits or complex microstrip lines.
@@ -42,7 +42,7 @@ classdef GDSII < handle
         function Reset(obj)
             % Resets the import options to the default.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.filename = [];
         end
         function FileName(obj, filename)
@@ -188,7 +188,7 @@ classdef GDSII < handle
         function Read(obj)
             % Starts the actual import of the file.
             obj.AddToHistory(['.Read']);
-            
+
             % Prepend With GDSII and append End With
             obj.history = [ 'With GDSII', newline, ...
                                 obj.history, ...
@@ -203,7 +203,7 @@ classdef GDSII < handle
         function Write(obj)
             % Starts the export of the file. Only MoreThan200Points is used for exporting.
             obj.AddToHistory(['.Write']);
-            
+
             % Prepend With SAT and append End With
             obj.history = [ 'With SAT', newline, ...
                                 obj.history, ...
@@ -275,7 +275,7 @@ end
 %     gdsii.ModelTolerance('0.0001');
 %     gdsii.AddLayer('2', '2', '0', '0', '0');
 %     gdsii.Read
-% 
+%
 %     gdsii.Reset
 %     gdsii.FileName('.\example.gds');
 %     gdsii.MoreThan200Points('0');

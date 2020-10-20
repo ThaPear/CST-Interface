@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -20,7 +20,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 classdef LumpedFaceElement < handle
     %% CST Interface specific functions.
@@ -42,14 +42,14 @@ classdef LumpedFaceElement < handle
         function Reset(obj)
             % Resets all internal values to their default settings.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
             obj.folder = [];
         end
         function Create(obj)
             % Creates a new element. All necessary settings for this element have to be made previously.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With LumpedFaceElement and append End With
             obj.history = [ 'With LumpedFaceElement', newline, ...
                                 obj.history, ...
@@ -64,7 +64,7 @@ classdef LumpedFaceElement < handle
         function Modify(obj)
             % Modifies an existing element. Only none geometrical settings which were made previously are changed.
             obj.AddToHistory(['.Modify']);
-            
+
             % Prepend With LumpedFaceElement and append End With
             obj.history = [ 'With LumpedFaceElement', newline, ...
                                 obj.history, ...

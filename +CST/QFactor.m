@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -19,7 +19,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % This object offers the possibility to calculate losses and as a result the Q-factor. It uses an H-field from a surface-loss-free solver run for calculation of surface losses. Dielectric losses are taken into account by either using the losses from a lossy solver run or applying the perturbation method in case of loss-free solver run. In both cases, lossy dielectric material properties have to be set before the solver run. For the surface losses, each material which was PEC in the surface-loss-free calculation can be set to a finite conductivity. Applying the calculation method, the losses and Q�s will be calculated for all solids. The losses are summed up for each material and for the total model.
 classdef QFactor < handle
@@ -46,7 +46,7 @@ classdef QFactor < handle
         function Calculate(obj)
             % This method performs the calculation with the given settings. The results can be obtained using the different functions offered by the object.
             obj.AddToHistory(['.Calculate']);
-            
+
             % Prepend With QFactor and append End With
             obj.history = [ 'With QFactor', newline, ...
                                 obj.history, ...
@@ -150,4 +150,4 @@ end
 % MsgBox Str$(.GetTotalQ)
 % MsgBox Str$(.GetLoss('component1:solid1');)
 % MsgBox Str$(.GetLoss('PEC');)
-% 
+%

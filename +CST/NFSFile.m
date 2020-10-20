@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,20 +18,20 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % The NFS file format allows the imprint of equivalent surface fields on a box or even on single planes. This format is especially designed for scan data and is able to handle an equidistant as well as a non-equidistant sampled spatial distribution of field data.
-% The format is based on the IEC® Technical Report IEC/TR 61967-1-1.
-% 
+% The format is based on the IECï¿½ Technical Report IEC/TR 61967-1-1.
+%
 % In order to describe surface fields on a rectangular box surface, each face and field component has to be defined  in a single XML-file and a corresponding DAT-file.
 % The XML-file contains all meta-data such as field type, field components (Ex, Ey, Ez, Hx, Hy, Hz ), frequencies, and a reference to the DAT-file.
-% 
+%
 % The DAT-file contains the actual field data values in the following ASCII pattern:
 % x0 y0 z0 Re(freq1) Im(freq1) Re(freq2) Im(freq2) Re(freq3) Im(freq3) ...
 % x1 y0 z0 Re(freq1) Im(freq1) Re(freq2) Im(freq2) Re(freq3) Im(freq3) ...
 % x0 y1 z0 Re(freq1) Im(freq1) Re(freq2) Im(freq2) Re(freq3) Im(freq3) ...
 % ...
-% Where (x_i, y_i, z_i) describe point positions of a cartesian grid and Re(freq1) / Im(freq2) the real / imaginary part of the field value at frequency freq1 and position (x_i, y_i, z_i). Example files for the supported types of the NFS format for the CST MICROWAVE STUDIO transient solver can be found here. A detailed description of the file syntax can be found in  IEC® Technical Report IEC/TR 61967-1-1.
+% Where (x_i, y_i, z_i) describe point positions of a cartesian grid and Re(freq1) / Im(freq2) the real / imaginary part of the field value at frequency freq1 and position (x_i, y_i, z_i). Example files for the supported types of the NFS format for the CST MICROWAVE STUDIO transient solver can be found here. A detailed description of the file syntax can be found in  IECï¿½ Technical Report IEC/TR 61967-1-1.
 classdef NFSFile < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
@@ -73,7 +73,7 @@ classdef NFSFile < handle
             % Export the specified field source monitor of the excitation in the current project.
             obj.AddToHistory(['.Export "', num2str(MonitorName, '%.15g'), '", '...
                                       '"', num2str(ExcitationString, '%.15g'), '"']);
-            
+
             % Prepend With NFSFile and append End With
             obj.history = [ 'With NFSFile', newline, ...
                                 obj.history, ...
@@ -85,7 +85,7 @@ classdef NFSFile < handle
             % Converts FSM-file to NFS-files, that will be saved in the specified directory. An absolute path has to be specified.
             obj.AddToHistory(['.Write "', num2str(FSMFile, '%.15g'), '", '...
                                      '"', num2str(NFSDirectoryPath, '%.15g'), '"']);
-            
+
             % Prepend With NFSFile and append End With
             obj.history = [ 'With NFSFile', newline, ...
                                 obj.history, ...
@@ -114,11 +114,11 @@ end
 % % Convert an FSM-file by directly specifying the filename and output folder
 % nfsfile = project.NFSFile();
 %     nfsfile.Write('C:\Path\To\Some\Monitorfile.fsm', 'C:\Output');
-% 
+%
 % % Export the monitor named('my_monitor'); with excitation string('1'); to the path('C:\nfs-export\');.
 % % Set the mesh half as dense as the mesh on the field source monitor surface.
 %     nfsfile.Reset
 %     nfsfile.SetCoarsening(2)
 %     nfsfile.SetOutputFolder('C:\nfs-export');
 %     nfsfile.Export('my_monitor', '1');
-% 
+%

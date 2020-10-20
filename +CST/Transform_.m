@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Offers a set of tools that change a solid by transformations.
 classdef Transform_ < handle
@@ -29,7 +29,7 @@ classdef Transform_ < handle
             obj.project = project;
             obj.hTransform = hProject.invoke('Transform');
             obj.history = [];
-            
+
             obj.names = {};
         end
     end
@@ -43,7 +43,7 @@ classdef Transform_ < handle
         function Reset(obj)
             % Resets all internal values to their defaults.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.names = {};
         end
         function Name(obj, sObjectName)
@@ -61,7 +61,7 @@ classdef Transform_ < handle
         function TranslateCurve(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.TranslateCurve']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -76,7 +76,7 @@ classdef Transform_ < handle
         function ScaleCurve(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.ScaleCurve']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -91,7 +91,7 @@ classdef Transform_ < handle
         function RotateCurve(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.RotateCurve']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -106,7 +106,7 @@ classdef Transform_ < handle
         function MirrorCurve(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.MirrorCurve']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -121,7 +121,7 @@ classdef Transform_ < handle
         function TranslateWire(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.TranslateWire']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -136,7 +136,7 @@ classdef Transform_ < handle
         function ScaleWire(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.ScaleWire']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -151,7 +151,7 @@ classdef Transform_ < handle
         function RotateWire(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.RotateWire']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -166,7 +166,7 @@ classdef Transform_ < handle
         function MirrorWire(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.MirrorWire']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -181,7 +181,7 @@ classdef Transform_ < handle
         function TranslateCoil(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.TranslateCoil']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -196,7 +196,7 @@ classdef Transform_ < handle
         function ScaleCoil(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.ScaleCoil']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -211,7 +211,7 @@ classdef Transform_ < handle
         function RotateCoil(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.RotateCoil']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -226,7 +226,7 @@ classdef Transform_ < handle
         function MirrorCoil(obj)
             % Translate / scale / rotate / mirror the selected object with all previously made settings.
             obj.AddToHistory(['.MirrorCoil']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -246,21 +246,21 @@ classdef Transform_ < handle
             % Port                    this transforms all kinds of ports
             % Currentdistribution     this transforms nearfield sources
             % Part                    this transforms a complete block in the 3D Layout View
-            % 
+            %
             % enum how        description                                                                 special methods
             % Translate       Moves the object along a given vector                                       Vector, UsePickedPoints, InvertPickedPoints
-            % Rotate          Rotates the object around one main axis, given the angle and an offset 
+            % Rotate          Rotates the object around one main axis, given the angle and an offset
             %                 for the rotation axis (origin).                                             Angle, Center, Origin
-            % Scale           scales the object. The scaling center can be specified as well. For some 
+            % Scale           scales the object. The scaling center can be specified as well. For some
             %                 types, only uniform scaling is allowed.                                     ScaleFactor, Center, Origin
             % Mirror          mirrors the object on a mirror plane whose normal and offset is given       PlaneNormal, Center, Origin
-            % Matrix          this applies a general matrix transformation onto a given object. Input 
+            % Matrix          this applies a general matrix transformation onto a given object. Input
             %                 is a 3 by 3 Matrix and an additional translation vector.                    Matrix, Vector
-            % LocalToGlobal   After this transform that consists of translates and rotates internally, the position and orientation of the object  in 
+            % LocalToGlobal   After this transform that consists of translates and rotates internally, the position and orientation of the object  in
             %                 regard to the global coordinate system will match its position and rotation that it had to the local coordinate system before.
-            % GlobalToLocal   This is the inverse operation to the one above. An object aligned to the x-y plane in the origin of the global coordinate 
+            % GlobalToLocal   This is the inverse operation to the one above. An object aligned to the x-y plane in the origin of the global coordinate
             %                 system will afterwards be aligned to the u-v plane and translated to be in the origin of the local coordinate system.
-            % 
+            %
             % Note: To align some object in a completely user specified manner onto something else, you can follow this workflow:
             % 1. Transform the local coordinate system to specify an anchor system for your object to be aligned.
             % 2. Transform "LocalToGlobal" this object.
@@ -281,7 +281,7 @@ classdef Transform_ < handle
             %      'LocalToGlobal'
             obj.AddToHistory(['.Transform "', num2str(what, '%.15g'), '", '...
                                          '"', num2str(how, '%.15g'), '"']);
-            
+
             % Prepend With Transform and append End With
             obj.history = [ 'With Transform', newline, ...
                                 obj.history, ...
@@ -397,4 +397,4 @@ end
 % MultipleObjects(0)
 % GroupObjects(0)
 % Origin('ShapeCenter');
-%  
+%

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -37,7 +37,7 @@ classdef ParticleMonitor < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, name)
@@ -140,7 +140,7 @@ classdef ParticleMonitor < handle
         end
         function OrdinateSetting(obj, type, direction)
             % Definition of the physical quantity which is displayed in the diagram. Note that for the plot-type "histogram" only the abscissa setting is considered.
-            %   
+            %
             % enum type   meaning
             % "position"  Position of the particles relative to the plane's origin point and local coordinate system.
             % "velocity"  Velocity of the particles relative to the plane's local coordinate system.
@@ -150,7 +150,7 @@ classdef ParticleMonitor < handle
             % "beta"      Beta of the particles relative to the plane's local coordinate system.
             % "current"   Current of the particles relative to the plane's local coordinate system.
             % "charge"    Charge of the monitored particles.
-            %   
+            %
             % enum direction  meaning
             % "x-direction"   x-component
             % "y-direction"   y-component
@@ -162,7 +162,7 @@ classdef ParticleMonitor < handle
         function Create(obj)
             % Creates the particle monitor
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With ParticleMonitor and append End With
             obj.history = [ 'With ParticleMonitor', newline, ...
                                 obj.history, ...
@@ -279,7 +279,7 @@ classdef ParticleMonitor < handle
         function double = GetMeanValue(obj, type, direction)
             % Statistical evaluation: arithmetic mean in the direction of the quantitiy type, e.g. the component of "velocity" in "x-direction". Admissible entries for the type are shown in the table of the description of AbcissaSetting.
             % Admissible entries for direction are "x-direction", "y-direction", "z-direction" and "absolute". Here, "x", "y" and "z" represent the local coordinates of the monitor plane: "z" corresponds to the axis that is normal to the monitor plane and "x" and "y" are parallel to it. In the local coordinate system UVW, "x" is "u", "y" is "v" and "z" is "w". The table below translates the directions in the local coordinate system to those in the global coordinate system, depending on which of the principal planes of the global coordinate system the monitor plane is aligned to.
-            %  
+            %
             % direction (local)   direction when plane normal is x (global)   direction when plane normal is y (global)   direction when plane normal is z (global)
             % "x-direction"       y                                           z                                           x
             % "y-direction"       z                                           x                                           y
@@ -402,7 +402,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % The following program demonstrates the application of the interrogative commands. The results of these commands are written into a text file.
-% 
+%
 % function Example(project)
 %     particlemonitor = project.ParticleMonitor();
 %         particlemonitor.Reset();
@@ -413,20 +413,20 @@ end
 %         particlemonitor.TemporalBehaviour('continuous');
 %         particlemonitor.TimeSpan('0', '0');
 %         particlemonitor.UsePlane('1');
-%         particlemonitor.Align('GLOBAL');  
+%         particlemonitor.Align('GLOBAL');
 %         particlemonitor.PlotType('phase-space');
 %         particlemonitor.AbscissaSetting('position', 'z-direction');
 %         particlemonitor.OrdinateSetting('position', 'y-direction');
 %         particlemonitor.DensitySamples('100');
-%         particlemonitor.PlaneSetting('x-direction', '0.00');  
+%         particlemonitor.PlaneSetting('x-direction', '0.00');
 %         particlemonitor.Create();
-% 
+%
 %     hOutFile = fopen('trk monitor.txt', 'w'); For Output
-% 
+%
 %     % Test of a Particle Monitor
 %     % selection of monitor
 %     particlemonitor.SelectMonitor('mymonitor');
-% 
+%
 %     % normal is 0,0,1
 %     particlemonitor.GetNormal(ucomp,vcomp,wcomp);
 %     fprintf(hOutFile, ['Normal                     :', num2str(ucomp, '%.15g'), ';', num2str(vcomp, '%.15g'), ';', num2str(wcomp, '%.15g'), '\n']);
@@ -483,7 +483,7 @@ end
 %     particlemonitor.GetEmittance(ucomp, vcomp);
 %     fprintf(hOutFile, ['Emittance-U                :', num2str(ucomp, '%.15g'), '\n']);
 %     fprintf(hOutFile, ['Emittance-V                :', num2str(vcomp, '%.15g'), '\n']);
-% 
+%
 %     % A single particle #2 is chosen
 %     particlemonitor.SelectParticle(2);
 %     fprintf(hOutFile, '\n');
@@ -501,7 +501,7 @@ end
 %     % number of particle-hits
 %     itest = particlemonitor.GetNHits();
 %     fprintf(hOutFile, ['   Particle-hits           :', num2str(itest, '%.15g'), '\n']);
-% 
+%
 %     % point of time of hit
 %     dtest = particlemonitor.GetHitTime(0);
 %     fprintf(hOutFile, '\n');
@@ -520,9 +520,9 @@ end
 %     fprintf(hOutFile, ['   Hit #0: velocity-z     :', num2str(dtest, '%.15g'), '\n']);
 %     dtest = particlemonitor.GetValue(0, 'beta', 'z-direction');
 %     fprintf(hOutFile, ['   Hit #0: beta-z         :', num2str(dtest, '%.15g'), '\n']);
-% 
+%
 %     % delete the above created result data
 %     particlemonitor.ClearMonitorData();
-% 
+%
 %     fclose(hOutFile);
 % end

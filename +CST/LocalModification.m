@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -38,7 +38,7 @@ classdef LocalModification < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
         end
         function Name(obj, solidname)
@@ -83,12 +83,12 @@ classdef LocalModification < handle
             % You can define multiple FacePlaneDistance constraints. If the switch is set, the first attached attribute is replaced, if existing. In default, this flag is false, and an additional attribute is attached on the face, each time a face plane distance constraint is defined.
             obj.AddToHistory(['.SetRepalceAttribute "', num2str(boolean, '%.15g'), '"']);
         end
-        %% 
+        %%
         function OffsetSelectedFaces(obj, amount)
             % This method moves the picked faces of the listed shapes in direction of their face normals. For instance if the offset method is applied to a cylindrical face of a cylinder, it simply changes its radius.
             % All adjoining faces to the changed faces will be changed as well such that the solid retains a closed surface.
             obj.AddToHistory(['.OffsetSelectedFaces "', num2str(amount, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -101,7 +101,7 @@ classdef LocalModification < handle
             obj.AddToHistory(['.MoveSelectedFaces "', num2str(dx, '%.15g'), '", '...
                                                  '"', num2str(dy, '%.15g'), '", '...
                                                  '"', num2str(dz, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -112,7 +112,7 @@ classdef LocalModification < handle
         function RemoveSelectedFaces(obj)
             % Tries to remove all previously picked faces on the listed shapes. When a face has to be removed the modeler tries to enlarge the adjoining faces according to their shapes to close the structure again. If the solid can not be closed in this way, the operation will not be executed.
             obj.AddToHistory(['.RemoveSelectedFaces']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -123,7 +123,7 @@ classdef LocalModification < handle
         function DefineConstraintSelectedFaceRadius(obj, newradius)
             % This method sets the radius of all picked cylindrical faces of involved shapes to the new given radius. A constraint is attached to the face and usable for the sensitivity analysis if the new radius is given as a plain parameter.
             obj.AddToHistory(['.DefineConstraintSelectedFaceRadius "', num2str(newradius, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -134,7 +134,7 @@ classdef LocalModification < handle
         function DefineConstraintSelectedFacePlaneDistance(obj, newdistance)
             % This method sets the distance of all picked faces to a chosen principal plane to the new given distance. To define the previous distance between face and plane, the reference point has to be given.
             obj.AddToHistory(['.DefineConstraintSelectedFacePlaneDistance "', num2str(newdistance, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -145,7 +145,7 @@ classdef LocalModification < handle
         function DefineConstraintSelectedFacePointDistance(obj, newdistance)
             % This method sets the distance of all picked planar faces to a given base point. For each face, the distance is calculated as the distance between the point and the projection of the point onto the plane in which the face is placed.
             obj.AddToHistory(['.DefineConstraintSelectedFacePointDistance "', num2str(newdistance, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -156,7 +156,7 @@ classdef LocalModification < handle
         function DeleteFacePlaneDistanceConstraint(obj, number)
             % This method removes a face plane constraint from the given face (See SetFaceID). Because multiple constraints may be attached to one face, the given number specifies, which one to delete. If there is only one face plane constraint attached, number should be 0.
             obj.AddToHistory(['.DeleteFacePlaneDistanceConstraint "', num2str(number, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -167,7 +167,7 @@ classdef LocalModification < handle
         function DeleteFacePointDistanceConstraint(obj)
             % This method removes the face point distance constraint from the given face. (It is not considered for sensitivity analysis anymore.)
             obj.AddToHistory(['.DeleteFacePointDistanceConstraint']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -178,7 +178,7 @@ classdef LocalModification < handle
         function DeleteFaceRadiusConstraint(obj)
             % This method removes the radius constraint from the given face. It is not considered for sensitivity analysis anymore.)
             obj.AddToHistory(['.DeleteFaceRadiusConstraint']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -189,7 +189,7 @@ classdef LocalModification < handle
         function DeleteFacePlaneDistanceBlendConstraint(obj, number)
             % Those methods do remove constraints from blends that have been considered while defining face constraints on an adjacent face. The syntax is the same for all deletion commands: .Name and .SetFaceID are required (see example below).
             obj.AddToHistory(['.DeleteFacePlaneDistanceBlendConstraint "', num2str(number, '%.15g'), '"']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -200,7 +200,7 @@ classdef LocalModification < handle
         function DeleteFaceRadiusBlendConstraint(obj)
             % Those methods do remove constraints from blends that have been considered while defining face constraints on an adjacent face. The syntax is the same for all deletion commands: .Name and .SetFaceID are required (see example below).
             obj.AddToHistory(['.DeleteFaceRadiusBlendConstraint']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -211,7 +211,7 @@ classdef LocalModification < handle
         function DeleteFacePointDistanceBlendConstraint(obj)
             % Those methods do remove constraints from blends that have been considered while defining face constraints on an adjacent face. The syntax is the same for all deletion commands: .Name and .SetFaceID are required (see example below).
             obj.AddToHistory(['.DeleteFacePointDistanceBlendConstraint']);
-            
+
             % Prepend With LocalModification and append End With
             obj.history = [ 'With LocalModification', newline, ...
                                 obj.history, ...
@@ -245,14 +245,14 @@ end
 %     local modifications.SetPlaneDirection('X');
 %     local modifications.EnableInvertedFaceRemoval('0');
 %     local modifications.DefineConstraintSelectedFacePlaneDistance('facedistance_1');
-% 
+%
 %     local modifications.Reset
 %     local modifications.Name('component1:solid1');
 %     local modifications.EnableInvertedFaceRemoval('0');
 %     local modifications.MoveSelectedFaces('-5.5', '0', '0');
-% 
+%
 %     local modifications.Reset
 %     local modifications.Name('component1:solid3');
 %     local modifications.SetFaceID('1');
 %     local modifications.DeleteFacePlaneDistanceConstraint('0');
-% 
+%

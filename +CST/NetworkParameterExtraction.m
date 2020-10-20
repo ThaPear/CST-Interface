@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -19,7 +19,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Determine an equivalent SPICE circuit which has the same behavior at the ports as the simulation model. This command represents the "Spice Extraction" in the "Signal Post-Processing" ribbon. Two different methods exist for this task. The "transmission line model" (TL) is based on a fixed topology of a network of parallel and coupled transmission lines. The other more general method is based on a "model order reduction" (MOR) and does not assume any fixed topology. The drawback of the latter approach, however, is that the derived SPICE circuit elements do not allow any physical interpretation.
 classdef NetworkParameterExtraction < handle
@@ -56,7 +56,7 @@ classdef NetworkParameterExtraction < handle
         function Calculate(obj)
             % Starts the network parameter extraction with the previously made settings.
             obj.AddToHistory(['.Calculate']);
-            
+
             % Prepend With NetworkParameterExtraction and append End With
             obj.history = [ 'With NetworkParameterExtraction', newline, ...
                                 obj.history, ...
@@ -237,14 +237,14 @@ end
 
 %% Default Settings
 % Method('TransmissionLine');
-%  
+%
 % ' defaults for transmission line based network parameter extraction
 % SetFrequency(0.0)
 % SetNCascades(1)
 % SetLimitCoupling(0, 60.0)
 % SetKeepTopology(0, 1e-30, 1e-30, 1e-30, 1e-30, 1e-30)
 % GenerateSubCircuit(0)
-%  
+%
 % ' defaults for model order reduction based network parameter extraction
 % EnsureOutOfBandPassivity(1)
 % UseARFilterResults(0)
@@ -255,7 +255,7 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % Example for TL
 % % start a transmission line based network extraction
-% 
+%
 % networkparameterextraction = project.NetworkParameterExtraction();
 % .Method('TransmissionLine');
 % .SetFrequency(0.9)
@@ -266,7 +266,7 @@ end
 % .Calculate
 % Example for MOR
 % % start a MOR based network extraction
-% 
+%
 % .Method('MOR');
 % .CircuitFileName('my_netlist.net');
 % .EnsureOutOfBandPassivity(0)
@@ -276,4 +276,4 @@ end
 % .DifferentialNetlist(1)
 % .NetlistFormat('HSPICE');
 % .Calculate
-% 
+%

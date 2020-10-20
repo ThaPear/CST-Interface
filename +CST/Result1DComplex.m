@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -76,32 +76,32 @@ classdef Result1DComplex < handle
         function result1DComplex = Copy(obj)
             % Returns a copy of the Result1D Complex object.
             newhResult1DComplex = obj.hResult1DComplex.invoke('Copy');
-            
+
             result1DComplex = CST.Result1DComplex(obj.project, newhResult1DComplex);
         end
         %% 1D Complex to 1D Operations
         function result1D = Real(obj)
             % Returns a Result1D object filled with the real part of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Real');
-            
+
             result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1D = Imaginary(obj)
             % Returns a Result1D object filled with the imaginary part of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Imaginary');
-            
+
             result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1D = Magnitude(obj)
             % Returns a Result1D object filled with the magnitude of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Magnitude');
-            
+
             result1D = CST.Result1D(obj.project, hResult1D);
         end
         function result1D = Phase(obj)
             % Returns a Result1D object filled with the phase in degrees of the data stored in the Result1DComplex object.
             hResult1D = obj.hResult1DComplex.invoke('Phase');
-            
+
             result1D = CST.Result1D(obj.project, hResult1D);
         end
         %% Local Operations:
@@ -293,10 +293,10 @@ end
 % % Construction
 % % An Result1DComplex object can be created as follows:
 % result = Result1DComplex('');
-% 
+%
 % % This will create an empty object. Alternatively, a filename of a complex .sig-file can be given as a parameter, then the object loads the data from the .sig-file(see Example).
 % % This example creates an empty object, fills it with data and adds it to the ResultTree.
-% 
+%
 % result1dcomplex = project.Result1DComplex('');
 %     result1dcomplex.AppendXY(1,1,1)
 %     result1dcomplex.AppendXY(2,2,1)
@@ -304,20 +304,20 @@ end
 %     result1dcomplex.Title('A complex curve');
 %     result1dcomplex.Save('a_file_name');
 %     result1dcomplex.AddToTree('1D Results\Test\complex_curve');
-% 
+%
 % This example loads the data of a complex  S-Parameter and adds it to the ResultTree.
 % resulttree = project.ResultTree();
 % sFile = resulttree.GetFileFromTreeItem('1D Results\S-Parameters\S1,1');
 % result1dcomplex = project.Result1DComplex(sFile)
 %     result.Save('copied_s11');
 %     result.AddToTree('1D Results\Copied Data\S1,1');
-% 
+%
 % This example links two objects via the command SetReferenceImpedanceLink.
 % refImp = project.Result1DComplex('');
 %     refImp.Appendxy(1,50,0)
 %     refImp.Save('refimp_name.sig');
 %     refImp.AddToTree('1D Results\Data\result-ref-imp');
-% 
+%
 % result = project.Result1DComplex('');
 %     result.Appendxy(1,0.4,0.6)
 %     result.Save('result_name.sig');

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -305,9 +305,9 @@ end
 % dim objName1 as object
 % set objName1 = ds.Result1D(ds.GetProjectPath('ResultsDSTask'); +('AC1\Components\P1\Data\P1\aAC Voltage');
 % % NOTE: The behavior of the('Result1D'); object depends on the context it is used. If you use it in CST DESIGN ENVIRONMENT, the .AddToTree command will place the curves into the result tree of CST DESIGN STUDIO. However, if for example used from within CST MICROWAVE STUDIO, the curves will be placed into the result tree of CST MICROWAVE STUDIO. To have the curves placed into CST DESIGN STUDIO you need to construct the result object as('DS.Result1D('');');.
-% 
+%
 % %% The following example shows how a Result1D object can be filled with data and added to the Navigation Tree.
-% 
+%
 % Dim o As Object
 % Set o = Result1D('');
 % %fill empty object with data
@@ -321,9 +321,9 @@ end
 % o.ylabel('cosine');
 % o.Save('cosine_curve.sig');
 % o.AddToTree('Results\Data\curve_1D');
-% 
+%
 % This example shows how  ASCII data from an external file can be loaded into a Result1D object and added to the Navigation Tree.
-% 
+%
 % Dim o As Object
 % Set o = Result1D('');
 % %load external ASCII file containing two data columns separated by white space or tabulator
@@ -335,9 +335,9 @@ end
 % o.Save('imported_curve.sig');
 % %add it to the Navigation Tree
 % o.AddToTree('Results\Data\curve_import');
-% 
+%
 % The example shows how to access all values of a result stored under the tree path('Tasks\Tran1\TD Voltages\Port1');. Please note that depending on type of the tree result, a Result1DComplex object might be needed to load the data.
-% 
+%
 % Dim nPoints As Long
 % Dim n As Long
 % Dim x As Double
@@ -357,9 +357,9 @@ end
 % DS.ReportInformationToWindow('x:(' + Cstr(x) +(' y:(' + CStr(y))
 % Next n
 % End If
-% 
+%
 % This example loads S1,1 and extracts the real part of the complex-valued S-Parameter. It then determines the closest existing data point to a certain frequency(here 0.65 GHz) and prints the result to the message window. It shows how the ResultTree object , the Result1DComplex object and the Result1D object can be used together to access 1D data.
-% 
+%
 % Dim filename As String
 % filename = DSResulttree.GetFileFromTreeItem('Tasks\SPara1\S-Parameters\S1,1');
 % If filename =(''); Then
@@ -373,6 +373,6 @@ end
 % n = realPart.GetClosestIndexFromX(0.65)
 % DS.ReportInformationToWindow('Closest data point to frequency 0.65 Ghz:(' + Cstr(realPart.GetX(n)) + ', ' + Cstr(realPart.GetY(n)))
 % End If
-% 
-% 
-% 
+%
+%
+%

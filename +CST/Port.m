@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Defines a waveguide port object. Waveguide ports are used to feed the calculation domain with power and to absorb the returning power. For each waveguide port, time signals and S-Parameters will be recorded during a solver run. In practice the port can be substituted by a longitudinal homogeneous waveguide connected to the structure. You will need at least one port (either waveguide port or discrete port) or a plane wave excitation source to feed the structure, before starting a solver run.
 classdef Port < handle
@@ -78,7 +78,7 @@ classdef Port < handle
             % Please note, that all necessary settings have to be made previously before calling one of these commands.
             % This also implies that the following Port and Mode Settings in the Port Creation / Modification section cannot be used separately, but only for port creation or modification.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With Port and append End With
             obj.history = [ 'With Port', newline, ...
                                 obj.history, ...
@@ -91,7 +91,7 @@ classdef Port < handle
             % Please note, that all necessary settings have to be made previously before calling one of these commands.
             % This also implies that the following Port and Mode Settings in the Port Creation / Modification section cannot be used separately, but only for port creation or modification.
             obj.AddToHistory(['.Modify']);
-            
+
             % Prepend With Port and append End With
             obj.history = [ 'With Port', newline, ...
                                 obj.history, ...
@@ -115,12 +115,12 @@ classdef Port < handle
         end
         function Orientation(obj, key)
             % This method defines the orientation, i.e. the direction of excitation, of the waveguide port. "xmin" means that the port is located at the lower x-boundary of the calculation domain and feeds the structure in positive x-direction. This excitation direction is also valid for internal ports, determined by the PortOnBound method.
-            %   
+            %
             % key = {"xmin", "xmax", "ymin", "ymax", "zmin", "zmax"}
-            %   
+            %
             % Coordinates ( enum {"Free", "Full", "Picks"} key )
             % This method determines how the transversal expansion of a waveguide port is defined.
-            %   
+            %
             % key can have one of  the following values:
             % Free
             % The transversal plane of the port is defined by the free input of the dimensions (Xrange, Yrange, Zrange).
@@ -187,7 +187,7 @@ classdef Port < handle
         %% Mode Settings
         function AddPotentialNumerically(obj, modeset, potential, upos, vpos)
             % This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
-            %   
+            %
             % The potential can have one of  the following values:
             % Positive
             % Defines a positive electrical potential setting.
@@ -202,7 +202,7 @@ classdef Port < handle
         end
         function AddPotentialPicked(obj, modeset, potential, name, face_id)
             % This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
-            %   
+            %
             % The potential can have one of  the following values:
             % Positive
             % Defines a positive electrical potential setting.
@@ -218,7 +218,7 @@ classdef Port < handle
         end
         function AddPotentialEdgePicked(obj, modeset, potential, name, fedge_id)
             % This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
-            %   
+            %
             % The potential can have one of  the following values:
             % Positive
             % Defines a positive electrical potential setting.
@@ -320,7 +320,7 @@ classdef Port < handle
         end
         function enum = GetModeType(obj, portnumber, modenumber)
             % This function returns the mode type of  the port mode, specified by its portnumber and modenumber.
-            %   
+            %
             % The return type can have one of the following values:
             % TE
             % Mode with a transverse electric field
@@ -378,7 +378,7 @@ classdef Port < handle
         end
         function [orientation, xmin, xmax, ymin, ymax, zmin, zmax] = GetPortMeshLocation(obj, portnumber)
             % This function returns the mesh line location of an existing port, specified by its portnumber.
-            %    
+            %
             % The reference values have the following meaning:
             % orientation           0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
             % ixmin / ixmax         The min / max  meshline number in x-direction.
@@ -401,7 +401,7 @@ classdef Port < handle
         end
         function [orientation, xmin, xmax, ymin, ymax, zmin, zmax] = GetPortMeshCoordinates(obj, portnumber)
             % This function returns the mesh line coordinates in local units of an existing port, specified by its portnumber.
-            %    
+            %
             % The reference values have the following meaning:
             % orientation           0 (xmin), 1 (xmax), 2 (ymin), 3 (ymax), 4 (zmin), 5(zmax), correspondent to the Orientation method.
             % dxmin / dxmax         The min / max mesh location in x-direction.
@@ -440,7 +440,7 @@ classdef Port < handle
             % This function returns characteristic values of the discrete face port of a special
             % geometry type (enumerated by faceporttype).
             % The size value parameters  have the following meaning:
-            % faceporttype      type                            sizevalue1                  sizevalue2 
+            % faceporttype      type                            sizevalue1                  sizevalue2
             % 0                 unknown                         ---                         ---
             % 1                 rectangular                     width                       length
             % 2                 barrel shaped / cylindrical     radius                      length
@@ -524,7 +524,7 @@ end
 %     port.Yrange(-0.3, 0.2)
 %     port.Zrange(1.1, 1.1)
 %     port.Create
-% 
+%
 %     port.Reset
 %     port.PortNumber(2)
 %     port.ReferencePlaneDistance(0)

@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -114,7 +114,7 @@ classdef PIC2DMonitorReader < handle
             %                             <function>
             % "Orbital Angle", "Angle"    Orbital angle                       Vectorial
             %                             <function>
-            %   
+            %
             % The different monitors provide several additional quantities. Therefore, it is advisable to always use GetQuantityNames to query the monitor's capabilities.
             % The parameter component can be one of
             % "-1"    ""              "-"             Queries a scalar value such as mass, current, etc.                              Has to be used for scalar quantities, see GetNComponents for more details.
@@ -128,7 +128,7 @@ classdef PIC2DMonitorReader < handle
             % "6"     "NORMAL"        "W-DIRECTION"   Returns the projection of a vectorial quantity onto a plane's normal-direction. ^
             % "7"     "ABS (UV)"      "NORM(UV)"      Returns the norm of the in-plane components of a vectorial quantity, i.e.       ^
             %                                         <function>
-            %   
+            %
             % All entries in an individual row of the table above are equivalent. The parameters quantity and component are case-insensitive to allow for more convenient VBA-UI development.
             % Subsequent calls to GetQuantityValues for different quantities retain the particle's order. Thus it is guaranteed, that for example after calling
             %     lstPosX = GetQuantityValues("Position", "x")
@@ -335,26 +335,26 @@ end
 % Dim sMonitorName As String
 % sMonitorName = lstMonitors(0)
 % PICPositionMonitorReader.SelectMonitor(sMonitorName)
-% 
+%
 % Dim iFrame As Long
 % For iFrame=0 To PICPositionMonitorReader.GetNFrames()-1
 % Dim sFileName As String
 % sFileName = sMonitorName +(' - Frame'); + Format(iFrame, '000'); +('.txt');
-% 
+%
 % Open sFileName For Output As #1
 % PICPositionMonitorReader.SelectFrame(iFrame)
-% 
+%
 % Dim lstPosX() As Single, lstPosY() As Single, lstMomentum() As Single
 % lstPosX = PICPositionMonitorReader.GetQuantityValues('Position', 'X');
 % lstPosY = PICPositionMonitorReader.GetQuantityValues('Position', 'Y');
 % lstMomentum = PICPositionMonitorReader.GetQuantityValues('Momentum', 'ABS(XYZ)');
-% 
+%
 % Dim iParticle As Long
 % For iParticle = 0 To PICPositionMonitorReader.GetNParticles()-1
 % Print #1, iParticle;('('; lstPosX(iParticle);('('; lstPosY(iParticle);('('; lstMomentum(iParticle);('('
 % Next
-% 
+%
 % Close #1
 % Next
 % End Sub
-% 
+%

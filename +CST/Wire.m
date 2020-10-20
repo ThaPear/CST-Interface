@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -41,7 +41,7 @@ classdef Wire < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.name = [];
             obj.folder = [];
             obj.solidname = [];
@@ -134,7 +134,7 @@ classdef Wire < handle
         function Add(obj)
             % Creates the wire. All necessary settings for this wire have to be made previously.
             obj.AddToHistory(['.Add']);
-            
+
             % Prepend With Wire and append End With
             obj.history = [ 'With Wire', newline, ...
                                 obj.history, ...
@@ -158,7 +158,7 @@ classdef Wire < handle
         function ConvertToSolidShape(obj)
             % Creates a new solid based on a wire given by Name and Folder. If no Material has been defined, the material will also be copied from the wire. The original wire may be deleted or kept.
             obj.AddToHistory(['.ConvertToSolidShape']);
-            
+
             % Prepend With Wire and append End With
             obj.history = [ 'With Wire', newline, ...
                                 obj.history, ...
@@ -293,7 +293,7 @@ end
 %     wire.Height(1)
 %     wire.Radius(0.01)
 %     wire.Add
-% 
+%
 %     wire.Reset
 %     wire.SolidName('component1:wire1');
 %     wire.Name('wire1');

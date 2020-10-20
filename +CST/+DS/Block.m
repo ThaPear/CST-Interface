@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -841,7 +841,7 @@ end
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % %Create a block
-% 
+%
 % block = dsproject.Block();
 % .Reset
 % .Type('MicrostripCoupledLinesIrregular');
@@ -855,21 +855,21 @@ end
 % .SetDoubleArrayProperty('Widths', sWidth)
 % .Position(51050, 51000)
 % .Create
-% 
+%
 % %Modify an existing block%s position and some solver settings
-% 
+%
 % .Reset
 % .Name('MyTLine');
 % .Position(57000, 50000)
 % .Rotate(90)
 % .SetDeembedded(1)
-% 
+%
 % %Set the enum property('Model Type'); of a resistor named('RES1'); to('Parasitic(1st Order)');(entries of the drop-down list are numbered from 0 -(n-1) ).
-% 
+%
 % .name('RES1');
 % .Type('CircuitBasic\Resistor');
 % .SetIntegerProperty('Model Type', '1');
-% 
+%
 % %Find all ports with label %MyLabel%
 % Dim portNames As Variant
 % Dim numberOfPorts As Long
@@ -886,7 +886,7 @@ end
 %          DS.ReportInformation( .GetPortName(iPortIndex)+');('+.GetPortLabel(iPortIndex)+');'); )
 %       Next
 %    End If
-% 
+%
 % %Get ports inside a bus pin 0
 % Dim portNames As Variant
 % Dim exists As Boolean
@@ -903,7 +903,7 @@ end
 %          DS.ReportInformation( .GetPortName(iPortIndex)+');('+.GetPortLabel(iPortIndex)+');'); )
 %       Next
 %    End If
-% 
+%
 % %Change the layout of the block
 % %Precondition: block %MyBlock% have at least 2 pins on the left and 2 pins on the right
 % Dim edge As String
@@ -914,7 +914,7 @@ end
 %    .SetPinLayout( 0, edge, edgeindex+1 ) %moves the pin 0 down on the same edge
 %    .SetPinLayout( 0, 'RIGHT', 1 ) %moves the pin 0 to be the second pin on the right
 %    .SetPinLayoutType(('clockwise'); ) %The pins are distributed on all four edges in clockwise order.
-% 
+%
 % %Create and configure an IBIS reference block
 % %It is assumed that an IBIS reference block exists and refers to an IBIS file in which the specified pins and buffers are defined
 %    .Reset

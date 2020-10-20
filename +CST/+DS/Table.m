@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -107,24 +107,24 @@ end
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % Construction
 % % A Table object can be created as follows:
-% 
+%
 % % From within CST DESIGN STUDIO™:
 % dim objName as object
 % set objName = Table('adapt_error.tab');
-% 
+%
 % % From an external progam:
 % % create a CSTStudio Application
 % Dim app As Object
 % Set app = CreateObject('CSTStudio.Application');
-% 
+%
 % % open a Design Studio example
 % Dim designstudio As Object
 % Set designstudio = app.OpenFile('C:\Program Files(x86)\CST STUDIO SUITE 2017\Examples\DS\S-Parameter\Circuit-EM\Matched Antenna\antenna.cst');
 % If designstudio.GetApplicationName <>('DS'); Then MsgBox('Example is not a Design Studio example.');
-% 
+%
 % % load a table located in the project folder of the example
 % Dim myTable As Object
 % Set myTable = designstudio.Table(designstudio.GetProjectPath('Project'); +('\Result\DS\Generic\1D\magdB(S1,1).tab');
 % MsgBox('Table has(' + CStr(myTable.GetNumberOfDataItems) +(' curves.');
-% 
+%
 % % While ”adapt_error.tab” is the name of the result table which should be loaded into the Table object.

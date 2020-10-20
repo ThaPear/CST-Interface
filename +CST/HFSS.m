@@ -1,16 +1,16 @@
 % CST Interface - Interface with CST from MATLAB.
 % Copyright (C) 2020 Alexander van Katwijk
-% 
+%
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % This program is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK> 
+     %#ok<*NBRAK>
 
 % Import a HFSS project.
 classdef HFSS < handle
@@ -41,7 +41,7 @@ classdef HFSS < handle
         function Reset(obj)
             % Resets the import options to the default.
             obj.AddToHistory(['.Reset']);
-            
+
             obj.filename = [];
         end
         function FilenameHFSS(obj, filename)
@@ -60,7 +60,7 @@ classdef HFSS < handle
         function Read(obj)
             % Starts the import of the selected files.
             obj.AddToHistory(['.Read']);
-            
+
             % Prepend With HFSS and append End With
             obj.history = [ 'With HFSS', newline, ...
                                 obj.history, ...
@@ -92,4 +92,4 @@ end
 %     hfss.FilenameSM3('*my_model.sm3');
 %     hfss.Filename('*my_model.sat');
 %     hfss.Read
-% 
+%
