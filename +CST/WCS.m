@@ -128,7 +128,7 @@ classdef WCS < handle
                                          '"', num2str(angle, '%.15g'), '"']);
         end
         function MoveWCS(obj, axis, du, dv, dw)
-            % Shifts the Working Coordinate System (WCS). With the key option ”local” you can move the WCS about (du, dv, dw) in local coordinates. To move the WCS in global coordinates use the key setting ”global”.
+            % Shifts the Working Coordinate System (WCS). With the key option "local" you can move the WCS about (du, dv, dw) in local coordinates. To move the WCS in global coordinates use the key setting "global".
             % axis,: 'global'
             %        'local'
             obj.AddToHistory(['.MoveWCS "', num2str(axis, '%.15g'), '", '...

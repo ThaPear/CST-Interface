@@ -38,7 +38,7 @@ classdef DRCRZ < handle
             obj.hDRCRZ.invoke('FileName', filename);
         end
         function Precision(obj, precision)
-            % Specify the precision of which the data shall be written to the exported file. If you specify single precision, the extension of the file name will be taken as ”.drc”. Setting this option to double precision will imply the file extension ”.drd”.
+            % Specify the precision of which the data shall be written to the exported file. If you specify single precision, the extension of the file name will be taken as ".drc". Setting this option to double precision will imply the file extension ".drd".
             %
             % precision can have one of  the following values:
             % "single"    Single precision mafia file

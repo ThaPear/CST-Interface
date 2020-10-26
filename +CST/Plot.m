@@ -101,12 +101,12 @@ classdef Plot < handle
         function Rotate(obj, direction)
             % Rotates the plot in the main view. This method has no effect if 2D-Values are plotted.
         	% direction can have one of the following values:
-            % ”left” - Rotates the figure to the left
-            % ”right” - Rotates the figure to the right
-            % ”up” - Rotates the figure upward
-            % ”down” - Rotates the figure downward
-            % ”clockwise” - Rotates the figure clockwise
-            % ”counterclockwise” - Rotates the figure counterclockwise
+            % "left" - Rotates the figure to the left
+            % "right" - Rotates the figure to the right
+            % "up" - Rotates the figure upward
+            % "down" - Rotates the figure downward
+            % "clockwise" - Rotates the figure clockwise
+            % "counterclockwise" - Rotates the figure counterclockwise
             obj.hPlot.invoke('Rotate', direction);
         end
         function Update(obj)

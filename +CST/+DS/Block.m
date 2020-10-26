@@ -139,7 +139,7 @@ classdef Block < handle
             obj.hBlock.invoke('SetSolver', solver);
         end
         function SetSpiceFilter(obj, type)
-            % This method can only be applied to SPICE import blocks. It specifies the SPICE dialect being applied. Currently, the types “SPICE3”, “PSPICE”, “HSPICE”, “AUTOMATIC” are supported. The latter is a combination of SPICE3f4 and a subset of PSPICE, where SPICE3f4 takes precedence over PSPICE, if conflicts occur.
+            % This method can only be applied to SPICE import blocks. It specifies the SPICE dialect being applied. Currently, the types "SPICE3", "PSPICE", "HSPICE", "AUTOMATIC" are supported. The latter is a combination of SPICE3f4 and a subset of PSPICE, where SPICE3f4 takes precedence over PSPICE, if conflicts occur.
             obj.hBlock.invoke('SetSpiceFilter', type);
         end
         function SetPackage(obj, type)

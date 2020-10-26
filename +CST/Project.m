@@ -634,7 +634,7 @@ classdef Project < handle
             % This latter option enables executable depot to be maintained updated and homogeneous.
             % - the temporary folder, for data storing on remote machines.
             % - the machines architecture and Operating System (OS). This field should belong to the following set:
-            % enum {"Windows IA32", " Windows AMD64", " Linux IA32”, ”r;Linux AMD64”} type
+            % enum {"Windows IA32", " Windows AMD64", " Linux IA32", "r;Linux AMD64"} type
             obj.hProject.invoke('SetCommonMPIClusterConfig', install_folder, temp_folder, architecture);
         end
         function SetCommonMPIClusterLoginInfo(obj, login_user, login_private_key_file)
@@ -656,7 +656,7 @@ classdef Project < handle
             % - the CST MICROWAVE STUDIO installation folder. This can be a local or network path. If left empty, default installation folder setting is employed.
             % - the temporary folder, for data storing on remote machines. If left empty, default temporary folder setting is employed.
             % - the machines architecture and Operating System (OS). This field may belong to the following set:
-            % enum {"Windows IA32", " Windows AMD64", " Linux IA32”, ” Linux AMD64”} type
+            % enum {"Windows IA32", " Windows AMD64", " Linux IA32", " Linux AMD64"} type
             % If left empty, default architecture setting is employed.
             % - an activation flag to enable or disable the computation on the machine.
             % Example
@@ -665,11 +665,11 @@ classdef Project < handle
             % ' Remove previous cluster definition
             % ClearMPIClusterConfig
             % ' Set default parameters
-            % SetCommonMPIClusterConfig(”r;C:\program files\MWS 2009”,”e:\temp\mpi”,”Windows IA32”)
+            % SetCommonMPIClusterConfig("r;C:\program files\MWS 2009","e:\temp\mpi","Windows IA32")
             % ' Add active nodes (with default parameter)
-            % AddMPIClusterNodeConfig (”r;Mynode1”,””,””,””,true)
+            % AddMPIClusterNodeConfig ("r;Mynode1","","","",true)
             % ' Add second node specializing parameter
-            % AddMPIClusterNodeConfig (”r;Mynode2”,”C:\programme\MWS 2009”,”f:\mpi”,”Windows IA32”,true)
+            % AddMPIClusterNodeConfig ("r;Mynode2","C:\programme\MWS 2009","f:\mpi","Windows IA32",true)
             % ' Enable solver MPI computation
             % Solver.MPIParallelization(true)
             obj.hProject.invoke('AddMPIClusterNodeConfig', host_name, install_folder, temp_folder, architecture, active);

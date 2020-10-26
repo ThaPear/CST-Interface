@@ -34,7 +34,7 @@ classdef ScalarPlot2D < handle
             % "contour"       The field values of the chosen scalar field will be plotted on the chosen cutting plane in different colors.
             % "isoline"       Lines of equal value of the chosen scalar field will be plotted on the chosen cutting plane.
             % "carpet"        Plots a carpet or a surface where the distance of a point on the cutting plane to the surface represents the field value at this point.
-            % "carpetcolor"   The same as ”carpet”, but additionally it is colored in relation to the field values.
+            % "carpetcolor"   The same as "carpet", but additionally it is colored in relation to the field values.
             obj.hScalarPlot2D.invoke('Type', key);
         end
         function PlotAmplitude(obj, boolean)

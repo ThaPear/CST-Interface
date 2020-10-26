@@ -78,7 +78,7 @@ classdef MQSTDSolver < handle
             % "Iterative"     use the iterative solver
             % "Direct"        use the direct solver
             %
-            % The default setting is "Auto" which defaults to the type ”r;Iterative”. Currently other options are not supported yet.
+            % The default setting is "Auto" which defaults to the type "r;Iterative". Currently other options are not supported yet.
             obj.AddToHistory(['.SystemSolverType "', num2str(solvertype, '%.15g'), '"']);
         end
         function TimeIntegrationMethod(obj, timeintmethod)
@@ -159,7 +159,7 @@ classdef MQSTDSolver < handle
             obj.AddToHistory(['.UseMaxNumberOfThreads "', num2str(useMaxThreads, '%.15g'), '"']);
         end
         function MaxNumberOfThreads(obj, nThreads)
-            % If the solver is to use less than all available threads (cf. UseMaxNumberOfThreads), the desired number can be specified here. The default value ”r;8” reflects the possibility of the modern processors architecture.
+            % If the solver is to use less than all available threads (cf. UseMaxNumberOfThreads), the desired number can be specified here. The default value "r;8" reflects the possibility of the modern processors architecture.
             obj.AddToHistory(['.MaxNumberOfThreads "', num2str(nThreads, '%.15g'), '"']);
         end
         function long = Start(obj)

@@ -140,8 +140,8 @@ classdef TimeSignal < handle
         function SignalType(obj, sType)
             % Sets the type of the signal.
             % sType can have one of the following values:
-            % ”Gaussian” - Gaussian excitation function within the given frequency range: Please note that for proper broadband S-Parameter calculations the Gaussian pulse should always be used. To ensure accurate results the signal's frequency range has to fit inside the project's frequency range. Relevant only for high frequency calculations.
-            % ”Rectangular” - Rectangular excitation function: Please note that for proper broadband S-Parameter calculations the Gaussian pulse should always be used. To ensure accurate results the signal's timing settings has to fit inside the project's frequency range.
+            % "Gaussian" - Gaussian excitation function within the given frequency range: Please note that for proper broadband S-Parameter calculations the Gaussian pulse should always be used. To ensure accurate results the signal's frequency range has to fit inside the project's frequency range. Relevant only for high frequency calculations.
+            % "Rectangular" - Rectangular excitation function: Please note that for proper broadband S-Parameter calculations the Gaussian pulse should always be used. To ensure accurate results the signal's timing settings has to fit inside the project's frequency range.
             % "Sine step" - Sine function with smoothed transition phase from 0 to maximum amplitude value. A signal in which the instantaneous frequency linearly varies with time (linear chirp) is also possible specifying the chirp rate (CR), i.e. the rate of frequency increase (or decrease, if negative).
             % "Sine" - Sine function.
             % "Smooth step" - Smoothed step (with controlled slope) excitation function: Please note that for proper broadband S-Parameter calculations the Gaussian pulse should always be used. To ensure accurate results the signal's timing settings has to fit inside the project's frequency range.

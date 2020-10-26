@@ -78,9 +78,9 @@ classdef TimeMonitor3D < handle
             % Sets what value is to be monitored.
             %
             % fType can have one of the following values:
-            % ”Energy”            The energy will be monitored.
+            % "Energy"            The energy will be monitored.
             % "Losses"            Ohmic losses will be monitored.
-            % ”Force”             The force on a solid will be monitored.
+            % "Force"             The force on a solid will be monitored.
             % "Coil Voltages"     Coil voltages will be monitored.
             % "I-loss"            Iron losses will be monitored.
             % "Mag.Mom."          Magnetic moment will be monitored.

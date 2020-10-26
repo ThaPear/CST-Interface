@@ -104,8 +104,8 @@ classdef FieldSource < handle
         end
         function FieldMonitorName(obj, name)
             % If the project specified by ProjectPath contains a transient thermal solution, use this command to specify the monitor from which the distribution should be imported. name may have the following values:
-            % ”Initial Solution”                      the initial temperature distribution is imported.
-            % ”Stationary Solution”                   if the source project contains a solution made by the stationary thermal solver, this solution will be imported.
+            % "Initial Solution"                      the initial temperature distribution is imported.
+            % "Stationary Solution"                   if the source project contains a solution made by the stationary thermal solver, this solution will be imported.
             % Name of a 3D temperature monitor        one of the temperature distributions saved by this monitor is imported. The time frame is then specified in TimeValue or by UseLastTimeFrame.
             obj.AddToHistory(['.FieldMonitorName "', num2str(name, '%.15g'), '"']);
         end

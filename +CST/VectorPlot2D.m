@@ -34,7 +34,7 @@ classdef VectorPlot2D < handle
             % "arrows"        The field vectors will be plotted as arrows.
             % "cone"          The field vectors will be plotted as cones.
             % "thinarrows"    The field vectors will be plotted as thin arrows.
-            % "hedgehog”      The field vectors will be plotted as ”lines”.
+            % "hedgehog"      The field vectors will be plotted as "lines".
             obj.hVectorPlot2D.invoke('Type', key);
         end
         function PhaseValue(obj, phase)

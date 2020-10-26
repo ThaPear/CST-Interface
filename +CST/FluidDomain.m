@@ -67,7 +67,7 @@ classdef FluidDomain < handle
         function Create(obj)
             % Creates the fluid domain with its previously made settings.
             obj.AddToHistory(['.Create']);
-            
+
             % Prepend With FluidDomain and append End With
             obj.history = [ 'With FluidDomain', newline, ...
                                 obj.history, ...
@@ -103,5 +103,5 @@ end
 %     fluiddomain.AddFace('component1:pipe', '352');
 %     fluiddomain.InvertNormal('0');
 %     fluiddomain.Create
-% 
-% 
+%
+%

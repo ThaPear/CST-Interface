@@ -71,9 +71,9 @@ classdef Face < handle
             obj.AddToHistory(['.Type "', num2str(mode, '%.15g'), '"']);
         end
         function may = mode(obj)
-            % ”PickFace”      The face is created by a picked face of a solid.
-            % ”ExtrudeCurve”  The face is created by extruding a curve profile.
-            % ”CoverCurve”    The face is created by covering a curve profile.
+            % "PickFace"      The face is created by a picked face of a solid.
+            % "ExtrudeCurve"  The face is created by extruding a curve profile.
+            % "CoverCurve"    The face is created by covering a curve profile.
             may = obj.hFace.invoke('mode');
         end
         function Rename(obj, oldName, newName)

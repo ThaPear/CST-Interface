@@ -74,7 +74,7 @@ classdef TimeMonitor2D < handle
             obj.AddToHistory(['.FieldType "', num2str(fType, '%.15g'), '"']);
         end
         function can = fType(obj)
-            % ”current”           The current flow through the prescribed faces will be monitored.
+            % "current"           The current flow through the prescribed faces will be monitored.
             % "magnetic flux"     The magnetix flux through the prescribed faces will be monitored.
             can = obj.hTimeMonitor2D.invoke('fType');
         end

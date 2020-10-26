@@ -127,4 +127,4 @@ end
 % Set myTable = designstudio.Table(designstudio.GetProjectPath('Project'); +('\Result\DS\Generic\1D\magdB(S1,1).tab');
 % MsgBox('Table has(' + CStr(myTable.GetNumberOfDataItems) +(' curves.');
 %
-% % While ”adapt_error.tab” is the name of the result table which should be loaded into the Table object.
+% % While "adapt_error.tab" is the name of the result table which should be loaded into the Table object.

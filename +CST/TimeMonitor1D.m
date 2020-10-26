@@ -73,7 +73,7 @@ classdef TimeMonitor1D < handle
             % Sets what field is to be monitored.
             %
             % fType can have one of the following values:
-            % ”voltage”   The voltage along the prescribed path will be monitored.
+            % "voltage"   The voltage along the prescribed path will be monitored.
             obj.AddToHistory(['.FieldType "', num2str(fType, '%.15g'), '"']);
         end
         function UsePickedEdges(obj, bFlag)

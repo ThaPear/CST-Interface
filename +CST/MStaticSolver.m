@@ -187,7 +187,7 @@ classdef MStaticSolver < handle
             obj.AddToHistory(['.UseMaxNumberOfThreads "', num2str(useMaxThreads, '%.15g'), '"']);
         end
         function MaxNumberOfThreads(obj, nThreads)
-            % If the solver is to use less than all available threads (cf. UseMaxNumberOfThreads), the desired number can be specified here. The default value ”r;8” reflects the possibility of the modern processors architecture.
+            % If the solver is to use less than all available threads (cf. UseMaxNumberOfThreads), the desired number can be specified here. The default value "r;8" reflects the possibility of the modern processors architecture.
             obj.AddToHistory(['.MaxNumberOfThreads "', num2str(nThreads, '%.15g'), '"']);
         end
         function long = Start(obj)

@@ -38,7 +38,7 @@ classdef Table < handle
         % dim objName as object
         % set objName = CreateObject("CSTStudio.Table")
         % objName.Load("adapt_error.tab")
-        % Where ”adapt_error.tab” is the name of the result table which should be loaded into the Table object.
+        % Where "adapt_error.tab" is the name of the result table which should be loaded into the Table object.
         %
         % From MATLAB
         % objName = project.Table('adapt_error.tab');

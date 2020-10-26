@@ -83,11 +83,11 @@ classdef ResultTree < handle
             obj.hResultTree.invoke('Type', key);
         end
         function Subtype(obj, key)
-            % Defines the result sub type of the tree entry in case of a type = ”XYSignal”. Otherwise this setting has no effect.
+            % Defines the result sub type of the tree entry in case of a type = "XYSignal". Otherwise this setting has no effect.
             % enum key    meaning
             % "Complex"   Complex 1D data
-            % ”Linear”    Linear scaled real data
-            % ”dB”        Logarithmic scaled real plot
+            % "Linear"    Linear scaled real data
+            % "dB"        Logarithmic scaled real plot
             % "Phase"     Phase data over frequency
             % "Time"      Time signal data
             % "Position"  Position depended data
@@ -205,7 +205,7 @@ end
 % resulttree.Delete();
 %
 %% Example Add Field Monitor Result into Tree
-% Adds a field monitor result of the electric field from the current project into the folder ”My Field”.
+% Adds a field monitor result of the electric field from the current project into the folder "My Field".
 %
 % resulttree.Name('My Field\E_Field');   % Entry name and destination folder
 % resulttree.File('e1_1.m3d');              % Result file name
@@ -213,7 +213,7 @@ end
 % resulttree.Add();
 %
 %% Example Add Farfield Monitor Result into Tree
-% Adds a farfield monitor result from the current project into the folder ”My Field”.
+% Adds a farfield monitor result from the current project into the folder "My Field".
 %
 % % The entry name and its destination folder
 % resulttree.Name('My Field\Farfield');   % Entry name and destination folder
@@ -274,7 +274,7 @@ end
 % resulttree.Add();
 %
 %% Example Add Command into Tree
-% Adds a command into the ”Userdefined” folder that starts the time domain solver.
+% Adds a command into the "Userdefined" folder that starts the time domain solver.
 %
 % resulttree.Name('Userdefined\Macro1');   % Entry name and its destination folder
 % resulttree.Macro('Solver.Start');        % String to be evaluated by VBA interpreter
@@ -282,9 +282,9 @@ end
 % resulttree.Add();
 %
 %% Example Add Macro into Tree
-% Adds the previously defined control macro ”AutoTest” into the tree.
+% Adds the previously defined control macro "AutoTest" into the tree.
 %
-% At first a string will be defined that contains a VBA command that executes the control macro. The command is ”RunMacro” that takes a string(the name of the control macro) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
+% At first a string will be defined that contains a VBA command that executes the control macro. The command is "RunMacro" that takes a string(the name of the control macro) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
 %
 % a = 'RunMacro "AutoTest"'
 %
@@ -294,9 +294,9 @@ end
 % resulttree.Add();
 %
 %% Example Add External Script into Tree
-% Adds an external VBA script into the tree. Let the name of the external macro be ”Macro1.bas” that will be located in the directory of the current project.
+% Adds an external VBA script into the tree. Let the name of the external macro be "Macro1.bas" that will be located in the directory of the current project.
 %
-% At first a string will be defined that contains a VBA command that executes an external VBA script file. The command is ”MacroRun” that takes a string(the name of the script) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
+% At first a string will be defined that contains a VBA command that executes an external VBA script file. The command is "MacroRun" that takes a string(the name of the script) as its argument. However, strings have to be specified within quotes. Unfortunately quotes are special characters which are not recognized as normal characters. They mark the start and the end of a string. Therefore the variable a is defined with a single quote as its only content. With this quote the entire command string can be constructed.
 %
 % a = 'MacroRun "Macro1.bas"'
 %

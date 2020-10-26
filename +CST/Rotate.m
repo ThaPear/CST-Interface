@@ -57,8 +57,8 @@ classdef Rotate < handle
         function Mode(obj, rotMode)
             % Selects whether a profile or a surface is to be rotated.
             % rotMode may have the following settings:
-            % ”pointlist” A profile defined by points is to be rotated
-            % ”picks”     A picked face is to be rotated
+            % "pointlist" A profile defined by points is to be rotated
+            % "picks"     A picked face is to be rotated
             obj.AddToHistory(['.Mode "', num2str(rotMode, '%.15g'), '"']);
         end
         function StartAngle(obj, startA)
@@ -66,7 +66,7 @@ classdef Rotate < handle
             obj.AddToHistory(['.StartAngle "', num2str(startA, '%.15g'), '"']);
         end
         function Angle(obj, angleVal)
-            % Sets the angle of rotation. If  the Mode is ”pointlist” this value will be counted from the StartAngle.
+            % Sets the angle of rotation. If  the Mode is "pointlist" this value will be counted from the StartAngle.
             obj.AddToHistory(['.Angle "', num2str(angleVal, '%.15g'), '"']);
         end
         function Height(obj, heightVal)
@@ -92,17 +92,17 @@ classdef Rotate < handle
                                        '"', num2str(w, '%.15g'), '"']);
         end
         function Point(obj, uPt, vPt)
-            % Sets the first point of the to be defined profile. This setting has an effect only if Mode is set to ”pointlist”.
+            % Sets the first point of the to be defined profile. This setting has an effect only if Mode is set to "pointlist".
             obj.AddToHistory(['.Point "', num2str(uPt, '%.15g'), '", '...
                                      '"', num2str(vPt, '%.15g'), '"']);
         end
         function LineTo(obj, u, v)
-            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location in absolute coordinates in the actual working coordinate system. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode  is set to ”pointlist”.
+            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location in absolute coordinates in the actual working coordinate system. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode  is set to "pointlist".
             obj.AddToHistory(['.LineTo "', num2str(u, '%.15g'), '", '...
                                       '"', num2str(v, '%.15g'), '"']);
         end
         function RLine(obj, u, v)
-            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location relative to the previous point in the current working coordinate sytem. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode is set to ”pointlist”.
+            % Sets a line from the point previously defined to the point defined by u, v here. u and v specify a location relative to the previous point in the current working coordinate sytem. This line will be a part of the profile to be rotated/extruded. To finisch a profile, the last line has to end on the values defined by the Point Method. This setting has an effect only, if Mode is set to "pointlist".
             obj.AddToHistory(['.RLine "', num2str(u, '%.15g'), '", '...
                                      '"', num2str(v, '%.15g'), '"']);
         end

@@ -244,33 +244,33 @@ classdef Probe < handle
         function SetCoordinateSystemType(obj, coordType)
             % Sets or returns the coordinate system type for a farfield probe, respectively. For the GetCoordinateSystemType method the selection of the probe is done either with the GetFirst or the GetNext function.
             % coordType can have one of the following values:
-            % ”Cartesian”     Cartesian coordinate system
-            % ”Spherical”     Spherical coordinate system
-            % ”Ludwig2ae”     Ludwig 2 Azimuth over Elevation coordinate system
-            % ”Ludwig2ea”     Ludwig 2 Elevation over Azimuth coordinate system
-            % ”Ludwig3”       Ludwig 3 coordinate system
+            % "Cartesian"     Cartesian coordinate system
+            % "Spherical"     Spherical coordinate system
+            % "Ludwig2ae"     Ludwig 2 Azimuth over Elevation coordinate system
+            % "Ludwig2ea"     Ludwig 2 Elevation over Azimuth coordinate system
+            % "Ludwig3"       Ludwig 3 coordinate system
             obj.AddToHistory(['.SetCoordinateSystemType "', num2str(coordType, '%.15g'), '"']);
         end
         function coordType = GetCoordinateSystemType(obj)
             % Sets or returns the coordinate system type for a farfield probe, respectively. For the GetCoordinateSystemType method the selection of the probe is done either with the GetFirst or the GetNext function.
             % coordType can have one of the following values:
-            % ”Cartesian”     Cartesian coordinate system
-            % ”Spherical”     Spherical coordinate system
-            % ”Ludwig2ae”     Ludwig 2 Azimuth over Elevation coordinate system
-            % ”Ludwig2ea”     Ludwig 2 Elevation over Azimuth coordinate system
-            % ”Ludwig3”       Ludwig 3 coordinate system
+            % "Cartesian"     Cartesian coordinate system
+            % "Spherical"     Spherical coordinate system
+            % "Ludwig2ae"     Ludwig 2 Azimuth over Elevation coordinate system
+            % "Ludwig2ea"     Ludwig 2 Elevation over Azimuth coordinate system
+            % "Ludwig3"       Ludwig 3 coordinate system
             coordType = obj.hProbe.invoke('GetCoordinateSystemType');
         end
         function Origin(obj, originType)
             % The origin type of all farfield probes.
             % originType can have one of the following values:
-            % ”bbox”  The center of the bounding box of the structure.
-            % ”zero”  Origin of coordinate system.
-            % ”free”  Any desired point defined by Userorigin
+            % "bbox"  The center of the bounding box of the structure.
+            % "zero"  Origin of coordinate system.
+            % "free"  Any desired point defined by Userorigin
             obj.project.AddToHistory(['Probe.Origin "', num2str(originType, '%.15g'), '"']);
         end
         function Userorigin(obj, x, y, z)
-            % Sets origin of the farfield probe calculation if the origin type is set to ”free”.
+            % Sets origin of the farfield probe calculation if the origin type is set to "free".
             obj.project.AddToHistory(['Probe.Userorigin "', num2str(x, '%.15g'), '", '...
                                                        '"', num2str(y, '%.15g'), '", '...
                                                        '"', num2str(z, '%.15g'), '"']);

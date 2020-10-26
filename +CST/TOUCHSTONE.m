@@ -16,7 +16,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% This command offers TOUCHSTONE file compatible export for the S-parameters. The extensions of the exported files names are specified by ”.sNp” where N stands for the number of ports in your model (e.g. ”.s3p”).
+% This command offers TOUCHSTONE file compatible export for the S-parameters. The extensions of the exported files names are specified by ".sNp" where N stands for the number of ports in your model (e.g. ".s3p").
 classdef TOUCHSTONE < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)

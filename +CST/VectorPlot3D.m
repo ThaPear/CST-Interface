@@ -35,9 +35,9 @@ classdef VectorPlot3D < handle
             % "cone"              The field vectors will be plotted as cones.
             % "thinarrows"        The field vectors will be plotted as thin arrows.
             % "bubble"            The field vectors will be plotted as bubble.
-            % "hedgehog”          The field vectors will be plotted as ”lines”.
-            % "streamline”        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
-            % "thinstreamline”    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+            % "hedgehog"          The field vectors will be plotted as "lines".
+            % "streamline"        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+            % "thinstreamline"    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
             obj.hVectorPlot3D.invoke('Type', key);
         end
         function PhaseValue(obj, phase)

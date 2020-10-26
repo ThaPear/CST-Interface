@@ -74,12 +74,12 @@ classdef TimeMonitor0D < handle
             obj.AddToHistory(['.FieldType "', num2str(fType, '%.15g'), '"']);
         end
         function can = fType(obj)
-            % ”B-Field”               The magnetic flux density will be monitored.
+            % "B-Field"               The magnetic flux density will be monitored.
             % "H-Field"               The magnetic field strength will be monitored.
             % "E-Field"               The electric field will be monitored.
             % "Cond. Current Dens."   The conduction current density will be monitored.
             % "Material"              The the relative permeability of the material at the given position will be monitored.
-            % ”Temperature”           The temperature will be monitored.
+            % "Temperature"           The temperature will be monitored.
             can = obj.hTimeMonitor0D.invoke('fType');
         end
         function Component(obj, comp)
