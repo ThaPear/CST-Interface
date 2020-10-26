@@ -21,7 +21,7 @@
      %#ok<*NBRAK>
 
 % The NFS file format allows the imprint of equivalent surface fields on a box or even on single planes. This format is especially designed for scan data and is able to handle an equidistant as well as a non-equidistant sampled spatial distribution of field data.
-% The format is based on the IECï¿½ Technical Report IEC/TR 61967-1-1.
+% The format is based on the IEC® Technical Report IEC/TR 61967-1-1.
 %
 % In order to describe surface fields on a rectangular box surface, each face and field component has to be defined  in a single XML-file and a corresponding DAT-file.
 % The XML-file contains all meta-data such as field type, field components (Ex, Ey, Ez, Hx, Hy, Hz ), frequencies, and a reference to the DAT-file.
@@ -31,7 +31,7 @@
 % x1 y0 z0 Re(freq1) Im(freq1) Re(freq2) Im(freq2) Re(freq3) Im(freq3) ...
 % x0 y1 z0 Re(freq1) Im(freq1) Re(freq2) Im(freq2) Re(freq3) Im(freq3) ...
 % ...
-% Where (x_i, y_i, z_i) describe point positions of a cartesian grid and Re(freq1) / Im(freq2) the real / imaginary part of the field value at frequency freq1 and position (x_i, y_i, z_i). Example files for the supported types of the NFS format for the CST MICROWAVE STUDIO transient solver can be found here. A detailed description of the file syntax can be found in  IECï¿½ Technical Report IEC/TR 61967-1-1.
+% Where (x_i, y_i, z_i) describe point positions of a cartesian grid and Re(freq1) / Im(freq2) the real / imaginary part of the field value at frequency freq1 and position (x_i, y_i, z_i). Example files for the supported types of the NFS format for the CST MICROWAVE STUDIO transient solver can be found here. A detailed description of the file syntax can be found in  IEC® Technical Report IEC/TR 61967-1-1.
 classdef NFSFile < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
@@ -92,6 +92,11 @@ classdef NFSFile < handle
                             'End With'];
             obj.project.RunVBACode(obj.history);
             obj.history = [];
+        end
+        %% CST 2014 Functions.
+        function SetNFSDirectory(obj, NFSDirectoryPath)
+            % Sets the output directory path where the NFS files should be located.
+            obj.AddToHistory(['.SetNFSDirectory "', num2str(NFSDirectoryPath, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

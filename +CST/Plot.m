@@ -222,6 +222,11 @@ classdef Plot < handle
             % Returns the blue component of the background color in the main view.
             string = obj.hPlot.invoke('GetBackgroundcolorB');
         end
+        %% CST 2019 Functions.
+        function StoreView3(obj, name, parameters)
+            % These commands store the view using the specified name and all its settings. 'parameters' contains several parameters that define the view. These parameters represent the internally used transformation, projection matrices and other view settings. It is strongly recommended to access these commands only by storing the view via the graphical user interface and then copying these commands from the resulting history list item.
+            obj.hPlot.invoke('StoreView3', name, parameters);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

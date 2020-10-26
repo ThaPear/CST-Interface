@@ -166,6 +166,19 @@ classdef MQSTDSolver < handle
             % Starts the LF time domain solver (MQS) with the prescribed settings and the currently active mesh. Returns 0 if the solver run was successful, an error code >0 otherwise.
             long = obj.hMQSTDSolver.invoke('Start');
         end
+        %% CST 2014 Functions.
+        function LinAccuracy(obj, accuracy)
+            % Specifies the accuracy of the linear solver.
+            obj.AddToHistory(['.LinAccuracy "', num2str(accuracy, '%.15g'), '"']);
+        end
+        function NLinAccuracy(obj, accuracy)
+            % Specifies the accuracy of the nonlinear solver.
+            obj.AddToHistory(['.NLinAccuracy "', num2str(accuracy, '%.15g'), '"']);
+        end
+        function NlinCycles(obj, value)
+            % Specifies the maximum number of nonlinear iterations when nonlinear materials are defined.
+            obj.AddToHistory(['.NlinCycles "', num2str(value, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

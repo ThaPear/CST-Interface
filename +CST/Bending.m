@@ -80,6 +80,70 @@ classdef Bending < handle
             obj.project.AddToHistory(['define Bending: ', obj.sheet, ' on ', obj.solid], obj.history);
             obj.history = [];
         end
+        %% CST 2019 Functions.
+        function Stackup(obj, stackupname)
+            % Sets the name of the folder which will be used for the layer stackup bending. The shapes in this folder are used for the bending operation. This can be a material or group folder. For example: "material$Folder1".
+            obj.AddToHistory(['.Stackup "', num2str(stackupname, '%.15g'), '"']);
+        end
+        function Shape(obj, shapename)
+            % Sets the name of the shape which will be used for the layer stackup bending. Several shape names can be used. You may not use the commands Stackup and Shape at the same time.
+            obj.AddToHistory(['.Shape "', num2str(shapename, '%.15g'), '"']);
+        end
+        function FlexBending(obj, boolean)
+            % This flag is only used by a layer stackup bending. The default is "True" and means that the length of the layers will be adapted flexible such that they match together after the bending.
+            obj.AddToHistory(['.FlexBending "', num2str(boolean, '%.15g'), '"']);
+        end
+        function CylindricalBend(obj, solidname, onesided, angle, radius, length)
+            % Performs a bending around a virtual cylinder defined by either an angle or an radius. Either the angle or the radius must be zero. The position and orientation of the cylinder is determined by setting the local WCS. The y-axis and the x-axis of the local WCS define the "neutral plane" of the bend. This is the area where the material will neither be stretched nor compressed when wrapping the solid around the virtual cylinder. The z-axis defines the direction of the bend. The flag "onesided" indicated whether only the half-space to the local x-direction will be bend or both sides. The length parameter allows it to restrict the effect to a certain area.
+            obj.AddToHistory(['.CylindricalBend "', num2str(solidname, '%.15g'), '", '...
+                                               '"', num2str(onesided, '%.15g'), '", '...
+                                               '"', num2str(angle, '%.15g'), '", '...
+                                               '"', num2str(radius, '%.15g'), '", '...
+                                               '"', num2str(length, '%.15g'), '"']);
+
+            % Prepend With Bending and append End With
+            obj.history = [ 'With Bending', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Bending: ', obj.sheet, ' on ', obj.solid], obj.history);
+            obj.history = [];
+        end
+        %% CST 2020 Functions.
+        function Centralized(obj, onesided)
+            % Sets the impact direction of the cylindrical bending operation. False indicates a one-sided direction which means that only the half-space of the u-axis will be bent. True indicates that the bending is performed along the entire u-axis.
+            obj.AddToHistory(['.Centralized "', num2str(onesided, '%.15g'), '"']);
+        end
+        function Angle(obj, angle)
+            % Sets the angle of the cylinder around which the items are going to be bent. Either the angle or the radius must be zero.
+            obj.AddToHistory(['.Angle "', num2str(angle, '%.15g'), '"']);
+        end
+        function Radius(obj, radius)
+            % Sets the radius of the cylinder around which the items are going to be bent. Either the angle or the radius must be zero.
+            obj.AddToHistory(['.Radius "', num2str(radius, '%.15g'), '"']);
+        end
+        function ULength(obj, length)
+            % Optionally, the u-length can be specified to limit the bending region along the u-axis of the local WCS.
+            obj.AddToHistory(['.ULength "', num2str(length, '%.15g'), '"']);
+        end
+        function VLength(obj, length)
+            % Optionally, the v-length can be specified to limit the bending region along the v-axis of the local WCS.
+            obj.AddToHistory(['.VLength "', num2str(length, '%.15g'), '"']);
+        end
+        function ReferenceSolid(obj, shapename)
+            % Sets the name of the reference solid. The reference solid is used internally to determine whether unconnected items shall be bent. If the reference solid is not specified then the algorithm determines an internally reference solid by uniting all items which shall be bent. This operation can be very time-consuming therefore it is recommended to use a reference solid when many shapes shall be bent.
+            obj.AddToHistory(['.ReferenceSolid "', num2str(shapename, '%.15g'), '"']);
+        end
+        function FlexBend(obj)
+            % Performs the cylindrical bending operation around a virtual cylinder defined by either an angle or an radius. The position and orientation of the cylinder is determined by setting the local WCS.
+            obj.AddToHistory(['.FlexBend']);
+
+            % Prepend With Bending and append End With
+            obj.history = [ 'With Bending', newline, ...
+                                obj.history, ...
+                            'End With'];
+            obj.project.AddToHistory(['define Bending'], obj.history);
+            obj.history = [];
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

@@ -1,0 +1,74 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Global | Project
+
+Project Object
+
+The Project Object offers miscellaneous functions concerning the program in general.
+
+General Methods
+
+File Handling
+
+Parameter Handling
+
+Global Data Cache
+
+Mathematical Functions / Constants
+
+Result Templates
+
+Macros
+
+MPI Cluster Setup
+
+Result Curve Handling
+
+Result Data Access
+
+Queries
+
+Parametric Modelling
+
+Result Plotting
+
+View
+
+Distributed Computing Setup
+
+General Methods
+
+%% Global Data Storage
+% The global data storage can be used to store named settings in projects.
+% Caution: It is very easy to use the global data storage in a way that introduces very hard to find result inconsistencies. It is strongly advised to be used by experienced users only. If possible, project parameters should be used instead.
+% The global data storage has the following properties:
+% It is shared between simulation projects and master projects, i.e. a setting stored in a simulation project will be visible in the master and other simulation projects. This is even true for simulation projects with disabled "Link geometry to master" flag.
+% Names and values of settings can be arbitrary strings, but line breaks are forbidden.
+% The standard dependency and result invalidation mechanisms of project parameters are not applied to the global data storage. Changing a value that is used in the history list of 3D projects or in a block or task setting on the schematic does neither prompt for a history rebuild, nor does it cause an invalidation of task results, the assembly or simulation projects. The user of the global data storage is responsible for any re-calculations and/or history rebuilds which might be needed.
+% Global Data storage settings must not be used in value expressions of project parameters. This would break the parametric result management.
+% When opening an existing project that uses GetGlobalData, it is impossible to tell whether the current state (3D geometry, task settings, block settings, results etc.) was obtained with the current result of GetGlobalData. The only way to find this out is to rebuild all 3D blocks and to run all 3D solvers and simulation tasks again.
+ 
+ResetGlobalDataStorage
+Clear all global data storage settings.
+ 
+SetGlobalData ( string name, string value )
+Creates a new global data storage setting with a given name and value or changes an existing one. For storing floating point numbers it is recommended to use an explicit conversion first to double and then to string to avoid errors caused by locale dependent decimal separators:
+SetGlobalData(name, CStr(Cdbl(value)))
+ 
+GetGlobalData ( string name ) string
+Returns a global data storage setting.
+ 
+SetPlotStyleForTreeItem( string treepath, string settings )
+This command allows modifying plot styles of 1D curves such as curve color, line style, etc. The modifications behave like modifications which are done in the Curve Style Dialog. It is not required to have any open 1D Plot to use this command. However, existing open 1D Plots will not be updated automatically; consider using the Plot1D object in this case. The parameter treepath is expected to be a Navigation Tree path to a 1D leaf item, that is a tree item which represents a single curve, e.g. "1D Results\S-Parameters\S1,1". If the tree item does not exist or is a folder, an error is reported. This check can be deactivated (see parameter settings ).
+The parameter settings is expected to be a whitespace separated list of the following strings:
+Keyword         Setting                                                                                                                             Example
+nocheck         Disables the existence check for the provided tree path. This allows modifying plot styles a priori to a solver run.
+runid=...       Allows controlling the plot styles of a parametric curve. If no runid is provided, runid=0 is assumed. No existence check is done.  runid=0
+color=...       Specifies the desired curve color in semicolon separated list of RGB values in the range [0,255].                                   color=255;255;0
+linewidth=...   Accepts an integer in the range [1,8] and specifies the line thickness.                                                             linewidth=3
+linetype=...    Can be used to specify the line style, which can be one of the options "Solid", "Dashed", "Dotted", "Dashdotted".                   linetype=Solid
+markerstyle=... Can be used to specify the marker style, which can be one of the options "Auto", "Additional", "Marksonly", "Nomarks".              markershape=Auto
+markersize=...  Accepts an integer in the range [1,8] and specifies the marker size.                                                                markersize=5
+clear           Removes all configured plot styles and sets it back to default values.
+The following example shows how a plot style can be modified:
+SetPlotStyleForTreeItem("1D Results\S-Parameters\S1,1","color=177;1;165 linetype=Dotted linewidth=8")

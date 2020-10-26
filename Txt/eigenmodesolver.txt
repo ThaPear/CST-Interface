@@ -241,23 +241,25 @@ Adds all the available modes to the list of modes selected for Lorentz force cal
 
  
 
-IsModeSelectedForForceCalculation (int ModeIndex)
+IsModeSelectedForForceCalculation (int ModeIndex) bool
 
 Checks whether the mode with index ModeIndex is selected for Lorentz force calculation. Mode indices are 1-based.
 
  
 
-IsAnyModeSelectedForForceCalculation
+IsAnyModeSelectedForForceCalculation bool
 
 Checks whether any modes are selected for Lorentz force calculation.
 
  
 
-StartForceCalculation
+StartForceCalculation bool
 
 Starts the calculation of Lorentz force density distributions for selected modes.
 
-Defaults
+ 
+
+Default Settings
 
 SetMethod ("AKS")
 

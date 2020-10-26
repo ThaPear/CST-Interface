@@ -1,0 +1,49 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Discrete Elements | LumpedElement
+
+LumpedElement Object
+Lumped elements can be used to include electronic components such as resistors, inductances, capacitances and diodes into the simulation.
+
+Methods
+
+Defaults
+
+Methods
+ 
+CreateMultipin
+Creates a new multipin lumped element. All necessary settings for this element have to be made previously. For the definition of elements other than multipin (typemultipingroupspice or multipingrouptouchstone) use the Create method.
+ 
+ConnectMultipinElementPinToSubElement ( name multipin_name, name circuit_pin_name, name multipin_sub_element_name )
+Connect a circuit pin of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) to a multipin sub-element (typemultipingroupitem).
+ 
+ConnectMultipinElementPinToShort ( name multipin_name, name circuit_pin_name )
+Define a circuit pin of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) be connected to the ideal circuit ground (ConnectMultipinElementPinToShort method) or to be kept floating (ConnectMultipinElementPinToOpen method).
+ 
+ConnectMultipinElementPinToOpen
+Define a circuit pin of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) be connected to the ideal circuit ground (ConnectMultipinElementPinToShort method) or to be kept floating (ConnectMultipinElementPinToOpen method).
+
+
+Default Settings
+
+SetType ("rlcparallel")
+
+SetR (0)
+
+SetL (0)
+
+SetC (0)
+
+SetGs (0)
+
+SetT (0)
+
+SetP1 (False, 0, 0, 0)
+
+SetP2 (False, 0, 0, 0)
+
+SetInvert (False)
+
+SetMonitor (False)
+
+SetRadius (0.0)
+
+ 

@@ -68,7 +68,8 @@ classdef PICSolver < handle
             % Defines when a cell should be treated as entirely filled with Perfectly Conducting Material (PEC). So if a cell is filled with more than percentage of the cell with PEC, the entire Cell will be filled with PEC. For other materials this setting has no effect. Generally, this setting should not be changed.
             obj.AddToHistory(['.PBAFillLimit "', num2str(percentage, '%.15g'), '"']);
         end
-        function AlwaysExludePec(obj, flag)
+        % Incorrectly named AlwaysExludePec in 2018 documentation.
+        function AlwaysExcludePec(obj, flag)
             % This method offers the possibility to automatically exclude all PEC regions from the calculation. In case that large PEC regions exist this option may produce a significant speed-up of the simulation.
             obj.AddToHistory(['.AlwaysExludePec "', num2str(flag, '%.15g'), '"']);
         end

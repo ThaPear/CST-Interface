@@ -1,0 +1,44 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ColorRamp
+
+ 
+
+ColorRamp Object
+Use this to change the color order for the color-by-value field plots.
+
+Methods
+
+Scaling ( enum scaletype )
+
+Stretches or squeezes the color ramp.
+
+enum scaletype  meaning                                                             result for rainbow type
+
+"None"          The color ramp is neither squeezed nor stretched.                   blue-cyan-green-yellow-red
+
+"Stretch"       The range 0..max is stretched to -max..max.                         green-yellow-red
+
+"Squeeze"       The range -max..max is squeezed to 0..max and inverted to -max..0.  red-yellow-green-cyan-blue-cyan-green-yellow-red
+
+ 
+
+AddPoint ( double value, double red, double green, double blue )
+
+A user defined color ramp is shown for .Type "Free". For any field value in the range from -1 (minimum) to +1 (maximum), the desired color can be defined by three doubles ranging from 0 to 1. The color values between two adjacent points will be interpolated. At least two color definitions are needed. See Example.
+
+ 
+
+Style (enum style{"None" / "Horizontal" / "Vertical"} )
+
+This switch either hides (None) the color ramp or positions it horizontally or vertically in the main view.
+
+Default Settings
+
+Type ("rainbow")
+
+Invert (False)
+
+NumberOfContourValues (33)
+
+DrawContourLines (False)
+
+ 

@@ -143,6 +143,7 @@ classdef ResultTree < handle
         end
         function object = GetResultFromTreeItem(obj, sTreePath, sResultID)
             % Returns a result object containing the data specified by 'sTreePath' and 'sResultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object. In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method returns an error, if the tree item does not exist or the Result ID is invalid.
+            % (2020) [Can also be a] Result 2D or a Result Matrix object.
             object = obj.hResultTree.invoke('GetResultFromTreeItem', sTreePath, sResultID);
         end
         function object = GetImpedanceResultFromTreeItem(obj, sTreePath, sResultID)

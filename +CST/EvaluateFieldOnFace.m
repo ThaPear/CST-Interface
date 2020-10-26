@@ -89,6 +89,31 @@ classdef EvaluateFieldOnFace < handle
             % If switch is set to True, the face is mapped on the underlying grid. All field components on this staircase surface are taken into account then. Be aware that this also might increase the area returned. This feature is only available for hexahedral meshes, but is active by default then.
             obj.AddToHistory(['.FitToGrid "', num2str(boolean, '%.15g'), '"']);
         end
+        %% CST 2020 Functions.
+        function [dIntReal, dIntImag, dArea] = CalulateIntegral(obj, facename, component, complexType)
+            % Integrates the selected field component / absolute value depending on the chosen complex type over the face named by sFaceName. The integrals are returned in the double variables dIntReal and dIntImag. Scalar results returned in the dIntReal variable and dIntImag is set to zero. Alone for the complex type "complex", the dIntImag variable is set accordingly. The size of the face is returned in the dArea variable.
+            % component,: 'x'
+            %             'y'
+            %             'z'
+            %             'abs'
+            %             'normal'
+            % complexType,: 'real'
+            %               'imaginary'
+            %               'magnitude'
+            %               'phase'
+            %               'complex'
+            obj.hEvaluateFieldOnFace.invoke('CalulateIntegral', facename, component, complexType);
+            functionString = [...
+                'Dim dIntReal As Double, dIntImag As Double, dArea As Double', newline, ...
+                'EvaluateFieldOnFace.CalculateIntegral(', facename, ', ', component, ', ', complexType, ', dIntReal, dIntImag, dArea)', newline, ...
+            ];
+            returnvalues = {'dIntReal', 'dIntImag', 'dArea'};
+            [dIntReal, dIntImag, dArea] = obj.dsproject.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            dIntReal = str2double(dIntReal);
+            dIntImag = str2double(dIntImag);
+            dArea = str2double(dArea);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

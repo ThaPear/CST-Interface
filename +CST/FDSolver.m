@@ -132,10 +132,12 @@ classdef FDSolver < handle
         end
         function ResetSampleIntervals(obj, key)
             % Removes sampling interval definitions according to the key . If used together with AddSampleInterval, a set of sampling intervals can be re-defined, for instance all adaptation frequencies.
+            % (2019) The key "infinite" describes automatic sampling interval definitions with an unspecified number of samples.
             % key: 'all'
             %      'adaptation'
             %      'single'
             %      'inactive'
+            %      (2019) 'infinite'
             obj.AddToHistory(['.ResetSampleIntervals "', num2str(key, '%.15g'), '"']);
         end
         function UseHelmholtzEquation(obj, flag)

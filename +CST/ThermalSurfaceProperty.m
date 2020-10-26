@@ -125,6 +125,14 @@ classdef ThermalSurfaceProperty < handle
             obj.project.AddToHistory(['ThermalSurfaceProperty.Rename "', num2str(oldname, '%.15g'), '", '...
                                                                     '"', num2str(newname, '%.15g'), '"']);
         end
+        %% CST 2019 Functions.
+        function Coverage(obj, type)
+            % Defines the part of the selected surface to which the thermal surface property must be assigned. This setting is used only by the tetrahedral mesh based thermal solver.
+            % type (enum )        meaning
+            % "WholeSurface"      Thermal surface property is assigned to the whole surface excluding parts possessing fixed temperature (temperature source or isothermal boundary)
+            % "BackgroundOnly"    Thermal surface property is assigned only to the parts of the surface directly contracting background, including adiabatic boundaries but exluding symmetry planes and open boundaries without added space.
+            obj.AddToHistory(['.Coverage "', num2str(type, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

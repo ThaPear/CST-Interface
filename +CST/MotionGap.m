@@ -92,6 +92,15 @@ classdef MotionGap < handle
             obj.project.AddToHistory(['define MotionGap: ', obj.name], obj.history);
             obj.history = [];
         end
+        %% CST 2014 Functions.
+        function Active(obj, state)
+            % Activates or deactivates the gap item for further calculations.
+            obj.AddToHistory(['.Active "', num2str(state, '%.15g'), '"']);
+        end
+        function Orientation(obj, dir)
+            % Specifies whether the rotor or mover elements are positioned inside the gap (dir = "inside") or outside the gap (dir = "outside").
+            obj.AddToHistory(['.Orientation "', num2str(dir, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

@@ -1,0 +1,69 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Low Frequency | LF Frequency Domain Solver (MQS/Fullwave)
+
+LFSolver Object
+This object is used to define the LF Frequency Domain (MQS or Fullwave) solver settings.
+
+Methods
+
+Functions
+
+Default Settings
+
+Example
+
+Methods
+
+SetLFPreconditionerAcceleration (enum precondtype)
+
+Specifies the preconditioner used to solve linear systems of equations. Available options are:
+                    
+precondtype (enum ) meaning
+
+"Auto"              The preconditioner type is chosen automatically. Currently the Low Memory type will be used by default, but this might change with future versions.
+
+"Accelerated"       A preconditioner which is suited well for structures with high mesh- and material-ratios. This method is more memory consuming, but might converge in situations where the Low Memory type does not converge.
+
+"Low Memory"        This preconditioner type is very memory efficient and converges if mesh- and material- ratios are not very high.
+
+
+Default Settings
+
+Accuracy "1e-6"
+
+Preconditioner "ILU"
+
+UseFullWaveCalculation "False"
+
+LSESolverType  "Auto"
+
+MeshAdaption "False"
+
+StoreResultsInCache "False"
+
+ValueScaling "Peak"
+
+UseMaxNumberOfThreads "False"
+
+MaxNumberOfThreads "8"
+
+Examples
+
+With LFSolver
+
+     .Reset
+
+     .Accuracy "1e-6"
+
+     .StoreResultsInCache "False"
+
+     .Preconditioner "ILU"
+
+     .MeshAdaption "False"
+
+     .UseFullWaveCalculation "False"
+
+     .LSESolverType "Auto"
+
+End With

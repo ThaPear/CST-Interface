@@ -1,0 +1,26 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ScalarPlot2D
+
+ScalarPlot2D Object
+
+This object allows to plot three dimensional vector fields on a cutting plane. Therefore the 3D Fields on 2D Plane option has to be active. To choose what field to plot, the SelectTreeItem command can be used.
+
+General Methods
+ 
+Attribute ( enum key )
+Selects the result mapping attribute of the Plot.
+key can have one of the following values:
+"animated" - Shows the instantaneous result values regarding given phase or time (see PhaseValue, SetTime, SetSample).
+"maximum" - Shows the maximum result values.
+"average" - Shows the average result values (only for complex result values).
+"rms" - Shows the RMS result values (only for complex result values).
+"phase" - Shows the phase of the result values (only for complex result values).
+
+
+ 
+
+Default Settings
+
+ 
+
+Examples
+

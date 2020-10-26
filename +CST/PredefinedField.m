@@ -112,22 +112,25 @@ classdef PredefinedField < handle
             obj.AddToHistory(['.SetExternalFieldDescription "', num2str(fieldID, '%.15g'), '", '...
                                                            '"', num2str(description, '%.15g'), '"']);
         end
-        function SetExternalFiedASCIIType(obj, fieldpath, type)
+        % Note: Incorrectly named SetExternalFiedASCIIType in 2018 documentation.
+        function SetExternalFieldASCIIType(obj, fieldpath, type)
             % In case of a ASCII field import with a given fieldpath , the type is the field type and must be set to one of the following strings: "B-Field", "H-Field" or "E-Field"..
-            obj.AddToHistory(['.SetExternalFiedASCIIType "', num2str(fieldpath, '%.15g'), '", '...
-                                                        '"', num2str(type, '%.15g'), '"']);
+            obj.AddToHistory(['.SetExternalFieldASCIIType "', num2str(fieldpath, '%.15g'), '", '...
+                                                         '"', num2str(type, '%.15g'), '"']);
         end
-        function SetExternalFiedASCIISymmetries(obj, fieldpath, symX, symY, symZ)
+        % Note: Incorrectly named SetExternalFiedASCIISymmetries in 2018 documentation.
+        function SetExternalFieldASCIISymmetries(obj, fieldpath, symX, symY, symZ)
             % In case of a ASCII field import with a given fieldpath ,  symX, symY and symZ  set the symmetry type of the field in the corresponding directions and must be set to one of the following strings: "None", "Electric" or "Magnetic".
-            obj.AddToHistory(['.SetExternalFiedASCIISymmetries "', num2str(fieldpath, '%.15g'), '", '...
-                                                              '"', num2str(symX, '%.15g'), '", '...
-                                                              '"', num2str(symY, '%.15g'), '", '...
-                                                              '"', num2str(symZ, '%.15g'), '"']);
+            obj.AddToHistory(['.SetExternalFieldASCIISymmetries "', num2str(fieldpath, '%.15g'), '", '...
+                                                               '"', num2str(symX, '%.15g'), '", '...
+                                                               '"', num2str(symY, '%.15g'), '", '...
+                                                               '"', num2str(symZ, '%.15g'), '"']);
         end
-        function SetExternalFiedASCIIFrequency(obj, fieldpath, frequency)
+        % Note: Incorrectly named SetExternalFiedASCIIFrequency in 2018 documentation.
+        function SetExternalFieldASCIIFrequency(obj, fieldpath, frequency)
             % In case of a ASCII field import with a given fieldpath , this method sets the frequency of the imported field..
-            obj.AddToHistory(['.SetExternalFiedASCIIFrequency "', num2str(fieldpath, '%.15g'), '", '...
-                                                             '"', num2str(frequency, '%.15g'), '"']);
+            obj.AddToHistory(['.SetExternalFieldASCIIFrequency "', num2str(fieldpath, '%.15g'), '", '...
+                                                              '"', num2str(frequency, '%.15g'), '"']);
         end
         function Create(obj)
             % Creates the defined source field.

@@ -636,6 +636,11 @@ classdef Mesh < handle
             %       'Tet'
             long = obj.hMesh.invoke('GetMaxParallelMesherThreads', type);
         end
+        %% CST 2014 Functions.
+        function MeshAllRegions(obj, bFlag)
+            % This method applies to tetrahedral grids only. It indicates whether all regions (including PEC regions) are to be meshed (bFlag = True) or not (bFlag = False). The default setting is bFlag = False.
+            obj.AddToHistory(['.MeshAllRegions "', num2str(bFlag, '%.15g'), '"']);
+        end
         %% Undocumented functions:
         % Found in template: 'Planar Coupler & Divider.cfg'
         function FPBAAvoidNonRegUnite(obj, bool)

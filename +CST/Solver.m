@@ -269,6 +269,8 @@ classdef Solver < handle
             % Define the update schema for the discrete items, i.e. discrete ports and lumped elements, to be used by the transient solver run.
             % Selecting the Gap schema (default choice) the discrete face element will be modeled as a PEC (perfectly electric conductor) sheet except for a small gap where the source excitation is imprinted and the load impedance is located. A similar modeling applies to the discrete edge element where the source/load is located in the middle of a PEC wire.
             % Selecting the Distributed schema (preview choice) models the source and load as distributed over the entire surface of the face (entire length of the wire, respectively) providing a more robust representation as well as supporting coaxial face elements and also discrete current face ports.
+            % (2019) Selecting the Distributed schema (default choice) models the source and load as distributed over the entire surface of the face (entire length of the wire, respectively) providing a robust representation as well as supporting coaxial face elements and also discrete current face ports.
+            % (2019) Selecting the Gap schema the discrete face element will be modeled as a PEC (perfectly electric conductor) sheet except for a small gap where the source excitation is imprinted and the load impedance is located. A similar modeling applies to the discrete edge element where the source/load is located in the middle of a PEC wire.
             % The method DiscreteItemUpdate applies the update schema both to the edge and to the face discrete ports and lumped elements. The method DiscreteItemEdgeUpdate and DiscreteItemFaceUpdate applies the update schema only to the edge and face discrete elements, respectively.
             % key: 'Gap'
             %      'Distributed'
@@ -579,6 +581,7 @@ classdef Solver < handle
         end
         function UseExtraFreqForPowerLoss1DMonitor(obj, flag)
             % Activates the computation of the power dissipated by the dispersive electric and magnetic materials and the lossy metal, surface impedance and compact model elements in correspondence of the  frequencies defined by means of the AddPowerLoss1DMonitorExtraFreq command. The computation of the material losses will be performed summing up the contributions in the entire simulation domain. To this purpose internal monitors will be generated on the entire domain at the required frequencies. Take into account that this requires additional memory resulting in a significant effort in case of multiple frequency definition.
+            % (2019) Take into account that this requires additional memory resulting in a significant effort in case of several additional frequencies. As this factor may become critical for the dispersive materials losses, the corresponding 3D internal monitors will not be stored on disk and they will not be available for further post processing steps.
             obj.AddToHistory(['.UseExtraFreqForPowerLoss1DMonitor "', num2str(flag, '%.15g'), '"']);
         end
         function ResetPowerLoss1DMonitorExtraFreq(obj)
@@ -946,6 +949,40 @@ classdef Solver < handle
         end
         function SaveSettings(obj)
             obj.AddToHistory(['.SaveSettings']);
+        end
+        %% CST 2019 Functions.
+        function enum = GetDiscreteItemUpdate(obj)
+            % Returns the selected update schema for the discrete items, i.e. discrete ports and lumped elements, used by the transient solver run. The function return value is either the Distributed or Gap string.
+            % The method GetDiscreteItemUpdate returns the update schema for both the edge and the face discrete ports and lumped elements and is the counterpart of the corresponding set method DiscreteItemUpdate.
+            enum = obj.hSolver.invoke('GetDiscreteItemUpdate');
+        end
+        function GetDiscreteItemEdgeUpdate(obj)
+            % Returns the selected update schema for the discrete items, i.e. discrete ports and lumped elements, used by the transient solver run. The function return value is either the Distributed or Gap string.
+            % The method GetDiscreteItemEdgeUpdate and GetDiscreteItemFaceUpdate returns the update schema only for the edge and face discrete elements, respectively, and is the counterpart of the set method DiscreteItemEdgeUpdate and DiscreteItemFaceUpdate.
+            obj.AddToHistory(['.GetDiscreteItemEdgeUpdate']);
+        end
+        function GetDiscreteItemFaceUpdate(obj)
+            % Returns the selected update schema for the discrete items, i.e. discrete ports and lumped elements, used by the transient solver run. The function return value is either the Distributed or Gap string.
+            % The method GetDiscreteItemEdgeUpdate and GetDiscreteItemFaceUpdate returns the update schema only for the edge and face discrete elements, respectively, and is the counterpart of the set method DiscreteItemEdgeUpdate and DiscreteItemFaceUpdate.
+            obj.AddToHistory(['.GetDiscreteItemFaceUpdate']);
+        end
+        function WaveguidePortBroadband(obj, flag)
+            % This activates the broadband treatment of waveguide modes in inhomogeneous ports. This means that a special absorber is used in time domain which takes the frequency dependence of the modes into account. It furthermore offers a broadband imprint and a broadband decomposition for QTEM modes by default.
+            obj.AddToHistory(['.WaveguidePortBroadband "', num2str(flag, '%.15g'), '"']);
+        end
+        function SetWaveguidePortExcitationType(obj, key)
+            % With this setting the frequency dependency of port modes can be considered in mode excitation signals (see "ScaleTETMModeToCenterFrequency" above). The setting will modify the excitation signal such that the imprinted time domain fields are power normalized at every frequency.
+            % "Automatic" - When the command "WaveguidePortBroadband" is set to "on", the option "broadband" is chosen for QTEM modes. For all other cases "Standard" is selected.
+            % "Standard" - The imprinted fields correspond to a mode evaluated at a single frequency. This is typically the center frequency (see "ScaleTETMModeToCenterFrequency" above).
+            % "Broadband" - Before the mode is imprinted the excitation signals are convolved with the modal response, i.e. the frequency normalization is applied broadband in time domain.
+            obj.AddToHistory(['.SetWaveguidePortExcitationType "', num2str(key, '%.15g'), '"']);
+        end
+        function SetWaveguidePortDecompositionType(obj, key)
+            % With this setting the TE/TM scaling can be applied to port signal results (see "ScaleTETMModeToCenterFrequency" above) . This setting effects the monitored time signals of waveguide ports with TE or TM modes but not the time domain 3d fields.
+            % "Automatic" - When the option "broadband for inhomogeneous ports" is active, "broadband" is chosen for QTEM modes. For all other cases "Standard" is selected.
+            % "Standard" - The monitored port signals refer to a mode evaluated at a single frequency. This is typically the center frequency (see "ScaleTETMModeToCenterFrequency" above).
+            % "Broadband" - The port signals are convolved with the modal response, i.e. the frequency normalization is applied broadband in time domain.
+            obj.AddToHistory(['.SetWaveguidePortDecompositionType "', num2str(key, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.

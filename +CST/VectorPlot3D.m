@@ -35,9 +35,9 @@ classdef VectorPlot3D < handle
             % "cone"              The field vectors will be plotted as cones.
             % "thinarrows"        The field vectors will be plotted as thin arrows.
             % "bubble"            The field vectors will be plotted as bubble.
-            % "hedgehogï¿½          The field vectors will be plotted as ï¿½linesï¿½.
-            % "streamlineï¿½        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
-            % "thinstreamlineï¿½    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+            % "hedgehog”          The field vectors will be plotted as ”lines”.
+            % "streamline”        Stream lines (cylindrical shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
+            % "thinstreamline”    Stream lines (line shapes) will be used to represent the fields. (Interesting mainly for the representation of pointing vectors)
             obj.hVectorPlot3D.invoke('Type', key);
         end
         function PhaseValue(obj, phase)
@@ -145,6 +145,55 @@ classdef VectorPlot3D < handle
         function Reset(obj)
             % Clears the internal storage used by the field list evaluation and empties the evaluation point storage.
             obj.hVectorPlot3D.invoke('Reset');
+        end
+        %% CST 2014 Functions.
+        function Objects(obj, objects)
+            % Specifies the number of plotted objects. Depending on the plot type, objects may be arrows, hedgehogs or streamlines.
+            obj.hVectorPlot3D.invoke('Objects', objects);
+        end
+        function LogScale(obj, boolean)
+            % Decides whether the fields should be plotted in a logarithmical scale or not.
+            obj.hVectorPlot3D.invoke('LogScale', boolean);
+        end
+        function LogStrength(obj, strength)
+            % The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed.
+            obj.hVectorPlot3D.invoke('LogStrength', strength);
+        end
+        function LogAnchor(obj, anchor)
+            % Sets the anchor values used for logarithmical scaling.
+            obj.hVectorPlot3D.invoke('LogAnchor', anchor);
+        end
+        function LogAnchorType(obj, type)
+            % Toggles between the automatic determination of the log anchor (type = "auto") and the user defined value set by LogAnchor (type = "user").
+            obj.hVectorPlot3D.invoke('LogAnchorType', type);
+        end
+        function VectorOffset(obj, offset)
+            % Specifies an offset in normal direction for surface vectors to improve their visibility. Only offsets from -2 to 2 are allowed, whereby negative offsets will move the vector to the other side of the surface.
+            obj.hVectorPlot3D.invoke('VectorOffset', offset);
+        end
+        function CheckVectorCollisions(obj, boolean)
+            % In case of strongly curved surfaces, high vector densities may occur. This method prevents vectors from being plotted into other vectors (switch = True). The collision check may take some time, therefore it is switched off by default (switch = False ).
+            obj.hVectorPlot3D.invoke('CheckVectorCollisions', boolean);
+        end
+        function OptimizedArrowGrid(obj, boolean)
+            % The distance between adjacent arrows is optimized according to the field strength.
+            obj.hVectorPlot3D.invoke('OptimizedArrowGrid', boolean);
+        end
+        function ClampValue(obj, value)
+            % Sets the maximum to which the plot is scaled. If you choose a maximum smaller than the field maximum, the field values greater than your chosen maximum are clamped (plotted as if they were equal to the chosen maximum).
+            obj.hVectorPlot3D.invoke('ClampValue', value);
+        end
+        function ClampMode(obj, type)
+            % Changes clamp mode (see ClampValue). If you choose to only clamp the size, you will get arrows of maximum size with different colors depending on the field value. If you choose a maximum greater than the field maximum, size and / or color are scaled down, as if the field maximum were the chosen maximum.
+            % type can have one of the following values:
+            % "None" - No clamping is used.
+            % "Size" - Only size is clamped.
+            % "SizeColor" - Size and color is clamped.
+            obj.hVectorPlot3D.invoke('ClampMode', type);
+        end
+        function Plot(obj)
+            % Plots the field with the previously made settings.
+            obj.hVectorPlot3D.invoke('Plot');
         end
     end
     %% MATLAB-side stored settings of CST state.

@@ -118,6 +118,35 @@ classdef Table < handle
 
             result1Dcomplex = CST.Result1DComplex(obj.project, hResult1DComplex);
         end
+        %% CST 2014 Functions.
+        function Save(obj, sTableFileName)
+            % Saves the current Table object with the given filename sTableFileName. If the specified file name is an empty string, the table data will be stored under the same file name as it has been specified when loading the table data.
+            obj.hTable.invoke('Save', sTableFileName);
+        end
+        function string = GetType(obj)
+            % This method returns a string containing the type of the current table, e.g. "xysignal".
+            string = obj.hTable.invoke('GetType');
+        end
+        function string = GetSubtype(obj)
+            % This method returns a string containing the sub-type of the current table, e.g. "linear".
+            string = obj.hTable.invoke('GetSubtype');
+        end
+        function long = GetVaryingParameter(obj)
+            % Returns the index of the currently varying parameter. This setting will be used as initial choice when the table properties dialog box is opened.
+            long = obj.hTable.invoke('GetVaryingParameter');
+        end
+        function SetVaryingParameter(obj, index)
+            % This methods sets the currently varying parameter. The index must be within the range of 0 to GetNumberOfParameters - 1. This setting will be used as initial choice when the table properties dialog box is opened.
+            obj.hTable.invoke('SetVaryingParameter', index);
+        end
+        function string = GetTypeOfDataItem(obj, index)
+            % This method returns a string containing the type of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1. The type can be any one of the following strings:
+            % "0d real" - The data item represents a single real value.
+            % "0d complex" - The data item represents a single complex value.
+            % "1d" - The data item represents an entire xy curve.
+            % "1d complex" - The data item represents an entire complex curve.
+            string = obj.hTable.invoke('GetTypeOfDataItem', index);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

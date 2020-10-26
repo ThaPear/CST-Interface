@@ -143,6 +143,11 @@ classdef TimeMonitor3D < handle
             obj.AddToHistory(['.SetIronLossModelParameter "', num2str(parametertype, '%.15g'), '", '...
                                                          '"', num2str(value, '%.15g'), '"']);
         end
+        %% CST 2014 Functions.
+        function SetTimeMonitor3DAutoLabel(obj, bFlag)
+            % This flag concerns only the behavior of the dialog box for monitors at points. It specifies whether or not the monitor name is adapted automatically to the settings made in the dialog box. This command will have no influence on the monitor name specified via the VBA command.
+            obj.AddToHistory(['.SetTimeMonitor3DAutoLabel "', num2str(bFlag, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

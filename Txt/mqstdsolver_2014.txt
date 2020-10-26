@@ -1,0 +1,80 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Low Frequency | LF Time Domain Solver
+
+MQSTDSolver Object
+This object is used to define the LF Time Domain solver settings for the magnetoquasistatic equation type.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+LinAccuracy (double accuracy)
+
+Specifies the accuracy of the linear solver.
+
+ 
+
+NLinAccuracy (double accuracy)
+
+Specifies the accuracy of the nonlinear solver.
+
+ 
+
+NlinCycles (int value)
+
+Specifies the maximum number of nonlinear iterations when nonlinear materials are defined.
+
+Default Values
+
+Accuracy "1e-6"
+
+MaxNumIter "0"
+
+SimulationDuration "0"
+
+TimeAdaption "True"
+
+TimeStepWidth "1e-2"
+
+TimeStepSamples "100"
+
+TimeStepMin "1e-6"
+
+TimeStepMax "1e-1"
+
+TimeStepInit "1e-2"
+
+TimeStepTolerance "1e-4"
+
+UseDistributedComputing "False"
+
+UseMaxNumberOfThreads "False"
+
+MaxNumberOfThreads "8"
+
+Examples
+
+With MQSTDSolver
+
+     .Reset
+
+     .Accuracy "1e-6"
+
+     .SimulationDuration "10"
+
+     .TimeStepAdaptive "True"
+
+     .TimeStepMin "1e-6"
+
+     .TimeStepMax "1e-1"
+
+     .TimeStepTolerance "1e-4"
+
+     .UseDistributedComputing "False"
+
+     .Start
+
+End With

@@ -49,9 +49,17 @@ classdef CurrentPort < handle
             obj.AddToHistory(['.Name "', num2str(name, '%.15g'), '"']);
             obj.name = name;
         end
-        function Face(obj, name)
-            % The name of the face (solidname:faceid) used for the definition.
-            obj.AddToHistory(['.Face "', num2str(name, '%.15g'), '"']);
+        function Face(obj, name, faceid_2020)
+            if(nargin == 2)
+                % 2018 Definition: Face (solidname:faceid name)
+                % The name of the face (solidname:faceid) used for the definition.
+                obj.AddToHistory(['.Face "', num2str(name, '%.15g'), '"']);
+            else
+                % 2020 Definition: Face (solidname name, int faceid)
+                % The name of the face used for the definition.
+                obj.AddToHistory(['.Face "', num2str(name, '%.15g'), '", '...
+                                        '"', num2str(faceid_2020, '%.15g'), '"']);
+            end
         end
         function Value(obj, value)
             % Sets  the potential or the current value of a current port - depending if the ValueType was set to "Potential" or "Current".

@@ -73,21 +73,22 @@ classdef TimeMonitor < handle
             % Sets what field is to be monitored.
             %
             % fType can have one of the following values:
-            % ”B-Field”                   The magnetic flux density will be monitored.
-            % ”H-Field”                   The magnetic field strength will be monitored.
-            % ”E-Field”                   The electric field will be monitored.
-            % ”D-Field”                   The electric displacement field will be monitored.
-            % ”Cond. Current Dens.”       The conductive current density will be monitored.
-            % ”Displ. Current Dens.”      The displacement current density will be monitored.
-            % ”Total Current Dens.”       The total current density will be monitored.
+            % "B-Field"                   The magnetic flux density will be monitored.
+            % "H-Field"                   The magnetic field strength will be monitored.
+            % "E-Field"                   The electric field will be monitored.
+            % "D-Field"                   The electric displacement field will be monitored.
+            % "Cond. Current Dens."       The conductive current density will be monitored.
+            % "Displ. Current Dens."      The displacement current density will be monitored.
+            % "Total Current Dens."       The total current density will be monitored.
             % "Potential"                 The electric scalar potential will be monitored.
             % "Material"                  The relative permeability of the materials will be monitored.
             % "Ohmic Losses"              The Ohmic loss density will be monitored.
-            % ”Averaged Ohmic Losses”     The Ohmic loss density  will be monitored and averaged over a given time period.
+            % "Averaged Ohmic Losses"     The Ohmic loss density  will be monitored and averaged over a given time period.
             % "Magnetic Energy Density"   The magnetic energy density will be monitored.
-            % ”Temperature”               The temperature will be monitored.
+            % "Temperature"               The temperature will be monitored.
             % "Heat Flow Density"         The heat flow density will be monitored.
             % "CEM43"                     The cumulative equivalent minutes at 43°C will be monitored in the biologically active tissues.
+            % (2014) "J-Field"            The current density will be monitored.
             obj.AddToHistory(['.FieldType "', num2str(fType, '%.15g'), '"']);
         end
         function Tstart(obj, startTime)
@@ -111,7 +112,7 @@ classdef TimeMonitor < handle
             % period specifies the length of the time interval over which the losses are averaged.
             %
             % method can have one of the following values:
-            % ”Auto”  This is the default option for the time averaging. The end time will be set automatically to the simulation duration, and the start time will be given by the end time minus the specified "period".
+            % "Auto"  This is the default option for the time averaging. The end time will be set automatically to the simulation duration, and the start time will be given by the end time minus the specified "period".
             % "Start" Choose this option to explicitly set the start time of the time-averaging. The end time will be given by "value + period" .
             % "End"   Choose this option to explicitly set the end time of the time-averaging. The start time will be given by "value - period".
             obj.AddToHistory(['.TimeAveraging "', num2str(period, '%.15g'), '", '...
@@ -131,7 +132,7 @@ classdef TimeMonitor < handle
             % Returns the type of the monitor with regard to the index in the internal monitor list.
             %
             % monType can have one of the following values:
-            % ”B-Field”       The magnetic flux density has been monitored.
+            % "B-Field"       The magnetic flux density has been monitored.
             % "Temperature"   The temperature has been monitored.
             enum = obj.hTimeMonitor.invoke('GetMonitorTypeFromIndex', index);
         end

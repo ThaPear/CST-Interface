@@ -313,6 +313,16 @@ classdef PIC2DMonitorReader < handle
             % Note, that while the original result data files are not modified by this method, the in-memory representation is. Thus, the only way to undo this operation is to reload the monitor from disk again using SelectMonitor and SelectPlane.
             obj.hPIC2DMonitorReader.invoke('RemoveOutliers', current_percent);
         end
+        %% CST 2019 Functions.
+        function SelectSource(obj, id)
+            % Filters the data for subsequent calls to only yield particles that were emitted from the source id. The parameter id must be one of the entries of the array retrieved by the GetSourceIDs method.
+            % Calls to SelectDataSource, LoadTrajectoryData, SelectMonitor, SelectSample, SelectFrame, SelectPlane, SelectTrajectory, Reset, etc. will remove the filter and lead to yielding particle data for all sources again.
+            obj.hParticle2DMonitorReader.invoke('SelectSource', id);
+        end
+        function LongArray = GetEmissionIDs(obj)
+            % Retrieve the unique IDs of all particle sources and interfaces.
+            LongArray = obj.hParticle2DMonitorReader.invoke('GetEmissionIDs');
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

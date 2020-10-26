@@ -1,0 +1,167 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Monitors | Monitor
+
+Monitor Object
+
+Defines 3D or 2D field monitors. Each monitor stores the field values either for a specified frequency or for a set of time samples. There are different kinds of monitors: magnetic and electric field or energy monitors as well as farfield, power flow and current monitors.
+
+Methods
+
+Queries
+
+Default Settings
+
+Examples
+
+Methods
+ 
+EnableNearfieldCalculation ( bool bFlag )
+If bFlag is true, then the computation with this farfield monitor keeps the recorded nearfield data from the solver and makes sure that this data is combined in later post-processing steps that involve this monitor. This is required for some post-processing features but it potentially reduces the speed of subsequent "combine results" post-processing.
+ 
+Default Settings
+
+FieldType ("Efield")
+
+Dimension ("Volume")
+
+PlaneNormal ("x")
+
+PlanePosition (0.0)
+
+Domain ("frequency")
+
+Tstart (0.0)
+
+Tstep (0.0)
+
+Tend (0.0)
+
+RepetitionPeriod (0.0)
+
+UseTend (False)
+
+TimeAverage (False)
+
+MaxOrder (1)
+
+FrequencySamples (21)
+
+AutomaticOrder (True)
+
+TransientFarfield (False)
+
+UseSubvolume (False)
+
+ExportFarfieldSource (False)
+
+SetSubVolumeSampling("", "", "")
+
+Examples
+
+' creates a frequency domain electric field monitor for the entire calculation domain
+
+With Monitor
+
+     .Reset
+
+     .Name ("e-field (f=2.5)")
+
+     .Dimension ("Volume")
+
+     .Domain ("Frequency")
+
+     .FieldType ("Efield")
+
+     .Frequency (2.5)
+
+     .Create
+
+End With
+
+ 
+
+' creates a time domain magnetic field monitor for the plane y=37.3
+
+With Monitor
+
+     .Reset
+
+     .Name ("My magnetic field monitor")
+
+     .Dimension ("Plane")
+
+     .Domain ("Time")
+
+     .FieldType ("Hfield")
+
+     .Tstart (1.0)
+
+     .Tstep (0.015)
+
+     .Tend (1.7)
+
+     .UseTend (True)
+
+     .PlaneNormal ("y")
+
+     .PlanePosition ("37.3")
+
+     .Create
+
+End With
+
+ 
+
+' creates a 2D subvolume frequency domain electric field monitor (with sub sampling for I-, A- and M-Solver)
+
+With Monitor
+
+     .Reset
+
+     .Name "e-field (f=0.80;z=30)"
+
+     .Dimension "Volume"
+
+     .Domain "Frequency"
+
+     .FieldType "Efield"
+
+     .Frequency "0.8"
+
+     .UseSubvolume "True"
+
+     .Coordinates "Calculation"
+
+     .SetSubvolume "-140", "140", "-100", "100", "-90", "90"
+
+     .SetSubvolumeOffset "0.0", "0.0", "0.0", "0.0", "0.0", "0.0"
+
+     .PlaneNormal "x"
+
+     .PlanePosition "0"
+
+     .SetSubVolumeSampling  "10", "6", "6"
+
+     .Create
+
+End With
+
+ 
+
+
+'Example for getting the sub volume sampling rate
+
+Dim V As Variant
+
+V = Monitor.GetSubVolumeSampling("e-field (f=0.80;z=30)")
+
+ 
+
+Debug.Print V(0)
+
+Debug.Print V(1)
+
+Debug.Print V(2)
+
+ 
+
+ 

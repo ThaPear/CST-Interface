@@ -192,6 +192,11 @@ classdef IESolver < handle
             %      'High'
             obj.AddToHistory(['.SetMemSettingCMA "', num2str(key, '%.15g'), '"']);
         end
+        %% CST 2020 Functions.
+        function CalculateModalWeightingCoefficientsCMA(obj, flag)
+            % Activates the calculation of modal weighting coefficients for the characteristic mode analysis.
+            obj.AddToHistory(['.CalculateModalWeightingCoefficientsCMA "', num2str(flag, '%.15g'), '"']);
+        end
         %% Undocumented functions
         % Found in history list when setting frequency domain solver settings.
         function ExtendThinWireModelByWireNubs(obj, bool)

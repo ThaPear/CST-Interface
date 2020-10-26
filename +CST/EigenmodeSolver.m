@@ -25,7 +25,7 @@
 classdef EigenmodeSolver < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
-        % Only CST.Project can create a EigenmodeSolver object.
+        % Only CST.Project can create a CST.EigenmodeSolver object.
         function obj = EigenmodeSolver(project, hProject)
             obj.project = project;
             obj.hEigenmodeSolver = hProject.invoke('EigenmodeSolver');
@@ -73,6 +73,7 @@ classdef EigenmodeSolver < handle
         end
         function SetMeshAdaptationTet(obj, flag)
             % Enable automatic tetrahedral mesh adaptation for the eigenmode solver.
+            % (2019) Please note that the preview eigenmode solver does not support mesh adaptation.
             obj.AddToHistory(['.SetMeshAdaptationTet "', num2str(flag, '%.15g'), '"']);
         end
         function SetNumberOfModes(obj, nModes)
@@ -216,39 +217,34 @@ classdef EigenmodeSolver < handle
             % Adds all the available modes to the list of modes selected for Lorentz force calculation.
             obj.AddToHistory(['.CalculateLorentzForceForAllModes']);
         end
-        function IsModeSelectedForForceCalculation(obj, ModeIndex)
+        function bool = IsModeSelectedForForceCalculation(obj, ModeIndex)
             % Checks whether the mode with index ModeIndex is selected for Lorentz force calculation. Mode indices are 1-based.
-            obj.AddToHistory(['.IsModeSelectedForForceCalculation "', num2str(ModeIndex, '%.15g'), '"']);
+            bool = obj.hEigenmodeSolver.invoke('IsModeSelectedForForceCalculation', ModeIndex);
         end
-        function IsAnyModeSelectedForForceCalculation(obj)
+        function bool = IsAnyModeSelectedForForceCalculation(obj)
             % Checks whether any modes are selected for Lorentz force calculation.
-            obj.AddToHistory(['.IsAnyModeSelectedForForceCalculation']);
+            bool = obj.hEigenmodeSolver.invoke('IsAnyModeSelectedForForceCalculation');
         end
-        function StartForceCalculation(obj)
+        function bool = StartForceCalculation(obj)
             % Starts the calculation of Lorentz force density distributions for selected modes.
-            % Defaults
-            % SetMethod ("AKS")
-            % SetMeshType ("Hexahedral Mesh")
-            % SetMeshAdaptationHex (False)
-            % SetMeshAdaptationTet (True)
-            % SetNumberOfModes (10)
-            % SetModesInFrequencyRange (False)
-            % SetFrequencyTarget (False, 0.0)
-            % SetLowerBoundForQ (False, 1000)
-            % SetMaterialEvaluationFrequency (True, 0.0)
-            % SetUseParallelization (True)
-            % SetMaxNumberOfThreads (48)
-            % SetConsiderLossesInPostprocessingOnly (True)
-            % SetOrderTet (2)
-            % SetStoreResultsInCache (False)
-            % SetTDCompatibleMaterials (False)
-            % SetCalculateThermalLosses (True)
-            % CalculateLorentzForceForMode: the list of modes is empty.
-            % SetConsiderStaticModes (True)
-            % SetAccuracy (1e-6)
-            % SetQExternalAccuracy (1e-4)
-            % SetCalculateExternalQFactor (False)
-            obj.AddToHistory(['.StartForceCalculation']);
+            bool = obj.hEigenmodeSolver.invoke('StartForceCalculation');
+        end
+        %% CST 2019 Functions.
+        function SetMethodType(obj, key, mesh)
+            % Two different eigenmode solver methods are provided for each mesh type, namely AKS (Krylov Subspace method) and JDM (Jacobi-Davidson method) for the hexahedral mesh; default and preview method for the tetrahedral mesh. The JDM and the default solver are capable to solve loss free as well as lossy problems with a frequency independent complex permittivity or reluctivity. The "JDM (low memory)" is a variant of "JDM" that is more efficient in terms of memory usage, but may be less robust in terms of the underlying iterative solver's convergence. The preview eigenmode solver method with tetrahedral mesh overcomes the aforestated limitations for the material losses being considered and can handle lossy and dispersive materials with no poles in the frequency band of interest. Due to the fact that the preview eigenmode solver considers the waveguide ports as open, it also provides an accurate external Q-factor for each calculated mode. This solver can be also used with discrete ports and it supports periodic, open (Standard Impedance Boundary Condition) as well as conducting wall boundaries.
+            % key,: 'AKS'
+            %       'JDM'
+            %       'JDM (low memory)'
+            %       'Default'
+            %       'Preview'
+            % mesh: 'Hex'
+            %       'Tet'
+            obj.AddToHistory(['.SetMethodType "', num2str(key, '%.15g'), '", '...
+                                             '"', num2str(mesh, '%.15g'), '"']);
+        end
+        function SetMinimumQ(obj, value)
+            % This setting is relevant only for the preview eigenmode solver and it allows that only modes having total Q-factor greater or equal to this value will be calculated.
+            obj.AddToHistory(['.SetMinimumQ "', num2str(value, '%.15g'), '"']);
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -261,3 +257,52 @@ classdef EigenmodeSolver < handle
 
     end
 end
+
+%% Default Settings
+% SetMethod('AKS');
+% SetMeshType('Hexahedral Mesh');
+% SetMeshAdaptationHex(0)
+% SetMeshAdaptationTet(1)
+% SetNumberOfModes(10)
+% SetModesInFrequencyRange(0)
+% SetFrequencyTarget(0, 0.0)
+% SetLowerBoundForQ(0, 1000)
+% SetMaterialEvaluationFrequency(1, 0.0)
+% SetUseParallelization(1)
+% SetMaxNumberOfThreads(48)
+% SetConsiderLossesInPostprocessingOnly(1)
+% SetOrderTet(2)
+% SetStoreResultsInCache(0)
+% SetTDCompatibleMaterials(0)
+% SetCalculateThermalLosses(1)
+% CalculateLorentzForceForMode: the list of modes is empty.
+% SetConsiderStaticModes(1)
+% SetAccuracy(1e-6)
+% SetQExternalAccuracy(1e-4)
+% SetCalculateExternalQFactor(0)
+%
+%% Default Settings 2019
+% SetMethodType ("AKS", "Hex")
+% SetMethodType ("Default", "Tet")
+% SetMeshType ("Tetrahedral Mesh")
+% SetMeshAdaptationHex (False)
+% SetMeshAdaptationTet (True)
+% SetNumberOfModes (1)
+% SetStoreResultsInCache (False)
+% SetCalculateExternalQFactor (False)
+% SetConsiderStaticModes (True)
+% SetCalculateThermalLosses (True)
+% SetModesInFrequencyRange (False)
+% SetFrequencyTarget (True, 0.0)
+% SetAccuracy (1e-6)
+% SetQExternalAccuracy (1e-4)
+% SetMaterialEvaluationFrequency (True, "")
+% SetTDCompatibleMaterials (False)
+% SetOrderTet (2)
+% SetUseSensitivityAnalysis (False)
+% SetConsiderLossesInPostprocessingOnly (True)
+% SetMinimumQ (1.0)
+% SetUseParallelization (True)
+% SetMaxNumberOfThreads (96)
+% MaximumNumberOfCPUDevices (2)
+% SetRemoteCalculation (False)

@@ -67,14 +67,14 @@ classdef Solid < handle
             obj.AddToHistory(['.Rename "', num2str(oldName, '%.15g'), '", '...
                                       '"', num2str(newName, '%.15g'), '"']);
         end
-        function ChangeComponent(obj, oldName, newName)
+        function ChangeComponent(obj, solidName, newName)
             % Changes the component of a solid. The compontent to be changed to must already exist.
-            obj.AddToHistory(['.ChangeComponent "', num2str(oldName, '%.15g'), '", '...
+            obj.AddToHistory(['.ChangeComponent "', num2str(solidName, '%.15g'), '", '...
                                                '"', num2str(newName, '%.15g'), '"']);
         end
-        function ChangeMaterial(obj, oldName, newName)
+        function ChangeMaterial(obj, solidName, newName)
             % Changes the material of a solid. The material to change to must already exist.
-            obj.AddToHistory(['.ChangeMaterial "', num2str(oldName, '%.15g'), '", '...
+            obj.AddToHistory(['.ChangeMaterial "', num2str(solidName, '%.15g'), '", '...
                                               '"', num2str(newName, '%.15g'), '"']);
         end
         function SetUseIndividualColor(obj, SolidName, flag)
@@ -127,6 +127,7 @@ classdef Solid < handle
         end
         function ShapeVisualizationOffset(obj, offset)
             % Specifies the distance between the triangulation of adjacent shapes. This setting only changes the display information, it does not change any internal description of a solid (Modeler, mesh module, solver, etc.); The parameter offset may have values between 0 - 100.
+            % (2020) This method is deprecated and should not be used anymore.
             obj.AddToHistory(['.ShapeVisualizationOffset "', num2str(offset, '%.15g'), '"']);
         end
         %% Advanced Modelling
@@ -632,6 +633,11 @@ classdef Solid < handle
             obj.AddToHistory(['.FillUpSpaceAdvanced "', num2str(sName, '%.15g'), '", '...
                                                    '"', num2str(componentName, '%.15g'), '", '...
                                                    '"', num2str(materialName, '%.15g'), '"']);
+        end
+        %% CST 2020 Functions.
+        function ShapeVisualizationAccuracy2(obj, acc)
+            % Specifies the accuracy of the triangulation of the shapes used for visualization. This setting only changes the display information, it does not change any internal description of a solid (Modeler, mesh module, solver, etc.). The parameter acc may ordinarily have values between 0 - 100, can be set interactively up to 120 and may also have arbitrary high values. However, due to performance reasons it is not recommended using values above 100. .
+            obj.AddToHistory(['.ShapeVisualizationAccuracy2 "', num2str(acc, '%.15g'), '"']);
         end
         %% Undocumented functions.
         % Found in history list of migrated CST 2014 file around boolean operations.

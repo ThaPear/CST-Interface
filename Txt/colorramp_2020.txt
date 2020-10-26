@@ -1,0 +1,23 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ColorRamp
+
+ 
+
+ColorRamp Object
+Use this to change the color order for the color-by-value field plots.
+
+Methods
+ 
+SetMonoRampColor ( double red, double green, double blue )
+Set user-defined color of the "Mono" color ramp. This results in a color ramp ranging from white to the given color.
+ 
+Default Settings
+
+Type ("rainbow")
+
+Invert (False)
+
+NumberOfContourValues (33)
+
+DrawContourLines (False)
+
+ 

@@ -1,0 +1,24 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | EvaluateFieldOnFace
+
+EvaluateFieldOnFace Object
+Evaluate a field, previously selected in the Navigation Tree, on a specified face.
+
+Methods
+
+CalulateIntegral ( name facename, enum{"x", "y", "z", "abs", "normal"} component, enum{"real", "imaginary", "magnitude", "phase", "complex"} complexType, double_ref dIntReal, double_ref dIntImag, double_ref dArea )
+Integrates the selected field component / absolute value depending on the chosen complex type over the face named by sFaceName. The integrals are returned in the double variables dIntReal and dIntImag. Scalar results returned in the dIntReal variable and dIntImag is set to zero. Alone for the complex type "complex", the dIntImag variable is set accordingly. The size of the face is returned in the dArea variable.
+
+
+Example
+
+Dim dIntReal as Double, dIntImag as Double
+
+Dim dArea, dMax As Double
+
+EvaluateFieldOnFace.IntegrateField ("face1", "normal", dIntReal, dIntImag, dArea)
+
+dMax = EvaluateFieldOnFace.GetValue ("max")
+
+MsgBox Str$(dIntReal)+"+i("+Str$(dIntImag)+") A="+Str$(dArea)+" max="+Str$(dMax)
+
+ 

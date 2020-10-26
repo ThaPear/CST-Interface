@@ -1,0 +1,138 @@
+
+
+InteriorBoundary Object
+This object is used to create a new lid object or a new opening for the multifluid support of the Conjugate Heat Transfer Solver.
+Lids should close a fluid domain. A lid which is not related to a fluid domain will be ignored in the simulation.
+Openings should be surrounded by background material and not be associated to fluid domains.  
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings of the interior boundary (lid or opening) to their default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name of the interior boundary. Each lid and each opening must have a unique name
+
+ 
+
+AddFace ( solidname solidname, int faceid  )
+
+Defines a face inside the calculation domain. For openings, the face should be surrounded by background. A lid face should close a fluid domain cavity.
+
+It might be necessary to define multiple lids in order to completely close a fluid domain. Mind that fluid domains which are not completely closed by lids are not supported.
+
+Each face belonging to the interior boundary must be specified by its faceid of the solid with name solidname.
+
+ 
+
+Set ( string what, variant parameters )
+
+Defines the parameters of the interior opening. The following settings are available:
+
+"BoundaryType" or "Boundary Type"       The boundary type considered only for lids and ignored for openings. Openings are always "open". 
+                                        The boundary type is passed as second parameter, e.g. .Set "BoundaryType", "wall: isothermal".
+        Available boundary types are:
+        "open"                                  The flow temperature or temperature gradient and the flow velocity, gauge pressure or volume flow rate can be set.
+                                                The opening emissivity is set to one.
+        "wall: isothermal"                      Heat can pass this type of boundary, but the temperature is constant.
+        "wall: adiabatic"                       No heat flow passes this boundary condition. The temperature distribution is not constant.
+%
+"Temperature"                           This setting is ignored by lids of type "wall: adiabatic". The second parameter specifies the way in which the temperature is prescribed.
+        Available types are:
+        "unset"                                 Supported only for open boundary types. In this case the flow temperature gradient is zero.
+        "ambient"                               The ambient temperature, which is set in the solver parameter settings, will be used for the fluid.
+        "fixed"                                 A user-defined fixed value can be assigned to the fluid. In this case two further parameters are required: string value, enum unit, where unit is either "Kelvin" or "Celsius" or "Fahrenheit".
+%
+"WallfFlow" or  "Wall Flow"             This setting is relevant only for lids with boundary type "wall: adiabatic" or "wall: isothermal". A slip or no-slip boundary condition can be applied to a lid to describe the flow behavior at the wall. The slip boundary condition sets the tangential velocity gradient to zero at the wall which implies that the flow encounters no friction at the wall and thus doesn't slow down. Conversely, the no-slip boundary condition sets the tangential velocity to zero at the wall which implies that the wall friction slows down the flow. The no-slip boundary condition is typically used to model a physical wall.
+                                        This wall flow boundary condition is passed as a second parameter, e.g. .Set "WallFlow", "no-slip".
+%
+"Emissivity"                            This setting is considered only for lids with boundary type "wall: isothermal". For other boundary types default values will be used according to the table below. Please note that radiation properties are used only when radiation is turned on in the CHT Solver Parameters.
+                                        The emissivity value is passed as a second parameter, e.g. .Set "Radiation", "0.8".
+        "wall: isothermal"                      The emissivity is set to the value specified by the user.  The wall temperature value is used as the reference temperature.
+        "wall: adiabatic"                       The emissivity is set to 0.
+        "open"                                  The radiation temperature define in the CHT Solver Parameters is used as the reference temperature.
+%
+"Velocity"                              This setting is considered only for openings or lids with boundary type "open". The settings for "Velocity", "Pressure" and "VolumeFlowRate" are exclusive. The last settings wins over the others.
+                                        With further parameters, the veloctiy vector and a unit ("m/s" or "km/h") can be specified, e.g. .Set "Velocity", "0", "0", "10", "km/h".
+
+"Pressure"                              This setting is considered only for openings or lids with boundary type "open". The settings for "Velocity", "Pressure" and "VolumeFlowRate" are exclusive. The last settings wins over the others.
+                                        With further parameters, the fluid gauge pressure at the interior boundary can be set to a fixed value and the corresponding unit ("atm", "bar", "Pa", "psi"), e.g. .Set "Pressure", "5", "bar".
+
+"VolumeFlowRate" or "Volume Flow Rate"  This setting is considered only for openings or lids with boundary type "open". The settings for "Velocity", "Pressure" and "VolumeFlowRate" are exclusive. The last settings wins over the others.
+                                        With further parameters, the volume flow rate (and optionally its unit "m^3/h" or "m3/h") can be specified, e.g. .Set "VolumeFlowRate", "1", "m3/h".
+
+ 
+
+Create ( enum type )
+
+Creates the interior boundary with its previously made settings. It has to be specified which type of interior boundary is created:
+
+"Opening"   Define an interior opening. An opening should be surrounded by background.
+
+"Lid"       Define a lid. A lid should close a fluid domain.
+
+ 
+
+ 
+
+Delete ( enum type, string name )
+
+Deletes the interior boundary of the specified type ("Opening" or "Lid") with the given name.
+
+ 
+
+Rename  ( enum type, string oldname,  string newname  )
+
+Renames the interior boundary of the specified type ("Opening" or "Lid") with the given oldname to the defined newname.
+
+ 
+
+Example
+
+With InteriorBoundary
+
+     .Reset
+
+     .Name "lid_outlet"
+
+     .AddFace "Background:lid_outlet", "3"
+
+     .Set "BoundaryType", "open"
+
+     .Set "Temperature", "unset"
+
+     .Set "Pressure", "0.0", "Pa"
+
+     .Create "Lid"
+
+End With
+
+ 
+
+With InteriorBoundary
+
+     .Reset
+
+     .Name "flow_condition"
+
+     .AddFace "Background:opening_inlet", "3"
+
+     .Set "Temperature", "Fixed", "16", "Celsius"
+
+     .Set "VolumeFlowRate"", "0.19", "m3/h"
+
+     .Create "Opening"
+
+End With
+
+ 
+
+ 

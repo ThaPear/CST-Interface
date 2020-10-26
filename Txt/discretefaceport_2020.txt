@@ -1,0 +1,82 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | High Frequency | DiscreteFacePort
+
+DiscreteFacePort Object
+
+Use this object to define discrete face ports. Beside waveguide ports or plane waves the discrete face ports offers another possibility to feed the calculation domain with power. The discrete face port is a special kind of discrete port. It is supported by the integral equation solver, the transient solvers, as well as the frequency domain solver with tetrahedral mesh. The discrete face port is replaced by a Discrete Edge Port if any other solver is chosen. Two different types of discrete face ports are available, considering the excitation as a voltage or as an impedance element which also absorbs some power and enables S-parameter calculation.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+FaceType ( enum {"Linear", "Curved"} facetype )
+Defines the geometry of the face which creates the port. Choose between linear or curved geometry type. By default, a port is created with the linear type. Curved geometry face ports can be created between two edges related to the same circle or between two circular edges related to a torus. Currently the curved geometry type is only available for the Frequency Domain solver with Tetrahedral mesh.
+
+Default Settings
+
+PortNumber (1)
+
+Label ("")
+
+Type (SParameter)
+
+Impedance (50.0)
+
+VoltageAmplitude (1.0)
+
+VoltagePhase (0.0)
+
+SetP1 (True, 0.0, 0.0, 0.0)
+
+SetP2 (True, 0.0, 0.0, 0.0)
+
+LocalCoordinates (False)
+
+InvertDirection (False)
+
+CenterEdge (False)
+
+Monitor (False)
+
+AllowFullSize (True)
+
+Example
+
+' Define a discrete port
+
+With DiscreteFacePort
+
+     .Reset
+
+     .PortNumber "1"
+
+     .Type "SParameter"
+
+     .Impedance "50.0"
+
+     .VoltageAmplitude "1.0"
+
+     .SetP1 "True", "-3.9", "-0.5", "0.2"
+
+     .SetP2 "True", "4.7", "0.15", "2.1"
+
+     .LocalCoordinates "False"
+
+     .InvertDirection "True"
+
+     .CenterEdge "True"
+
+     .Monitor "False"
+
+     .Create
+
+End With
+
+ 
+
+'Delete the discrete port
+
+Port.Delete (1)

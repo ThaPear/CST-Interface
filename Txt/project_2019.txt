@@ -1,0 +1,49 @@
+
+Show 
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Global | Project
+
+Project Object
+
+The Project Object offers miscellaneous functions concerning the program in general.
+
+General Methods
+
+File Handling
+
+Parameter Handling
+
+Global Data Cache
+
+Mathematical Functions / Constants
+
+Result Templates
+
+Macros
+
+MPI Cluster Setup
+
+Result Curve Handling
+
+Result Data Access
+
+Queries
+
+Parametric Modelling
+
+Result Plotting
+
+View
+
+Distributed Computing Setup
+
+General Methods
+
+GetSimulationProject ( string name ) object
+
+Returns the COM interface of the simulation project.
+
+ 
+
+GetParentOfSimulationProject ( ) object
+
+Returns the COM interface of the parent project if the current project is a simulation project.

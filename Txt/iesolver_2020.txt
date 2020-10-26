@@ -1,0 +1,65 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | High Frequency | IESolver
+
+IESolver Object
+
+This object together with the FDSolver Object controls the integral equation solver and multilayer solver.
+
+ 
+
+Integral Equation Solver Settings
+
+General
+
+Defaults
+
+Methods
+ 
+CalculateModalWeightingCoefficientsCMA(bool flag )
+Activates the calculation of modal weighting coefficients for the characteristic mode analysis.
+
+
+Default Settings
+
+SetAccuracySetting ( "Low" )
+
+UseFastFrequencySweep  ( False )
+
+UseIEGroundPlane  ( False )
+
+SetRealGroundMaterialName ( "" )
+
+CalcFarFieldInRealGround ( False )
+
+RealGroundModelType ( "Auto" )
+
+PreconditionerType ( "Auto" )
+
+LowFrequencyStabilization ( False )
+
+LowFrequencyStabilizationML( True )
+
+Multilayer ( FALSE )
+
+SetiMoMACC_I ( 0.0001 )
+
+SetiMoMACC_M ( 0.0001 )
+
+SetCFIEAlpha ( 0.5 )
+
+DeembedExternalPorts ( False )
+
+IgnoreBC_XY_And_Set_To_Open ( True )
+
+ModeTrackingCMA ( True )
+
+NumberOfModesCMA ( 3 )
+
+StartFrequencyCMA ( -1.0 )
+
+SetAccuracySettingCMA ( "Default" )
+
+FrequencySamplesCMA ( 0 )
+
+SetMemSettingCMA ( "Auto" )
+
+ 

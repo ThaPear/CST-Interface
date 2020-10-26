@@ -128,6 +128,30 @@ classdef ColourMapPlot < handle
             % Get the value of the data with the given indices x and y. Valid indices are greater or equal 0 and lower than the number of data samples in the corresponding direction.
             double = obj.hColourMapPlot.invoke('GetDataValue', x, y);
         end
+        %% CST 2019 Functions.
+        function SetSkipValuesMode(obj, mode)
+            % This option specifies which data values shall be skipped from visualization.
+            % enum mode           Skip values
+            % "lessorequal"       less or equal threshold
+            % "greaterorequal"    greater or equal threshold
+            % "outsiderange"      outside clamp range
+            % "insiderange"       inside clamp range
+            % "clamp" (default)   don't skip any values
+            obj.hColourMapPlot.invoke('SetSkipValuesMode', mode);
+        end
+        function SetSkipValuesThreshold(obj, threshold)
+            % This threshold is used only if the SetSkipValuesMode option is set to "lessorequal" or "greaterorequal".
+            obj.hColourMapPlot.invoke('SetSkipValuesThreshold', threshold);
+        end
+        %% CST 2020 Functions.
+        function SetXAutoTick(obj, on)
+            % If set to true (default), the plot ticks of the horizontal / vertical axis are chosen automatically as round values. Otherwise the number of ticks is defined by the 'SetXTicks' / 'SetYTicks' command.
+            obj.hColourMapPlot.invoke('SetXAutoTick', on);
+        end
+        function SetYAutoTick(obj, on)
+            % If set to true (default), the plot ticks of the horizontal / vertical axis are chosen automatically as round values. Otherwise the number of ticks is defined by the 'SetXTicks' / 'SetYTicks' command.
+            obj.hColourMapPlot.invoke('SetYAutoTick', on);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

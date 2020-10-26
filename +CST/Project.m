@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % The Project Object offers miscellaneous functions concerning the program in general.
 classdef Project < handle
     %% CST Interface specific functions.
@@ -973,6 +977,56 @@ classdef Project < handle
             % Example: MinDistributedComputingMemoryLimit (1024)
             obj.hProject.invoke('MinDistributedComputingMemoryLimit', lowerLimit);
         end
+        %% (2020) Global Data Storage
+        % The global data storage can be used to store named settings in projects.
+        % Caution: It is very easy to use the global data storage in a way that introduces very hard to find result inconsistencies. It is strongly advised to be used by experienced users only. If possible, project parameters should be used instead.
+        % The global data storage has the following properties:
+        % It is shared between simulation projects and master projects, i.e. a setting stored in a simulation project will be visible in the master and other simulation projects. This is even true for simulation projects with disabled "Link geometry to master" flag.
+        % Names and values of settings can be arbitrary strings, but line breaks are forbidden.
+        % The standard dependency and result invalidation mechanisms of project parameters are not applied to the global data storage. Changing a value that is used in the history list of 3D projects or in a block or task setting on the schematic does neither prompt for a history rebuild, nor does it cause an invalidation of task results, the assembly or simulation projects. The user of the global data storage is responsible for any re-calculations and/or history rebuilds which might be needed.
+        % Global Data storage settings must not be used in value expressions of project parameters. This would break the parametric result management.
+        % When opening an existing project that uses GetGlobalData, it is impossible to tell whether the current state (3D geometry, task settings, block settings, results etc.) was obtained with the current result of GetGlobalData. The only way to find this out is to rebuild all 3D blocks and to run all 3D solvers and simulation tasks again.
+        function ResetGlobalDataStorage(obj)
+            % Clear all global data storage settings.
+            obj.AddToHistory(['.ResetGlobalDataStorage']);
+        end
+        function SetGlobalData(obj, name, value)
+            % Creates a new global data storage setting with a given name and value or changes an existing one. For storing floating point numbers it is recommended to use an explicit conversion first to double and then to string to avoid errors caused by locale dependent decimal separators:
+            % SetGlobalData(name, CStr(Cdbl(value)))
+            obj.AddToHistory(['.SetGlobalData "', num2str(name, '%.15g'), '", '...
+                                             '"', num2str(value, '%.15g'), '"']);
+        end
+        function string = GetGlobalData(obj, name)
+            % Returns a global data storage setting.
+            string = obj.hProject.invoke('GetGlobalData', name);
+        end
+        %% CST 2019 Functions.
+        function object = GetSimulationProject(obj, name)
+            % Returns the COM interface of the simulation project.
+            object = obj.hProject.invoke('GetSimulationProject', name);
+        end
+        function object = GetParentOfSimulationProject(obj)
+            % Returns the COM interface of the parent project if the current project is a simulation project.
+            object = obj.hProject.invoke('GetParentOfSimulationProject');
+        end
+        %% CST 2020 Functions.
+        function SetPlotStyleForTreeItem(obj, treepath, settings)
+            % This command allows modifying plot styles of 1D curves such as curve color, line style, etc. The modifications behave like modifications which are done in the Curve Style Dialog. It is not required to have any open 1D Plot to use this command. However, existing open 1D Plots will not be updated automatically; consider using the Plot1D object in this case. The parameter treepath is expected to be a Navigation Tree path to a 1D leaf item, that is a tree item which represents a single curve, e.g. "1D Results\S-Parameters\S1,1". If the tree item does not exist or is a folder, an error is reported. This check can be deactivated (see parameter settings ).
+            % The parameter settings is expected to be a whitespace separated list of the following strings:
+            % Keyword         Setting                                                                                                                             Example
+            % nocheck         Disables the existence check for the provided tree path. This allows modifying plot styles a priori to a solver run.
+            % runid=...       Allows controlling the plot styles of a parametric curve. If no runid is provided, runid=0 is assumed. No existence check is done.  runid=0
+            % color=...       Specifies the desired curve color in semicolon separated list of RGB values in the range [0,255].                                   color=255;255;0
+            % linewidth=...   Accepts an integer in the range [1,8] and specifies the line thickness.                                                             linewidth=3
+            % linetype=...    Can be used to specify the line style, which can be one of the options "Solid", "Dashed", "Dotted", "Dashdotted".                   linetype=Solid
+            % markerstyle=... Can be used to specify the marker style, which can be one of the options "Auto", "Additional", "Marksonly", "Nomarks".              markershape=Auto
+            % markersize=...  Accepts an integer in the range [1,8] and specifies the marker size.                                                                markersize=5
+            % clear           Removes all configured plot styles and sets it back to default values.
+            % The following example shows how a plot style can be modified:
+            % SetPlotStyleForTreeItem("1D Results\S-Parameters\S1,1","color=177;1;165 linetype=Dotted linewidth=8")
+            obj.AddToHistory(['.SetPlotStyleForTreeItem "', num2str(treepath, '%.15g'), '", '...
+                                                       '"', num2str(settings, '%.15g'), '"']);
+        end
         %% Undocumented functions.
         % Found at https://www.researchgate.net/post/How_to_export_all_tables_obtained_from_parameter_sweep_in_CST_together
         function ExportPlotData(obj, filename)
@@ -1149,6 +1203,7 @@ classdef Project < handle
         discreteport                CST.DiscretePort
         discretizer                 CST.Discretizer
         displacement                CST.Displacement
+        drc                         CST.DRC
         drcrz                       CST.DRCRZ
         dxf                         CST.DXF
         ecylinder                   CST.ECylinder
@@ -1170,6 +1225,7 @@ classdef Project < handle
         fdsolver                    CST.FDSolver
         fieldsource                 CST.FieldSource
         floquetport                 CST.FloquetPort
+        fluiddomain                 CST.FluidDomain
         force                       CST.Force
         gdsii                       CST.GDSII
         gerber                      CST.GERBER
@@ -1179,6 +1235,7 @@ classdef Project < handle
         humanmodel                  CST.HumanModel
         iesolver                    CST.IESolver
         iges                        CST.IGES
+        interiorboundary            CST.InteriorBoundary
         layerstacking               CST.LayerStacking
         layoutdb                    CST.LayoutDB
         lfsolver                    CST.LFSolver
@@ -1235,10 +1292,12 @@ classdef Project < handle
         probe                       CST.Probe
         proe                        CST.PROE
         qfactor                     CST.QFactor
+        rayresultcreator            CST.RayResultCreator
         rectangle                   CST.Rectangle
 %       result0d                    CST.Result0D
 %       result1d                    CST.Result1D
 %       result1dcomplex             CST.Result1DComplex
+%       result2d                    CST.Result2D
 %       result3d                    CST.Result3D
         resultdatabase              CST.ResultDatabase
 %       resultmap                   CST.ResultMap
@@ -1337,6 +1396,7 @@ classdef Project < handle
         function discreteport                = DiscretePort(obj);                if(isempty(obj.discreteport));                obj.discreteport                = CST.DiscretePort(obj, obj.hProject);                end; discreteport                = obj.discreteport;                end
         function discretizer                 = Discretizer(obj);                 if(isempty(obj.discretizer));                 obj.discretizer                 = CST.Discretizer(obj, obj.hProject);                 end; discretizer                 = obj.discretizer;                 end
         function displacement                = Displacement(obj);                if(isempty(obj.displacement));                obj.displacement                = CST.Displacement(obj, obj.hProject);                end; displacement                = obj.displacement;                end
+        function drc                         = DRC(obj);                         if(isempty(obj.drc));                         obj.drc                         = CST.DRC(obj, obj.hProject);                         end; drc                         = obj.drc  ;                       end
         function drcrz                       = DRCRZ(obj);                       if(isempty(obj.drcrz));                       obj.drcrz                       = CST.DRCRZ(obj, obj.hProject);                       end; drcrz                       = obj.drcrz;                       end
         function dxf                         = DXF(obj);                         if(isempty(obj.dxf));                         obj.dxf                         = CST.DXF(obj, obj.hProject);                         end; dxf                         = obj.dxf;                         end
         function ecylinder                   = ECylinder(obj);                   if(isempty(obj.ecylinder));                   obj.ecylinder                   = CST.ECylinder(obj, obj.hProject);                   end; ecylinder                   = obj.ecylinder;                   end
@@ -1358,6 +1418,7 @@ classdef Project < handle
         function fdsolver                    = FDSolver(obj);                    if(isempty(obj.fdsolver));                    obj.fdsolver                    = CST.FDSolver(obj, obj.hProject);                    end; fdsolver                    = obj.fdsolver;                    end
         function fieldsource                 = FieldSource(obj);                 if(isempty(obj.fieldsource));                 obj.fieldsource                 = CST.FieldSource(obj, obj.hProject);                 end; fieldsource                 = obj.fieldsource;                 end
         function floquetport                 = FloquetPort(obj);                 if(isempty(obj.floquetport));                 obj.floquetport                 = CST.FloquetPort(obj, obj.hProject);                 end; floquetport                 = obj.floquetport;                 end
+        function fluiddomain                 = FluidDomain(obj);                 if(isempty(obj.fluiddomain));                 obj.fluiddomain                 = CST.FluidDomain(obj, obj.hProject);                 end; fluiddomain                 = obj.fluiddomain;                 end
         function force                       = Force(obj);                       if(isempty(obj.force));                       obj.force                       = CST.Force(obj, obj.hProject);                       end; force                       = obj.force;                       end
         function gdsii                       = GDSII(obj);                       if(isempty(obj.gdsii));                       obj.gdsii                       = CST.GDSII(obj, obj.hProject);                       end; gdsii                       = obj.gdsii;                       end
         function gerber                      = GERBER(obj);                      if(isempty(obj.gerber));                      obj.gerber                      = CST.GERBER(obj, obj.hProject);                      end; gerber                      = obj.gerber;                      end
@@ -1367,6 +1428,7 @@ classdef Project < handle
         function humanmodel                  = HumanModel(obj);                  if(isempty(obj.humanmodel));                  obj.humanmodel                  = CST.HumanModel(obj, obj.hProject);                  end; humanmodel                  = obj.humanmodel;                  end
         function iesolver                    = IESolver(obj);                    if(isempty(obj.iesolver));                    obj.iesolver                    = CST.IESolver(obj, obj.hProject);                    end; iesolver                    = obj.iesolver;                    end
         function iges                        = IGES(obj);                        if(isempty(obj.iges));                        obj.iges                        = CST.IGES(obj, obj.hProject);                        end; iges                        = obj.iges;                        end
+        function interiorboundary            = InteriorBoundary(obj);            if(isempty(obj.interiorboundary));            obj.interiorboundary            = CST.InteriorBoundary(obj, obj.hProject);            end; interiorboundary            = obj.interiorboundary;            end
         function layerstacking               = LayerStacking(obj);               if(isempty(obj.layerstacking));               obj.layerstacking               = CST.LayerStacking(obj, obj.hProject);               end; layerstacking               = obj.layerstacking;               end
         function layoutdb                    = LayoutDB(obj);                    if(isempty(obj.layoutdb));                    obj.layoutdb                    = CST.LayoutDB(obj, obj.hProject);                    end; layoutdb                    = obj.layoutdb;                    end
         function lfsolver                    = LFSolver(obj);                    if(isempty(obj.lfsolver));                    obj.lfsolver                    = CST.LFSolver(obj, obj.hProject);                    end; lfsolver                    = obj.lfsolver;                    end
@@ -1393,7 +1455,7 @@ classdef Project < handle
         function nearfieldscan               = NearfieldScan(obj);               if(isempty(obj.nearfieldscan));               obj.nearfieldscan               = CST.NearfieldScan(obj, obj.hProject);               end; nearfieldscan               = obj.nearfieldscan;               end
         function networkparameterextraction  = NetworkParameterExtraction(obj);  if(isempty(obj.networkparameterextraction));  obj.networkparameterextraction  = CST.NetworkParameterExtraction(obj, obj.hProject);  end; networkparameterextraction  = obj.networkparameterextraction;  end
         function nfsfile                     = NFSFile(obj);                     if(isempty(obj.nfsfile));                     obj.nfsfile                     = CST.NFSFile(obj, obj.hProject);                     end; nfsfile                     = obj.nfsfile;                     end
-        function obj_                        = OBJ(obj);                        if(isempty(obj.obj_));                        obj.obj_                        = CST.OBJ(obj, obj.hProject);                        end; obj_                        = obj.obj_;                        end
+        function obj_                        = OBJ(obj);                         if(isempty(obj.obj_));                        obj.obj_                        = CST.OBJ(obj, obj.hProject);                        end; obj_                        = obj.obj_;                        end
         function optimizer                   = Optimizer(obj);                   if(isempty(obj.optimizer));                   obj.optimizer                   = CST.Optimizer(obj, obj.hProject);                   end; optimizer                   = obj.optimizer;                   end
         function parametersweep              = ParameterSweep(obj);              if(isempty(obj.parametersweep));              obj.parametersweep              = CST.ParameterSweep(obj, obj.hProject);              end; parametersweep              = obj.parametersweep;              end
         function parasolid                   = Parasolid(obj);                   if(isempty(obj.parasolid));                   obj.parasolid                   = CST.Parasolid(obj, obj.hProject);                   end; parasolid                   = obj.parasolid;                   end
@@ -1423,6 +1485,7 @@ classdef Project < handle
         function probe                       = Probe(obj);                       if(isempty(obj.probe));                       obj.probe                       = CST.Probe(obj, obj.hProject);                       end; probe                       = obj.probe;                       end
         function proe                        = PROE(obj);                        if(isempty(obj.proe));                        obj.proe                        = CST.PROE(obj, obj.hProject);                        end; proe                        = obj.proe;                        end
         function qfactor                     = QFactor(obj);                     if(isempty(obj.qfactor));                     obj.qfactor                     = CST.QFactor(obj, obj.hProject);                     end; qfactor                     = obj.qfactor;                     end
+        function rayresultcreator            = RayResultCreator(obj);            if(isempty(obj.rayresultcreator));            obj.rayresultcreator            = CST.RayResultCreator(obj, obj.hProject);            end; rayresultcreator            = obj.rayresultcreator;            end
         function rectangle                   = Rectangle(obj);                   if(isempty(obj.rectangle));                   obj.rectangle                   = CST.Rectangle(obj, obj.hProject);                   end; rectangle                   = obj.rectangle;                   end
 %       function result0d                    = Result0D(obj, resultname);        if(isempty(obj.result0d));                    obj.result0d                    = CST.Result0D(obj, obj.hProject, resultname);        end; result0d                    = obj.result0d;                    end
         % Each result0d can be different depending on resultname, so don't store it.
@@ -1433,6 +1496,9 @@ classdef Project < handle
 %       function result1dcomplex             = Result1DComplex(obj, resultname); if(isempty(obj.result1dcomplex));             obj.result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname); end; result1dcomplex             = obj.result1dcomplex;             end
         % Each result1dcomplex can be different depending on resultname, so don't store it.
         function result1dcomplex             = Result1DComplex(obj, resultname);                                                   result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname);                                                                     end
+%       function result2d                    = Result2D(obj, resultname);        if(isempty(obj.result2d));                    obj.result2d                    = CST.Result2D(obj, obj.hProject, resultname);        end; result2d                    = obj.result2d;                    end
+        % Each result2d can be different depending on resultname, so don't store it.
+        function result2d                    = Result2D(obj, resultname);                                                          result2d                    = CST.Result2D(obj, obj.hProject, resultname);                                                                            end
 %       function result3d                    = Result3D(obj, resultname);        if(isempty(obj.result3d));                    obj.result3d                    = CST.Result3D(obj, obj.hProject, resultname);        end; result3d                    = obj.result3d;                    end
         % Each result3d can be different depending on resultname, so don't store it.
         function result3d                    = Result3D(obj, resultname);                                                          result3d                    = CST.Result3D(obj, obj.hProject, resultname);                                                                            end

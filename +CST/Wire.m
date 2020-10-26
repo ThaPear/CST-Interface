@@ -259,6 +259,22 @@ classdef Wire < handle
             % Returnes true if the name is an existing folder.
             bool = obj.hWire.invoke('DoesFolderExist', name);
         end
+        %% CST 2014 Functions.
+        function SetAutomeshPriority(obj, wirename, priority)
+            % This method specifies how the specified wire should be treated by the automatic mesh generation. If the wire is more important than others, a priority can be given for it. Generally the priority for all objects (apart from wires, lumped elements, discrete ports) equals to zero. In the case that two fixpoints are so close to each other that the ratiolimit prohibits a mesh line for each point, the mesh lines will be merged. However if one of the fixpoints has been created by an object of higher priority the mesh lines will be placed on this fixpoint.
+            % Because wires, lumped elements and discrete ports are very sensitive to their start and endpoints, they have a priority of 1000, to ensure the connection of the wire.
+            obj.AddToHistory(['.SetAutomeshPriority "', num2str(wirename, '%.15g'), '", '...
+                                                   '"', num2str(priority, '%.15g'), '"']);
+        end
+        %% CST 2020 Functions.
+        function Slice(obj, sName)
+            % Slices the wire named sName into pieces while the currently active active working coordinate system defines the cutting plane.
+            obj.project.AddToHistory(['Wire.Slice "', num2str(sName, '%.15g'), '"']);
+        end
+        function SliceFolder(obj, sName)
+            % Cuts all the wires in the wire-folder named sName into pieces while the currently active working coordinate system defines the cutting plane.
+            obj.project.AddToHistory(['Wire.SliceFolder "', num2str(sName, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

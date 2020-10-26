@@ -1,0 +1,109 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Low Frequency | MStaticSolver
+
+MStaticSolver Object
+This object is used to define the magnetostatic solver settings.
+
+Methods
+
+Functions
+
+Default Settings
+
+Example
+
+Methods
+
+MaxLinIter (int value)
+The number of iterations performed by the linear solver is automatically limited by a number depending on the desired solver accuracy. This is equivalent to setting the value to "0". If you would like to prescribe a fixed upper limit for number of linear iterations, then specify the corresponding value here.
+
+ 
+
+NlinCycles (int value)
+
+Specifies the maximum number of nonlinear iteration cycles when nonlinear materials are defined.
+
+ 
+
+NlinAccuracy (double accuracy)
+
+Specifies the accuracy of the nonlinear solver. For backward compatibility reasons a value of zero is accepted, but not recognized by the solver.
+
+ 
+
+NlinCylceAccuracy(double accuracy)
+
+This value sets the accuracy of the linear solver for each defect iteration step (inner cycle). If not specified or if set zero (default) an automatic control will be activated.
+
+Recommended for experienced users only.
+
+This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
+
+ 
+
+NlinCycleAccuFactor (double accuracy)
+
+This is a control factor used for the automatic determination of the linear solver accuracy of the defect iteration. This inner cycle accuracy is obtained from the product of the control factor and the current material accuracy.
+
+Recommended for experienced users only.
+
+This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
+
+ 
+
+NlinFinalCycleAccuracy (double accuracy)
+
+This value controls the accuracy of the linear solver run in the last nonlinear cycle. If not specified or if set zero (default) an automatic control will be activated.
+
+Recommended for experienced users only.
+
+This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
+
+ 
+
+Default Values
+
+GridLocation "dual"
+
+Accuracy "1e-6"
+
+Preconditioner "ILU"
+
+MaxNumIter "0"
+
+CalcInductanceMatrix "False"
+
+MeshAdaption "False"
+
+SavePotentialChargeData  "False"
+
+StoreResultsInCache "False"
+
+UseMaxNumberOfThreads "False"
+
+MaxNumberOfThreads "8"
+
+PrecomputeStationaryCurrentSource "False"
+
+EnableDivergenceCheck "True"
+
+Examples
+
+With MStaticSolver
+
+     .Reset
+
+     .Accuracy "1e-6"
+
+     .Preconditioner "ILU"
+
+     .CalcInductanceMatrix "False"
+
+     .StoreResultsInCache "False"
+
+     .MeshAdaption "False"
+
+     .GridLocation "Dual"
+
+End With
+
+ 

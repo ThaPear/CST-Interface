@@ -1,0 +1,88 @@
+
+
+FluidDomain Object
+This object is used to specify a domain (cavity) for a (not explicitly modeled) fluid for the Conjugate Heat Transfer Solver.
+
+If a fluid domain is not closed, each open part must be closed by a lid.
+
+Methods
+
+Example
+
+Methods
+
+Reset
+
+Resets all internal settings of the fluid domain to their default values.
+
+ 
+
+Name ( string name )
+
+Specifies the name of the fluid domain. Each fluid domain must have a unique name.
+
+ 
+
+CavityMaterial ( string materialname )
+
+Specifies the material of fluid inside the fluid domain. The materialname should be a name of a material that exists in the active project.
+
+ 
+
+AddFace ( solidname solidname, int faceid  )
+
+Defines a face inside the fluid domain cavity. For a complex cavities, consisting of multiple connected solids, it is sufficient to specify only one interior face.
+
+In order to define multiple disjoint domains with the same properties, multiple faces can be defined.
+Each face describing the fluid domain must be specified by its faceid of the solid with name solidname.
+
+ 
+
+InvertNormal ( bool flag )
+
+Usually, the fluid domain is considered the domain into which the normal vector of the picked face is pointing. In general, this is the background material side of the face.
+
+In order to change this direction, i.e. the side of the picked face, the flag should be set True.
+
+default: value = False
+
+ 
+
+Create
+
+Creates the fluid domain with its previously made settings.
+
+ 
+
+Delete ( string name )
+
+Deletes the fluid domain with the given name.
+
+ 
+
+Rename  ( string oldname,  string newname  )
+
+Renames the fluid domain with the given oldname to the defined newname.
+
+Example
+
+With FluidDomain
+
+     .Reset
+
+     .Name "fluiddomain_water"
+
+     .CavityMaterial "Water"
+
+     .AddFace "component1:pipe", "352"
+
+     .InvertNormal "False"
+
+     .Create
+
+End With
+
+ 
+
+ 
+

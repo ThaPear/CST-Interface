@@ -34,7 +34,7 @@ classdef ScalarPlot2D < handle
             % "contour"       The field values of the chosen scalar field will be plotted on the chosen cutting plane in different colors.
             % "isoline"       Lines of equal value of the chosen scalar field will be plotted on the chosen cutting plane.
             % "carpet"        Plots a carpet or a surface where the distance of a point on the cutting plane to the surface represents the field value at this point.
-            % "carpetcolor"   The same as ï¿½carpetï¿½, but additionally it is colored in relation to the field values.
+            % "carpetcolor"   The same as ”carpet”, but additionally it is colored in relation to the field values.
             obj.hScalarPlot2D.invoke('Type', key);
         end
         function PlotAmplitude(obj, boolean)
@@ -84,7 +84,7 @@ classdef ScalarPlot2D < handle
             % "y"             The y component of the vector result
             % "z"             The z component of the vector result
             % "abs"           The absolute value of the vector result
-            % "normal"        The normal part of the vector field is the scalar product of the surfaceï¿½s normal vector and the field vector on the surface.
+            % "normal"        The normal part of the vector field is the scalar product of the surface’s normal vector and the field vector on the surface.
             % "tangential"    The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
             obj.hScalarPlot2D.invoke('SetComponent', component);
         end
@@ -119,6 +119,60 @@ classdef ScalarPlot2D < handle
         function long = GetSample(obj)
             % Returns the current time sample number of a time monitor plot.
             long = obj.hScalarPlot2D.invoke('GetSample');
+        end
+        %% CST 2014 Functions.
+        function Scaling(obj, scale)
+            % Defines a scale factor of the plotted objects. A value between 0 and 100 may be given. This value influences the size of the objects.
+            obj.hScalarPlot2D.invoke('Scaling', scale);
+        end
+        function dBScale(obj, boolean)
+            % Decides whether the fields should be plotted in a dB scale or not.
+            obj.hScalarPlot2D.invoke('dBScale', boolean);
+        end
+        function dBUnit(obj, unit)
+            % Sets the a unit for logarithmic farfield plots. The unit must be integer and between "0" and "4". ("0" = "3D Max = 0 dB", "1" = "2D Max = 0 dB",
+            % "2" = "dBV/m", "3" = "dBmV/m", "4" = "dBuV/m").
+            obj.hScalarPlot2D.invoke('dBUnit', unit);
+        end
+        function dBRange(obj, range)
+            % Sets the logarithmic field plot range in dB.
+            % Please note: range must be a double value here. Any expression is not allowed.
+            obj.hScalarPlot2D.invoke('dBRange', range);
+        end
+        function LogScale(obj, boolean)
+            % Decides whether the fields should be plotted in a logarithmical scale or not.
+            obj.hScalarPlot2D.invoke('LogScale', boolean);
+        end
+        function LogStrength(obj, strength)
+            % The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed.
+            obj.hScalarPlot2D.invoke('LogStrength', strength);
+        end
+        function ScaleToVectorMaximum(obj, boolean)
+            % All components will be scaled to the vector maximum. Thus different components can be compared. If not enabled, the components are scaled to their own maximum.
+            obj.hScalarPlot2D.invoke('ScaleToVectorMaximum', boolean);
+        end
+        function ScaleToRange(obj, boolean)
+            % Scales the plot to a range given by ScaleRange. (The used color ramp represents the values between the given interval) This is useful to compare plots with different maximum values.
+            obj.hScalarPlot2D.invoke('ScaleToRange', boolean);
+        end
+        function ScaleRange(obj, min, max)
+            % Sets the minimal and maximal values of the plot. This setting has only an effect, if ScaleToRange is True.
+            obj.hScalarPlot2D.invoke('ScaleRange', min, max);
+        end
+        function Plot(obj)
+            % Plots the field with the previously made settings.
+            obj.hScalarPlot2D.invoke('Plot');
+        end
+        %% CST 2020 Functions.
+        function Attribute(obj, key)
+            % Selects the result mapping attribute of the Plot.
+            % key can have one of the following values:
+            % "animated" - Shows the instantaneous result values regarding given phase or time (see PhaseValue, SetTime, SetSample).
+            % "maximum" - Shows the maximum result values.
+            % "average" - Shows the average result values (only for complex result values).
+            % "rms" - Shows the RMS result values (only for complex result values).
+            % "phase" - Shows the phase of the result values (only for complex result values).
+            obj.hScalarPlot2D.invoke('Attribute', key);
         end
     end
     %% MATLAB-side stored settings of CST state.

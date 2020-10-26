@@ -1,0 +1,21 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ColourMapPlot
+
+ColourMapPlot Object
+
+This object allows controlling the visualization of color map plots.
+
+ 
+
+Methods
+
+SetXAutoTick ( bool on )
+If set to true (default), the plot ticks of the horizontal / vertical axis are chosen automatically as round values. Otherwise the number of ticks is defined by the 'SetXTicks' / 'SetYTicks' command.
+ 
+SetYAutoTick ( bool on )
+If set to true (default), the plot ticks of the horizontal / vertical axis are chosen automatically as round values. Otherwise the number of ticks is defined by the 'SetXTicks' / 'SetYTicks' command.
+
+
+
+Default Settings
+
+Examples

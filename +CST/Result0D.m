@@ -120,6 +120,11 @@ classdef Result0D < handle
             % Returns the string "0DC" if the result object contains complex-valued data, otherwise it returns the string "0D". This method can be used to distinguish the result object from Result1D and Result1DComplex objects in a context where the type of a result object is unknown.
             string = obj.hResult0D.invoke('GetResultObjectType');
         end
+        %% CST 2014 Functions.
+        function SetUnit(obj, unit)
+            % Sets the Unit string for the Result0D object.
+            obj.hResult0D.invoke('SetUnit', unit);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

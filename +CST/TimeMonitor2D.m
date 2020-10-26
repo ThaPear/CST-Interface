@@ -88,6 +88,11 @@ classdef TimeMonitor2D < handle
             % The orientation of the first edge or curve in a chain specifies a direction which influences the result when the monitor is evaluated along this chain. If bFlag is True, this orientation (direction) is inverted.
             obj.AddToHistory(['.InvertOrientation "', num2str(bFlag, '%.15g'), '"']);
         end
+        %% CST 2014 Functions.
+        function SetTimeMonitor2DAutoLabel(obj, bFlag)
+            % This flag concerns only the behavior of the dialog box for monitors at points. It specifies whether or not the monitor name is adapted automatically to the settings made in the dialog box. This command will have no influence on the monitor name specified via the VBA command.
+            obj.AddToHistory(['.SetTimeMonitor2DAutoLabel "', num2str(bFlag, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

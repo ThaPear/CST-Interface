@@ -89,11 +89,12 @@ classdef CombineResults < handle
         function SetExcitationValues(obj, Type, Source, Mode, amplitude, phase_or_timedelay)
             % Specifies the amplitude and phase (respectively  time shift value) for a selected excitation. Supported excitations are:
             %
-            % Excitation source     Type    Source                  Mode
-            % Waveguide port        "port"  Port number             Mode number
-            % Discrete port         "port"  Port number             not available
-            % Farfield source       "ffs"   Farfield source name    not available
-            % Nearfield source      "cd"    Nearfield source name   not available
+            % Excitation source             Type    Source                  Mode
+            % Waveguide port                "port"  Port number             Mode number
+            % Discrete port                 "port"  Port number             not available
+            % Farfield source               "ffs"   Farfield source name    not available
+            % Nearfield source              "cd"    Nearfield source name   not available
+            % (2019) Characteristic mode    "mode"  Mode name               not available
             %
             % For the specified excitation the amplitude is set to amplitude and the  phase value (respectively  time shift values) is set to phase_or_timedelay.
             obj.AddToHistory(['.SetExcitationValues "', num2str(Type, '%.15g'), '", '...

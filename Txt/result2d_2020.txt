@@ -1,0 +1,458 @@
+
+
+Result2D Object
+This object offers access and manipulation functions for 2D results.
+A Result2D object represents a rectangular domain holding data values. The domain is defined on a two dimensional coordinate system with x- and y-axis with a minimum and maximum value on each axis. The data within the domain can be arranged in two different ways, either using discrete samples on a regular grid or triangle based. In both arrangements the data values can hold real or a complex data values.
+Initialization, File Operation
+
+General Settings
+
+Data Access
+
+2D to 2D Operations
+
+Local Operations
+
+Example
+
+Initialization, File Operation
+
+Methods
+
+%% Construction
+
+% A Result2D object can be created as follows:
+
+ 
+
+% Dim result As Object
+
+% Set result = Result2D("")
+
+ 
+
+% This will create an empty object. Alternatively, a file name can be given as a parameter, then the object loads the data from the hard disc.
+
+ 
+
+Initialize ( long nX, long nY )
+
+Initializes an empty Result2D object ("2D") arranged in a regular grid with the specified dimension nX x nY for the storage of real-valued data.
+
+ 
+
+InitializeComplex ( long nX, long nY )
+
+Initializes an empty Result2D object ("2DC") arranged in a regular grid with the specified dimension nX x nY for the storage of complex-valued data.
+
+ 
+
+InitializeTriangulation ( long nTriangles )
+
+Initializes an empty Result2D object ("2D") in a triangle based arrangement with the specified dimension nTriangles for the storage of real-valued data.
+
+ 
+
+InitializeTriangulationComplex ( long nTriangles )
+
+Initializes an empty Result2D object ("2DC") in a triangle based arrangement with the specified dimension nTriangles for the storage of complex-valued data.
+
+ 
+
+Load ( string sFileName )
+
+Loads the Result2D object from file.
+
+NOTE: The names used in the ResultTree do not necessarily correspond to the file names. The file names of tree items can be queried using the ResultTree Object.
+
+ 
+
+Save ( string sFileName )
+
+Saves the Result2D object to file.
+
+ 
+
+AddToTree ( name sTreePath )
+
+Inserts the Result2D object into the tree at the folder specified by sTreePath. NOTE: Save the Result2D object before adding it to the tree to set correct path.
+ 
+%% General Settings
+
+SetTitle ( string sName )
+
+Sets / returns the title / x-axis label / y-axis label of the result.
+ 
+SetXLabel ( string sName )
+
+Sets / returns the title / x-axis label / y-axis label of the result.
+ 
+SetYLabel ( string sName )
+
+Sets / returns the title / x-axis label / y-axis label of the result.
+ 
+GetTitle string
+
+Sets / returns the title / x-axis label / y-axis label of the result.
+
+ 
+
+GetXLabel string
+
+Sets / returns the title / x-axis label / y-axis label of the result.
+
+ 
+
+GetYLabel string
+
+Sets / returns the title / x-axis label / y-axis label of the result.
+
+ 
+
+SetXMin ( double dValue )
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+SetXMax ( double dValue )
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+SetYMin ( double dValue )
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+SetYMax ( double dValue )
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+GetXMin double
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+GetXMax double
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+GetYMin double
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+GetYMax double
+
+Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
+
+ 
+
+SetDataUnit ( string sUnit )
+
+Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
+
+ 
+SetXUnit ( string sUnit )
+
+Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
+
+ 
+etYUnit ( string sUnit )
+
+Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
+
+ 
+
+GetDataUnit string
+
+Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
+
+ 
+
+GetXUnit string
+
+Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
+
+ 
+
+GetYUnit string
+
+Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
+
+ 
+
+SetLogarithmicFactor ( double dValue )
+
+Sets / returns logarithmic factor used for dB Scaling. The logarithmic factor can be 10 for power quantities, 20 for field quantities and zero if dB scaling is not available.
+
+ 
+
+GetLogarithmicFactor double
+
+Sets / returns logarithmic factor used for dB Scaling. The logarithmic factor can be 10 for power quantities, 20 for field quantities and zero if dB scaling is not available.
+
+ 
+
+%% Data Access
+
+GetNX long
+
+If the Result2D object has a regular grid arrangement GetNX / GetNY returns the number of data values on the x- / y-axis.
+
+If the Result2D object has a triangle based arrangement GetNX returns the number of data values (total number of triangle corners) while GetNY always returns 1.
+
+Thus the product of both values always is the total number of data values stored in the Result2D object.
+
+ 
+
+GetNY long
+
+If the Result2D object has a regular grid arrangement GetNX / GetNY returns the number of data values on the x- / y-axis.
+
+If the Result2D object has a triangle based arrangement GetNX returns the number of data values (total number of triangle corners) while GetNY always returns 1.
+
+Thus the product of both values always is the total number of data values stored in the Result2D object.
+
+ 
+
+GetNTriangles long
+
+Returns the total number of triangles stored in the Result2D object.
+
+ 
+
+IsComplex bool
+
+Returns true if the Result2D object holds complex-valued data ("2DC"), otherwise false ("2D").
+
+ 
+
+GetResultObjectType string
+
+Returns the string "2DC" if the result object contains complex-valued data, otherwise it returns the string "2D". This method can be used to distinguish the result object from other result objects in a context where the type of a result object is unknown.
+
+ 
+
+SetValue ( long iX, long iY, double dValue )
+
+Sets / returns the real data value at the specified x/y index in the Result2D object. NOTE: If used with a "2DC" object an error is produced.
+
+ 
+
+GetValue ( long iX, long iY ) double
+
+Sets / returns the real data value at the specified x/y index in the Result2D object. NOTE: If used with a "2DC" object an error is produced.
+
+ 
+
+SetValueComplex ( long iX, long iY, double dRe, double dIm )
+
+Sets / returns the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+GetValueComplex ( long iX, long iY, double_ref dRe, double_ref dIm )
+
+Sets / returns the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+SetValueRe ( long iX, long iY, double dValue )
+
+Sets / returns the real part / imaginary of the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+SetValueIm ( long iX, long iY, double dValue )
+
+Sets / returns the real part / imaginary of the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+GetValueRe ( long iX, long iY ) double
+
+Sets / returns the real part / imaginary of the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+GetValueIm ( long iX, long iY ) double
+
+Sets / returns the real part / imaginary of the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+SetArray ( variant dArray )
+
+Sets / returns data of  the Result2D object from / as a double array.
+
+The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNX' and 'GetNY' to query and one of the 'Initialize...' commands to modify the number of data values of the Result2D object. The array's data layout is in row-major order. In case of complex data the real and imaginary values are alternating.
+
+ 
+
+GetArray variant
+
+Sets / returns data of  the Result2D object from / as a double array.
+
+The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNX' and 'GetNY' to query and one of the 'Initialize...' commands to modify the number of data values of the Result2D object. The array's data layout is in row-major order. In case of complex data the real and imaginary values are alternating.
+
+ 
+
+SetTriangleArray ( variant dArray )
+
+GetTriangleArray variant
+
+Sets / returns triangle data of  the Result2D object from / as a double array.
+
+The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNTriangle' to query and 'InitializeTriangulation' or 'InitializeTriangulationComplex' to modify the number of triangles of the Result2D object. The array's data layout is x11,y11, x12,y12, x13,y13, x21,y21,... with x1*, y1* being the coordinates of the first triangle and so on.
+
+ 
+
+GetGlobalMaximum ( long_ref iX, long_ref iY ) double
+
+Returns the x/y index of the overall maximum / minimum of the data values and the overall maximum / minimum value itself. NOTE: If used with a "2DC" object an error is produced.
+
+ 
+
+GetGlobalMinimum ( long_ref iX, long_ref iY ) double
+
+Returns the x/y index of the overall maximum / minimum of the data values and the overall maximum / minimum value itself. NOTE: If used with a "2DC" object an error is produced.
+
+ 
+
+%% 2D to 2D Operations
+
+Copy Result2D Object
+
+Returns a copy of the object.
+
+ 
+
+Real Result2D Object
+
+Returns a Result2D object filled with the real / imaginary part of the data stored in the calling Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+Imaginary Result2D Object
+
+Returns a Result2D object filled with the real / imaginary part of the data stored in the calling Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+Magnitude Result2D Object
+
+Returns a Result2D object filled with the magnitude / phase (in degrees) of the data stored in the calling Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+Phase Result2D Object
+
+Returns a Result2D object filled with the magnitude / phase (in degrees) of the data stored in the calling Result2D object. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+%% Local Operations
+
+Add ( Result2D Object oObject )
+
+Adds / subtracts the components in oObject  to / from the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same value type (real/complex)).
+
+ 
+
+Subtract ( Result2D Object oObject )
+
+Adds / subtracts the components in oObject  to / from the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same value type (real/complex)).
+
+ 
+
+ComponentMult ( Result2D Object oObject )
+
+Multiplies / divides the components in oObject  with / by the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same value type (real/complex)).
+
+ 
+
+ComponentDiv ( Result2D Object oObject )
+
+Multiplies / divides the components in oObject  with / by the calling object's components. The result will be stored in the calling object. Before calling this method please make sure that the calling object and oObject contain compatible data (same number of samples, same value type (real/complex)).
+
+ 
+
+ScalarMult ( double dValue )
+
+Multiplies all real data values of the current object with the given real number. NOTE: If used with a "2DC" object an error is produced.
+
+ 
+
+ScalarMultReIm ( double dRe, double dIm )
+
+Multiplies all complex data values of the current object with the given complex number. NOTE: If used with a "2D" object an error is produced.
+
+ 
+
+Conjugate
+
+Conjugates all complex data values of the current object.
+
+ 
+
+InterpolateTriangulation
+
+Converts a Result2D object with a triangle based arrangement into a Result2D object with a regular grid arrangement. The number of samples on the grid is automatically derived from the number of triangles.
+
+NOTE: For complex data values, the interpolation is done on real and imaginary parts separately.
+
+NOTE: If used with grid based Result2D object an error is produced.
+
+Example
+
+This example creates an empty object, fills it with real-valued data and adds it to the ResultTree.
+
+ 
+
+Dim result As Object
+
+Set result = Result2D("")
+
+With result
+
+  .Initialize(2, 2)
+
+  .SetValue(0, 0, 0.0)
+
+  .SetValue(0, 1, 0.5)
+
+  .SetValue(1, 0, 0.5)
+
+  .SetValue(1, 1, 1.0)
+
+  .SetTitle("2D Result")
+
+  .Save("my_result.dat")
+
+  .AddToTree("2D/3D Results\Test\real2d")
+
+End With
+
+ 
+
+ 
+
+ 
+
+ 
+
+CST Studio Suite 2020 | 3DS.COM/SIMULIA
+
+
+
+ 

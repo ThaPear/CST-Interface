@@ -97,6 +97,11 @@ classdef TimeMonitor0D < handle
                                         '"', num2str(posY, '%.15g'), '", '...
                                         '"', num2str(posZ, '%.15g'), '"']);
         end
+        %% CST 2014 Functions.
+        function SetTimeMonitor0DAutoLabel(obj, bFlag)
+            % This flag concerns only the behavior of the dialog box for monitors at points. It specifies whether or not the monitor name is adapted automatically to the settings made in the dialog box. This command will have no influence on the monitor name specified via the VBA command.
+            obj.AddToHistory(['.SetTimeMonitor0DAutoLabel "', num2str(bFlag, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

@@ -186,6 +186,12 @@ classdef ThermalSolver < handle
             % Starts the thermal simulation with the current settings and returns 0 if the calculation is successfully finished and an error code >0 otherwise.
             int = obj.hThermalSolver.invoke('Start');
         end
+        %% CST 2020 Functions.
+        function EnableSuspendSolverRun(obj, flag)
+            % If the solver has not converged after the specified maximum number of iterations, the simulation can be suspended (flag = True). This means that the solver pauses; a dialog box will be opened to require from the user how to continue (perform additional iterations or stop and save or discard results). In order to end the simulation normally without pause in case of unconverged results, this flag should be set False.
+            % default: flag = True
+            obj.AddToHistory(['.EnableSuspendSolverRun "', num2str(flag, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

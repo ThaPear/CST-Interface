@@ -246,6 +246,13 @@ classdef Transform_ < handle
             % Port                    this transforms all kinds of ports
             % Currentdistribution     this transforms nearfield sources
             % Part                    this transforms a complete block in the 3D Layout View
+            % (2020) Anchorpoint, Face, Meshshape, Probe, Voxeldata
+            %                         this transforms the named object
+            % (2020) mixed            this transforms a mixed selection of objects. Those need to be added via Name and AddName global name syntax.
+            % (2020) HF3DMonitor      this transforms high frequency field monitors. Currently only Field-Source-Monitors are transformable.
+            % (2020) Lumpedelement    this transforms lumped element
+            % (2020) Coil, currentmonitor, currentwire, voltagemonitor, voltagewire
+            %                         this transforms the named object
             %
             % enum how        description                                                                 special methods
             % Translate       Moves the object along a given vector                                       Vector, UsePickedPoints, InvertPickedPoints
@@ -272,6 +279,18 @@ classdef Transform_ < handle
             %       'Port'
             %       'Currentdistribution'
             %       'Part'
+            %       (2020) 'Anchorpoint'
+            %       (2020) 'Coil'
+            %       (2020) 'CurrentMonitor'
+            %       (2020) 'CurrentWire'
+            %       (2020) 'Face'
+            %       (2020) 'HF3DMonitor'
+            %       (2020) 'Mixed'
+            %       (2020) 'Probe'
+            %       (2020) 'VoltageMonitor'
+            %       (2020) 'VoltageWire'
+            %       (2020) 'Voxeldata'
+
             % how: 'Translate'
             %      'Rotate'
             %      'Scale'
@@ -373,6 +392,49 @@ classdef Transform_ < handle
         function MultipleSelection(obj, boolean)
             % This setting specifies whether the transformation should be performed only to one solid or to multiple selected objects. If you transform multiple objects history entries are created for every shape and if you transform by selected points the pickpoints will be deleted after an operation. This flag prevents the pickpoints from being deleted. If there are still solids to transform the flag is 'true' and in the last transform block it is 'false' so the pickpoints will be deleted.
             obj.AddToHistory(['.MultipleSelection "', num2str(boolean, '%.15g'), '"']);
+        end
+        %% CST 2014 Functions.
+        function TransformAlign(obj, previouslyPasted, noMoreRotate)
+            % This method expects two faces to be picked and transforms a subset of all objects by translation and rotation so that the selected faces touch afterwards. Which parts of the objects are transformed depends on the bool previouslyPasted: if true the information of a previous copy-paste operation or of a subproject import are used. If false, all solids set by .Name and .AddName are used.
+            % If noMoreRotate is true, the picks are deleted and left for a following RotateAlign.
+            obj.AddToHistory(['.TransformAlign "', num2str(previouslyPasted, '%.15g'), '", '...
+                                              '"', num2str(noMoreRotate, '%.15g'), '"']);
+        end
+        function RotateAlign(obj, previouslyPasted)
+            % This method expects two faces and two points to be picked and twists a subset of all objects around the center of the second face. The twist angle is calculated by defining two lines starting at the center of the second face to the two given points which should be parallel afterwards. The rotation axis is perpendicular to the second face.
+            % The selection of the model is done in the same way as described for TransformAlign.
+            % Please Note: This method expects to be called after a TransformAlign so that the picked faces are already touching. The picks are cleared afterwards.
+            obj.AddToHistory(['.RotateAlign "', num2str(previouslyPasted, '%.15g'), '"']);
+        end
+        %% CST 2020 Functions.
+        function Touch(obj, enable)
+            % This enables parametric transform-touch. Whenever this transform is executed, the translation or rotation is continued until it hits another shape.
+            obj.AddToHistory(['.Touch "', num2str(enable, '%.15g'), '"']);
+        end
+        function AddNameToActiveTouchSet(obj, name)
+            % Adds a shape to the set of shapes that are used for touch calculation and actively moved against the set of passive shapes. If not specified, all shapes listed via Name and AddName are used for the touch calculations.
+            obj.AddToHistory(['.AddNameToActiveTouchSet "', num2str(name, '%.15g'), '"']);
+        end
+        function AddNameToPassiveTouchSet(obj, name)
+            % Adds a shape to the set of shapes that are used as opponents for the touch calculations. Against each of the shapes, all shapes of the "active set" (see above) are moved. If not specified, all shapes of the project that are not part of the "active set" are taken as "passive set".
+            obj.AddToHistory(['.AddNameToPassiveTouchSet "', num2str(name, '%.15g'), '"']);
+        end
+        function TouchTolerance(obj, tolerance)
+            % Specifies the maximum distance that the touch algorithm interprets as "touching". The smaller this value, the longer touch calculations will take but also the more accurate they will be.
+            obj.AddToHistory(['.TouchTolerance "', num2str(tolerance, '%.15g'), '"']);
+        end
+        function TouchMaxIterations(obj, number)
+            % Specifies the maximum number of iterations that the touch algorithm performs. If nothing is found until max iterations is reached, the shapes will not move at all.
+            obj.AddToHistory(['.TouchMaxIterations "', num2str(number, '%.15g'), '"']);
+        end
+        function TouchHeuristic(obj, heuristic)
+            % Usually, the heurstic mode is a lot faster, esp. for rotation cases. The default is "true". In very special corner cases, a collision may be missed. If switched off, a conservative approach in collision detection is used. This will take way more iterations but no collision will be missed.
+            obj.AddToHistory(['.TouchHeuristic "', num2str(heuristic, '%.15g'), '"']);
+        end
+        function TouchOffset(obj, offset)
+            % If above zero, the transformation is taken beyond the point of touching, approximately to penetrate the touching shape by a depth of offset.
+            % If below zero, a collision is prevented and the final state should be approximately such that the minimum distance between the moving shapes and a close "passive" shape has the value of offset.
+            obj.AddToHistory(['.TouchOffset "', num2str(offset, '%.15g'), '"']);
         end
         %% Undocumented functions.
         % Found in history list.

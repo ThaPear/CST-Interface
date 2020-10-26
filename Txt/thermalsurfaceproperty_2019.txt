@@ -1,0 +1,54 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Sources and Ports | Thermal | ThermalSurfaceProperty
+
+ThermalSurfaceProperty Object
+This object offers the possibility to create a thermal surface with its radiation and convection properties. A thermal surface can consist of several different shape faces and is used by the Thermal Solver.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Coverage (enum type)
+Defines the part of the selected surface to which the thermal surface property must be assigned. This setting is used only by the tetrahedral mesh based thermal solver.
+type (enum )        meaning
+"WholeSurface"      Thermal surface property is assigned to the whole surface excluding parts possessing fixed temperature (temperature source or isothermal boundary)
+"BackgroundOnly"    Thermal surface property is assigned only to the parts of the surface directly contracting background, including adiabatic boundaries but exluding symmetry planes and open boundaries without added space.
+
+ 
+
+Default Settings
+
+AddFace ("", 0)
+
+UseEmissivityValue ("True")
+
+Emissivity (0.0)
+
+ConvectiveHeatTransferCoefficient (0.0, "W/m^2/K")
+
+ReferenceTemperatureType ("Ambient")
+
+Example
+
+With ThermalSurfaceProperty
+
+     .Reset
+
+     .Name "surfaceprops1"
+
+     .AddFace "component1:solid1", "5"
+
+     .Emissivity "0.1"
+
+     .ConvectiveHeatTransferCoefficient "2", "W/m^2/K"  
+
+     .ReferenceTemperatureType "UserDefined"  
+
+     .ReferenceTemperatureValue "293.15", "Kelvin"  
+
+     .Create
+
+End With

@@ -147,37 +147,119 @@ classdef ParameterSweep < handle
             % Enables/disables the distributed calculation of different solver runs across the network.
             obj.AddToHistory(['.UseDistributedComputing "', num2str(boolean, '%.15g'), '"']);
         end
-
+        %% CST 2014 Functions.
+        function long = GetNumberOfVaryingParameters(obj)
+            % Get the number of varying parameters.
+            long = obj.hParameterSweep.invoke('GetNumberOfVaryingParameters');
+        end
+        function string = GetNameOfVaryingParameter(obj, index)
+            % Returns the name of the specified parameter.
+            string = obj.hParameterSweep.invoke('GetNameOfVaryingParameter', index);
+        end
+        function double = GetValueOfVaryingParameter(obj, index)
+            % Returns the value of the specified parameter.
+            double = obj.hParameterSweep.invoke('GetValueOfVaryingParameter', index);
+        end
+        function AddVolumeWatch(obj, name)
+            % This method adds the volume of a previously defined solid to the watch list, i.e. the volume of the selected solid is stored for every simulation of the parameter sweep. After the sweep has finished, the results are collected under a "Tables" Folder in the tree view.
+            obj.AddToHistory(['.AddVolumeWatch "', num2str(name, '%.15g'), '"']);
+        end
+        function AddUserdefinedWatch(obj)
+            % This method offers the possibility to define a userdefined watch. Only one user defined goal can be added and its results are collected under a "Tables" Folder in the tree view.
+            obj.AddToHistory(['.AddUserdefinedWatch']);
+        end
+        function AddCapacitanceWatch(obj)
+            % Adds a capacitance watch.
+            obj.AddToHistory(['.AddCapacitanceWatch']);
+        end
+        function AddInductanceWatch(obj)
+            % Adds an inductance watch.
+            obj.AddToHistory(['.AddInductanceWatch']);
+        end
+        function AddEnergyWatch(obj)
+            % Adds an energy watch.
+            obj.AddToHistory(['.AddEnergyWatch']);
+        end
+        function AddFieldWatch(obj, x, y, z, key, type)
+            % Adds a field watch, specifying the position, the component key and the type of the field to be watched.
+            % key can have one of the following values:
+            % "X" - X-component of the defined field.
+            % "Y" - Y-component of the defined field.
+            % "Z" - Z-component of the defined field.
+            % "Abs" - Absolut value of the define field.
+            % "Scalar" - Setting for scalar field types (e.g. potentials in electrostatic calculations).
+            % type can have one of the following values:
+            % "E-Field" - Electric field strength in case of an electrostatic calculation.
+            % "D-Field" - Electric flux density in case of an electrostatic calculation.
+            % "H-Field" - Magnetic field strength in case of a magnetostatic calculation.
+            % "B-Field" - Magnetic flux density in case of a magnetostatic calculation.
+            % "Potential" - Potential field in case of an electrostatic calculation.
+            obj.AddToHistory(['.AddFieldWatch "', num2str(x, '%.15g'), '", '...
+                                             '"', num2str(y, '%.15g'), '", '...
+                                             '"', num2str(z, '%.15g'), '", '...
+                                             '"', num2str(key, '%.15g'), '", '...
+                                             '"', num2str(type, '%.15g'), '"']);
+        end
+        function AddForceWatchEx(obj, solidname, key, x, y, z, xaxis, yaxis, zaxis, bAutoExtend)
+            % Adds a force watch, specifying the corresponding solid, the force component ant in case of a torque component, the torque's origin and axis normal.
+            % key can have one of the following values:
+            % "X" - X-component of the force.
+            % "Y" - Y-component of the force.
+            % "Z" - Z-component of the force.
+            % "Abs" - Absolut value of the force.
+            % "Torque" - Torque value.
+            % The setting bAutoExtend concerns only the force computation with tetrahedral solvers and will be ignored otherwise.
+            % The force computation method requires objects which are surrounded completely by the background or by objects that are equivalent to the background. If bAutoExtend is True, all shapes connected to a specified solid or coil will be collected into one group and the force on this group will be computed. If bAutoExtend is False, the force will be computed on the specified object only, and a warning will be printed if this object is not entirely embedded in background or equivalent material.
+            % Please see Force and Torque Calculation for further information.
+            obj.AddToHistory(['.AddForceWatchEx "', num2str(solidname, '%.15g'), '", '...
+                                               '"', num2str(key, '%.15g'), '", '...
+                                               '"', num2str(x, '%.15g'), '", '...
+                                               '"', num2str(y, '%.15g'), '", '...
+                                               '"', num2str(z, '%.15g'), '", '...
+                                               '"', num2str(xaxis, '%.15g'), '", '...
+                                               '"', num2str(yaxis, '%.15g'), '", '...
+                                               '"', num2str(zaxis, '%.15g'), '", '...
+                                               '"', num2str(bAutoExtend, '%.15g'), '"']);
+        end
+        function AddFrqEnergyWatch(obj, frequency)
+            % Adds an energy watch associated with a frequency. SetSimulationType must be set to "Low Frequency".
+            obj.AddToHistory(['.AddFrqEnergyWatch "', num2str(frequency, '%.15g'), '"']);
+        end
+        function AddFrqFieldWatch(obj, x, y, z, key, type, frequency)
+            % Adds a field watch associated with a frequency, specifying the position, the component key and the type of the field to be watched. SetSimulationType must be set to "Low Frequency".
+            % key can have one of the following values:
+            % "X" - X-component of the defined field.
+            % "Y" - Y-component of the defined field.
+            % "Z" - Z-component of the defined field.
+            % "Abs" - Absolut value of the define field.
+            % "Scalar" - Setting for scalar field types (e.g. potentials in electrostatic calculations).
+            % type can have one of the following values:
+            % "E-Field" - Electric field strength in case of an electrostatic calculation.
+            % "D-Field" - Electric flux density in case of an electrostatic calculation.
+            % "H-Field" - Magnetic field strength in case of a magnetostatic calculation.
+            % "B-Field" - Magnetic flux density in case of a magnetostatic calculation.
+            % "Potential" - Potential field in case of an electrostatic calculation.
+            obj.AddToHistory(['.AddFrqFieldWatch "', num2str(x, '%.15g'), '", '...
+                                                '"', num2str(y, '%.15g'), '", '...
+                                                '"', num2str(z, '%.15g'), '", '...
+                                                '"', num2str(key, '%.15g'), '", '...
+                                                '"', num2str(type, '%.15g'), '", '...
+                                                '"', num2str(frequency, '%.15g'), '"']);
+        end
+        function DeleteWatch(obj, name)
+            % Deletes a previously defined watch.
+            obj.AddToHistory(['.DeleteWatch "', num2str(name, '%.15g'), '"']);
+        end
         %% Undocumented functions.
-        % Implemented from History List.
+        % Found in history list.
         % Definition below is copied from CST.ResultTree.
         function EnableTreeUpdate(obj, boolean)
             % Enable or disable the update of the tree. After enabling the tree update, this method does actually update the tree also.
             obj.hParameterSweep.invoke('EnableTreeUpdate', boolean);
         end
-        % Found in 'Library/Result Templates/S-Parameters/- Touchstone Export^+MWS+DS.rtp'
-        function nparams = GetNumberOfVaryingParameters(obj)
-            nparams = obj.hParameterSweep.invoke('GetNumberOfVaryingParameters');
-        end
-        % Found in 'Library\Macros\Solver\E-Solver\Model.pfc'
-        function value = GetValueOfVaryingParameter(obj, index)
-            % Sounds like it'd get the value of the parameter denoted by the index.
-            value = obj.hParameterSweep.invoke('GetValueOfVaryingParameter', index);
-        end
-        % Found in 'Library/Result Templates/Misc/- Send Outlook Notification E-Mail^-DS.rtp'
-        function name = GetNameOfVaryingParameter(obj, index)
-            % Sounds like it'd get the name of the parameter denoted by the index.
-            name = obj.hParameterSweep.invoke('GetNameOfVaryingParameter', index);
-        end
         % Found in 'Library\Result Templates\Particles\- Export 3D Trajectory Plot as Bitmap^+PS.rtp'
         function index = GetCurrentParameterIndex(obj)
             index = obj.hParameterSweep.invoke('GetCurrentParameterIndex');
-        end
-        % Found in 'Library/Macros/Solver/E-solver/Define Slow Wave userdefined Watch^+MWS.mcr'
-        function AddUserdefinedWatch(obj)
-            % 'Library\Macros\Solver\E-Solver\Model.pfc' contains a method named ParameterSweepWatch
-            % That function might be related.
-            obj.hParameterSweep.invoke('AddUserdefinedWatch');
         end
         % Found in history list.
         function AddParameter_Linear(obj, sequencename, parametername, from, to, steps)

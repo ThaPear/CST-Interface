@@ -1,0 +1,81 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shapes | Wire
+
+Wire Object
+
+This object is used to create a new wire. This wire may either specified by its start / end points and its height above the working plane or by a previously defined curve.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+SetAutomeshPriority ( string wirename, double priority )
+
+This method specifies how the specified wire should be treated by the automatic mesh generation. If the wire is more important than others, a priority can be given for it. Generally the priority for all objects (apart from wires, lumped elements, discrete ports) equals to zero. In the case that two fixpoints are so close to each other that the ratiolimit prohibits a mesh line for each point, the mesh lines will be merged. However if one of the fixpoints has been created by an object of higher priority the mesh lines will be placed on this fixpoint.
+
+Because wires, lumped elements and discrete ports are very sensitive to their start and endpoints, they have a priority of 1000, to ensure the connection of the wire.
+
+ 
+
+Default Settings
+
+Height (0)
+
+Radius (0)
+
+BondWireType ("Spline")
+
+RelativeCenterPosition (0.5)
+
+Termination ("natural")
+
+SolidWireModel (False)
+
+AdvancedChainSelection (True)
+
+Material ("")
+
+Examples
+
+With Wire
+
+    .Reset
+
+    .Name ("bondwire1")
+
+    .Type ("Bondwire")
+
+    .Point1 (0, 0, 0, False)
+
+    .Point2 (1, 1, 0, False)
+
+    .Height (1)
+
+    .Radius (0.01)
+
+    .Add
+
+End With
+
+ 
+
+With Wire
+
+     .Reset
+
+     .SolidName "component1:wire1"
+
+     .Name "wire1"
+
+     .Folder "Folder1"
+
+     .Material "Copper (annealed)"
+
+     .KeepWire "False"
+
+     .ConvertToSolidShape
+
+End With

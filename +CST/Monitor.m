@@ -309,6 +309,11 @@ classdef Monitor < handle
                                                                 '"', num2str(y, '%.15g'), '", '...
                                                                 '"', num2str(z, '%.15g'), '"']);
         end
+        %% CST 2020 Functions.
+        function EnableNearfieldCalculation(obj, bFlag)
+            % If bFlag is true, then the computation with this farfield monitor keeps the recorded nearfield data from the solver and makes sure that this data is combined in later post-processing steps that involve this monitor. This is required for some post-processing features but it potentially reduces the speed of subsequent "combine results" post-processing.
+            obj.AddToHistory(['.EnableNearfieldCalculation "', num2str(bFlag, '%.15g'), '"']);
+        end
         %% Undocumented functions
         % Found in history list.
         function CreateUsingLinearStep(obj, fmin, fmax, step)
@@ -409,6 +414,7 @@ end
 % UseSubvolume(0)
 % ExportFarfieldSource(0)
 % SetSubVolumeSampling(');', '', '');
+% (2020) EnableNearfieldCalculation (True)
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % creates a frequency domain electric field monitor for the entire calculation domain

@@ -47,6 +47,7 @@ classdef LumpedElement < handle
         end
         function Create(obj)
             % Creates a new element. All necessary settings for this element have to be made previously.
+            % (2020) For the definition of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) use the CreateMultipin method.
             obj.AddToHistory(['.Create']);
 
             % Prepend With LumpedElement and append End With
@@ -77,16 +78,17 @@ classdef LumpedElement < handle
         end
         function SetType(obj, key)
             % Sets the type of the discrete element.
-            % enum key
-            % meaning
-            % �rlcparallel�
-            % The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance. (default)
-            % �rlcserial�
-            % The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance.
-            % �diode�
-            % The discrete element is a diode.
-            % �generalcircuit�
-            % The discrete element is defined by circuit file.
+            % enum key                           meaning
+            % "rlcparallel"                      The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance. (default)
+            % "rlcserial"                        The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance.
+            % "diode"                            The discrete element is a diode.
+            % "generalcircuit"                   The discrete element is defined by circuit file.
+            % (2020) "spicecircuit"              The discrete element is defined by circuit file with Spice format (typical extensions are *.cir, *.net).
+            % (2020) "touchstone"                The discrete element is defined by circuit file with Touchstone format (typical extensions are *.ts, *.s*p).
+            % (2020) "multipingroupitem"         The discrete element is a multipin sub-element to be connected to a multipin lumped element (with type "multipingroupspice" or multipingrouptouchstone").
+            % (2020) "multipingroupspice"        The discrete element is a multipin lumped element defined by circuit file with Spice format (typical extensions are *.cir, *.net).
+            % (2020) "multipingrouptouchstone"   The discrete element is a multipin lumped element defined by circuit file with Touchstone format (typical extensions are *.ts, *.s*p).
+
             obj.AddToHistory(['.SetType "', num2str(key, '%.15g'), '"']);
         end
         function SetName(obj, name)
@@ -112,15 +114,15 @@ classdef LumpedElement < handle
             obj.AddToHistory(['.SetC "', num2str(dValue, '%.15g'), '"']);
         end
         function SetGs(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to �diode�.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to "diode".
             obj.AddToHistory(['.SetGs "', num2str(dValue, '%.15g'), '"']);
         end
         function SetI0(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to �diode�.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to "diode".
             obj.AddToHistory(['.SetI0 "', num2str(dValue, '%.15g'), '"']);
         end
         function SetT(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to �diode�.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to "diode".
             obj.AddToHistory(['.SetT "', num2str(dValue, '%.15g'), '"']);
         end
         function SetP1(obj, picked, x, y, z)
@@ -137,16 +139,18 @@ classdef LumpedElement < handle
                                      '"', num2str(y, '%.15g'), '", '...
                                      '"', num2str(z, '%.15g'), '"']);
         end
-        function [x0, y0, z0, x1, y1, z1] = GetCoordinates(obj, name)
+        function [boolean, x0, y0, z0, x1, y1, z1] = GetCoordinates(obj, name)
             % Queries the start and end point coordinates of a discrete element specified by name.
             functionString = [...
+                'Dim bool As Boolean', newline, ...
                 'Dim x0 As Double, y0 As Double, z0 As Double', newline, ...
                 'Dim x1 As Double, y1 As Double, z1 As Double', newline, ...
-                'LumpedElement.GetCoordinates(', name, ', x0, y0, z0, x1, y1, z1)', newline, ...
+                'bool = LumpedElement.GetCoordinates(', name, ', x0, y0, z0, x1, y1, z1)', newline, ...
             ];
-            returnvalues = {'x0', 'y0', 'z0', 'x1', 'y1', 'z1'};
-            [x0, y0, z0, x1, y1, z1] = obj.project.RunVBACode(functionString, returnvalues);
+            returnvalues = {'bool', 'x0', 'y0', 'z0', 'x1', 'y1', 'z1'};
+            [boolean, x0, y0, z0, x1, y1, z1] = obj.project.RunVBACode(functionString, returnvalues);
             % Numerical returns.
+            boolean = str2double(boolean);
             x0 = str2double(x0);
             y0 = str2double(y0);
             z0 = str2double(z0);
@@ -154,15 +158,16 @@ classdef LumpedElement < handle
             y1 = str2double(y1);
             z1 = str2double(z1);
         end
-        function [type, R, L, C, Gs, I0, T, radius] = GetProperties(obj, name)
+        function [boolean, type, R, L, C, Gs, I0, T, radius] = GetProperties(obj, name)
             % Queries the basic values of the Lumped Element with the given name. All other parameters are out-values. Returns false if name do not exists, true otherwise.
             functionString = [...
-                'Dim type As String, R As Double, L As Double, C As Double, Gs As Double, I0 As Double, T As Double, radius As Double', newline, ...
-                'LumpedElement.GetProperties(', name, ', condX, condY, condZ)', newline, ...
+                'Dim bool As Boolean, type As String, R As Double, L As Double, C As Double, Gs As Double, I0 As Double, T As Double, radius As Double', newline, ...
+                'bool = LumpedElement.GetProperties(', name, ', condX, condY, condZ)', newline, ...
             ];
-            returnvalues = {'type', 'R', 'L', 'C', 'Gs', 'I0', 'T', 'radius'};
-            [type, R, L, C, Gs, I0, T, radius] = obj.project.RunVBACode(functionString, returnvalues);
+            returnvalues = {'bool', 'type', 'R', 'L', 'C', 'Gs', 'I0', 'T', 'radius'};
+            [boolean, type, R, L, C, Gs, I0, T, radius] = obj.project.RunVBACode(functionString, returnvalues);
             % Numerical returns.
+            boolean = str2double(boolean);
             R = str2double(R);
             L = str2double(L);
             C = str2double(C);
@@ -173,6 +178,7 @@ classdef LumpedElement < handle
         end
         function CircuitFileName(obj, filename)
             % Sets the name of the external Spice file to be imported.
+            % (2020) Sets the name of the external Spice or Touchstone file to be imported for the spicecircuit, touchstone, multipingroupspice and multipingrouptouchstone element type.
             obj.AddToHistory(['.CircuitFileName "', num2str(filename, '%.15g'), '"']);
         end
         function UseRelativePath(obj, flag)
@@ -191,7 +197,7 @@ classdef LumpedElement < handle
             % Initialize an iterator over all Lumped Elements and place it before the first element. Returns the current number of elements in the list.
             obj.AddToHistory(['.StartLumpedElementNameIteration']);
         end
-        function [name] = GetNextLumpedElementName(obj)
+        function [boolean, name] = GetNextLumpedElementName(obj)
             % Returns the name of the next available Lumped Element. Returns false if there are no other elements, true otherwise. Use GetNextLumpedElementName to initialize the iteration. Example of usage:
             % Dim itemName As String
             % Dim lType As String  Dim valueR As Double
@@ -210,11 +216,12 @@ classdef LumpedElement < handle
             % End If
             % Loop
             functionString = [...
+                'Dim bool As Boolean', newline, ...
                 'Dim name As String', newline, ...
-                'LumpedElement.GetNextLumpedElementName(name)', newline, ...
+                'bool = LumpedElement.GetNextLumpedElementName(name)', newline, ...
             ];
-            returnvalues = {'name'};
-            [name] = obj.project.RunVBACode(functionString, returnvalues);
+            returnvalues = {'bool, name'};
+            [boolean, name] = obj.project.RunVBACode(functionString, returnvalues);
         end
         function SetInvert(obj, boolean)
             % Set switch to True to reverse the orientation of the lumped element. This might be important, if the lumped element is a diode.
@@ -268,19 +275,25 @@ classdef LumpedElement < handle
             obj.project.AddToHistory(['LumpedElement.RenameFolder "', num2str(oldFoldername, '%.15g'), '", '...
                                                                   '"', num2str(newFoldername, '%.15g'), '"']);
         end
-        function Defaults(obj)
-            % SetType ("rlcparallel")
-            % SetR (0)
-            % SetL (0)
-            % SetC (0)
-            % SetGs (0)
-            % SetT (0)
-            % SetP1 (False, 0, 0, 0)
-            % SetP2 (False, 0, 0, 0)
-            % SetInvert (False)
-            % SetMonitor (False)
-            % SetRadius (0.0)
-            obj.AddToHistory(['.Defaults']);
+        %% CST 2020 Functions.
+        function CreateMultipin(obj)
+            % Creates a new multipin lumped element. All necessary settings for this element have to be made previously. For the definition of elements other than multipin (typemultipingroupspice or multipingrouptouchstone) use the Create method.
+            obj.AddToHistory(['.CreateMultipin']);
+        end
+        function ConnectMultipinElementPinToSubElement(obj, multipin_name, circuit_pin_name, multipin_sub_element_name)
+            % Connect a circuit pin of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) to a multipin sub-element (typemultipingroupitem).
+            obj.AddToHistory(['.ConnectMultipinElementPinToSubElement "', num2str(multipin_name, '%.15g'), '", '...
+                                                                     '"', num2str(circuit_pin_name, '%.15g'), '", '...
+                                                                     '"', num2str(multipin_sub_element_name, '%.15g'), '"']);
+        end
+        function ConnectMultipinElementPinToShort(obj, multipin_name, circuit_pin_name)
+            % Define a circuit pin of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) be connected to the ideal circuit ground (ConnectMultipinElementPinToShort method) or to be kept floating (ConnectMultipinElementPinToOpen method).
+            obj.AddToHistory(['.ConnectMultipinElementPinToShort "', num2str(multipin_name, '%.15g'), '", '...
+                                                                '"', num2str(circuit_pin_name, '%.15g'), '"']);
+        end
+        function ConnectMultipinElementPinToOpen(obj)
+            % Define a circuit pin of a multipin lumped element (typemultipingroupspice or multipingrouptouchstone) be connected to the ideal circuit ground (ConnectMultipinElementPinToShort method) or to be kept floating (ConnectMultipinElementPinToOpen method).
+            obj.AddToHistory(['.ConnectMultipinElementPinToOpen']);
         end
     end
     %% MATLAB-side stored settings of CST state.
@@ -294,3 +307,17 @@ classdef LumpedElement < handle
         folder
     end
 end
+
+%% Default Settings
+% SetType('rlcparallel');
+% SetR(0)
+% SetL(0)
+% SetC(0)
+% SetGs(0)
+% SetT(0)
+% SetP1(0, 0, 0, 0)
+% SetP2(0, 0, 0, 0)
+% SetInvert(0)
+% SetMonitor(0)
+% SetRadius(0.0)
+%

@@ -189,12 +189,10 @@ classdef Port < handle
             % This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
             %
             % The potential can have one of  the following values:
-            % Positive
-            % Defines a positive electrical potential setting.
-            % Negative
-            % Defines a negative electrical potential setting.
-            % potential,: 'Positive'
-            %             'Negative'
+            % Positive - Defines a positive electrical potential setting.
+            % Negative - Defines a negative electrical potential setting.
+            % potential: 'Positive'
+            %            'Negative'
             obj.AddToHistory(['.AddPotentialNumerically "', num2str(modeset, '%.15g'), '", '...
                                                        '"', num2str(potential, '%.15g'), '", '...
                                                        '"', num2str(upos, '%.15g'), '", '...
@@ -204,12 +202,10 @@ classdef Port < handle
             % This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
             %
             % The potential can have one of  the following values:
-            % Positive
-            % Defines a positive electrical potential setting.
-            % Negative
-            % Defines a negative electrical potential setting.
-            % potential,: 'Positive'
-            %             'Negative'
+            % Positive - Defines a positive electrical potential setting.
+            % Negative - Defines a negative electrical potential setting.
+            % potential: 'Positive'
+            %            'Negative'
             obj.AddToHistory(['.AddPotentialPicked "', num2str(modeset, '%.15g'), '", '...
                                                   '"', num2str(potential, '%.15g'), '", '...
                                                   '"', num2str(name, '%.15g'), '", '...
@@ -220,12 +216,10 @@ classdef Port < handle
             % This method adds and defines a new potential setting to a specific modeset of a multipin waveguide port. The location of the potential can be defined either numerically (upos, vpos) or by selecting a PEC solid face or edge in the port plane, determined by its corresponding name and face_id or edge_id.
             %
             % The potential can have one of  the following values:
-            % Positive
-            % Defines a positive electrical potential setting.
-            % Negative
-            % Defines a negative electrical potential setting.
-            % potential,: 'Positive'
-            %             'Negative'
+            % Positive - Defines a positive electrical potential setting.
+            % Negative - Defines a negative electrical potential setting.
+            % potential: 'Positive'
+            %            'Negative'
             obj.AddToHistory(['.AddPotentialEdgePicked "', num2str(modeset, '%.15g'), '", '...
                                                       '"', num2str(potential, '%.15g'), '", '...
                                                       '"', num2str(name, '%.15g'), '", '...
@@ -303,8 +297,10 @@ classdef Port < handle
         end
         function Shield(obj, key)
             % The boundary of the waveguide port is treated as a perfectly shielding (PEC) frame when calling this method with key = "PEC".
+            % (2019) The boundary of the waveguide port is treated as a perfect electric (PEC) or magnetic (PMC) conductor frame when calling this method with key = "PEC" or "PMC", respectively.
             % key: 'none'
             %      'PEC'
+            %      (2019) 'PMC'
             obj.AddToHistory(['.Shield "', num2str(key, '%.15g'), '"']);
         end
         %% Queries

@@ -2192,7 +2192,7 @@ classdef Material < handle
             % Debye 2nd order         Static value 1      Static value  2     Relaxation time 1       Relaxation time 2
             % Drude                   Plasma freq.        Collision freq.     -                       -
             % Lorentz                 Static epsilon      Resonance freq.     Damping freq.           -
-            % Gyrotropic Gauss        Landï¿½ factor        Sat. magnetization  Resonance line width    Magnetic field vector
+            % Gyrotropic Gauss        Landé factor        Sat. magnetization  Resonance line width    Magnetic field vector
             % Gyrotropic SI           Larmor freq.        Gyrotropic freq.    Damping factor          Biasing direction
             % General 1st order       Alpha0              Beta0               -                       -
             % General 2nd order       Alpha0              Alpha1              Beta0                   Beta1
@@ -2416,6 +2416,40 @@ classdef Material < handle
             MueX = str2double(MueX);
             MueY = str2double(MueY);
             MueZ = str2double(MueZ);
+        end
+        %% CST 2014 Functions.
+        function SetNLBloodFlowLocalVasolidationParam(obj, dValue)
+            % (*) property shared among all available material sets
+            % Specifies the local vasolidation parameter for the nonlinear blood flow coefficient. The typical value is 1.6.
+            obj.AddToHistory(['.SetNLBloodFlowLocalVasolidationParam "', num2str(dValue, '%.15g'), '"']);
+        end
+        %% CST 2020 Functions.
+        function IonSEEModel(obj, strValue)
+            % Sets the type of the ion-induced secondary electron emission model: "None", "Ion Import".
+            obj.AddToHistory(['.IonSEEModel "', num2str(strValue, '%.15g'), '"']);
+        end
+        function IonSEEImportSettings(obj, sFileName, dTemperature)
+            % When the type of the emission model is set to "Ion Import" (method IonSEEModel), this method sets the name of the secondary electron yield (SEY) import file (including the parth) that is displayed in the SEY import dialog box. This setting is to be used as a helpful display of the file name in the import dialog box and it cannot used to import SEY data from sFileName. To import SEY data, one can use either the method IonSEEImportData or the SEY import dialog box. The method sets also the temperature parameter of the energy distribution of the secondary electrons (gamma distributed). This is done in units of eV via the argument dTemperature.
+            obj.AddToHistory(['.IonSEEImportSettings "', num2str(sFileName, '%.15g'), '", '...
+                                                    '"', num2str(dTemperature, '%.15g'), '"']);
+        end
+        function IonSEEImportData(obj, dEnergy, dSEY)
+            % When the type of the emission model is set to "Ion Import", this method sets the secondary electron yield dSEY at the energy dEnergy. This is equivalent to importing one pair of energy - SEY values of the SEY curve.
+            % SpecificHeat ( double dValue, string unit )
+            % This parameter defines the specific heat capacity in the given unit (optional). If the unit is not specified, the default unit J / K / kg is used. This setting is relevant only for transient thermal simulations.
+            obj.AddToHistory(['.IonSEEImportData "', num2str(dEnergy, '%.15g'), '", '...
+                                                '"', num2str(dSEY, '%.15g'), '"']);
+        end
+        function [heatcapacity] = GetSpecificHeat(obj, name)
+            % Returns the specific heat capacity in [J / (K kg)] of the material specified by name. Please note that this setting is taken into account only for transient thermal simulations.
+            functionString = [...
+                'Dim heatcapacity As Double', newline, ...
+                'Material.GetSpecificHeat(', name, ', heatcapacity)', newline, ...
+            ];
+            returnvalues = {'heatcapacity'};
+            [heatcapacity] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            heatcapacity = str2double(heatcapacity);
         end
         %% Undocumented functions.
         % Found in history list when background material is changed.

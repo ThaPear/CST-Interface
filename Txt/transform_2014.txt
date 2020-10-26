@@ -1,0 +1,41 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Transformations and Picks | Transform
+
+Transform Object
+Offers a set of tools that change a solid by transformations.
+
+Methods
+
+Default Settings
+
+Methods
+
+TransformAlign ( bool previouslyPasted, bool noMoreRotate )
+
+This method expects two faces to be picked and transforms a subset of all objects by translation and rotation so that the selected faces touch afterwards. Which parts of the objects are transformed depends on the bool previouslyPasted: if true the information of a previous copy-paste operation or of a subproject import are used. If false, all solids set by .Name and .AddName are used.
+
+If noMoreRotate is true, the picks are deleted and left for a following RotateAlign.
+
+ 
+
+RotateAlign ( bool previouslyPasted )
+
+This method expects two faces and two points to be picked and twists a subset of all objects around the center of the second face. The twist angle is calculated by defining two lines starting at the center of the second face to the two given points which should be parallel afterwards. The rotation axis is perpendicular to the second face.
+
+The selection of the model is done in the same way as described for TransformAlign.
+
+Please Note: This method expects to be called after a TransformAlign so that the picked faces are already touching. The picks are cleared afterwards.
+
+
+Default Settings
+
+UsePickedPoints (False)
+
+InvertPickedPoints (False)
+
+MultipleObjects (False)
+
+GroupObjects (False)
+
+Origin ("ShapeCenter")
+
+ 

@@ -1,0 +1,78 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ScalarPlot2D
+
+ScalarPlot2D Object
+
+This object allows to plot three dimensional vector fields on a cutting plane. Therefore the 3D Fields on 2D Plane option has to be active. To choose what field to plot, the SelectTreeItem command can be used.
+
+General Methods
+
+Scaling ( int scale )
+
+Defines a scale factor of the plotted objects. A value between 0 and 100 may be given. This value influences the size of the objects.
+
+ 
+
+dBScale ( bool switch )
+
+Decides whether the fields should be plotted in a dB scale or not.
+
+ 
+
+dBUnit ( int unit )
+
+Sets the a unit for logarithmic farfield plots. The unit must be integer and between "0" and "4". ("0" = "3D Max = 0 dB", "1" = "2D Max = 0 dB",
+
+"2" = "dBV/m", "3" = "dBmV/m", "4" = "dBuV/m").
+
+ 
+
+dBRange ( double range )
+
+Sets the logarithmic field plot range in dB.
+
+Please note: range must be a double value here. Any expression is not allowed.
+
+ 
+
+LogScale ( bool switch )
+
+Decides whether the fields should be plotted in a logarithmical scale or not.
+
+ 
+
+LogStrength ( double strength )
+
+The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed.
+
+ 
+
+ScaleToVectorMaximum ( bool switch )
+
+All components will be scaled to the vector maximum. Thus different components can be compared. If not enabled, the components are scaled to their own maximum.
+
+ 
+
+ScaleToRange ( bool switch )
+
+Scales the plot to a range given by ScaleRange. (The used color ramp represents the values between the given interval) This is useful to compare plots with different maximum values.
+
+ 
+
+ScaleRange ( double min, double max )
+
+Sets the minimal and maximal values of the plot. This setting has only an effect, if ScaleToRange is True.
+
+ 
+
+Plot
+
+Plots the field with the previously made settings.
+
+ 
+
+Default Settings
+
+ 
+
+Examples
+

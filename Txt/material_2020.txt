@@ -1,0 +1,116 @@
+
+Material Object
+
+The Material Object lets you define or change materials. Each material defines the material constants of the associated solids.
+
+General
+
+Appearance
+
+Basic Material Parameters
+
+Surface Impedance Materials
+
+Electric Conductivity
+
+Magnetic Conductivity
+
+Dispersion
+
+Tensor Formulas
+
+Temperature Dependent Materials
+
+Thermal Material Properties
+
+Mechanics Material Properties
+
+Queries
+
+Default Settings
+
+General Methods
+
+IonSEEModel (name strValue )
+Sets the type of the ion-induced secondary electron emission model: "None", "Ion Import".
+ 
+IonSEEImportSettings ( name sFileName, double dTemperature )
+When the type of the emission model is set to "Ion Import" (method IonSEEModel), this method sets the name of the secondary electron yield (SEY) import file (including the parth) that is displayed in the SEY import dialog box. This setting is to be used as a helpful display of the file name in the import dialog box and it cannot used to import SEY data from sFileName. To import SEY data, one can use either the method IonSEEImportData or the SEY import dialog box. The method sets also the temperature parameter of the energy distribution of the secondary electrons (gamma distributed). This is done in units of eV via the argument dTemperature.
+ 
+IonSEEImportData ( double dEnergy, double dSEY )
+When the type of the emission model is set to "Ion Import", this method sets the secondary electron yield dSEY at the energy dEnergy. This is equivalent to importing one pair of energy - SEY values of the SEY curve.
+
+SpecificHeat ( double dValue, string unit )
+This parameter defines the specific heat capacity in the given unit (optional). If the unit is not specified, the default unit J / K / kg is used. This setting is relevant only for transient thermal simulations.
+ 
+GetSpecificHeat ( name name, double_ref heatcapacity )
+Returns the specific heat capacity in [J / (K kg)] of the material specified by name. Please note that this setting is taken into account only for transient thermal simulations.
+
+
+
+
+Default Settings
+
+.Type ("Normal")
+
+.Colour ("0", "1", "1")
+
+.Wireframe ("False")
+
+.Transparency ("0")
+
+.Epsilon ("1.0")
+
+.Mue ("1.0")
+
+.Rho ("0.0")
+
+.Sigma ("0.0")
+
+.TanD ("0.0")
+
+.TanDFreq ("0.0")
+
+.TanDGiven ("False")
+
+.TanDModel ("ConstTanD")
+
+.SigmaM ("0.0")
+
+.TanDM ("0.0")
+
+.TanDMFreq ("0.0")
+
+.TanDMGiven ("False")
+
+.DispModelEps ("None")
+
+.DispModelMue ("None")
+
+.MueInfinity ("1.0")
+
+.EpsInfinity ("1.0")
+
+.DispCoeff1Eps ("0.0")
+
+.DispCoeff2Eps ("0.0")
+
+.DispCoeff3Eps ("0.0")
+
+.DispCoeff4Eps ("0.0")
+
+.DispCoeff1Mue ("0.0")
+
+.DispCoeff2Mue ("0.0")
+
+.DispCoeff3Mue ("0.0")
+
+.DispCoeff4Mue ("0.0")
+
+.AddDispEpsPole1stOrder ("0.0", "0.0")
+
+.AddDispEpsPole2ndOrder ("0.0", "0.0", "0.0", "0.0")
+
+ 
+
+ 

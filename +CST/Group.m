@@ -101,6 +101,20 @@ classdef Group < handle
             % Removes all items from groups and then all groups are deleted.
             obj.AddToHistory(['.Reset']);
         end
+        %% CST 2014 Functions.
+        function Create(obj, groupname)
+            % Creates a new group with the given name.
+            obj.AddToHistory(['.Create "', num2str(groupname, '%.15g'), '"']);
+        end
+        function AddSolid(obj, solidname, groupname)
+            % Adds a solid to an existing group.
+            obj.AddToHistory(['.AddSolid "', num2str(solidname, '%.15g'), '", '...
+                                        '"', num2str(groupname, '%.15g'), '"']);
+        end
+        function RemoveSolid(obj, solidname)
+            % Removes a solid from its group.
+            obj.AddToHistory(['.RemoveSolid "', num2str(solidname, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

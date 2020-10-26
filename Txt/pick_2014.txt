@@ -1,0 +1,84 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Transformations and Picks | Pick
+
+Pick Object
+
+Offers a set of tools to find or set specific points, edges or areas.
+
+ 
+
+Some methods/functions specify the objects that have to be picked by an id number. This id number is unique for every object. If not specified otherwise, the numbering starts with 0. Please note: If a solid changes such that new faces/edges/points are created, the id number might change!
+
+ 
+
+Some other methods/functions work on existing picks that can be listed by the pick lists (Modeling: Picks > Pick Lists   ). In this case, an index is passed to the function. This index is 0-based. The first element in the list (the pick that was performed the earliest) will be addressed by "0". It is also possible to use negative numbers, in that case the list is addressed in reverse order: "-1" is the latest picked object (the one with the greatest index in the list), "-2" the second to last pick and so on.
+
+Edge Modifications
+
+General Methods
+
+Generic Picking
+
+Pick Edges from Solids (Id based)
+
+Pick Faces
+
+Pick Modifications
+
+Pick Points from Curves (Coordinate based)
+
+Pick Points from Curves (Id based)
+
+Pick Points from Solids (Coordinate based)
+
+Pick Points from Solids (Id based)
+
+Pick Points from Wires
+
+Queries
+
+Methods
+
+PickCoilFaceFromId ( string coilname, int id )
+
+Picks a face of the coil. The face is specified by the coil that it belongs to and an identity number.
+
+ 
+
+PickCoilFaceFromPoint ( string coilname, double x, double y, double z )
+
+Picks a face of the coil. The face is specified by the coil that it belongs to and the point coordinates.
+
+ 
+
+MeanPointAll
+Creates the mean of the latest two picked points and replaces them with the newly created one. It represents the macro implementation of the command Modeling: Picks  Pick Point   Mean Last two points
+
+ 
+
+GetPickpointCoordinates ( int index, double_ref x, double_ref y, double_ref z ) bool
+
+Returns the coordinates of a picked point through the argument list. The picked point is specified by index starting with 1.
+
+ 
+
+GetPickedEdgeFromIndex ( int index, long_ref edgeid, long_ref vertexid ) string
+
+Returns the shapename of a picked edge. The edge id and the vertex id is returned through the argument list. The picked edge is specified by index starting with 1.
+
+ 
+
+GetPickedFaceFromIndex ( int index, long_ref faceid) string
+
+Returns the shapename of a picked face. The face id is returned through the argument list. The picked face is specified by index starting with 1.
+
+ 
+
+GetPickedFaceAreaFromIndex ( int index ) double
+
+Returns the surface area of a picked face. The picked face is specified by index starting with 1.
+
+ 
+
+Default Settings
+
+Examples

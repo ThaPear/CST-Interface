@@ -1,0 +1,53 @@
+
+Show 
+Home | Visual Basic (VBA) Language | MotionGap Object
+
+MotionGap Object
+
+Defines a new gap item for an existing rigid body motion object.
+
+Methods
+
+Active (bool state)
+
+Activates or deactivates the gap item for further calculations.
+
+ 
+
+Orientation (string dir)
+
+Specifies whether the rotor or mover elements are positioned inside the gap (dir = "inside") or outside the gap (dir = "outside").
+
+Example
+
+With MotionGap
+
+     .Reset
+
+     .Name "Gap1"
+
+     .MotionObject "Rotation1"
+
+     .Active "True"
+
+     .Orientation "Inside"
+
+     .StartPointState "coordinate"
+
+     .EndPointState "coordinate"
+
+     .Point "0", "0"
+
+     .LineTo "0", "1"
+
+     .LineTo "1", "1"
+
+     .LineTo "1", "0"
+
+     .LineTo "0", "0"
+
+     .Create
+
+End With
+
+ 

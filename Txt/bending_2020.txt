@@ -1,0 +1,59 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shape Operations | Bending
+
+Bending Object
+
+This object is used to bend a planar sheet on a solid shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+ 
+Centralized ( bool onesided )
+Sets the impact direction of the cylindrical bending operation. False indicates a one-sided direction which means that only the half-space of the u-axis will be bent. True indicates that the bending is performed along the entire u-axis.
+ 
+Angle ( double angle)
+Sets the angle of the cylinder around which the items are going to be bent. Either the angle or the radius must be zero.
+ 
+Radius ( double radius )
+Sets the radius of the cylinder around which the items are going to be bent. Either the angle or the radius must be zero.
+ 
+ULength ( double length )
+Optionally, the u-length can be specified to limit the bending region along the u-axis of the local WCS.
+ 
+VLength ( double length )
+Optionally, the v-length can be specified to limit the bending region along the v-axis of the local WCS.
+ 
+ReferenceSolid ( name shapename )
+Sets the name of the reference solid. The reference solid is used internally to determine whether unconnected items shall be bent. If the reference solid is not specified then the algorithm determines an internally reference solid by uniting all items which shall be bent. This operation can be very time-consuming therefore it is recommended to use a reference solid when many shapes shall be bent.
+ 
+FlexBend
+Performs the cylindrical bending operation around a virtual cylinder defined by either an angle or an radius. The position and orientation of the cylinder is determined by setting the local WCS.
+
+
+Default Settings
+
+Sheet ("")
+
+Solid ("")
+
+Faces ("")
+
+Example
+
+With Bending
+
+.Reset
+
+.Sheet "component1:sheet"
+
+.Solid "component2:solid1"
+
+.Faces "10,9,8,7"
+
+.Bend
+
+End With

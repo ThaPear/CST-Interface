@@ -73,6 +73,11 @@ classdef ColorRamp < handle
             % "FarFire" - blue-magenta-red-yellow (for far fields)
             % "Gray" - for black-and-white printer
             % "Hot" - black-red-yellow-white
+            % (2014) "Phase" - red-magenta-blue-cyan-green-yellow-red
+            % (2014) "Free" - user defined, see .AddPoint method
+            % (2019) "Free" - user-defined color order
+            % (2020) "Phase" - red-magenta-blue-cyan-green-yellow-red
+            % (2020) "Mono" - white to user-defined color
             obj.AddToHistory(['.Type "', num2str(ramptype, '%.15g'), '"']);
         end
         function Invert(obj, boolean)
@@ -118,8 +123,45 @@ classdef ColorRamp < handle
         end
         function Style(obj, enum)
             % This switch either hides (None) the color ramp or positions it vertically in the main view.
-            % enum: 'None' / 'Vertical'
+            % enum: 'None'
+            %       'Vertical'
+            %       (2014) 'Vertical
             obj.AddToHistory(['.Style "', num2str(enum, '%.15g'), '"']);
+        end
+        %% CST 2014 Functions.
+        function Scaling(obj, scaletype)
+            % Stretches or squeezes the color ramp.
+            % enum scaletype  meaning                                                             result for rainbow type
+            % "None"          The color ramp is neither squeezed nor stretched.                   blue-cyan-green-yellow-red
+            % "Stretch"       The range 0..max is stretched to -max..max.                         green-yellow-red
+            % "Squeeze"       The range -max..max is squeezed to 0..max and inverted to -max..0.  red-yellow-green-cyan-blue-cyan-green-yellow-red
+            obj.AddToHistory(['.Scaling "', num2str(scaletype, '%.15g'), '"']);
+        end
+        function AddPoint(obj, value, red, green, blue)
+            % A user defined color ramp is shown for .Type "Free". For any field value in the range from -1 (minimum) to +1 (maximum), the desired color can be defined by three doubles ranging from 0 to 1. The color values between two adjacent points will be interpolated. At least two color definitions are needed. See Example.
+            obj.AddToHistory(['.AddPoint "', num2str(value, '%.15g'), '", '...
+                                        '"', num2str(red, '%.15g'), '", '...
+                                        '"', num2str(green, '%.15g'), '", '...
+                                        '"', num2str(blue, '%.15g'), '"']);
+        end
+        function AddFreeRampVertex(obj, value, red, green, blue)
+            % Adds a vertex to the user-defined color ramp. All parameters need to be in the range [0.0, 1.0]. The value defines the relative position on the color ramp, with value = 0.0 referring to the lower bound of the color ramp and value = 1.0 to the upper bound. The color given in red, green, blue is interpolated linearly between the given color ramp vertices.
+            % For example a simple color ramp ranging from red to white is defined as follows:
+            % AddFreeRampVertex (0.0, 1.0, 0.0, 0.0)
+            % AddFreeRampVertex (1.0, 1.0, 1.0, 1.0)
+            obj.AddToHistory(['.AddFreeRampVertex "', num2str(value, '%.15g'), '", '...
+                                                 '"', num2str(red, '%.15g'), '", '...
+                                                 '"', num2str(green, '%.15g'), '", '...
+                                                 '"', num2str(blue, '%.15g'), '"']);
+        end
+        function DeleteFreeRampVertices(obj)
+            % Delete all vertices from the user-defined color ramp. This results in an empty black user-defined color ramp.
+            obj.AddToHistory(['.DeleteFreeRampVertices']);
+        end
+        %% CST 2020 Functions.
+        function SetMonoRampColor(obj, red, green, blue)
+            % Set user-defined color of the "Mono" color ramp. This results in a color ramp ranging from white to the given color.
+            obj.hColorRamp.invoke('SetMonoRampColor', red, green, blue);
         end
     end
     %% MATLAB-side stored settings of CST state.

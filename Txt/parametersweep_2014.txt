@@ -1,0 +1,181 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | ParameterSweep
+
+ParameterSweep Object
+
+Allows to automatically perform several simulations with varying parameters.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+GetNumberOfVaryingParameters long
+
+Get the number of varying parameters.
+
+ 
+
+GetNameOfVaryingParameter ( long index ) string
+
+Returns the name of the specified parameter.
+
+ 
+
+GetValueOfVaryingParameter ( long index ) double
+
+Returns the value of the specified parameter.
+
+ 
+
+AddVolumeWatch ( solidname name )
+
+This method adds the volume of a previously defined solid to the watch list, i.e. the volume of the selected solid is stored for every simulation of the parameter sweep. After the sweep has finished, the results are collected under a "Tables" Folder in the tree view.
+
+ 
+
+AddUserdefinedWatch
+
+This method offers the possibility to define a userdefined watch. Only one user defined goal can be added and its results are collected under a "Tables" Folder in the tree view.
+
+ 
+
+AddCapacitanceWatch
+
+Adds a capacitance watch.
+
+ 
+
+AddInductanceWatch
+
+Adds an inductance watch.
+
+ 
+
+AddEnergyWatch
+
+Adds an energy watch.
+
+ 
+
+AddFieldWatch ( double x, double y, double z, enum key, enum type )
+
+Adds a field watch, specifying the position, the component key and the type of the field to be watched.
+
+key can have one of the following values:
+
+"X" - X-component of the defined field.
+
+"Y" - Y-component of the defined field.
+
+"Z" - Z-component of the defined field.
+
+"Abs" - Absolut value of the define field.
+
+"Scalar" - Setting for scalar field types (e.g. potentials in electrostatic calculations).
+
+type can have one of the following values:
+
+"E-Field" - Electric field strength in case of an electrostatic calculation.
+
+"D-Field" - Electric flux density in case of an electrostatic calculation.
+
+"H-Field" - Magnetic field strength in case of a magnetostatic calculation.
+
+"B-Field" - Magnetic flux density in case of a magnetostatic calculation.
+
+"Potential" - Potential field in case of an electrostatic calculation.
+
+ 
+
+AddForceWatchEx ( solidname solidname, enum key, double x, double y, double z, double xaxis, double yaxis, double zaxis, bool bAutoExtend)
+
+Adds a force watch, specifying the corresponding solid, the force component ant in case of a torque component, the torque's origin and axis normal.
+
+key can have one of the following values:
+
+"X" - X-component of the force.
+
+"Y" - Y-component of the force.
+
+"Z" - Z-component of the force.
+
+"Abs" - Absolut value of the force.
+
+"Torque" - Torque value.
+
+The setting bAutoExtend concerns only the force computation with tetrahedral solvers and will be ignored otherwise.
+
+The force computation method requires objects which are surrounded completely by the background or by objects that are equivalent to the background. If bAutoExtend is True, all shapes connected to a specified solid or coil will be collected into one group and the force on this group will be computed. If bAutoExtend is False, the force will be computed on the specified object only, and a warning will be printed if this object is not entirely embedded in background or equivalent material.
+
+Please see Force and Torque Calculation for further information.
+
+ 
+
+AddFrqEnergyWatch ( double frequency )
+
+Adds an energy watch associated with a frequency. SetSimulationType must be set to "Low Frequency".
+
+ 
+
+AddFrqFieldWatch ( double x, double y, double z, enum key, enum type, double frequency )
+
+Adds a field watch associated with a frequency, specifying the position, the component key and the type of the field to be watched. SetSimulationType must be set to "Low Frequency".
+
+key can have one of the following values:
+
+"X" - X-component of the defined field.
+
+"Y" - Y-component of the defined field.
+
+"Z" - Z-component of the defined field.
+
+"Abs" - Absolut value of the define field.
+
+"Scalar" - Setting for scalar field types (e.g. potentials in electrostatic calculations).
+
+type can have one of the following values:
+
+"E-Field" - Electric field strength in case of an electrostatic calculation.
+
+"D-Field" - Electric flux density in case of an electrostatic calculation.
+
+"H-Field" - Magnetic field strength in case of a magnetostatic calculation.
+
+"B-Field" - Magnetic flux density in case of a magnetostatic calculation.
+
+"Potential" - Potential field in case of an electrostatic calculation.
+
+ 
+
+DeleteWatch ( name name )
+
+Deletes a previously defined watch.
+
+ 
+
+Default Settings
+
+SetSimulationType ("")
+
+UseDistributedComputing (False)
+
+Example
+
+With ParameterSweep
+
+    .SetSimulationType ("Transient")
+
+    .SetSimulationType ("E-Static")
+
+    .AddSequence ("Sweep")
+
+    .AddParameter_Samples ("Sweep", "l", 2.6, 2.8, 5, False)
+
+    .Start
+
+End With
+
+ 

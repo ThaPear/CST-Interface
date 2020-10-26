@@ -1,0 +1,60 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | EvaluateFieldAlongCurve
+
+EvaluateFieldAlongCurve Object
+Evaluate a 2D/3D field, previously selected in the Navigation Tree, along a specified curve. The field values can be analyzed as a 1D result.
+
+Methods
+
+PlotField ( name sCurveName, enum{"x", "y", "z", "abs", "tangential"} component )
+
+Creates a 1D-plot of the selected field component / absolute value along the curve named by sCurveName. The plot is put under "1D Results\Field Along Curves\<sCurveName>" in the Navigation Tree.
+
+ 
+
+IntegrateField ( name  sCurveName, enum{"x", "y", "z", "abs", "tangential"} component, double_ref  dIntReal, double_ref   dIntImag )
+
+Integrates the real and imaginary part of the selected field component / absolute value along the curve named by sCurveName. The integrals are returned in the double variables dIntReal and dIntImag.
+
+ 
+
+FitCurveToGridForPlot ( bool  switch )
+
+If switch is set to True, the field is plot along a curve path which is fitted to the mesh cells. Else, the field is interpolated on the exact curve positions for the plot.
+
+ 
+
+FitCurveToGridForIntegration ( bool  switch )
+
+If switch is set to True, the field is integrated along a curve path which is fitted to the mesh cells. Set to False to interpolate the field on the exact curve positions for the integration.
+
+ 
+
+EvaluateOnSurface ( bool  switch )
+
+If switch is set to True, the field is evaluated on the nearest surface to the curve path, disregarding volume results. This can be used to avoid zero result values, if the curve path is defined on a surface bordering a volume with zero field values (e.g. PEC).
+
+Default Settings
+
+FitCurveToGridForPlot (False)
+
+FitCurveToGridForIntegration (True)
+
+EvaluateOnSurface (False)
+
+Example
+
+Dim dIntReal as Double, dIntImag as Double
+
+EvaluateFieldAlongCurve.FitCurveToGridForIntegration (True)
+
+EvaluateFieldAlongCurve.IntegrateField ("curve1", "tangential", dIntReal, dIntImag)
+
+EvaluateFieldAlongCurve.PlotField ("curve1", "tangential")
+
+SelectTreeItem ("1D Results\Field Along Curves\curve1\Mag")
+
+MsgBox Str$(dIntReal)+"+i("+Str$(dIntImag)+")"
+
+ 
+
+ 

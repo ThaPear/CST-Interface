@@ -19,13 +19,14 @@
 % This object offers access and manipulation functions to 1D results.
 classdef Result1D < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.Result1D, ?CST.Result1DComplex, ?CST.ResultTree, ?CST.Table})
+    methods(Access = {?CST.Project, ?CST.Result1D, ?CST.Result1DComplex, ?CST.ResultTree, ?CST.Table, ?CST.EvaluateFieldAlongCurve})
         % CST.Project can create a Result1D object.
         % CST.Result1D.Copy can create a Result1D object.
         % CST.Result1DComplex.Real/Imaginary/Magnitude/Phase can create a Result1D object.
         % CST.ResultTree.GetResultFromTreeItem can create a Result1D object.
         % CST.ResultTree.GetImpedanceResultFromTreeItem can create a Result1D object.
         % CST.Table.Get1DDataItem can create a Result1D object.
+        % CST.EvaluateFieldAlongCurve.GetField1D can create a Result1D object.
         function obj = Result1D(project, hProjectOrhResult1D, resultname)
             if(nargin == 3)
                 % Created by CST.Project.
@@ -163,10 +164,12 @@ classdef Result1D < handle
         end
         function long = GetMaximumInRange(obj, x1, x2)
             % Returns the index to the maximum y-value that can be found between x1 and x2.
+            % (2019) This function assumes monotonously increasing x values.
             long = obj.hResult1D.invoke('GetMaximumInRange', x1, x2);
         end
         function long = GetMinimumInRange(obj, x1, x2)
             % Returns the index to the minimum y-value that can be found between x1 and x2.
+            % (2019) This function assumes monotonously increasing x values.
             long = obj.hResult1D.invoke('GetMinimumInRange', x1, x2);
         end
         function long = GetMaximumInIndexRange(obj, i1, i2)

@@ -1,0 +1,156 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | Result 3D
+
+Result3D Object
+This object offers access and manipulation functions to 3D results. Therefore it may contain either vector fields or scalar fields. If a scalar field is represented by this object, its values are treated to be x-components of a vector field, while all other components are not available. Therefore all functions that manipulate the x-components manipulate the components of the scalar field.
+
+Initialization, File Operation
+
+Global Field Operators
+
+Local Set/Get Methods
+
+General Settings
+
+Example
+
+Example for Tetrahedral Mesh
+
+General Methods
+
+InitMesh
+
+Initializes the object as an empty tetrahedral/surface mesh.
+
+ 
+
+GetMeshInfo ( long_ref nNodes, long_ref nEdges, long_ref nTriangles, long_ref nTetrahedra )
+
+Yields numbers of nodes, edges, triangles and tetrahedra of the mesh.
+
+ 
+
+GetNode ( long index, double_ref x, double_ref y, double_ref z, long_ref ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+GetEdge ( long index, long_ref Node0, long_ref Node1, long_ref ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+GetTriangle ( long index, long_ref Node0, long_ref Node1, long_ref Node2, long_ref ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+GetTetrahedron ( long index, long_ref Node0, long_ref Node1, long_ref Node2, long_ref Node3, long_ref ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+AddNode ( double x, double y, double z, long ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+AddEdge ( long Node0, long Node1, long ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+AddTriangle ( long Node0, long Node1, long Node2, long ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+AddTetrahedron ( long Node0, long Node1, long Node2, long Node3, long ID )
+
+Read existing mesh entities with a given index or append entities to the mesh.
+
+ 
+
+CopyFrom ( Result3D Object oSecondObject )
+
+Copies the contents from the given second object to the Result3D object. An uninitialized Result3D object will be initialized using the settings of the second object.
+
+ 
+
+Default Settings
+
+Examples
+
+The following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
+
+ 
+
+dim res1 as object          'Create an object with the project
+
+set res1 = Result3D("^e1")  'result file "projectName^e1.m3d"
+
+ 
+
+dim res2 as object          'Create an empty object
+
+set res2 = Result3D("")
+
+ 
+
+set res2 = res1.Copy()      'Copy the data of res1 into res2
+
+res1.Conjugate              'Calculate the complex conjugate
+
+res1.Add res2               'Add both results
+
+ 
+
+res1.Save "^MyResult"       'Save the result in a file named "projectName^MyResult.m3d"
+
+ 
+
+'Store the result into the tree
+
+res1.AddToTree "2D/3D Results\MyFolder", "MyResult"
+
+Example for Tetrahedral Mesh
+
+As above, but for tetrahedral mesh, the following VBA-Script adds a result vector with its complex conjugate, stores it to file with a separate filename and adds the result to the Navigation Tree.
+
+ 
+
+dim res1 as object          'Create an object with the project
+
+set res1 = Result3D("^e-field (#0001)_1(1).m3t")  'result file "projectName^e1.m3t"
+
+ 
+
+dim res2 as object          'Create an empty object
+
+set res2 = Result3D("")
+
+ 
+
+set res2 = res1.Copy()      'Copy the data of res1 into res2
+
+res1.Conjugate              'Calculate the complex conjugate
+
+res1.Add res2               'Add both results
+
+ 
+
+res1.Save "^MyResult.m3t"       'Save the result in a file named "projectName^MyResult.m3t"
+
+ 
+
+'Store the result into the tree
+
+res1.AddToTree "2D/3D Results\MyFolder", "MyResult.m3t"
+
+ 

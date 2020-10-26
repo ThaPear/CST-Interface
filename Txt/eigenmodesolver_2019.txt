@@ -1,0 +1,72 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | High Frequency | EigenmodeSolver
+
+EigenmodeSolver Object
+This is the object that controls some of the eigenmode solver settings and provides access to basic eigenmode solver results. Currently most VBA settings for the eigenmode solvers are controled by the Solver Object.
+
+ 
+
+Eigenmode Solver Settings and Result Queries
+
+General Methods
+
+Result Queries
+
+Force Calculation
+
+Defaults
+
+General Methods
+
+SetMethodType ( enum {"AKS", "JDM", "JDM (low memory)", "Default", "Preview"} key, enum {"Hex", "Tet"} mesh )
+
+Two different eigenmode solver methods are provided for each mesh type, namely AKS (Krylov Subspace method) and JDM (Jacobi-Davidson method) for the hexahedral mesh; default and preview method for the tetrahedral mesh. The JDM and the default solver are capable to solve loss free as well as lossy problems with a frequency independent complex permittivity or reluctivity. The "JDM (low memory)" is a variant of "JDM" that is more efficient in terms of memory usage, but may be less robust in terms of the underlying iterative solver's convergence. The preview eigenmode solver method with tetrahedral mesh overcomes the aforestated limitations for the material losses being considered and can handle lossy and dispersive materials with no poles in the frequency band of interest. Due to the fact that the preview eigenmode solver considers the waveguide ports as open, it also provides an accurate external Q-factor for each calculated mode. This solver can be also used with discrete ports and it supports periodic, open (Standard Impedance Boundary Condition) as well as conducting wall boundaries.
+ 
+SetMinimumQ ( double value )
+
+This setting is relevant only for the preview eigenmode solver and it allows that only modes having total Q-factor greater or equal to this value will be calculated.
+
+Default Settings
+
+SetMethod ("AKS")
+
+SetMeshType ("Hexahedral Mesh")
+
+SetMeshAdaptationHex (False)
+
+SetMeshAdaptationTet (True)
+
+SetNumberOfModes (10)
+
+SetModesInFrequencyRange (False)
+
+SetFrequencyTarget (False, 0.0)
+
+SetLowerBoundForQ (False, 1000)
+
+SetMaterialEvaluationFrequency (True, 0.0)
+
+SetUseParallelization (True)
+
+SetMaxNumberOfThreads (48)
+
+SetConsiderLossesInPostprocessingOnly (True)
+
+SetOrderTet (2)
+
+SetStoreResultsInCache (False)
+
+SetTDCompatibleMaterials (False)
+
+SetCalculateThermalLosses (True)
+
+CalculateLorentzForceForMode: the list of modes is empty.
+
+SetConsiderStaticModes (True)
+
+SetAccuracy (1e-6)
+
+SetQExternalAccuracy (1e-4)
+
+SetCalculateExternalQFactor (False)
+
+ 

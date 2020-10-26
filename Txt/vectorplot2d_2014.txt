@@ -1,0 +1,133 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | VectorPlot2D
+
+VectorPlot2D Object
+
+This object allows to plot three dimensional vector fields in a cutting plane. Therefore the 3D Fields on 2D Plane option has to be active. To choose what field to plot the SelectTreeItem command can be used.
+
+General Methods
+
+Query
+
+Default Settings
+
+Example
+
+General Methods
+
+Color ( bool switch )
+
+Plots the arrows relating to their values in different colors.
+
+ 
+
+Arrows ( int arrows )
+
+Defines the number of arrows used for the field plot.
+
+ 
+
+dBScale ( bool switch )
+
+Decides whether the fields should be plotted in a dB scale or not.
+
+ 
+
+dBUnit ( int unit )
+
+Sets the a unit for logarithmic farfield plots. The unit must be integer and between "0" and "4". ("0" = "3D Max = 0 dB", "1" = "2D Max = 0 dB",
+
+"2" = "dBV/m", "3" = "dBmV/m", "4" = "dBuV/m").
+
+ 
+
+dBRange ( double range )
+
+Sets the logarithmic field plot range in dB.
+
+Please note: range must be a double value here. Any expression is not allowed.
+
+ 
+
+LogScale ( bool switch )
+
+Decides whether the fields should be plotted in a logarithmical scale or not.
+
+ 
+
+LogStrength ( double strength )
+
+The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed.
+
+ 
+
+Plot
+
+Plots the field with the previously made settings.
+
+ 
+
+Default Settings
+
+PhaseValue (0.0)
+
+PhaseStep (22.5)
+
+SetDensityInPercent(50)
+
+ArrowSize (50)
+
+LogScale (False)
+
+LogStrength (10.0)
+
+PlaneNormal ("x")
+
+PlaneCoordinate (0)
+
+SetTime (0.0)
+
+SetSample (0)
+
+Example
+
+The following script plots the electric field  "e1" (if available) in a linear scale by using arrows with density equal 30% . The y-z-plane is defined as cutting plane.
+
+ 
+
+' Plot only a wire frame of the structure to be able to look inside
+
+Plot.wireframe (True)
+
+ 
+
+' Select the desired monitor in the tree.
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+ 
+
+' Enables plotting of 3D fields on 2D planes
+
+Plot3DPlotsOn2DPlane (True)
+
+ 
+
+' Plot the field of the selected monitor
+
+With VectorPlot2D
+
+    .SetDensityInPercent(30)
+
+    .ArrowSize (50)
+
+    .PlaneNormal ("x")
+
+    .PlaneCoordinate (0.0)
+
+    .LogScale (False)
+
+End With 
+
+ 
+
+ 

@@ -28,6 +28,7 @@ classdef DRCRZ < handle
     end
     %% CST Object functions.
     methods
+        %% CST 2013 Functions.
         function Reset(obj)
             % Resets the import options to the default.
             obj.hDRCRZ.invoke('Reset');

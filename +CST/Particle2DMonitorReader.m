@@ -246,6 +246,7 @@ classdef Particle2DMonitorReader < handle
             Single = obj.hParticle2DMonitorReader.invoke('GetBrightness');
         end
         %% Particle2DMonitorReader and PIC2DMonitorReader Object
+        % (2019) Particle2DMonitorReader data consists of multiple frames. The first frame is selected automatically. The monitor's planes are represented by the individual samples in the dataset.
         % Particle2DMonitorReader data only consists of a single frame which is automatically selected. The monitor's planes are represented by the individual samples in the dataset.
         % PIC2DMonitorReader data only consists of a single plane which is automatically selected. However, multiple frames are available.
         % In addition to the common methods, the following methods are available:
@@ -312,6 +313,16 @@ classdef Particle2DMonitorReader < handle
             % This methods removes outlier particles from the currently selected plane. The parameter current_percent can be any value between 0 and 100. It specifies the percentage of the total current through the plane to be kept. The method first sorts all particles on the plane by their distance to the average position. Then, starting from the most central particles, it runs outwards and accumulates the particle current. As soon as the current reaches the given percentage of the total current, the method terminates and removes all remaining particles. After calling this method, GetNParticles will return the appropriately reduced number of particles and the arrays returned by GetQuantityValues are shorter.
             % Note, that while the original result data files are not modified by this method, the in-memory representation is. Thus, the only way to undo this operation is to reload the monitor from disk again using SelectMonitor and SelectPlane.
             obj.hParticle2DMonitorReader.invoke('RemoveOutliers', current_percent);
+        end
+        %% CST 2019 Functions.
+        function SelectSource(obj, id)
+            % Filters the data for subsequent calls to only yield particles that were emitted from the source id. The parameter id must be one of the entries of the array retrieved by the GetSourceIDs method.
+            % Calls to SelectDataSource, LoadTrajectoryData, SelectMonitor, SelectSample, SelectFrame, SelectPlane, SelectTrajectory, Reset, etc. will remove the filter and lead to yielding particle data for all sources again.
+            obj.hParticle2DMonitorReader.invoke('SelectSource', id);
+        end
+        function LongArray = GetEmissionIDs(obj)
+            % Retrieve the unique IDs of all particle sources and interfaces.
+            LongArray = obj.hParticle2DMonitorReader.invoke('GetEmissionIDs');
         end
     end
     %% MATLAB-side stored settings of CST state.

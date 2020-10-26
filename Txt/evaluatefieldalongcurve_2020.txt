@@ -1,0 +1,24 @@
+EvaluateFieldAlongCurve Object
+EvaluateFieldAlongCurve Object
+Evaluate a 2D/3D field, previously selected in the Navigation Tree, along a specified curve. The field values can be analyzed as a 1D result.
+Methods
+ 
+GetField1D ( name sCurveName, enum{"x", "y", "z", "abs", "tangential"} component, enum{"real", "imaginary", "magnitude", "phase", "complex"} complexType ) Result1D Object
+Creates a Result1D object of the selected field component / absolute value and complex type along the curve named by sCurveName.
+ 
+CalculateIntegral ( name sCurveName, enum{"x", "y", "z", "abs", "tangential"} component, enum{"real", "imaginary", "magnitude", "phase", "complex"} complexType, double_ref dIntReal, double_ref dIntImag )
+Integrates the selected field component / absolute value depending on the chosen complex type along the curve named by sCurveName. The integrals are returned in the double variables dIntReal and dIntImag. Scalar results returned in the dIntReal variable and dIntImag is set to zero. Alone for the complex type "complex", the dIntImag variable is set accordingly.
+
+ 
+Default Settings
+FitCurveToGridForPlot (False)
+FitCurveToGridForIntegration (True)
+EvaluateOnSurface (False)
+Example
+Dim dIntReal as Double, dIntImag as Double
+
+EvaluateFieldAlongCurve.FitCurveToGridForIntegration (True)
+EvaluateFieldAlongCurve.IntegrateField ("curve1", "tangential", dIntReal, dIntImag)
+EvaluateFieldAlongCurve.PlotField ("curve1", "tangential")
+SelectTreeItem ("1D Results\Field Along Curves\curve1\Mag")
+MsgBox Str$(dIntReal)+"+i("+Str$(dIntImag)+")"

@@ -1,0 +1,49 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Shape Operations | Bending
+
+Bending Object
+
+This object is used to bend a planar sheet on a solid shape.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+Stackup ( name stackupname )
+Sets the name of the folder which will be used for the layer stackup bending. The shapes in this folder are used for the bending operation. This can be a material or group folder. For example: "material$Folder1".
+ 
+Shape ( name shapename )
+Sets the name of the shape which will be used for the layer stackup bending. Several shape names can be used. You may not use the commands Stackup and Shape at the same time.
+ 
+FlexBending (bool switch )
+This flag is only used by a layer stackup bending. The default is "True" and means that the length of the layers will be adapted flexible such that they match together after the bending.
+ 
+CylindricalBend ( name solidname, bool onesided, double angle, double radius, double length )
+Performs a bending around a virtual cylinder defined by either an angle or an radius. Either the angle or the radius must be zero. The position and orientation of the cylinder is determined by setting the local WCS. The y-axis and the x-axis of the local WCS define the "neutral plane" of the bend. This is the area where the material will neither be stretched nor compressed when wrapping the solid around the virtual cylinder. The z-axis defines the direction of the bend. The flag "onesided" indicated whether only the half-space to the local x-direction will be bend or both sides. The length parameter allows it to restrict the effect to a certain area.
+
+
+Default Settings
+
+Sheet ("")
+
+Solid ("")
+
+Faces ("")
+
+Example
+
+With Bending
+
+.Reset
+
+.Sheet "component1:sheet"
+
+.Solid "component2:solid1"
+
+.Faces "10,9,8,7"
+
+.Bend
+
+End With

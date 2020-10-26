@@ -209,6 +209,37 @@ classdef MStaticSolver < handle
             % Retrieves the couple incuctance between given magnetostatic source definitions. The return value represents an element of the inductance matrix in Henry.
             double = obj.hMStaticSolver.invoke('GetInductanceValue', source1, source2);
         end
+        %% CST 2014 Functions.
+        function MaxLinIter(obj, value)
+            % The number of iterations performed by the linear solver is automatically limited by a number depending on the desired solver accuracy. This is equivalent to setting the value to "0". If you would like to prescribe a fixed upper limit for number of linear iterations, then specify the corresponding value here.
+            obj.AddToHistory(['.MaxLinIter "', num2str(value, '%.15g'), '"']);
+        end
+        function NlinCycles(obj, value)
+            % Specifies the maximum number of nonlinear iteration cycles when nonlinear materials are defined.
+            obj.AddToHistory(['.NlinCycles "', num2str(value, '%.15g'), '"']);
+        end
+        function NlinAccuracy(obj, accuracy)
+            % Specifies the accuracy of the nonlinear solver. For backward compatibility reasons a value of zero is accepted, but not recognized by the solver.
+            obj.AddToHistory(['.NlinAccuracy "', num2str(accuracy, '%.15g'), '"']);
+        end
+        function NlinCylceAccuracy(obj, accuracy)
+            % This value sets the accuracy of the linear solver for each defect iteration step (inner cycle). If not specified or if set zero (default) an automatic control will be activated.
+            % Recommended for experienced users only.
+            % This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
+            obj.AddToHistory(['.NlinCylceAccuracy "', num2str(accuracy, '%.15g'), '"']);
+        end
+        function NlinCycleAccuFactor(obj, accuracy)
+            % This is a control factor used for the automatic determination of the linear solver accuracy of the defect iteration. This inner cycle accuracy is obtained from the product of the control factor and the current material accuracy.
+            % Recommended for experienced users only.
+            % This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
+            obj.AddToHistory(['.NlinCycleAccuFactor "', num2str(accuracy, '%.15g'), '"']);
+        end
+        function NlinFinalCycleAccuracy(obj, accuracy)
+            % This value controls the accuracy of the linear solver run in the last nonlinear cycle. If not specified or if set zero (default) an automatic control will be activated.
+            % Recommended for experienced users only.
+            % This setting is considered only for the hexahedral mesh type and will be ignored by the tetrahedral solver.
+            obj.AddToHistory(['.NlinFinalCycleAccuracy "', num2str(accuracy, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

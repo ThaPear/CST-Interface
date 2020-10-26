@@ -1,0 +1,46 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Transformations and Picks | Transform
+
+Transform Object
+Offers a set of tools that change a solid by transformations.
+
+Methods
+
+Default Settings
+
+Methods
+
+Touch ( bool enable )
+This enables parametric transform-touch. Whenever this transform is executed, the translation or rotation is continued until it hits another shape.
+ 
+AddNameToActiveTouchSet ( name name )
+Adds a shape to the set of shapes that are used for touch calculation and actively moved against the set of passive shapes. If not specified, all shapes listed via Name and AddName are used for the touch calculations.
+ 
+AddNameToPassiveTouchSet ( name name )
+Adds a shape to the set of shapes that are used as opponents for the touch calculations. Against each of the shapes, all shapes of the "active set" (see above) are moved. If not specified, all shapes of the project that are not part of the "active set" are taken as "passive set".
+ 
+TouchTolerance ( double tolerance )
+Specifies the maximum distance that the touch algorithm interprets as "touching". The smaller this value, the longer touch calculations will take but also the more accurate they will be.
+ 
+TouchMaxIterations( int number )
+Specifies the maximum number of iterations that the touch algorithm performs. If nothing is found until max iterations is reached, the shapes will not move at all.
+ 
+TouchHeuristic( bool heuristic)
+Usually, the heurstic mode is a lot faster, esp. for rotation cases. The default is "true". In very special corner cases, a collision may be missed. If switched off, a conservative approach in collision detection is used. This will take way more iterations but no collision will be missed.
+ 
+TouchOffset ( double offset )
+If above zero, the transformation is taken beyond the point of touching, approximately to penetrate the touching shape by a depth of offset.
+If below zero, a collision is prevented and the final state should be approximately such that the minimum distance between the moving shapes and a close "passive" shape has the value of offset.
+
+Default Settings
+
+UsePickedPoints (False)
+
+InvertPickedPoints (False)
+
+MultipleObjects (False)
+
+GroupObjects (False)
+
+Origin ("ShapeCenter")
+
+ 

@@ -1,0 +1,20 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | Thermal | ThermalSolver
+
+ThermalSolver Object
+This object is used to calculate thermal field problems. The corresponding models can be excited by different source types: heat or  temperature sources or as well by importing previously calculated current fields. Thermal surface properties enable the definition of radiation or convection of certain shape faces.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+EnableSuspendSolverRun ( bool flag )
+If the solver has not converged after the specified maximum number of iterations, the simulation can be suspended (flag = True). This means that the solver pauses; a dialog box will be opened to require from the user how to continue (perform additional iterations or stop and save or discard results). In order to end the simulation normally without pause in case of unconverged results, this flag should be set False.
+default: flag = True
+
+Default Settings
+
+Example

@@ -1,0 +1,30 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Post Processing | ColorRamp
+
+ 
+
+ColorRamp Object
+Use this to change the color order for the color-by-value field plots.
+
+Methods
+
+AddFreeRampVertex ( double value, double red, double green, double blue )
+Adds a vertex to the user-defined color ramp. All parameters need to be in the range [0.0, 1.0]. The value defines the relative position on the color ramp, with value = 0.0 referring to the lower bound of the color ramp and value = 1.0 to the upper bound. The color given in red, green, blue is interpolated linearly between the given color ramp vertices.
+For example a simple color ramp ranging from red to white is defined as follows:
+AddFreeRampVertex (0.0, 1.0, 0.0, 0.0)
+AddFreeRampVertex (1.0, 1.0, 1.0, 1.0)
+ 
+DeleteFreeRampVertices
+Delete all vertices from the user-defined color ramp. This results in an empty black user-defined color ramp.
+
+
+Default Settings
+
+Type ("rainbow")
+
+Invert (False)
+
+NumberOfContourValues (33)
+
+DrawContourLines (False)
+
+ 

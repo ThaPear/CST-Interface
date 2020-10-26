@@ -19,12 +19,13 @@
 % This object offers access and manipulation functions to complex 1D results. A Result1DComplex object can hold a number of points ( x, y ) where x is a real number and y is a complex number. Access to the points is possible by specifying an zero-based index.
 classdef Result1DComplex < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.Result1DComplex, ?CST.ResultTree, ?CST.Table})
+    methods(Access = {?CST.Project, ?CST.Result1DComplex, ?CST.ResultTree, ?CST.Table, ?CST.EvaluateFieldAlongCurve})
         % CST.Project can create a Result1DComplex object.
         % CST.Result1DComplex.Copy can create a Result1DComplex object.
         % CST.ResultTree.GetResultFromTreeItem can create a Result1DComplex object.
         % CST.ResultTree.GetImpedanceResultFromTreeItem can create a Result1DComplex object.
         % CST.Table.Get1DDataItem can create a Result1DComplex object.
+        % CST.EvaluateFieldAlongCurve.GetField1D can create a Result1DComplex object.
         function obj = Result1DComplex(project, hProjectOrhResult1DComplex, resultname)
             if(nargin == 3)
                 % Created by CST.Project.
@@ -278,6 +279,39 @@ classdef Result1DComplex < handle
         function DeleteAt(obj, Lifetime)
             % This setting specifies the lifetime of the Result1DComplex object. The variable Lifetime can be one of the following strings: "never", "solverstart" or "rebuild". This setting is considered if the Result1DComplex object is added to the Navigation Tree via AddToTree.
             obj.hResult1DComplex.invoke('DeleteAt', Lifetime);
+        end
+        %% CST 2014 Functions.
+        function Xunit(obj, Unit)
+            % Sets the Unit string for the Result1DComplex object.
+            obj.hResult1DComplex.invoke('Xunit', Unit);
+        end
+        function Yunit(obj, Unit)
+            % Sets the Unit string for the Result1DComplex object.
+            obj.hResult1DComplex.invoke('Yunit', Unit);
+        end
+        function string = GetXunit(obj)
+            % Returns the Unit string of the Result1DComplex object.
+            string = obj.hResult1DComplex.invoke('GetXunit');
+        end
+        function string = GetYunit(obj)
+            % Returns the Unit string of the Result1DComplex object.
+            string = obj.hResult1DComplex.invoke('GetYunit');
+        end
+        function AttachImpedanceOfTreeItem(obj, Name)
+            % If the Result1DComplex object is created and processed within a multiple template evaluation in the Template Based Postprocessing framework, this setting creates a separate result entry of the impedance of the specified tree item and attaches it to the result entry of the current Result1DComplex object to allow visualizing a Smith Chart.
+            obj.hResult1DComplex.invoke('AttachImpedanceOfTreeItem', Name);
+        end
+        function string = GetAttachedImpedanceTreeItem(obj)
+            % Returns the tree item specified by AttachImpedanceOfTreeItem.
+            string = obj.hResult1DComplex.invoke('GetAttachedImpedanceTreeItem');
+        end
+        function SetImpedanceTreeItem(obj, Name)
+            % If the Result1DComplex object is created and processed within a multiple template evaluation in the Template Based Postprocessing framework, this setting stores a reference to a tree item. The data of this tree item is used as impedance data to allow visualizing a Smith Chart. The data is expected to be stored in complex data format.
+            obj.hResult1DComplex.invoke('SetImpedanceTreeItem', Name);
+        end
+        function string = GetImpedanceTreeItem(obj)
+            % Returns the tree item specified by SetImpedanceTreeItem.
+            string = obj.hResult1DComplex.invoke('GetImpedanceTreeItem');
         end
     end
     %% MATLAB-side stored settings of CST state.

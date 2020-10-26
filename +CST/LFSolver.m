@@ -255,6 +255,15 @@ classdef LFSolver < handle
             % Get the imaginary part of the impedance on a voltage source named voltagesourcename in Ohm at the frequency frequency.
             double = obj.hLFSolver.invoke('GetVoltageSourceImpedanceIm', frequency, voltagesourcename);
         end
+        %% CST 2014 Functions.
+        function SetLFPreconditionerAcceleration(obj, precondtype)
+            % Specifies the preconditioner used to solve linear systems of equations. Available options are:
+            % precondtype (enum ) meaning
+            % "Auto"              The preconditioner type is chosen automatically. Currently the Low Memory type will be used by default, but this might change with future versions.
+            % "Accelerated"       A preconditioner which is suited well for structures with high mesh- and material-ratios. This method is more memory consuming, but might converge in situations where the Low Memory type does not converge.
+            % "Low Memory"        This preconditioner type is very memory efficient and converges if mesh- and material- ratios are not very high.
+            obj.AddToHistory(['.SetLFPreconditionerAcceleration "', num2str(precondtype, '%.15g'), '"']);
+        end
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

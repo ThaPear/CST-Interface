@@ -22,6 +22,7 @@
      %#ok<*NBRAK>
 
 % Defines the settings for the Ar-filter. Ar-filters may be applied to time signals at the ports, probe signals or current and voltage monitor signals. You may define different settings for port, probe and monitor signals. An Ar-filter run can be started by using the PostProcess1D object.
+% (2019) Defines the settings for signal prediction. Signal prediction may be applied to time signals at the ports, probe signals or current and voltage monitor signals. You may define different settings for port, probe and monitor signals. A Signal prediction run can be started by using the PostProcess1D object.
 classdef Arfilter < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
@@ -68,6 +69,7 @@ classdef Arfilter < handle
         end
         function SetFirstTime(obj, time)
             % The first time step (in seconds) from which filter determination starts.
+            % (2019) Instead of a numerical value you can also use "auto" for the setting to be determined automatically.
             obj.AddToHistory(['.SetFirstTime "', num2str(time, '%.15g'), '"']);
         end
         function SetSkip(obj, skip)
@@ -76,6 +78,7 @@ classdef Arfilter < handle
         end
         function SetMaxFrq(obj, fMax)
             % Because the time signals will be low pass filtered within the AR calculation process, the maximum frequency of the low pass filter need to be specified here (usually : 1,2 * fmax (from the Frequency dialog box)).
+            % (2019) Instead of a numerical value you can also use "auto" for the setting to be determined automatically.
             obj.AddToHistory(['.SetMaxFrq "', num2str(fMax, '%.15g'), '"']);
         end
         function SetMaxOrder(obj, order)
@@ -86,6 +89,16 @@ classdef Arfilter < handle
             % This method sets the length of the analyzed time interval relative to the maximum number of elements. E.g. with maximum order of filter 40 and a window length of 2.0 the number of analyzed time samples is 40 * 2.0 = 80.
             obj.AddToHistory(['.SetWindowLength "', num2str(length, '%.15g'), '"']);
         end
+        %% CST 2019 Functions.
+        function SetAlgorithmType(obj, type)
+            % Sets the type of algorithm for the signal prediction.
+            % The behavior of the "Basic (Default)" algorithm can be configured via the five options listed below. The "Enhanced (Preview)" version does not require any configuration.
+            % type: 'Basic'
+            %       'Enhanced'
+            obj.AddToHistory(['.SetAlgorithmType "', num2str(type, '%.15g'), '"']);
+        end
+
+
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

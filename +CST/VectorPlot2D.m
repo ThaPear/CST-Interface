@@ -34,7 +34,7 @@ classdef VectorPlot2D < handle
             % "arrows"        The field vectors will be plotted as arrows.
             % "cone"          The field vectors will be plotted as cones.
             % "thinarrows"    The field vectors will be plotted as thin arrows.
-            % "hedgehogï¿½      The field vectors will be plotted as ï¿½linesï¿½.
+            % "hedgehog”      The field vectors will be plotted as ”lines”.
             obj.hVectorPlot2D.invoke('Type', key);
         end
         function PhaseValue(obj, phase)
@@ -104,6 +104,41 @@ classdef VectorPlot2D < handle
         function long = GetSample(obj)
             % Returns the current time sample number of a time monitor plot.
             long = obj.hVectorPlot2D.invoke('GetSample');
+        end
+        %% CST 2014 Functions.
+        function Color(obj, boolean)
+            % Plots the arrows relating to their values in different colors.
+            obj.hVectorPlot2D.invoke('Color', boolean);
+        end
+        function Arrows(obj, arrows)
+            % Defines the number of arrows used for the field plot.
+            obj.hVectorPlot2D.invoke('Arrows', arrows);
+        end
+        function dBScale(obj, boolean)
+            % Decides whether the fields should be plotted in a dB scale or not.
+            obj.hVectorPlot2D.invoke('dBScale', boolean);
+        end
+        function dBUnit(obj, unit)
+            % Sets the a unit for logarithmic farfield plots. The unit must be integer and between "0" and "4". ("0" = "3D Max = 0 dB", "1" = "2D Max = 0 dB",
+            % "2" = "dBV/m", "3" = "dBmV/m", "4" = "dBuV/m").
+            obj.hVectorPlot2D.invoke('dBUnit', unit);
+        end
+        function dBRange(obj, range)
+            % Sets the logarithmic field plot range in dB.
+            % Please note: range must be a double value here. Any expression is not allowed.
+            obj.hVectorPlot2D.invoke('dBRange', range);
+        end
+        function LogScale(obj, boolean)
+            % Decides whether the fields should be plotted in a logarithmical scale or not.
+            obj.hVectorPlot2D.invoke('LogScale', boolean);
+        end
+        function LogStrength(obj, strength)
+            % The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed.
+            obj.hVectorPlot2D.invoke('LogStrength', strength);
+        end
+        function Plot(obj)
+            % Plots the field with the previously made settings.
+            obj.hVectorPlot2D.invoke('Plot');
         end
     end
     %% MATLAB-side stored settings of CST state.

@@ -49,33 +49,20 @@ classdef FarfieldPlot < handle
         function Plottype(obj, type)
             % Defines the type of the farfield plot.
             % type can have one of the following values:
-            % polar
-            % Plots the farfield with one coordinate varying and one fixed as a polar plot. Underneath the plot there will be shown some secondary coefficients like main lobe direction, 3dB-angular width and side lobe suppression.
-            % cartesian
-            % Plots the farfield with one coordinate varying and one fixed as a cartesian plot.
-            % 2d
-            % Plots the farfield with both coordinates varying as a 2D plot with each point colored according to its field value (see the color bar below the plot).
-            % 3d
-            % Plots the farfield with both coordinates varying as a 3D plot.
+            % polar - Plots the farfield with one coordinate varying and one fixed as a polar plot. Underneath the plot there will be shown some secondary coefficients like main lobe direction, 3dB-angular width and side lobe suppression.
+            % cartesian - Plots the farfield with one coordinate varying and one fixed as a cartesian plot.
+            % 2d - Plots the farfield with both coordinates varying as a 2D plot with each point colored according to its field value (see the color bar below the plot).
+            % 3d - Plots the farfield with both coordinates varying as a 3D plot.
+            % (2020) 2dortho - Plots the farfield as a 2D colormap plot using an orthographic projection from the z-axis onto the x-y-plane. The projected coordinates are called u and v.
             obj.AddToHistory(['.Plottype "', num2str(type, '%.15g'), '"']);
         end
         function Vary(obj, varyAngle)
             % Varies the first or the second coordinate respectively if  the plot type is set to "polar" or "cartesian" using Plottype. The coordinate type depends on the active coordinate system:
-            % Name
-            % Angle 1
-            % Angle 2
-            % Spherical
-            % Theta
-            % Phi
-            % Ludwig 2 AE
-            % Elevation
-            % Azimuth
-            % Ludwig 2 EA
-            % Alpha
-            % Epsilon
-            % Ludwig 3
-            % Theta
-            % Phi
+            % Name            Angle 1     Angle 2
+            % Spherical       Theta       Phi
+            % Ludwig 2 AE     Elevation   Azimuth
+            % Ludwig 2 EA     Alpha       Epsilon
+            % Ludwig 3        Theta       Phi
             % varyAngle: 'angle1'
             %            'angle2'
             obj.AddToHistory(['.Vary "', num2str(varyAngle, '%.15g'), '"']);
@@ -676,6 +663,14 @@ classdef FarfieldPlot < handle
         function string = GetPhaseCenterResultExprHPlane(obj)
             % Returns the previously calculated  phase center location calculated in the H-plane in global coordinates  as character string.
             string = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprHPlane');
+        end
+        %% CST 2019 Functions.
+        function SetMaxReferenceMode(obj, maxRefMode)
+            % This command sets the reference for the maximum of the color scale.
+            % maxRefMode can have one of the following values:
+            % "abs"  - The maximum of the Abs value of the vector associated to the current plot component is used.
+            % "plot" - The maximum of the current plot component is used.
+            obj.AddToHistory(['.SetMaxReferenceMode "', num2str(maxRefMode, '%.15g'), '"']);
         end
         %% Undocumented functions
         % Found in the history list.

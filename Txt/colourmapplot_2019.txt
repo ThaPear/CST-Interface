@@ -1,0 +1,26 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | ColourMapPlot
+
+ColourMapPlot Object
+
+This object allows controlling the visualization of color map plots.
+
+ 
+
+Methods
+
+SetSkipValuesMode( enum mode )
+This option specifies which data values shall be skipped from visualization.
+enum mode           Skip values
+"lessorequal"       less or equal threshold
+"greaterorequal"    greater or equal threshold
+"outsiderange"      outside clamp range
+"insiderange"       inside clamp range
+"clamp" (default)   don't skip any values
+ 
+SetSkipValuesThreshold( double threshold)
+This threshold is used only if the SetSkipValuesMode option is set to "lessorequal" or "greaterorequal".
+
+
+Default Settings
+
+Examples

@@ -40,6 +40,7 @@ classdef Result3D < handle
         % Construction
         % A Result3D object must be constructed with a string as argument. The string may either be empty or the name of a result file. If the string is empty, an empty object will be created.
         % If the string contains a valid result file name, the object will read the values into its memory and represent this data. The behavior will be the same as if an empty object is created and afterwards filled by the Load command.
+        % (2019) A Result3D object instantiated in CST DESIGN STUDIO has only limited functionality. As a workaround, a Result3D object is automatically instantiated in the Modeler with the name "ResultOperator3D". It can be used from CST DESIGN STUDIO as any other Modeler object (i.e. Brick, Mesh).
         function Load(obj, sObjectName)
             % Only used for VBA scripts running in an external program. Loads a 3D result from a file with a file path contructed from sObjectName.
             % Syntax              Resulting file path
@@ -61,6 +62,7 @@ classdef Result3D < handle
         end
         function InitSCT(obj, numberOfFirstSideTriangles, nSamplesPerTriangle, nComponents, numberOfSecondSideTriangles)
             % Initializes the object as zero valued SCT surface vector result data, i.e. nComponents=6 for complex vector.
+            % (2020) Initializes the object as zero valued triangle-based surface result data. Set nComponents=6 for complex vector, nComponents=3 for vector and nComponents=1 for scalar data. Valid values for nSamplesPerTriangle are 1, 3 or 6.
             obj.hResult3D.invoke('InitSCT', numberOfFirstSideTriangles, nSamplesPerTriangle, nComponents, numberOfSecondSideTriangles);
         end
         function AddToTree(obj, sTreePath, sLabel)
@@ -332,6 +334,81 @@ classdef Result3D < handle
         function bool = IsComplex(obj)
             % Determines, if the object contains complex values.
             bool = obj.hResult3D.invoke('IsComplex');
+        end
+        %% CST 2014 Functions.
+        function InitMesh(obj)
+            % Initializes the object as an empty tetrahedral/surface mesh.
+            obj.hResult3D.invoke('InitMesh');
+        end
+        function GetMeshInfo(obj, nNodes, nEdges, nTriangles, nTetrahedra)
+            % This function was not implemented due to the double_ref
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetMeshInfo''.');
+            return;
+            % Yields numbers of nodes, edges, triangles and tetrahedra of the mesh.
+            obj.hResult3D.invoke('GetMeshInfo', nNodes, nEdges, nTriangles, nTetrahedra);
+        end
+        function GetNode(obj, index, x, y, z, ID)
+            % This function was not implemented due to the double_ref
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetNode''.');
+            return;
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('GetNode', index, x, y, z, ID);
+        end
+        function GetEdge(obj, index, Node0, Node1, ID)
+            % This function was not implemented due to the double_ref
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetEdge''.');
+            return;
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('GetEdge', index, Node0, Node1, ID);
+        end
+        function GetTriangle(obj, index, Node0, Node1, Node2, ID)
+            % This function was not implemented due to the double_ref
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetTriangle''.');
+            return;
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('GetTriangle', index, Node0, Node1, Node2, ID);
+        end
+        function GetTetrahedron(obj, index, Node0, Node1, Node2, Node3, ID)
+            % This function was not implemented due to the double_ref
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetTetrahedron''.');
+            return;
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('GetTetrahedron', index, Node0, Node1, Node2, Node3, ID);
+        end
+        function AddNode(obj, x, y, z, ID)
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('AddNode', x, y, z, ID);
+        end
+        function AddEdge(obj, Node0, Node1, ID)
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('AddEdge', Node0, Node1, ID);
+        end
+        function AddTriangle(obj, Node0, Node1, Node2, ID)
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('AddTriangle', Node0, Node1, Node2, ID);
+        end
+        function AddTetrahedron(obj, Node0, Node1, Node2, Node3, ID)
+            % Read existing mesh entities with a given index or append entities to the mesh.
+            obj.hResult3D.invoke('AddTetrahedron', Node0, Node1, Node2, Node3, ID);
+        end
+        function CopyFrom(obj, Object)
+            % Copies the contents from the given second object to the Result3D object. An uninitialized Result3D object will be initialized using the settings of the second object.
+            obj.hResult3D.invoke('CopyFrom', Object);
+        end
+        %% CST 2019 Functions.
+        function long = LoadFieldLine(obj, sFilePath, iLine, sQuantity)
+            % Loads one quantity of field line number iLine from a field line file (*.bix). Returns total number of field lines in file.
+            long = obj.hResult3D.invoke('LoadFieldLine', sFilePath, iLine, sQuantity);
+        end
+        %% CST 2020 Functions.
+        function InitM3T(obj, numberOfTetrahedra, nSamplesPerTetrahedron, nComponents)
+            % Initializes the object as zero valued tetrahedral volume result data. Set nComponents=6 for complex vector, nComponents=3 for vector and nComponents=1 for scalar data. Valid values for nSamplesPerTriangle are 1, 4 or 10.
+            obj.hResult3D.invoke('InitM3T', numberOfTetrahedra, nSamplesPerTetrahedron, nComponents);
         end
     end
     %% MATLAB-side stored settings of CST state.

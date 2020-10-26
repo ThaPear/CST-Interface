@@ -77,6 +77,7 @@ classdef Component < handle
             while(~available)
                 i = i + 1;
                 namei = [name, num2str(i)];
+                namei = strrep(strrep(namei, ' ', '__'), '/', '__');
                 if(~isfield(obj.components, namei) || ~obj.components.(namei))
                     available = 1;
                 end

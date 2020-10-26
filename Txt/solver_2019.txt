@@ -1,0 +1,283 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Solver | High Frequency | Solver (HF)
+
+Solver Object
+
+This is the object that controls the high frequency solvers. A corresponding FDSolver Object allows to manipulate the settings for the Frequency Domain and Integral Equation solvers. The EigenmodeSolver Object is the specialized object for the calculation of Eigenmodes. Please note that the AKS Eigenmode solver method is still configured by the Solver Object.
+
+Settings concerning a simulation run may be defined with this object. Use one of the 'start' commands to run the Time Domain Solver.
+
+This object controls the Wakefield solver.
+
+ 
+
+General
+
+General Methods
+
+Mesh
+
+Queries
+
+Defaults
+
+Time Domain Solver Settings
+
+Wakefield Solver Settings
+
+General
+
+Excitation
+
+Symmetries
+
+Waveguide Ports
+
+Steady State
+
+AR Filter / Time Window
+
+Material Special Settings and Monitors
+
+Mesh
+
+MPI Computation
+
+Defaults
+
+Examples
+
+Eigenmode Solver Settings
+
+General
+
+Queries
+
+Defaults
+
+ 
+
+General Methods
+
+
+GetDiscreteItemUpdate enum {"Gap", "Distributed"}
+Returns the selected update schema for the discrete items, i.e. discrete ports and lumped elements, used by the transient solver run. The function return value is either the Distributed or Gap string.
+The method GetDiscreteItemUpdate returns the update schema for both the edge and the face discrete ports and lumped elements and is the counterpart of the corresponding set method DiscreteItemUpdate.
+ 
+GetDiscreteItemEdgeUpdate
+Returns the selected update schema for the discrete items, i.e. discrete ports and lumped elements, used by the transient solver run. The function return value is either the Distributed or Gap string.
+The method GetDiscreteItemEdgeUpdate and GetDiscreteItemFaceUpdate returns the update schema only for the edge and face discrete elements, respectively, and is the counterpart of the set method DiscreteItemEdgeUpdate and DiscreteItemFaceUpdate.
+ 
+GetDiscreteItemFaceUpdate
+Returns the selected update schema for the discrete items, i.e. discrete ports and lumped elements, used by the transient solver run. The function return value is either the Distributed or Gap string.
+The method GetDiscreteItemEdgeUpdate and GetDiscreteItemFaceUpdate returns the update schema only for the edge and face discrete elements, respectively, and is the counterpart of the set method DiscreteItemEdgeUpdate and DiscreteItemFaceUpdate.
+ 
+WaveguidePortBroadband ( bool flag )
+This activates the broadband treatment of waveguide modes in inhomogeneous ports. This means that a special absorber is used in time domain which takes the frequency dependence of the modes into account. It furthermore offers a broadband imprint and a broadband decomposition for QTEM modes by default.
+ 
+SetWaveguidePortExcitationType ( enum key )
+With this setting the frequency dependency of port modes can be considered in mode excitation signals (see "ScaleTETMModeToCenterFrequency" above). The setting will modify the excitation signal such that the imprinted time domain fields are power normalized at every frequency.
+"Automatic" - When the command "WaveguidePortBroadband" is set to "on", the option "broadband" is chosen for QTEM modes. For all other cases "Standard" is selected.
+"Standard" - The imprinted fields correspond to a mode evaluated at a single frequency. This is typically the center frequency (see "ScaleTETMModeToCenterFrequency" above).
+"Broadband" - Before the mode is imprinted the excitation signals are convolved with the modal response, i.e. the frequency normalization is applied broadband in time domain.
+ 
+SetWaveguidePortDecompositionType ( enum key )
+With this setting the TE/TM scaling can be applied to port signal results (see "ScaleTETMModeToCenterFrequency" above) . This setting effects the monitored time signals of waveguide ports with TE or TM modes but not the time domain 3d fields.
+"Automatic" - When the option "broadband for inhomogeneous ports" is active, "broadband" is chosen for QTEM modes. For all other cases "Standard" is selected.
+"Standard" - The monitored port signals refer to a mode evaluated at a single frequency. This is typically the center frequency (see "ScaleTETMModeToCenterFrequency" above).
+"Broadband" - The port signals are convolved with the modal response, i.e. the frequency normalization is applied broadband in time domain.
+
+
+
+
+
+Default Settings
+
+% Solve Defaults
+
+PBAFillLimit (99)
+
+UseSplitComponents (True)
+
+TimeBetweenUpdates (20)
+
+SParaAdjustment (True)
+
+PrepareFarfields (True)
+
+% Time Domain Solver Defaults
+
+AutoNormImpedance (False)
+
+NormingImpedance (50.0)
+
+MeshAdaption (False)
+
+UseDistributedComputing (False)
+
+StoreTDResultsInCache (False)
+
+ConsiderTwoPortReciprocity (True)
+
+EnergyBalanceLimit (0.03)
+
+TimeStepStabilityFactor (1.0)
+
+AutomaticTimeSignalSampling (True)
+
+UseBroadBandPhaseShift (False)
+
+SParaAdjustment (True)
+
+PrepareFarfields (True)
+
+CalculateModesOnly (False)
+
+StimulationMode (1)
+
+WaveguidePortGeneralized (True)
+
+WaveguidePortModeTracking (False)
+
+AbsorbUnconsideredModeFields ("Automatic")
+
+FullDeembedding (False)
+
+SetSamplesFullDeembedding (20)
+
+SetModeFreqFactor (0.5)
+
+ScaleTETMModeToCenterFrequency (True)
+
+AdaptivePortMeshing (True)
+
+AccuracyAdaptivePortMeshing (1)
+
+PassesAdaptivePortMeshing (4)
+
+NumberOfPulseWidths (20)
+
+SteadyStateLimit ("-30")
+
+UseArfilter (False)
+
+ArMaxEnergyDeviation (0.1)
+
+ArPulseSkip (1)
+
+SetTimeWindow ("Rectangular", 100, False)
+
+SurfaceImpedanceOrder (10)
+
+ActivateSIPowerLossyMonitor (False)
+
+SetBurningPlasmaDensityMonitor (False)
+
+TimestepReduction (0.45)
+
+UseTSTAtPort (True)
+
+SetSubcycleState ("Automatic")
+
+NumberOfSubcycles (4)
+
+SubcycleFillLimit (70)
+
+EnableSubgridding (False)
+
+SetSubgridCycleState ("Automatic")
+
+SimplifiedPBAMethod (False)
+
+SetSimultaneousExcitAutoLabel (True)
+
+SetSimultaneousExcitationOffset ("Phaseshift")
+
+AlwaysExludePec (False)
+
+RestartAfterInstabilityAbort (True)
+
+HardwareAcceleration (False)
+
+MPIParallelization (False)
+
+SetPMLType ("ConvPML")
+
+NormalizeToReferenceSignal (False)
+
+NormalizeToDefaultSignalWhenInUse (True)
+
+TDRComputation (False)
+
+TDRShift50Percent (False)
+
+TDRReflection (False)
+
+% Eigenmode Solver Defaults
+
+AKSPenaltyFactor (1.0)
+
+AKSEstimation (0.0)
+
+AKSIterations (2)
+
+AKSAccuracy (1e-6)
+
+AKSNFsamples (1001)
+
+AKSEstimationCycles (2)
+
+AKSAutomaticEstimation (True)
+
+AKSSpecDensitySamples (1)
+
+AKSCheckModes (10)
+
+AKSMaximumDF (0.01)
+
+AKSMaximumPasses (6)
+
+AKSMeshIncrement (5)
+
+AKSMinimumPasses (2)
+
+Examples
+
+% Time Domain Solver
+
+' User defined function that produces a sine of 30 MHz as excitation signal.
+
+Option Explicit
+
+Function ExcitationFunction(dtime As Double) As Double
+
+ExcitationFunction = Sin(2*3.141*30*10^6*dtime)
+
+End Function
+
+ 
+
+' S-Parameter symmetry setup for a 3 port structure where all ports are symmetric to each other
+
+With Solver
+
+     .ResetSParaSymm
+
+     .DefSParaSymm
+
+     .SPara ("1, 1")
+
+     .SPara ("2, 2")
+
+     .SPara ("3, 3")
+
+     .DefSParaSymm
+
+     .SPara ("2, 1")
+
+     .SPara ("3, 1")
+
+     .SPara ("3, 2")
+
+End With
+
+

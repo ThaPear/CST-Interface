@@ -96,6 +96,12 @@ classdef CATIA < handle
             obj.project.AddToHistory(['import CATIA: ', obj.filename], obj.history);
             obj.history = [];
         end
+        %% CST 2019 Functions.
+        function TypePECForNewMaterials(obj, boolean)
+            % If set to True, the type for newly created materials during the import will be PEC. Otherwise it will be Vacuum.
+            obj.AddToHistory(['.TypePECForNewMaterials "', num2str(boolean, '%.15g'), '"']);
+        end
+
     end
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.

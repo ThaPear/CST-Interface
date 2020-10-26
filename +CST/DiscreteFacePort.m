@@ -172,6 +172,13 @@ classdef DiscreteFacePort < handle
             % with Tetrahedral mesh.
             obj.AddToHistory(['.AllowFullSize "', num2str(boolean), '"']);
         end
+        %% CST 2020 Functions.
+        function FaceType(obj, facetype)
+            % Defines the geometry of the face which creates the port. Choose between linear or curved geometry type. By default, a port is created with the linear type. Curved geometry face ports can be created between two edges related to the same circle or between two circular edges related to a torus. Currently the curved geometry type is only available for the Frequency Domain solver with Tetrahedral mesh.
+            % facetype: 'Linear'
+            %           'Curved'
+            obj.AddToHistory(['.FaceType "', num2str(facetype, '%.15g'), '"']);
+        end
         %% Undocumented functions
         function CurrentAmplitude(obj, amplitude)
             obj.AddToHistory(['.CurrentAmplitude "', num2str(amplitude), '"']);
@@ -202,6 +209,7 @@ end
 % CenterEdge(0)
 % Monitor(0)
 % AllowFullSize(1)
+% (2020) FaceType(Linear)
 
 %% Example - Taken from CST documentation and translated to MATLAB.
 % % Define a discrete port

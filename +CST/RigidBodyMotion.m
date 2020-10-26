@@ -91,6 +91,15 @@ classdef RigidBodyMotion < handle
             %                                     The initial gap position (angle or displacement) for the motion type "Equation"
             % MotionEquationInitialSpeed          double initial_speed
             %                                     The initial speed (velocity or rotational speed) for the motion type "Equation"
+            % (2014) RotationCenter               double x, double y, double z
+            %                                     Relevant only for the motion type "Rotation". Specifies the center of the rotor in global coordinates.
+            % (2014) WCSOrigin                    double origin_x, double origin_y, double origin_z
+            % (2014) WCSNormal                    double normal_x, double normal_y, double normal_z
+            % (2014) WCSUVector                   double uvector_x, double uvector_y, double uvector_z
+            %                                     Set the origin, the normal (W axis) and the U axis of the coordinate system which is taken as the base for the definition of the translation or rotation axis or the rotation center. All coordinates are specified in global coordinates.
+            %                                     For rotations, the rotation center is prescribed by the origin of this coordinate system, whereas the rotation axis corresponds to the U axis. For translations, the translation axis is defined by the W axis (normal) of this coordinate system.
+
+
             obj.AddToHistory(['.Set "', num2str(keyword, '%.15g'), '", '...
                                    '"', num2str(value, '%.15g'), '"']);
         end

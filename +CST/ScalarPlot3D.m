@@ -31,12 +31,9 @@ classdef ScalarPlot3D < handle
         function Type(obj, key)
             % Selects the type of Plot.
             % key can have one of  the following values:
-            % "contour"
-            % The field values of the chosen scalar field will be plotted on the surfaces of the structure in different colors.
-            % "isosurfaces"
-            % Surfaces of equal value of the chosen scalar field will be plotted.
-            % "bubbles"
-            % Spheres of color and size depending on field value are plotted on equidistant positions.
+            % "contour" - The field values of the chosen scalar field will be plotted on the surfaces of the structure in different colors.
+            % "isosurfaces" - Surfaces of equal value of the chosen scalar field will be plotted.
+            % "bubbles" - Spheres of color and size depending on field value are plotted on equidistant positions.
             obj.hScalarPlot3D.invoke('Type', key);
         end
         function PlotAmplitude(obj, boolean)
@@ -70,18 +67,12 @@ classdef ScalarPlot3D < handle
         function SetComponent(obj, component)
             % Sets the vector component of a vector result that should be visualized by a Scalar Plot.
             % component can have one of  the following values:
-            % "x"
-            % The x component of the vector result
-            % "y"
-            % The y component of the vector result
-            % "z"
-            % The z component of the vector result
-            % "abs"
-            % The absolute value of the vector result
-            % "normal"
-            % The normal part of the vector field is the scalar product of the surfaceï¿½s normal vector and the field vector on the surface.
-            % "tangential"
-            % The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
+            % "x" - The x component of the vector result
+            % "y" - The y component of the vector result
+            % "z" - The z component of the vector result
+            % "abs" - The absolute value of the vector result
+            % "normal" - The normal part of the vector field is the scalar product of the surface’s normal vector and the field vector on the surface.
+            % "tangential" - The tangential part is the absolute value of the difference between the vector and the normal part of the vector.
             obj.hScalarPlot3D.invoke('SetComponent', component);
         end
         %% Query
@@ -115,6 +106,62 @@ classdef ScalarPlot3D < handle
         function long = GetSample(obj)
             % Returns the current time sample number of a time monitor plot.
             long = obj.hScalarPlot3D.invoke('GetSample');
+        end
+        %% CST 2014 Functions.
+        function Scaling(obj, scale)
+            % Defines a scale factor of the plotted objects. A value between 0 and 100 may be given. This value influences the size of the objects.
+            obj.hScalarPlot3D.invoke('Scaling', scale);
+        end
+        function dBScale(obj, boolean)
+            % Decides whether the fields should be plotted in a dB scale or not.
+            obj.hScalarPlot3D.invoke('dBScale', boolean);
+        end
+        function LogScale(obj, boolean)
+            % Decides whether the fields should be plotted in a logarithmical scale or not.
+            obj.hScalarPlot3D.invoke('LogScale', boolean);
+        end
+        function LogStrength(obj, strength)
+            % The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed. This setting has only an effect, if LogScale is True.
+            obj.hScalarPlot3D.invoke('LogStrength', strength);
+        end
+        function LogAnchor(obj, anchor)
+            % Sets the anchor values used for logarithmical scaling.
+            obj.hScalarPlot3D.invoke('LogAnchor', anchor);
+        end
+        function LogAnchorType(obj, type)
+            % Toggles between the automatic determination of the log anchor (type = "auto") and the user defined value set by LogAnchor (type = "user").
+            obj.hScalarPlot3D.invoke('LogAnchorType', type);
+        end
+        function ContourLines(obj, boolean)
+            % Activates the plotting of contour lines.
+            obj.hScalarPlot3D.invoke('ContourLines', boolean);
+        end
+        function ScaleToVectorMaximum(obj, boolean)
+            % All components will be scaled to the vector maximum. Thus different components can be compared. If not enabled, the components are scaled to their own maximum.
+            obj.hScalarPlot3D.invoke('ScaleToVectorMaximum', boolean);
+        end
+        function ScaleToRange(obj, boolean)
+            % Scales the plot to a range given by ScaleRange. (The used color ramp represents the values between the given interval) This is useful to compare plots with different maximum values.
+            obj.hScalarPlot3D.invoke('ScaleToRange', boolean);
+        end
+        function ScaleRange(obj, min, max)
+            % Sets the minimal and maximal values of the plot. This setting has only an effect, if ScaleToRange is True.
+            obj.hScalarPlot3D.invoke('ScaleRange', min, max);
+        end
+        function Plot(obj)
+            % Plots the field with the previously made settings.
+            obj.hScalarPlot3D.invoke('Plot');
+        end
+        %% CST 2020 Functions.
+        function Attribute(obj, key)
+            % Selects the result mapping attribute of the Plot.
+            % key can have one of the following values:
+            % "animated" - Shows the instantaneous result values regarding given phase or time (see PhaseValue, SetTime, SetSample).
+            % "maximum" - Shows the maximum result values.
+            % "average" - Shows the average result values (only for complex result values).
+            % "rms" - Shows the RMS result values (only for complex result values).
+            % "phase" - Shows the phase of the result values (only for complex result values).
+            obj.hScalarPlot2D.invoke('Attribute', key);
         end
     end
     %% MATLAB-side stored settings of CST state.

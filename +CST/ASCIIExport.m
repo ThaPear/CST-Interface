@@ -53,6 +53,7 @@ classdef ASCIIExport < handle
             % type: 'ascii' - ASCII format (default)
             %       'csv' - csv format
             %       'bix' - binary format
+            %       (2020) 'hdf5' - HDF5 format
             obj.hASCIIExport.invoke('SetFileType', type);
         end
         function SetCsvSeparator(obj, csvseparator)

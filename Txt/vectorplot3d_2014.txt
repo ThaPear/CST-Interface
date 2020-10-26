@@ -1,0 +1,140 @@
+Home | Visual Basic (VBA) Language | 3D Simulation VBA | VBA Objects | Plot | VectorPlot3D
+
+VectorPlot3D Object
+
+With this object three dimensional complex vector fields can be plotted in various ways. To choose what field to plot the SelectTreeItem command can be used.
+
+General Methods
+
+Query
+
+Default Settings
+
+Example
+
+General Methods
+
+Objects ( int objects )
+
+Specifies the number of plotted objects. Depending on the plot type, objects may be arrows, hedgehogs or streamlines.
+
+ 
+
+LogScale ( bool switch )
+
+Decides whether the fields should be plotted in a logarithmical scale or not.
+
+ 
+
+LogStrength ( double strength )
+
+The characteristic curve used for logarithmic scaling can be varied. Values from 1.0e-6 to 100000 are allowed.
+
+ 
+
+LogAnchor ( double anchor )
+
+Sets the anchor values used for logarithmical scaling.
+
+ 
+
+LogAnchorType ( enum type )
+
+Toggles between the automatic determination of the log anchor (type = "auto") and the user defined value set by LogAnchor (type = "user").
+
+ 
+
+VectorOffset ( double offset )
+
+Specifies an offset in normal direction for surface vectors to improve their visibility. Only offsets from -2 to 2 are allowed, whereby negative offsets will move the vector to the other side of the surface.
+
+ 
+
+CheckVectorCollisions ( bool switch )
+
+In case of strongly curved surfaces, high vector densities may occur. This method prevents vectors from being plotted into other vectors (switch = True). The collision check may take some time, therefore it is switched off by default (switch = False ).
+
+ 
+
+OptimizedArrowGrid ( bool switch )
+
+The distance between adjacent arrows is optimized according to the field strength.
+
+ 
+
+ClampValue ( double value )
+
+Sets the maximum to which the plot is scaled. If you choose a maximum smaller than the field maximum, the field values greater than your chosen maximum are clamped (plotted as if they were equal to the chosen maximum).
+
+ 
+
+ClampMode ( enum type )
+
+Changes clamp mode (see ClampValue). If you choose to only clamp the size, you will get arrows of maximum size with different colors depending on the field value. If you choose a maximum greater than the field maximum, size and / or color are scaled down, as if the field maximum were the chosen maximum.
+
+type can have one of the following values:
+
+"None"
+
+No clamping is used.
+
+"Size"
+
+Only size is clamped.
+
+"SizeColor"
+
+Size and color is clamped.
+
+ 
+
+Plot
+
+Plots the field with the previously made settings.
+
+
+Default Settings
+
+Type ("arrowscolor")
+
+PhaseValue (0.0)
+
+PhaseStep (22.5)
+
+SetDensityInPercent(50)
+
+Scaling (50)
+
+SetTime (0.0)
+
+SetSample (0)
+
+Example
+
+The following script plots the electric field  "e1" (if available) in a linear scale by using  thin arrows with density 30%.
+
+ 
+
+' Plot only a wire frame of the structure to be able to look inside
+
+Plot.wireframe (True)
+
+ 
+
+' Select the desired monitor in the tree.
+
+SelectTreeItem ("2D/3D Results\E-Field\e1")
+
+ 
+
+' Plot the field of the selected monitor
+
+With VectorPlot3D
+
+    .Type ("thinarrows")
+
+    .SetDensityInPercent(30)
+
+End With 
+
+ 
