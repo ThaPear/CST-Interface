@@ -67,6 +67,7 @@ classdef ParameterSweep < handle
             % "Frequency" - Frequency domain simulation
             % "TLM" - Microstripes simulation
             % "Asymtotic" - Asymtotic simulation
+            % type can have one of  the following values:
             % "E-Static" - Electrostatic simulation
             % "Electroquasistatic" - Electroquasistatic simulation
             % "Transient Electroquasistatic" - Transient electroquasistatic simulation
@@ -74,9 +75,11 @@ classdef ParameterSweep < handle
             % "Transient Magnetoquasistatic" - Transient magnetoquasistatic simulation
             % "J-Static" - Stationary current simulation
             % "Low Frequency" - Low frequency simulation in frequency domain
+            % type can have one of  the following values:
             % "Thermal" - Stationary thermal simulation
             % "Transient Thermal" - Transient  thermal simulation
             % "Structural Mechanics" - Structural mechanics simulation
+            % type can have one of  the following values:
             % "E-Static" - Electrostatic simulation
             % "M-Static" - Magnetostatic simulation
             % "PIC" - Particle in cell simulation

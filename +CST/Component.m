@@ -70,17 +70,16 @@ classdef Component < handle
         end
         %% Utility functions.
         function number = GetNextFreeNameWithBase(obj, name)
-            % Returns the next unused component name with given base.
-            % e.g. component1, component2, etc...
-            available = 0;
+            % Returns the next unused component name with given base suffixed by a number.
+            % e.g. component0, component1, etc...
             i = 0;
-            while(~available)
-                i = i + 1;
+            while(1)
                 namei = [name, num2str(i)];
                 namei = strrep(strrep(namei, ' ', '__'), '/', '__');
                 if(~isfield(obj.components, namei) || ~obj.components.(namei))
-                    available = 1;
+                    break;
                 end
+                i = i + 1;
             end
             number = i;
         end

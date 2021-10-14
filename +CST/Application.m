@@ -141,7 +141,7 @@ classdef Application < handle
             %     4 = MPS
             %     5 = CS
             %     6 = DS, Assembly
-            % Other values = error: 'No manager implemented so far. Be patient.'
+            % Other values = error: 'Provided id (id) is not supported.'
             hCST = CST.Application.GetHandle();
             hProject = hCST.invoke('NewProject', id);
             switch(id)
