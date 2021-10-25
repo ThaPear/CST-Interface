@@ -49,7 +49,7 @@ classdef Units < handle
             if(obj.bulkmode)
                 obj.history = [obj.history, '     ', command, newline];
             else
-                obj.project.AddToHistory(['Solver', command]);
+                obj.project.AddToHistory(['Units', command]);
             end
         end
     end
