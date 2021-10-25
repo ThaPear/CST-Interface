@@ -164,7 +164,7 @@ classdef Plot < handle
                 end
             end
 
-            obj.project.AddToHistory(['Plot.DrawWorkplane "', num2str(boolean, '%.15g'), '"']);
+            obj.project.AddToHistory(['Plot.DrawBox "', num2str(boolean, '%.15g'), '"']);
         end
         function DrawWorkplane(obj, boolean)
             % Shows or hides the working plane.
