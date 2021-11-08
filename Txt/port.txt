@@ -112,31 +112,21 @@ Orientation ( enum key )
 
 This method defines the orientation, i.e. the direction of excitation, of the waveguide port. "xmin" means that the port is located at the lower x-boundary of the calculation domain and feeds the structure in positive x-direction. This excitation direction is also valid for internal ports, determined by the PortOnBound method.
 
-  
-
 key = {"xmin", "xmax", "ymin", "ymax", "zmin", "zmax"}
 
-  
+ 
 
 Coordinates ( enum {"Free", "Full", "Picks"} key )
 
 This method determines how the transversal expansion of a waveguide port is defined.
 
-  
-
 key can have one of  the following values:
 
-Free
+Free  - The transversal plane of the port is defined by the free input of the dimensions (Xrange, Yrange, Zrange).
 
-The transversal plane of the port is defined by the free input of the dimensions (Xrange, Yrange, Zrange).
+Full  - The full plane of the calculation domain will work as the waveguide port.
 
-Full
-
-The full plane of the calculation domain will work as the waveguide port.
-
-Picks
-
-The transversal plane of the port is defined by selected pickpoints.
+Picks - The transversal plane of the port is defined by selected pickpoints.
 
  
 

@@ -115,20 +115,19 @@ classdef Port < handle
         end
         function Orientation(obj, key)
             % This method defines the orientation, i.e. the direction of excitation, of the waveguide port. "xmin" means that the port is located at the lower x-boundary of the calculation domain and feeds the structure in positive x-direction. This excitation direction is also valid for internal ports, determined by the PortOnBound method.
-            %
             % key = {"xmin", "xmax", "ymin", "ymax", "zmin", "zmax"}
-            %
-            % Coordinates ( enum {"Free", "Full", "Picks"} key )
-            % This method determines how the transversal expansion of a waveguide port is defined.
-            %
-            % key can have one of  the following values:
-            % Free
-            % The transversal plane of the port is defined by the free input of the dimensions (Xrange, Yrange, Zrange).
-            % Full
-            % The full plane of the calculation domain will work as the waveguide port.
-            % Picks
-            % The transversal plane of the port is defined by selected pickpoints.
             obj.AddToHistory(['.Orientation "', num2str(key, '%.15g'), '"']);
+        end
+        function Coordinates(obj, key)
+            % This method determines how the transversal expansion of a waveguide port is defined.
+            % key can have one of  the following values:
+            % Free  - The transversal plane of the port is defined by the free input of the dimensions (Xrange, Yrange, Zrange).
+            % Full  - The full plane of the calculation domain will work as the waveguide port.
+            % Picks - The transversal plane of the port is defined by selected pickpoints.
+            % key: 'Free'
+            %      'Full'
+            %      'Picks'
+            obj.AddToHistory(['.Coordinates "', num2str(key, '%.15g'), '"']);
         end
         function Xrange(obj, xmin, xmax)
             % In case that the transversal  Coordinates of the waveguide port are defined as "Free", these methods determine the range in each direction in global (x, y, z) coordinates.
@@ -462,11 +461,6 @@ classdef Port < handle
         function Reset(obj)
             % Resets all internal settings to their default values.
             obj.AddToHistory(['.Reset']);
-        end
-        % Found in history list upon creating a waveguide port.
-        function Coordinates(obj, coords)
-            % coords: Picks, Full
-            obj.AddToHistory(['.Coordinates "', coords, '"']);
         end
         % Found in history list upon creating a waveguide port.
         function Folder(obj, folder)

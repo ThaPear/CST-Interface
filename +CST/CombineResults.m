@@ -57,27 +57,16 @@ classdef CombineResults < handle
             obj.hCombineResults.invoke('SetLabel', labelName);
         end
         function SetExcitationValues(obj, Type, Source, Mode, amplitude, phase_or_timedelay)
-            % Specifies the amplitude and phase (respectively  time shift value) for a selected excitation. Supported excitations are:
-            % Excitation source
-            % Type
-            % Source
-            % Mode
-            % Waveguide port
-            % "port"
-            % Port number
-            % Mode number
-            % Discrete port
-            % "port"
-            % Port number
-            % not available
-            % Farfield source
-            % "ffs"
-            % Farfield source name
-            % not available
-            % Nearfield source
-            % "cd"
-            % Nearfield source name
-            % not available
+            % Specifies the amplitude and phase (respectively  time shift value) for a selected excitation. Supported excitations are: 
+            % 
+            % Excitation source             Type    Source                  Mode 
+            % Waveguide port                "port"  Port number             Mode number 
+            % Discrete port                 "port"  Port number             not available 
+            % Farfield source               "ffs"   Farfield source name    not available 
+            % Nearfield source              "cd"    Nearfield source name   not available 
+            % (2019) Characteristic mode    "mode"  Mode name               not available 
+            % 
+            % For the specified excitation the amplitude is set to amplitude and the  phase value (respectively  time shift values) is set to phase_or_timedelay. 
             obj.hCombineResults.invoke('SetExcitationValues', Type, Source, Mode, amplitude, phase_or_timedelay);
         end
         function the = For(obj, time)
@@ -112,27 +101,18 @@ classdef CombineResults < handle
             obj.hCombineResults.invoke('AddFilter', Filter);
         end
         function Filter(obj)
-            % Action
-            % *
-            % All monitors are added to the selection
-            % <MonitorName>
-            % This monitor is added to the selection
-            % :farfield:
-            % All farfield monitors are added to the selection
-            % :fieldsource:
-            % All Field source monitors are added to the selection
-            % :efield:
-            % All E-field monitors are added to the selection
-            % :hfield:
-            % All H-field monitors are added to the selection
-            % :current:
-            % All current monitors are added to the selection
-            % :powerflow:
-            % All power flow monitors are added to the selection
-            % :eenergy:
-            % All E-energy monitors are added to the selection
-            % :henergy:
-            % All H-energy monitors are added to the selection
+            % Adds a monitor selection filter to the internal filter set. The following expressions are allowed: 
+            % 
+            % Filter                Action 
+            % <MonitorName>         This monitor is added to the selection 
+            % :farfield:            All farfield monitors are added to the selection 
+            % :fieldsource:         All Field source monitors are added to the selection 
+            % :efield:              All E-field monitors are added to the selection 
+            % :hfield:              All H-field monitors are added to the selection 
+            % :current:             All current monitors are added to the selection 
+            % :powerflow:           All power flow monitors are added to the selection 
+            % :eenergy:             All E-energy monitors are added to the selection 
+            % :henergy:             All H-energy monitors are added to the selection 
             obj.hCombineResults.invoke('Filter');
         end
         function OnlyAtFrequency(obj, freq)
