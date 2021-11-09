@@ -77,20 +77,28 @@ AddToTree ( name sTreePath )
 
 Inserts the Result2D object into the tree at the folder specified by sTreePath. NOTE: Save the Result2D object before adding it to the tree to set correct path.
  
+
+
 %% General Settings
 
 SetTitle ( string sName )
 
 Sets / returns the title / x-axis label / y-axis label of the result.
+
  
+
 SetXLabel ( string sName )
 
 Sets / returns the title / x-axis label / y-axis label of the result.
+
  
+
 SetYLabel ( string sName )
 
 Sets / returns the title / x-axis label / y-axis label of the result.
  
+
+
 GetTitle string
 
 Sets / returns the title / x-axis label / y-axis label of the result.
@@ -162,11 +170,13 @@ SetDataUnit ( string sUnit )
 Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
 
  
+
 SetXUnit ( string sUnit )
 
 Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
 
  
+
 etYUnit ( string sUnit )
 
 Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
@@ -308,6 +318,12 @@ The array needs to start with index zero and is expected to have as many element
  
 
 SetTriangleArray ( variant dArray )
+
+Sets / returns triangle data of  the Result2D object from / as a double array.
+
+The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNTriangle' to query and 'InitializeTriangulation' or 'InitializeTriangulationComplex' to modify the number of triangles of the Result2D object. The array's data layout is x11,y11, x12,y12, x13,y13, x21,y21,... with x1*, y1* being the coordinates of the first triangle and so on.
+
+ 
 
 GetTriangleArray variant
 

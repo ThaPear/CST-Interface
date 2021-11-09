@@ -1,0 +1,115 @@
+Home | Automation and Scripting | Visual Basic (VBA) | 3D Simulation VBA | VBA Objects | Post Processing | Result Matrix
+
+ 
+
+ResultMatrix Object
+This object offers access functions to matrix results. A ResultMatrix object can hold a two dimensional array of numbers.
+A typical use case for a ResultMatrix is the Capacitance Matrix of electric potentials created by the Electrostatic Solver in a 3D simulation.
+
+Initialization
+
+Queries
+
+Example
+
+Methods
+
+%% Initialization
+
+% A ResultMatrix object can be created via the ResultTree object:
+
+% Dim matrix As Object
+
+% Set matrix = ResultTree.GetResultFromTreeItem("1D Results\Es Solver\Capacitance Matrix",GetLastResultID())
+
+% The first argument needs to be a tree path to an existing matrix result in the navigation tree.
+
+%% Queries
+
+ 
+
+GetSize( string row_or_column ) long
+
+The method returns the number of rows or columns. The argument is expected to be the string "row" or "column" to indicate which size is queried.
+
+ 
+
+GetName( string row_or_column, long index ) string
+
+This method returns the name of a row or column. The first argument is expected to be the string "row" or "column" . The second argument is the zero-based index of the queried row or column.
+
+ 
+
+GetElementType() string
+
+This method returns the ResultObjectType of a single matrix element, e.g. the string "0D".
+
+ 
+
+GetElement( long row, long column ) Result0D
+
+This method returns a Result 0D object which contains the data of the matrix at the given row and column.
+
+ 
+
+GetResultObjectType() string
+
+Returns the string "matrix". This method can be used to distinguish this result object from other objects (e.g. Result1D,  Result1DComplex)  in a context where the type of a result object is unknown.
+
+ 
+
+Example
+
+This example loads a matrix result, iterates over all its elements and reports the value of each matrix entry to the message window.
+
+ 
+
+Dim m As Object
+
+Set m = Resulttree.GetResultFromTreeItem("1D Results\Es Solver\Capacitance Matrix",GetLastResultID())
+
+If (m Is Nothing) Then
+
+    ReportError("empty object")
+
+End If
+
+ 
+
+Dim row As Long, col As Long
+
+For row = 0 To m.GetSize("row")-1
+
+    For col = 0 To m.GetSize("column")-1
+
+        Dim o As Object
+
+        Set o = m.GetElement(row,col)
+
+        If o.GetResultObjectType() = "0D" Then
+
+            Dim data As Double
+
+            o.GetData( data )
+
+            ReportInformationToWindow(Cstr(row) + "," + Cstr(col) + ": " + Cstr(data))
+
+        Else
+
+            ReportWarningToWindow("not a 0D object")
+
+        End If
+
+    Next
+
+Next
+
+ 
+
+ 
+
+CST Studio Suite 2020 | 3DS.COM/SIMULIA
+
+
+
+ 

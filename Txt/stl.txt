@@ -1,0 +1,149 @@
+Home | Automation and Scripting | Visual Basic (VBA) | 3D Simulation VBA | VBA Objects | Import/Export | STL
+
+STL Object
+
+Most of today’s CAD systems offer STL import/export options. In case your CAD system does not support SAT or IGES export you might import structure data via the STL interface. Though STL data export/import is very common, STL data import can take some time and might lead to a very slow meshing process, because every STL triangle will be converted to an ACIS FACE.
+
+If you have the choice between a high end data format like SAT / IGES and STL – choose the high end format, because further operations on the structure will be much faster.
+
+Methods
+
+Default Settings
+
+Example
+
+Methods
+
+Reset
+
+Resets the import options to the default.
+
+ 
+
+FileName ( filename filename )
+
+Sets the name of the imported file or the file to be exported to.
+
+ 
+
+Name ( name name )
+
+Sets a name.
+
+ 
+
+Component ( name componentname )
+
+Sets the component name for the solid.
+
+ 
+
+ScaleToUnit ( bool switch )
+
+If set to True the imported model is scaled to the currently active unit. The scale factor is determined by the unit of the import model and the currently active unit in the project. As the unit of the import model are not defined in the import file you have to specify the unit of the import model by using  ImportFileUnits. If not activated no scaling occurs.
+
+ 
+
+ImportFileUnits ( enum {"m", "cm", "mm", "um", "nm", "ft", "mil", "in"} units )
+
+Sets the units of the imported model. The units have to be defined when ScaleToUnit is activated.
+
+ 
+
+ExportFromActiveCoordinateSystem( bool switch )
+
+If an active coordinate system is enabled and this flag is set, the coordinate system is used to calculate a transformation that is applied to the geometry before exporting. Importing that file will position the geometry to the global coordinates in that way that it was positioned and oriented to the active coordinate system while exporting.
+
+ 
+
+ImportToActiveCoordinateSystem ( bool switch )
+
+Import the CAD data relative to the active coordinate system.
+
+ 
+
+ExportFileUnits ( enum {"m", "cm", "mm", "um", "nm", "ft", "mil", "in"} units )
+
+Set this option to scale the exported model, from currently active unit in the project to another desired unit.
+
+ 
+
+NormalTolerance ( double tolerance )
+
+Normal tolerance is the maximum angle between any two surface normals on a facet. Set this option to control accuracy of the exported model compared to the model in the project.
+
+ 
+
+SurfaceTolerance ( double surfacetolerance )
+
+Surface tolerance is the maximum distance between the facet and the part of the surface it is representing. Set this option to control accuracy of the exported model compared to the model in the project.
+
+ 
+
+Read
+
+Starts the actual import of the file.
+
+ 
+
+Write
+
+Performs the export.
+
+
+
+Default Settings
+
+FileName ("")
+
+Name ("")
+
+Component ("default")
+
+ImportToActiveCoordinateSystem (False)
+
+ExportFromActiveCoordinateSystem (False)
+
+Examples
+
+With STL
+
+    .Reset
+
+    .FileName (".\example.stl")
+
+    .Name ("test")
+
+    .Component ("default")
+
+    .ImportToActiveCoordinateSystem (False)
+
+    .Read
+
+End With
+
+ 
+
+With STL
+
+    .Reset
+
+    .FileName (".\example.stl")
+
+    .Name ("solid1")
+
+    .Component ("component1/component1")
+
+    .ExportFromActiveCoordinateSystem (True)
+
+    .Write
+
+End With
+
+ 
+
+CST Studio Suite 2020 | 3DS.COM/SIMULIA
+
+
+
+ 
