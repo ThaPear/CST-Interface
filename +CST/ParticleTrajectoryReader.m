@@ -262,11 +262,11 @@ classdef ParticleTrajectoryReader < handle
         function SelectSource(obj, id)
             % Filters the data for subsequent calls to only yield particles that were emitted from the source id. The parameter id must be one of the entries of the array retrieved by the GetSourceIDs method.
             % Calls to SelectDataSource, LoadTrajectoryData, SelectMonitor, SelectSample, SelectFrame, SelectPlane, SelectTrajectory, Reset, etc. will remove the filter and lead to yielding particle data for all sources again.
-            obj.hParticle2DMonitorReader.invoke('SelectSource', id);
+            obj.hParticleTrajectoryReader.invoke('SelectSource', id);
         end
         function LongArray = GetEmissionIDs(obj)
             % Retrieve the unique IDs of all particle sources and interfaces.
-            LongArray = obj.hParticle2DMonitorReader.invoke('GetEmissionIDs');
+            LongArray = obj.hParticleTrajectoryReader.invoke('GetEmissionIDs');
         end
     end
     %% MATLAB-side stored settings of CST state.

@@ -135,15 +135,25 @@ classdef RigidBodyMotion < handle
             obj.AddToHistory(['.RenameGapItem "', num2str(oldname, '%.15g'), '", '...
                                              '"', num2str(newname, '%.15g'), '"']);
         end
+        % These are implemented differently below due to the history list
+        % code not playing nice with these kinds of functions.
+        % function value = Get(obj, keyword)
+        %     % Returns the value of the setting specified by keyword for the rigid body motion object which is previously declared with the Name command. Available keywords are listed above in the description of the Set command.
+        %     value = obj.hRigidBodyMotion.invoke('Get', keyword);
+        % end
+        % function str = GetStr(keyword)
+        %     % Returns the string value of the setting specified by keyword for the rigid body motion object which is previously declared with the Name command. Available keywords are listed above in the description of the Set command.
+        %     value = obj.hRigidBodyMotion.invoke('GetStr', keyword);
+        % end
         function value = Get(obj, rbmName, keyword)
             % Returns the value of the setting specified by keyword for the rigid body motion object name. Available keywords are listed above in the description of the Set command.
-            obj.hRigidBodyMotion.invoke('Name', name);
+            obj.hRigidBodyMotion.invoke('Name', rbmName);
             value = obj.hRigidBodyMotion.invoke('Get', keyword);
         end
-        function value = GetStr(obj, rbmName, keyword)
+        function str = GetStr(obj, rbmName, keyword)
             % Returns the string value of the setting specified by keyword for the rigid body motion object name. Available keywords are listed above in the description of the Set command.
-            obj.hRigidBodyMotion.invoke('Name', name);
-            value = obj.hRigidBodyMotion.invoke('Get', keyword);
+            obj.hRigidBodyMotion.invoke('Name', rbmName);
+            str = obj.hRigidBodyMotion.invoke('GetStr', keyword);
         end
     end
     %% MATLAB-side stored settings of CST state.

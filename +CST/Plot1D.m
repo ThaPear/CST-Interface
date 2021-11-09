@@ -243,7 +243,7 @@ classdef Plot1D < handle
             % Returns the total number of displayed curves in a 1D plot. If some curves are hidden they are not counted anymore.
             double = obj.hPlot1D.invoke('GetNumberOfCurves');
         end
-        function string = GetCurrentPlotSettings(obj, options)
+        function string = GetCurrentPlotSettings(obj)
             % Returns the current plot settings as a string. The parameter 'options' is expected to be an empty string. The string returned by this method contains VBA commands that can be used to restore the current plot state.
             functionString = [...
                 'Dim options As String', newline, ...

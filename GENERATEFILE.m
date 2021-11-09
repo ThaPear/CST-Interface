@@ -37,7 +37,7 @@ split = strrep(split, 'Examples', 'Example');
 
 % Find object name (e.g. 'Brick', 'Material').
 i = 1;
-while(isempty(strfind(split{i}, ' Object')) || ~isempty(strfind(split{i}, 'Visual Basic (VBA) Language')))
+while(isempty(strfind(split{i}, ' Object')) || ~isempty(strfind(split{i}, 'Visual Basic (VBA)')))
     i = i + 1;
 end
 objecttype = strrep(split{i}, ' Object', '');
