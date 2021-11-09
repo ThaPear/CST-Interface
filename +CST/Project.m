@@ -1301,6 +1301,7 @@ classdef Project < handle
 %       result3d                    CST.Result3D
         resultdatabase              CST.ResultDatabase
 %       resultmap                   CST.ResultMap
+%       resultmatrix                CST.ResultMatrix
         resulttree                  CST.ResultTree
         rigidbodymotion             CST.RigidBodyMotion
         rotate                      CST.Rotate
@@ -1322,6 +1323,7 @@ classdef Project < handle
         spline                      CST.Spline
         stationarycurrentsolver     CST.StationaryCurrentSolver
         step                        CST.STEP
+        stl                         CST.STL
         structuralmechanicssolver   CST.StructuralMechanicsSolver
         sweepcurve                  CST.SweepCurve
 %       table                       CST.Table
