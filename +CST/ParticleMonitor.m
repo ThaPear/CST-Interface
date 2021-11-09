@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % Definition, control and manipulation of particle monitors in the tracking solver.
 classdef ParticleMonitor < handle
     %% CST Interface specific functions.

@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % This command offers GERBER file import (RS274-D, RS274-X). With this feature you can import data from any IC package system providing the GERBER format.
 classdef GERBER < handle
     %% CST Interface specific functions.

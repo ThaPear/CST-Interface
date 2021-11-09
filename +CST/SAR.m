@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % The Specific Absorption Rate (SAR) is defined as the time derivative of the incremental energy (dW) absorbed by an incremental mass (dm) contained in a volume element (dV) of a given mass density (r). The SAR calculation is done as a post-processing step after the simulation, based on a previously defined power loss density monitor.
 classdef SAR < handle
     %% CST Interface specific functions.

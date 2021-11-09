@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % This object is used to perform local modifications on faces of shapes and to work with face constraints for the sensitivity analysis.
 % Local Modifications can be very useful when parameterizing an imported structure. No information about the history of the solid creation is needed.
 classdef LocalModification < handle

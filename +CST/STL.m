@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % Most of today’s CAD systems offer STL import/export options. In case your CAD system does not support SAT or IGES export you might import structure data via the STL interface. Though STL data export/import is very common, STL data import can take some time and might lead to a very slow meshing process, because every STL triangle will be converted to an ACIS FACE.
 classdef STL < handle
     %% CST Interface specific functions.

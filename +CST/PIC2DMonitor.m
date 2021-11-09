@@ -16,6 +16,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Suppress warnings:
+% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
+     %#ok<*NBRAK>
+
 % Defines a 2D position monitor. The monitor uses a plane to record the data of the particles of which the trajectories intersect the monitor plane.
 classdef PIC2DMonitor < handle
     %% CST Interface specific functions.
