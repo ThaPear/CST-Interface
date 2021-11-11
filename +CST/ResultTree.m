@@ -153,17 +153,28 @@ classdef ResultTree < handle
                     resultObject = CST.Result1D(obj.project, hResult);
                 case '1DC'
                     resultObject = CST.Result1DComplex(obj.project, hResult);
-%                 case '2D'
-%                     resultObject = CST.Result2D(obj.project, hResult);
-%                 case 'Matrix'
-%                     resultObject = CST.ResultMatrix(obj.project, hResult);
+                case '2D'
+                    resultObject = CST.Result2D(obj.project, hResult);
+                case 'Matrix'
+                    resultObject = CST.ResultMatrix(obj.project, hResult);
                 otherwise
                     error('Unknown result type %s.\n', type);
             end
         end
-        function object = GetImpedanceResultFromTreeItem(obj, sTreePath, sResultID)
+        function resultObject = GetImpedanceResultFromTreeItem(obj, sTreePath, sResultID)
             % Returns a result object containing the reference impedance data of the tree item specified by 'sTreePath' and 'sResultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object. In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method also returns an error, if the tree item does not exist or the Result ID is invalid.
-            object = obj.hResultTree.invoke('GetImpedanceResultFromTreeItem', sTreePath, sResultID);
+            hResult = obj.hResultTree.invoke('GetImpedanceResultFromTreeItem', sTreePath, sResultID);
+            type = hResult.invoke('GetResultObjectType');
+            switch(type)
+                case {'0D', '0DC'}
+                    resultObject = CST.Result0D(obj.project, hResult);
+                case '1D'
+                    resultObject = CST.Result1D(obj.project, hResult);
+                case '1DC'
+                    resultObject = CST.Result1DComplex(obj.project, hResult);
+                otherwise
+                    error('Unknown result type %s.\n', type);
+            end
         end
         function bool = TreeItemHasImpedance(obj, sTreePath, sResultID)
             % Returns whether the data specified by 'sTreePath' and 'sResultID' has reference impedances attached to it. This data can be accessed with GetImpedanceResultFromTreeItem. The method returns an error, if the tree item does not exist or if the Result ID is invalid.

@@ -19,8 +19,10 @@
 % This object offers access and manipulation functions for 2D results.
 classdef Result2D < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.ResultTree, ?CST.EvaluateFieldAlongCurve})
-        % Only CST.Project can create a CST.Result2D object.
+    methods(Access = {?CST.Project, ?CST.Result2D, ?CST.ResultTree, ?CST.EvaluateFieldAlongCurve})
+        % CST.Project can create a CST.Result2D object.
+        % CST.Result3D.Copy can create a Result3D object.
+        % CST.ResultTree.GetResultFromTreeItem can create a CST.Result2D object.
         function obj = Result2D(project, hProject)
             obj.project = project;
             obj.hResult2D = hProject.invoke('Result2D');
@@ -188,13 +190,15 @@ classdef Result2D < handle
             % Sets / returns the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
             obj.hResult2D.invoke('SetValueComplex', iX, iY, dRe, dIm);
         end
-        function GetValueComplex(obj, iX, iY, dRe, dIm)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetValueComplex''.');
-            return;
+        function [dRe, dIm] = GetValueComplex(obj, iX, iY)
             % Sets / returns the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.
-            obj.hResult2D.invoke('GetValueComplex', iX, iY, dRe, dIm);
+
+            % Not sure how to implement this, so use the functions for each
+            % one individually for now.
+            dRe = obj.GetValueRe(iX, iY);
+            dIm = obj.GetValueIm(iX, iY);
+
+            % See Result3D.GetNxNyNz for the beginning of a possible implementation.
         end
         function SetValueRe(obj, iX, iY, dValue)
             % Sets / returns the real part / imaginary of the complex data value at the specified x/y index in the Result2D object. NOTE: If used with a "2D" object an error is produced.

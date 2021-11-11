@@ -238,23 +238,15 @@ classdef Result1D < handle
             obj.hResult1D.invoke('SetXYDouble', index, xValue, yValue);
         end
         function [xValue, yValue] = GetXYDouble(obj, index) %#ok<INUSD>
-            % This function was not implemented due to the Result1D object being seemingly
-            % impossible to pass from MATLAB.
-            warning('Used unimplemented function ''GetXYDouble''.');
-            xValue = nan;
-            yValue = nan;
-            return;
             % Returns the x- and  y-value at the specified index in the Result1D object.
             % Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
-%             functionString = [...
-%                 'Dim xValue As Double, yValue As Double', newline, ...
-%                 'Result1D.GetXYDouble(', num2str(index), ', xValue, yValue)', newline, ...
-%             ];
-%             returnvalues = {'xValue', 'yValue'};
-%             [xValue, yValue] = obj.project.RunVBACode(functionString, returnvalues);
-%             % Numerical returns.
-%             xValue = str2double(xValue);
-%             yValue = str2double(yValue);
+
+            % Not sure how to implement this, so use the functions for each
+            % one individually for now.
+            xValue = obj.GetX(iX, iY);
+            yValue = obj.GetY(iX, iY);
+
+            % See Result3D.GetNxNyNz for the beginning of a possible implementation.
         end
         function AppendXY(obj, xValue, yValue)
             % Appends a new pair of values to the end of the result object.

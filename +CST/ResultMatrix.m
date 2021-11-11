@@ -19,7 +19,7 @@
 % This object offers access functions to matrix results. A ResultMatrix object can hold a two dimensional array of numbers.
 classdef ResultMatrix < handle
     %% CST Interface specific functions.
-    methods(Access = ?CST.Project)
+    methods(Access = {?CST.Project, ?CST.ResultTree})
         % Only CST.Project can create a CST.ResultMatrix object.
         function obj = ResultMatrix(project, hProject)
             obj.project = project;

@@ -19,7 +19,7 @@
 % This object offers access and manipulation functions to 3D results. Therefore it may contain either vector fields or scalar fields. If a scalar field is represented by this object, its values are treated to be x-components of a vector field, while all other components are not available. Therefore all functions that manipulate the x-components manipulate the components of the scalar field.
 classdef Result3D < handle
     %% CST Interface specific functions.
-    methods(Access = {?CST.Project, ?CST.Result1D})
+    methods(Access = {?CST.Project, ?CST.Result3D})
         % CST.Project can create a CST.Result3D object.
         % CST.Result3D.Copy can create a Result3D object.
         function obj = Result3D(project, hProjectOrhResult3D, resultname)
@@ -176,14 +176,19 @@ classdef Result3D < handle
             % Returns the real/imaginary part of the x/y/z-component in the Result3D Object that corresponds to the given index. For scalar Result3D objects, only the GetXRe method may be used.
             double = obj.hResult3D.invoke('GetZIm', index);
         end
-        function GetDataFromIndex(obj, index, xre, yre, zre, xim, yim, zim)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            % Not sure how to implement this with project.RunVBACode either.
-            warning('Used unimplemented function ''GetDataFromIndex''.');
-            return;
+        function [xre, yre, zre, xim, yim, zim] = GetDataFromIndex(obj, index)
             % Yields real and imaginary parts of all vector components for the given index.
-            obj.hResult3D.invoke('GetDataFromIndex', index, xre, yre, zre, xim, yim, zim);
+
+            % Not sure how to implement this, so use the functions for each
+            % one individually for now.
+            xre = obj.GetXRe(index);
+            xim = obj.GetXIm(index);
+            yre = obj.GetYRe(index);
+            yim = obj.GetYIm(index);
+            zre = obj.GetZRe(index);
+            zim = obj.GetZIm(index);
+
+            % See Result3D.GetNxNyNz for the beginning of a possible implementation.
         end
         function variant = GetArray(obj, component)
             % Returns the array of the component results for all meshnodes ordered by the indexing scheme described above. The return value is an array of doubles. Valid components are "xre", "yre", "zre",  "xim", "yim", "zim".
@@ -314,14 +319,34 @@ classdef Result3D < handle
             % Returns the number of mesh nodes in x/y/z-direction. Returns zero for tetrahedral meshes.
             long = obj.hResult3D.invoke('GetNz');
         end
-        function GetNxNyNz(obj, nx, ny, nz)
-            % This function was not implemented due to the double_ref
-            % arguments being seemingly impossible to pass from MATLAB.
-            % Not sure how to implement this with project.RunVBACode either.
-            warning('Used unimplemented function ''GetNxNyNz''.');
+        function [Nx, Ny, Nz] = GetNxNyNz(obj)
+%             % Yields the number of mesh nodes in all three coordinate directions. Yields zero for tetrahedral meshes.
+%             obj.hResult3D.invoke('GetNxNyNz', nx, ny, nz);
+
+            % Not sure how to implement this, so use the functions for each
+            % one individually for now.
+            Nx = obj.GetNx();
+            Ny = obj.GetNy();
+            Nz = obj.GetNz();
             return;
-            % Yields the number of mesh nodes in all three coordinate directions. Yields zero for tetrahedral meshes.
-            obj.hResult3D.invoke('GetNxNyNz', nx, ny, nz);
+
+            % Below is an implementation, but how do we get the Result3D
+            % object in there?
+%             obj.project.StoreGlobalDataValue('matlab1', obj.hResult3D);
+            obj.Save('^tempmatlab');
+            functionString = [...
+                'Dim res as Object', newline, ...
+                'Set res = Result3D("^tempmatlab.m3d")', newline, ... % Causes CST to give the last error it gave.
+                ...'res.Load("e-field (#0000)_2(1).m3t")', newline, ...
+                'Dim Nx As Double, Ny As Double, Nz As Double', newline, ...
+                'value = res.GetNxNyNz(Nx, Ny, Nz)', newline, ...
+            ];
+            returnvalues = {'Nx', 'Ny', 'Nz'};
+            [Nx, Ny, Nz] = obj.project.RunVBACode(functionString, returnvalues);
+            % Numerical returns.
+            Nx = str2double(Nx);
+            Ny = str2double(Ny);
+            Nz = str2double(Nz);
         end
         function long = GetLength(obj)
             % Returns the dimension of the Result3D Object. This value is equal to nx*ny*nz for regular hexahedral meshes and equal to nTets*nSamplesPerTet for tetrahedral meshes.
@@ -396,9 +421,13 @@ classdef Result3D < handle
             % Read existing mesh entities with a given index or append entities to the mesh.
             obj.hResult3D.invoke('AddTetrahedron', Node0, Node1, Node2, Node3, ID);
         end
-        function CopyFrom(obj, Object)
+        function CopyFrom(obj, oObject)
             % Copies the contents from the given second object to the Result3D object. An uninitialized Result3D object will be initialized using the settings of the second object.
-            obj.hResult3D.invoke('CopyFrom', Object);
+            if(isa(oObject, 'CST.Result3D'))
+                oObject = oObject.hResult3D;
+            end
+
+            obj.hResult3D.invoke('CopyFrom', oObject);
         end
         %% CST 2019 Functions.
         function long = LoadFieldLine(obj, sFilePath, iLine, sQuantity)
