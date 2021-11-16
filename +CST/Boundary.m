@@ -362,8 +362,8 @@ classdef Boundary < handle
             % by calling SetPeriodicBoundaryAnglesDirection can be accessed using this function. All
             % arguments of this function are output values, which are set by the function. Its
             % return value is True if the unit cell is active and the expressions for the scan angle
-            % are valid. If direction is +1, then it refers to the ï¿½outwardï¿½ direction, and to the
-            % ï¿½inwardï¿½ direction if direction is -1.
+            % are valid. If direction is +1, then it refers to the "outward" direction, and to the
+            % "inward" direction if direction is -1.
             %
             % NOTE: valid is -1 when true.
             functionString = [...
@@ -424,169 +424,169 @@ classdef Boundary < handle
         function XminThermal(obj, ThermalBoundaryType)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.XminThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
         end
         function XmaxThermal(obj, ThermalBoundaryType)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.XmaxThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
         end
         function YminThermal(obj, ThermalBoundaryType)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.YminThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
         end
         function YmaxThermal(obj, ThermalBoundaryType)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.YmaxThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
         end
         function ZminThermal(obj, ThermalBoundaryType)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.ZminThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
         end
         function ZmaxThermal(obj, ThermalBoundaryType)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.ZmaxThermal "', num2str(ThermalBoundaryType, '%.15g'), '"']);
         end
         function enum = GetXminThermal(obj)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetXminThermal');
         end
         function enum = GetXmaxThermal(obj)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetXmaxThermal');
         end
         function enum = GetYminThermal(obj)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetYminThermal');
         end
         function enum = GetYmaxThermal(obj)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetYmaxThermal');
         end
         function enum = GetZminThermal(obj)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetZminThermal');
         end
         function enum = GetZmaxThermal(obj)
             % ThermalBoundaryType: "isothermal" - Boundary condition with constant temperature (T=const). This boundary type can carry a temperature definition.
             %                      "adiabatic" - Boundary condition without any heat-flow through the boundary (dT / dN = 0).
-            %                      ”open” - Simulates the open space.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "open" - Simulates the open space.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetZmaxThermal');
         end
         function XsymmetryThermal(obj, ThermalSymmetryType)
             % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
             %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
             %                      "none" - No symmetry.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.XsymmetryThermal "', num2str(ThermalSymmetryType, '%.15g'), '"']);
         end
         function YsymmetryThermal(obj, ThermalSymmetryType)
             % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
             %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
             %                      "none" - No symmetry.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.YsymmetryThermal "', num2str(ThermalSymmetryType, '%.15g'), '"']);
         end
         function ZsymmetryThermal(obj, ThermalSymmetryType)
             % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
             %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
             %                      "none" - No symmetry.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             obj.AddToHistory(['.ZsymmetryThermal "', num2str(ThermalSymmetryType, '%.15g'), '"']);
         end
         function enum = GetXSymmetryThermal(obj)
             % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
             %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
             %                      "none" - No symmetry.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetXSymmetryThermal');
         end
         function enum = GetYSymmetryThermal(obj)
             % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
             %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
             %                      "none" - No symmetry.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetYSymmetryThermal');
         end
         function enum = GetZSymmetryThermal(obj)
             % thermalSymmetryType: "isothermal" - Symmetry condition with constant temperature at the symmetry plane (T=const).
             %                      "adiabatic" - Symmetry condition without any heat-flow through the symmetry plane (dT / dN = 0).
             %                      "none" - No symmetry.
-            %                      ”expanded open” - Same as ”open” but adds some extra space to the calculation domain.
+            %                      "expanded open" - Same as "open" but adds some extra space to the calculation domain.
             enum = obj.hBoundary.invoke('GetZSymmetryThermal');
         end
         function XminTemperatureType(obj, type)
             % Specifies the temperature type of the lower and upper boundaries.
-            % type: ”none” - No temperature is set for  the corresponding boundary.
-            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
-            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            % type: "none" - No temperature is set for  the corresponding boundary.
+            %       "fixed" - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       "floating" - The temperature is defined as floating on the corresponding boundary.
             obj.AddToHistory(['.XminTemperatureType "', num2str(type, '%.15g'), '"']);
         end
         function XmaxTemperatureType(obj, type)
             % Specifies the temperature type of the lower and upper boundaries.
-            % type: ”none” - No temperature is set for  the corresponding boundary.
-            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
-            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            % type: "none" - No temperature is set for  the corresponding boundary.
+            %       "fixed" - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       "floating" - The temperature is defined as floating on the corresponding boundary.
             obj.AddToHistory(['.XmaxTemperatureType "', num2str(type, '%.15g'), '"']);
         end
         function YminTemperatureType(obj, type)
             % Specifies the temperature type of the lower and upper boundaries.
-            % type: ”none” - No temperature is set for  the corresponding boundary.
-            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
-            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            % type: "none" - No temperature is set for  the corresponding boundary.
+            %       "fixed" - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       "floating" - The temperature is defined as floating on the corresponding boundary.
             obj.AddToHistory(['.YminTemperatureType "', num2str(type, '%.15g'), '"']);
         end
         function YmaxTemperatureType(obj, type)
             % Specifies the temperature type of the lower and upper boundaries.
-            % type: ”none” - No temperature is set for  the corresponding boundary.
-            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
-            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            % type: "none" - No temperature is set for  the corresponding boundary.
+            %       "fixed" - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       "floating" - The temperature is defined as floating on the corresponding boundary.
             obj.AddToHistory(['.YmaxTemperatureType "', num2str(type, '%.15g'), '"']);
         end
         function ZminTemperatureType(obj, type)
             % Specifies the temperature type of the lower and upper boundaries.
-            % type: ”none” - No temperature is set for  the corresponding boundary.
-            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
-            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            % type: "none" - No temperature is set for  the corresponding boundary.
+            %       "fixed" - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       "floating" - The temperature is defined as floating on the corresponding boundary.
             obj.AddToHistory(['.ZminTemperatureType "', num2str(type, '%.15g'), '"']);
         end
         function ZmaxTemperatureType(obj, type)
             % Specifies the temperature type of the lower and upper boundaries.
-            % type: ”none” - No temperature is set for  the corresponding boundary.
-            %       ”fixed” - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
-            %       ”floating” - The temperature is defined as floating on the corresponding boundary.
+            % type: "none" - No temperature is set for  the corresponding boundary.
+            %       "fixed" - On the boundaries a fixed temperature value can be defined by use of the corresponding Temperature methods (see below).
+            %       "floating" - The temperature is defined as floating on the corresponding boundary.
             obj.AddToHistory(['.ZmaxTemperatureType "', num2str(type, '%.15g'), '"']);
         end
         function XminTemperature(obj, value)

@@ -401,7 +401,7 @@ classdef AsymptoticSolver < handle
             obj.AddToHistory(['.SetSolverHotspotNumberOfPixels "', num2str(value, '%.15g'), '"']);
         end
         function SetSolverHotspotAngularRange(obj, value)
-            % This value sets the maximum angular range (angle between observation direction and reflected ray) for which specular contributions will be evaluated. This allows you to hide contributions that don't originate from reflections in the observers' direction. Its effect resembles that of an aperture. A small value (greater than 0�) only selects contributions going in the observer's direction. A setting of 180� includes all contributions, resembling an open aperture.
+            % This value sets the maximum angular range (angle between observation direction and reflected ray) for which specular contributions will be evaluated. This allows you to hide contributions that don't originate from reflections in the observers' direction. Its effect resembles that of an aperture. A small value (greater than 0 degrees) only selects contributions going in the observer's direction. A setting of 180 degrees includes all contributions, resembling an open aperture.
             obj.AddToHistory(['.SetSolverHotspotAngularRange "', num2str(value, '%.15g'), '"']);
         end
         function SetSolverHotspotWeightingExponent(obj, value)
@@ -409,7 +409,7 @@ classdef AsymptoticSolver < handle
             obj.AddToHistory(['.SetSolverHotspotWeightingExponent "', num2str(value, '%.15g'), '"']);
         end
         function SetSolverHotspotHOAngularRange(obj, value)
-            % This value sets the maximum angular range (angle between observation direction and reflected ray) for which higher-order contributions will be evaluated. This allows you to hide contributions that don't originate from reflections in the observers' direction. Its effect resembles that of an aperture. A small value (greater than 0�) only selects contributions going in the observer's direction. A setting of 180� includes all contributions, resembling an open aperture.
+            % This value sets the maximum angular range (angle between observation direction and reflected ray) for which higher-order contributions will be evaluated. This allows you to hide contributions that don't originate from reflections in the observers' direction. Its effect resembles that of an aperture. A small value (greater than 0 degrees) only selects contributions going in the observer's direction. A setting of 180 degrees includes all contributions, resembling an open aperture.
             obj.AddToHistory(['.SetSolverHotspotHOAngularRange "', num2str(value, '%.15g'), '"']);
         end
         function SetSolverHotspotHOWeightingExponent(obj, value)
@@ -417,7 +417,7 @@ classdef AsymptoticSolver < handle
             obj.AddToHistory(['.SetSolverHotspotHOWeightingExponent "', num2str(value, '%.15g'), '"']);
         end
         function SetNearfieldPartitioningAccuracy(obj, value)
-            % This setting specifies how sub sources are chosen for illumination of the scattering object: the size of the sub sources used to illuminate a particular part of the scattering object is adjusted to fulfil the farfield criterion R > accuracy*2*D�/?, where accuracy is the current setting. If this value is set to zero, sub sources are not used. Instead, the whole field distribution is modeled as a single point source.
+            % This setting specifies how sub sources are chosen for illumination of the scattering object: the size of the sub sources used to illuminate a particular part of the scattering object is adjusted to fulfil the farfield criterion R > accuracy*2*D^2/?, where accuracy is the current setting. If this value is set to zero, sub sources are not used. Instead, the whole field distribution is modeled as a single point source.
             obj.AddToHistory(['.Set "NearfieldPartitioningAccuracy", '...
                                    '"', num2str(value, '%.15g'), '"']);
         end

@@ -712,7 +712,7 @@ classdef Project < handle
             % "angularwavenumber" RADIAN/LENGTH UNIT
             % vMin and vMax speficy the desired data interval in transformed coordinates and vSamples defines the desired number of equidistant samples. Only time-frequency and space-wavenumber space transforms are supported. Frequency and wavenumber functions are related as follows to their angular frequency/wavenumber counterparts:
             % No further scaling is applied. isign controls the sign of the exponent to affect a forward or a backward transform. The argument normalization may assume any value, depending on the employed normalization convention. However, forward and backward transform normalizations must always guarantee:
-            % Fourier transform conventions adopted by  CST MICROWAVE STUDIO� are:
+            % Fourier transform conventions adopted by  CST MICROWAVE STUDIO are:
             % CalculateFourierComplex(Signal, "time", Spectrum, "frequency", "-1", "1.0", ...)
             % CalculateFourierComplex(Spectrum, "frequency", Signal, "time", "+1", "1.0/(2.0*Pi)", ...)
             obj.hProject.invoke('CalculateFourierComplex', Input, InputUnit, Output, OutputUnit, isign, normalization, vMin, vMax, vSamples);

@@ -142,7 +142,7 @@ classdef Background < handle
         % Definition below is copied from CST.Material.
         function Rho(obj, dValue)
             % (*) property shared among all available material sets property shared among all available material sets
-            % Sets the material density value of the material in kg/m�, i.e. used for SAR calculations.
+            % Sets the material density value of the material in kg/m^2, i.e. used for SAR calculations.
             % This setting is important for transient thermal simulations.
             obj.AddToHistory(['.Rho "', num2str(dValue, '%.15g'), '"']);
         end

@@ -70,8 +70,8 @@ classdef FarfieldArray < handle
         function Arraytype(obj, type)
             % Sets the type of the array pattern.
             % type can have one of the following values:
-            % �rectangular� - A rectangular array pattern (linear: 1D, planar: 2D, cubic: 3D) can be defined by setting the corresponding antenna numbers together with the space and phaseshift information using the methods XSet, YSet, and ZSet. The resulting list is then calculated by SetList. The array setup uses automatically the unit cell geometry and phasing if unit cell or periodic boundaries are active.
-            % �edit� - This mode offers the possibility to edit the current antennalist by adding single antenna elements to the list using the method Antenna.
+            % "rectangular" - A rectangular array pattern (linear: 1D, planar: 2D, cubic: 3D) can be defined by setting the corresponding antenna numbers together with the space and phaseshift information using the methods XSet, YSet, and ZSet. The resulting list is then calculated by SetList. The array setup uses automatically the unit cell geometry and phasing if unit cell or periodic boundaries are active.
+            % "edit" - This mode offers the possibility to edit the current antennalist by adding single antenna elements to the list using the method Antenna.
             obj.AddToHistory(['.Arraytype "', num2str(type, '%.15g'), '"']);
         end
         function XSet(obj, number, spaceshift, phaseshift)

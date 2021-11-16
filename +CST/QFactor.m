@@ -21,7 +21,7 @@
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
      %#ok<*NBRAK>
 
-% This object offers the possibility to calculate losses and as a result the Q-factor. It uses an H-field from a surface-loss-free solver run for calculation of surface losses. Dielectric losses are taken into account by either using the losses from a lossy solver run or applying the perturbation method in case of loss-free solver run. In both cases, lossy dielectric material properties have to be set before the solver run. For the surface losses, each material which was PEC in the surface-loss-free calculation can be set to a finite conductivity. Applying the calculation method, the losses and Q�s will be calculated for all solids. The losses are summed up for each material and for the total model.
+% This object offers the possibility to calculate losses and as a result the Q-factor. It uses an H-field from a surface-loss-free solver run for calculation of surface losses. Dielectric losses are taken into account by either using the losses from a lossy solver run or applying the perturbation method in case of loss-free solver run. In both cases, lossy dielectric material properties have to be set before the solver run. For the surface losses, each material which was PEC in the surface-loss-free calculation can be set to a finite conductivity. Applying the calculation method, the losses and Q's will be calculated for all solids. The losses are summed up for each material and for the total model.
 classdef QFactor < handle
     %% CST Interface specific functions.
     methods(Access = ?CST.Project)
@@ -59,12 +59,12 @@ classdef QFactor < handle
             obj.AddToHistory(['.SetHField "', num2str(sFieldName, '%.15g'), '"']);
         end
         function SetConductivity(obj, name, value)
-            % Defines the conductivity / mu to be used in the calculation for a specific material indicated by its name. Choose �**Cond. Enclosure**� to set the value for the background material and/or electric boundaries. The conductivity is set either by a numerical value or to infinity using �PEC�.
+            % Defines the conductivity / mu to be used in the calculation for a specific material indicated by its name. Choose "**Cond. Enclosure**" to set the value for the background material and/or electric boundaries. The conductivity is set either by a numerical value or to infinity using "PEC".
             obj.AddToHistory(['.SetConductivity "', num2str(name, '%.15g'), '", '...
                                                '"', num2str(value, '%.15g'), '"']);
         end
         function SetMu(obj, name, value)
-            % Defines the conductivity / mu to be used in the calculation for a specific material indicated by its name. Choose �**Cond. Enclosure**� to set the value for the background material and/or electric boundaries. The conductivity is set either by a numerical value or to infinity using �PEC�.
+            % Defines the conductivity / mu to be used in the calculation for a specific material indicated by its name. Choose "**Cond. Enclosure**" to set the value for the background material and/or electric boundaries. The conductivity is set either by a numerical value or to infinity using "PEC".
             obj.AddToHistory(['.SetMu "', num2str(name, '%.15g'), '", '...
                                      '"', num2str(value, '%.15g'), '"']);
         end
@@ -98,18 +98,12 @@ classdef QFactor < handle
         end
         function double = GetLossRMS(obj, name)
             % Returns the value of Q or Loss respectively for an entity name. Supported values are:
-            % name parameter
-            % Return value
-            % solidname ("componentname:solidname")
-            % Q/loss of the entered solid
-            % material ("materialname")
-            % Integrated Q/loss of the entered material
-            % **Cond. Enclosure**
-            % Q/loss of the bounding box surface
-            % **Volume Losses**
-            % Integrated Q/loss of all volume losses
-            % **Sum of Surface Losses**
-            % Integrated Q/loss of all surface losses
+            % name parameter                            Return value
+            % solidname ("componentname:solidname")     Q/loss of the entered solid
+            % material ("materialname")                 Integrated Q/loss of the entered material
+            % **Cond. Enclosure**                       Q/loss of the bounding box surface
+            % **Volume Losses**                         Integrated Q/loss of all volume losses
+            % **Sum of Surface Losses**                 Integrated Q/loss of all surface losses
             double = obj.hQFactor.invoke('GetLossRMS', name);
         end
         function UseNewMethod(obj, boolean)

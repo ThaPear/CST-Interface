@@ -80,14 +80,10 @@ classdef LumpedFaceElement < handle
             % Sets the type of the discrete element.
             % enum key
             % meaning
-            % �rlcparallel�
-            % The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance. (default)
-            % �rlcserial�
-            % The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance.
-            % �diode�
-            % The discrete element is a diode.
-            % �generalcircuit�
-            % The discrete element is defined by circuit file.
+            % "rlcparallel"     -  The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance. (default)
+            % "rlcserial"       - The discrete element is made out of a parallel circuit of a resistance, an inductance and a capacitance.
+            % "diode"           - The discrete element is a diode.
+            % "generalcircuit"  -  The discrete element is defined by circuit file.
             obj.AddToHistory(['.SetType "', num2str(key, '%.15g'), '"']);
         end
         function SetName(obj, name)
@@ -113,15 +109,15 @@ classdef LumpedFaceElement < handle
             obj.AddToHistory(['.SetC "', num2str(dValue, '%.15g'), '"']);
         end
         function SetGs(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to �diode�.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to "diode".
             obj.AddToHistory(['.SetGs "', num2str(dValue, '%.15g'), '"']);
         end
         function SetI0(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to �diode�.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to "diode".
             obj.AddToHistory(['.SetI0 "', num2str(dValue, '%.15g'), '"']);
         end
         function SetT(obj, dValue)
-            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to �diode�.
+            % Sets the blocking conductivity / reverse current / the temperature in Kelvin for the diode. These methods have only an effect if the .SetType method is set to "diode".
             obj.AddToHistory(['.SetT "', num2str(dValue, '%.15g'), '"']);
         end
         function SetP1(obj, picked, x, y, z)
