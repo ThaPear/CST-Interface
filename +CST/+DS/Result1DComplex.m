@@ -133,9 +133,16 @@ classdef Result1DComplex < handle
             % Returns the y-value at the specified index in the Result1D object.
             double = obj.hResult1DComplex.invoke('GetYIm', index);
         end
-        function GetDataFromIndex(obj, Index, X, YReal, YImaginary)
+        function [X, YReal, YImaginary] = GetDataFromIndex(obj, Index)
             % Fills the variables X, YReal and YImaginary with the data point at the given index.
-            obj.hResult1DComplex.invoke('GetDataFromIndex', Index, X, YReal, YImaginary);
+
+            % Not sure how to implement this, so use the functions for each
+            % one individually for now.
+            X = obj.GetX(Index);
+            YReal = obj.GetYRe(Index);
+            YImaginary = obj.GetYIm(Index);
+
+            % See Result3D.GetNxNyNz for the beginning of a possible implementation.
         end
         function AppendXY(obj, XValue, YReal, YImaginary)
             % Appends a data point  to the end of the complex result object.

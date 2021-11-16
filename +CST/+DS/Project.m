@@ -96,7 +96,7 @@ classdef Project < handle
             % NOTE: The positive coordinate directions of the schematic go like this: from Left to Right and from Top to Bottom. However, nYmin specifies the bottom of the bounding box and nYmax specifies the top of the bounding box.
             functionString = [...
                 'Dim nXMin As Double, nXMax As Double, nYMin As Double, nYMax As Double', newline, ...
-                'DS.GetBBoxAllComponents(', opMode, ', nXMin, nXMax, nYMin, nYMax)', newline, ...
+                'DS.GetBBoxAllComponents("', opMode, '", nXMin, nXMax, nYMin, nYMax)', newline, ...
             ];
             returnvalues = {'nXMin', 'nXMax', 'nYMin', 'nYMax'};
             [nXMin, nXMax, nYMin, nYMax] = obj.RunVBACode(functionString, returnvalues);
@@ -227,7 +227,7 @@ classdef Project < handle
             functionString = [...
                 'Dim bool As Boolean', newline, ...
                 'Dim parameterNames As Variant, parameterValues As Variant', newline, ...
-                'bool = DS.GetParameterCombination(', resultID, ', parameterNames, parameterValues)', newline, ...
+                'bool = DS.GetParameterCombination("', resultID, '", parameterNames, parameterValues)', newline, ...
                 'DS.StoreGlobalDataValue("matlab1", bool)', newline, ...
                 ... % If the resultID was valid, then bool will be true.
                 'If bool Then', newline, ...
@@ -783,24 +783,50 @@ classdef Project < handle
             % functionstring specifies the VBA code to be run.
             % returnvalues specifies the VBA names of the values to be returned to MATLAB.
             %     This must match the number of output arguments nargout.
-            if(nargout ~= length(returnvalues))
-                error('Invalid number of return values specified.');
+            if((nargout ~= 0 || nargin >= 3) && ~isempty(returnvalues))
+                if(nargout ~= length(returnvalues))
+                    error('Invalid number of return values specified.');
+                end
+
+                % Append the code to return the values to MATLAB.
+                for(i = 1:length(returnvalues))
+                    functionstring = [functionstring, newline, ...
+                    'DS.StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
+                end
             end
 
-            % Append the code to return the values to MATLAB.
-            for(i = 1:length(returnvalues))
-                functionstring = [functionstring, newline, ...
-                'DS.StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
+            % Determine the full path to the RunVBACode.bas file.
+            folders = what('+CST');
+            cstinterfacefolder = [];
+            % There may be multiple folders named '+CST'.
+            for(i = 1:length(folders))
+                % Find the one that contains adscomponentexport.m.
+                if(any([cellfun(@(name) strcmpi(name, 'adscomponentexport.m'), folders(i).m)]))
+                    % Strip '\+CST' from the folder.
+                    cstinterfacefolder = folders(i).path(1:end-5);
+                    break;
+                end
+            end
+            % Ensure the folder is found.
+            if(isempty(cstinterfacefolder))
+                error('''+CST'' folder not found, something went wrong.');
+            end
+            basfilepath = [cstinterfacefolder, '\Bas\RunVBACode_DS.bas'];
+            % Ensure the script is present.
+            if(~exist(basfilepath, 'file'))
+                error('RunVBACode_DS.bas macro not found, ensure it is placed in the Bas folder.\nThe Bas folder should be next to the +CST folder.');
             end
 
             % Run the code in CST.
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
-            obj.RunScript(GetFullPath('CST Interface\Bas\RunVBACode_DS.bas'));
+            obj.RunScript(basfilepath);
 
-            % Retrieve return arguments.
-            varargout = cell(1, nargout);
-            for(i = 1:nargout)
-                varargout{i} = obj.RestoreGlobalDataValue(['matlab', num2str(i)]);
+            if(nargin >= 3 && ~isempty(returnvalues))
+                % Retrieve return arguments.
+                varargout = cell(1, nargout);
+                for(i = 1:nargout)
+                    varargout{i} = obj.RestoreGlobalDataValue(['matlab', num2str(i)]);
+                end
             end
         end
     end

@@ -237,14 +237,14 @@ classdef Result1D < handle
             % Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
             obj.hResult1D.invoke('SetXYDouble', index, xValue, yValue);
         end
-        function [xValue, yValue] = GetXYDouble(obj, index) %#ok<INUSD>
+        function [xValue, yValue] = GetXYDouble(obj, index)
             % Returns the x- and  y-value at the specified index in the Result1D object.
             % Note, that these methods in contrast to .SetXY do only accept double parameters and no expressions.
 
             % Not sure how to implement this, so use the functions for each
             % one individually for now.
-            xValue = obj.GetX(iX, iY);
-            yValue = obj.GetY(iX, iY);
+            xValue = obj.GetX(index);
+            yValue = obj.GetY(index);
 
             % See Result3D.GetNxNyNz for the beginning of a possible implementation.
         end

@@ -319,7 +319,7 @@ classdef Project < handle
             functionString = [...
                 'Dim bool As Boolean', newline, ...
                 'Dim parameterNames As Variant, parameterValues As Variant', newline, ...
-                'bool = GetParameterCombination(', resultID, ', parameterNames, parameterValues)', newline, ...
+                'bool = GetParameterCombination("', resultID, '", parameterNames, parameterValues)', newline, ...
                 'StoreGlobalDataValue("matlab1", bool)', newline, ...
                 ... % If the resultID was valid, then bool will be true.
                 'If bool Then', newline, ...
@@ -1059,9 +1059,31 @@ classdef Project < handle
                 end
             end
 
+            % Determine the full path to the RunVBACode.bas file.
+            folders = what('+CST');
+            cstinterfacefolder = [];
+            % There may be multiple folders named '+CST'.
+            for(i = 1:length(folders))
+                % Find the one that contains adscomponentexport.m.
+                if(any([cellfun(@(name) strcmpi(name, 'adscomponentexport.m'), folders(i).m)]))
+                    % Strip '\+CST' from the folder.
+                    cstinterfacefolder = folders(i).path(1:end-5);
+                    break;
+                end
+            end
+            % Ensure the folder is found.
+            if(isempty(cstinterfacefolder))
+                error('''+CST'' folder not found, something went wrong.');
+            end
+            basfilepath = [cstinterfacefolder, '\Bas\RunVBACode.bas'];
+            % Ensure the script is present.
+            if(~exist(basfilepath, 'file'))
+                error('RunVBACode.bas macro not found, ensure it is placed in the Bas folder.\nThe Bas folder should be next to the +CST folder.');
+            end
+
             % Run the code in CST.
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
-            obj.RunScript(GetFullPath('CST-Interface\Bas\RunVBACode.bas'));
+            obj.RunScript(basfilepath);
 
             if(nargin >= 3 && ~isempty(returnvalues))
                 % Retrieve return arguments.
