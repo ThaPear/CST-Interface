@@ -49,13 +49,13 @@ classdef ResultTree < handle
             % Enable or disable the update of the tree. After enabling the tree update, this method does actually update the tree also.
             obj.hResultTree.invoke('EnableTreeUpdate', boolean);
         end
-        function GetFirstChildName(obj, sParentTreePath)
+        function string = GetFirstChildName(obj, sParentTreePath)
             % Get the name including tree path of the first child item of the specified parent item. An empty string will be returned if no child exists.
-            obj.hResultTree.invoke('GetFirstChildName', sParentTreePath);
+            string = obj.hResultTree.invoke('GetFirstChildName', sParentTreePath);
         end
-        function GetNextItemName(obj, sCurrentTreeItem)
+        function string = GetNextItemName(obj, sCurrentTreeItem)
             % Get the name including tree path of the item following sCurrentTreeItem in the same tree folder. sCurrentTreeItem has to specify the tree folder and the current item name. An empty string will be returned if sCurrentTreeItem is the last item in the tree folder.
-            obj.hResultTree.invoke('GetNextItemName', sCurrentTreeItem);
+            string = obj.hResultTree.invoke('GetNextItemName', sCurrentTreeItem);
         end
         function RefreshView(obj)
             % Updates the results stored in the  tree.
@@ -145,6 +145,9 @@ classdef ResultTree < handle
             % Returns a result object containing the data specified by 'treeItemName' and 'resultID' . The return value can be a Result0D, a Result 1D or a Result 1D Complex object.  In case no data exists, a reference to an object is returned that is nothing. This can be queried via the VBA keyword Nothing (e.g. If(myObject Is Nothing)Then...). The method returns an error, if the tree item does not exist or the Result ID is invalid.
             % (2020) [Can also be a] Result 2D or a Result Matrix object.
             hResult = obj.hResultTree.invoke('GetResultFromTreeItem', treeItemName, resultID);
+            if(isempty(hResult))
+                error('Result ''%s'' not found. Note that 3D results are not supported by this API function.', treeItemName);
+            end
             type = hResult.invoke('GetResultObjectType');
             switch(type)
                 case {'0D', '0DC'}

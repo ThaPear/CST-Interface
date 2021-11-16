@@ -17,10 +17,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Warning: Untested
 
-% Suppress warnings:
-% Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-     %#ok<*NBRAK>
-
 % Evaluate a field, previously selected in the Navigation Tree, on a specified face.
 classdef EvaluateFieldOnFace < handle
     %% CST Interface specific functions.
@@ -29,32 +25,6 @@ classdef EvaluateFieldOnFace < handle
         function obj = EvaluateFieldOnFace(project, hProject)
             obj.project = project;
             obj.hEvaluateFieldOnFace = hProject.invoke('EvaluateFieldOnFace');
-            obj.history = [];
-            obj.bulkmode = 0;
-        end
-    end
-    methods
-        function StartBulkMode(obj)
-            % Buffers all commands instead of sending them to CST
-            % immediately.
-            obj.bulkmode = 1;
-        end
-        function EndBulkMode(obj)
-            % Flushes all commands since StartBulkMode to CST.
-            obj.bulkmode = 0;
-            % Prepend With EvaluateFieldOnFace and append End With
-            obj.history = [ 'With EvaluateFieldOnFace', newline, ...
-                                obj.history, ...
-                            'End With'];
-            obj.project.AddToHistory(['define EvaluateFieldOnFace settings'], obj.history);
-            obj.history = [];
-        end
-        function AddToHistory(obj, command)
-            if(obj.bulkmode)
-                obj.history = [obj.history, '     ', command, newline];
-            else
-                obj.project.AddToHistory(['EvaluateFieldOnFace', command]);
-            end
         end
     end
     %% CST Object functions.
@@ -68,10 +38,10 @@ classdef EvaluateFieldOnFace < handle
             %             'normal'
             functionString = [...
                 'Dim dIntReal As Double, dIntImag As Double, dArea As Double', newline, ...
-                'EvaluateFieldAlongCurve.IntegrateField(', facename, ', ', component, ', dIntReal, dIntImag, dArea)', newline, ...
+                'EvaluateFieldAlongCurve.IntegrateField("', facename, '", "', component, '", dIntReal, dIntImag, dArea)', newline, ...
             ];
             returnvalues = {'dIntReal', 'dIntImag', 'area'};
-            [dIntReal, dIntImag, dArea] = obj.dsproject.RunVBACode(functionString, returnvalues);
+            [dIntReal, dIntImag, dArea] = obj.project.RunVBACode(functionString, returnvalues);
             % Numerical returns.
             dIntReal = str2double(dIntReal);
             dIntImag = str2double(dIntImag);
@@ -83,14 +53,14 @@ classdef EvaluateFieldOnFace < handle
         end
         function EvaluateOnSurface(obj, boolean)
             % If switch is set to True, the field is evaluated on the nearest surface to the curve path, disregarding volume results. This can be used to avoid zero result values, if the curve path is defined on a surface bordering a volume without field results (e.g. PEC).
-            obj.AddToHistory(['.EvaluateOnSurface "', num2str(boolean, '%.15g'), '"']);
+            obj.hEvaluateFieldOnFace.invoke('EvaluateOnSurface', boolean);
         end
         function FitToGrid(obj, boolean)
             % If switch is set to True, the face is mapped on the underlying grid. All field components on this staircase surface are taken into account then. Be aware that this also might increase the area returned. This feature is only available for hexahedral meshes, but is active by default then.
-            obj.AddToHistory(['.FitToGrid "', num2str(boolean, '%.15g'), '"']);
+            obj.hEvaluateFieldOnFace.invoke('FitToGrid', boolean);
         end
         %% CST 2020 Functions.
-        function [dIntReal, dIntImag, dArea] = CalulateIntegral(obj, facename, component, complexType)
+        function [dIntReal, dIntImag, dArea] = CalculateIntegral(obj, facename, component, complexType)
             % Integrates the selected field component / absolute value depending on the chosen complex type over the face named by sFaceName. The integrals are returned in the double variables dIntReal and dIntImag. Scalar results returned in the dIntReal variable and dIntImag is set to zero. Alone for the complex type "complex", the dIntImag variable is set accordingly. The size of the face is returned in the dArea variable.
             % component,: 'x'
             %             'y'
@@ -102,13 +72,12 @@ classdef EvaluateFieldOnFace < handle
             %               'magnitude'
             %               'phase'
             %               'complex'
-            obj.hEvaluateFieldOnFace.invoke('CalulateIntegral', facename, component, complexType);
             functionString = [...
                 'Dim dIntReal As Double, dIntImag As Double, dArea As Double', newline, ...
-                'EvaluateFieldOnFace.CalculateIntegral(', facename, ', ', component, ', ', complexType, ', dIntReal, dIntImag, dArea)', newline, ...
+                'EvaluateFieldOnFace.CalculateIntegral("', facename, '", "', component, '", "', complexType, '", dIntReal, dIntImag, dArea)', newline, ...
             ];
             returnvalues = {'dIntReal', 'dIntImag', 'dArea'};
-            [dIntReal, dIntImag, dArea] = obj.dsproject.RunVBACode(functionString, returnvalues);
+            [dIntReal, dIntImag, dArea] = obj.project.RunVBACode(functionString, returnvalues);
             % Numerical returns.
             dIntReal = str2double(dIntReal);
             dIntImag = str2double(dIntImag);
@@ -120,8 +89,6 @@ classdef EvaluateFieldOnFace < handle
     properties(SetAccess = protected)
         project
         hEvaluateFieldOnFace
-        history
-        bulkmode
 
     end
 end
