@@ -40,7 +40,7 @@ classdef EvaluateFieldOnFace < handle
                 'Dim dIntReal As Double, dIntImag As Double, dArea As Double', newline, ...
                 'EvaluateFieldAlongCurve.IntegrateField("', facename, '", "', component, '", dIntReal, dIntImag, dArea)', newline, ...
             ];
-            returnvalues = {'dIntReal', 'dIntImag', 'area'};
+            returnvalues = {'dIntReal', 'dIntImag', 'dArea'};
             [dIntReal, dIntImag, dArea] = obj.project.RunVBACode(functionString, returnvalues);
             % Numerical returns.
             dIntReal = str2double(dIntReal);
@@ -82,6 +82,11 @@ classdef EvaluateFieldOnFace < handle
             dIntReal = str2double(dIntReal);
             dIntImag = str2double(dIntImag);
             dArea = str2double(dArea);
+        end
+        %% Mislabeled functions in documentation.
+        function CalulateIntegral(obj, facename, component, complexType)
+            ric = matlab.lang.correction.ReplaceIdentifierCorrection('CalulateIntegral', 'CalculateIntegral');
+            error(ric, 'This function is mislabeled in the CST documentation, please use the proper function ''CalculateIntegral''.');
         end
     end
     %% MATLAB-side stored settings of CST state.

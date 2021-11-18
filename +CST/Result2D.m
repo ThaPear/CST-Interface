@@ -217,31 +217,27 @@ classdef Result2D < handle
             double = obj.hResult2D.invoke('GetValueIm', iX, iY);
         end
         function SetArray(obj, dArray)
-            warning('''SetArray'' uses variant type and is therefore unlikely to work.');
-            % Sets / returns data of  the Result2D object from / as a double array.
+            % Sets data of the Result2D object from a double array.
             % The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNX' and 'GetNY' to query and one of the 'Initialize...' commands to modify the number of data values of the Result2D object. The array's data layout is in row-major order. In case of complex data the real and imaginary values are alternating.
             obj.hResult2D.invoke('SetArray', dArray);
         end
         function variant = GetArray(obj)
-            warning('''GetArray'' uses variant type and is therefore unlikely to work.');
-            % Sets / returns data of  the Result2D object from / as a double array.
+            % Returns data of the Result2D object as a double array.
             % The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNX' and 'GetNY' to query and one of the 'Initialize...' commands to modify the number of data values of the Result2D object. The array's data layout is in row-major order. In case of complex data the real and imaginary values are alternating.
             variant = obj.hResult2D.invoke('GetArray');
         end
         function SetTriangleArray(obj, dArray)
-            warning('''SetTriangleArray'' uses variant type and is therefore unlikely to work.');
-            % Sets / returns triangle data of  the Result2D object from / as a double array.
+            % Sets triangle data of the Result2D object from a double array.
             % The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNTriangle' to query and 'InitializeTriangulation' or 'InitializeTriangulationComplex' to modify the number of triangles of the Result2D object. The array's data layout is x11,y11, x12,y12, x13,y13, x21,y21,... with x1*, y1* being the coordinates of the first triangle and so on.
             obj.hResult2D.invoke('SetTriangleArray', dArray);
         end
         function variant = GetTriangleArray(obj)
-            warning('''GetTriangleArray'' uses variant type and is therefore unlikely to work.');
-            % Sets / returns triangle data of  the Result2D object from / as a double array.
+            % Returns triangle data of the Result2D object as a double array.
             % The array needs to start with index zero and is expected to have as many elements as the Result2D object contains. Consider using the methods 'GetNTriangle' to query and 'InitializeTriangulation' or 'InitializeTriangulationComplex' to modify the number of triangles of the Result2D object. The array's data layout is x11,y11, x12,y12, x13,y13, x21,y21,... with x1*, y1* being the coordinates of the first triangle and so on.
             variant = obj.hResult2D.invoke('GetTriangleArray');
         end
         function double = GetGlobalMaximum(obj, iX, iY)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result2D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetGlobalMaximum''.');
             double = nan;
@@ -250,7 +246,7 @@ classdef Result2D < handle
             double = obj.hResult2D.invoke('GetGlobalMaximum', iX, iY);
         end
         function double = GetGlobalMinimum(obj, iX, iY)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result2D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetGlobalMinimum''.');
             double = nan;

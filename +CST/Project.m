@@ -718,8 +718,8 @@ classdef Project < handle
             obj.hProject.invoke('CalculateFourierComplex', Input, InputUnit, Output, OutputUnit, isign, normalization, vMin, vMax, vSamples);
         end
         function CalculateCONV(obj, a, b, conv) %#ok<INUSD>
-            % This function was not implemented due to the Result1D arguments being seemingly
-            % impossible to pass from MATLAB.
+            % This function was not implemented due to the Result1D
+            % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''CalculateCONV''.');
             return;
             % This method calculates the convolution of two sequences. All signals are given as Result1D objects.
@@ -729,8 +729,8 @@ classdef Project < handle
 %             obj.hProject.invoke('CalculateCONV', a, b, conv);
         end
         function CalculateCROSSCOR(obj, a, b, corr, bNorm) %#ok<INUSD>
-            % This function was not implemented due to the Result1D arguments being seemingly
-            % impossible to pass from MATLAB.
+            % This function was not implemented due to the Result1D
+            % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''CalculateCROSSCOR''.');
             return;
             % This method calculates the cross correlation sequence of two sequences. All signals are given as Result1D objects. If "bNorm" is "False"  then the standard cross correlation sequence is calculated by the following equation.

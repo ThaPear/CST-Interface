@@ -366,7 +366,7 @@ classdef Result3D < handle
             obj.hResult3D.invoke('InitMesh');
         end
         function GetMeshInfo(obj, nNodes, nEdges, nTriangles, nTetrahedra)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result3D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetMeshInfo''.');
             return;
@@ -374,7 +374,7 @@ classdef Result3D < handle
             obj.hResult3D.invoke('GetMeshInfo', nNodes, nEdges, nTriangles, nTetrahedra);
         end
         function GetNode(obj, index, x, y, z, ID)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result3D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetNode''.');
             return;
@@ -382,7 +382,7 @@ classdef Result3D < handle
             obj.hResult3D.invoke('GetNode', index, x, y, z, ID);
         end
         function GetEdge(obj, index, Node0, Node1, ID)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result3D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetEdge''.');
             return;
@@ -390,7 +390,7 @@ classdef Result3D < handle
             obj.hResult3D.invoke('GetEdge', index, Node0, Node1, ID);
         end
         function GetTriangle(obj, index, Node0, Node1, Node2, ID)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result3D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetTriangle''.');
             return;
@@ -398,7 +398,7 @@ classdef Result3D < handle
             obj.hResult3D.invoke('GetTriangle', index, Node0, Node1, Node2, ID);
         end
         function GetTetrahedron(obj, index, Node0, Node1, Node2, Node3, ID)
-            % This function was not implemented due to the double_ref
+            % This function was not implemented due to the Result3D
             % arguments being seemingly impossible to pass from MATLAB.
             warning('Used unimplemented function ''GetTetrahedron''.');
             return;

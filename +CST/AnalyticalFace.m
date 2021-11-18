@@ -71,10 +71,10 @@ classdef AnalyticalFace < handle
             % Sets the analytical function defining the z-coordinates for the analytical face dependent on the parameters u, and v.
             obj.AddToHistory(['.LawZ "', num2str(zlaw, '%.15g'), '"']);
         end
-        function ParamerRangeU(obj, umin, umax)
+        function ParameterRangeU(obj, umin, umax)
             % Sets the bounds for the parameter u.
-            obj.AddToHistory(['.ParamerRangeU "', num2str(umin, '%.15g'), '", '...
-                                             '"', num2str(umax, '%.15g'), '"']);
+            obj.AddToHistory(['.ParameterRangeU "', num2str(umin, '%.15g'), '", '...
+                                               '"', num2str(umax, '%.15g'), '"']);
         end
         function ParameterRangeV(obj, vmin, vmax)
             % Sets the bounds for the parameter v.
@@ -91,6 +91,11 @@ classdef AnalyticalFace < handle
                             'End With'];
             obj.project.AddToHistory(['define AnalyticalFace: ', obj.component, ':', obj.name], obj.history);
             obj.history = [];
+        end
+        %% Mislabeled functions in documentation.
+        function ParamerRangeU(obj, umin, umax)
+            ric = matlab.lang.correction.ReplaceIdentifierCorrection('ParamerRangeU', 'ParameterRangeU');
+            error(ric, 'This function is mislabeled in the CST documentation, please use the proper function ''ParameterRangeU''.');
         end
     end
     %% MATLAB-side stored settings of CST state.
