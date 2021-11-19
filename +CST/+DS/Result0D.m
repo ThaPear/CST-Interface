@@ -22,7 +22,8 @@ classdef Result0D < handle
     methods(Access = {?CST.DS.Project, ?CST.DS.Result0D, ?CST.DS.ResultTree})
         % CST.DS.Project can create a Result0D object.
         % CST.DS.Result0D.Copy can create a Result0D object.
-        % CST.DS.ResultTree.GetResultFromTreeItem/GetImpedanceResultFromTreeItem can create a Result0D object.
+        % CST.DS.ResultTree.GetResultFromTreeItem can create a Result0D object.
+        % CST.DS.ResultTree.GetImpedanceResultFromTreeItem can create a Result0D object.
         function obj = Result0D(dsproject, hDSProjectOrhResult0D, resultname)
             if(nargin == 3)
                 % Created by CST.DS.Project.
@@ -63,21 +64,43 @@ classdef Result0D < handle
             result0D = CST.DS.Result0D(obj.dsproject, newhResult0D);
         end
         %% Local Operations:
-        function GetData(obj, Value)
+        function Value = GetData(obj)
+            % This function was not implemented due to the Result0D
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetData''.');
+            Value = nan;
+            return;
             % The value of the real 0D result can be found in Value.
             obj.hResult0D.invoke('GetData', Value);
         end
-        function GetDataComplex(obj, ValueRe, ValueIm)
+        function [ValueRe, ValueIm] = GetDataComplex(obj)
+            % This function was not implemented due to the Result0D
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetDataComplex''.');
+            ValueRe = nan;
+            ValueIm = nan;
+            return;
             % The values of real and imaginary part of a complex 0D result can be found in ValueRe and ValueIm.
             obj.hResult0D.invoke('GetDataComplex', ValueRe, ValueIm);
         end
-        function GetDerivativeData(obj, Parameter, Value)
+        function Value = GetDerivativeData(obj, Parameter)
+            % This function was not implemented due to the Result0D
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetDerivativeData''.');
+            Value = nan;
+            return;
             % Writes the value of derivative information corresponding to the Parameter to the variable Value, if set previously.
             obj.hResult0D.invoke('GetDerivativeData', Parameter, Value);
         end
-        function GetDerivativeDataComplex(obj, Parameter, ValueRe, doubleValueIm)
-            % Writes real and imaginary part of the derivative information corresponding to the Parameter into the variables ValueRe and ValueIm, if set previously.
-            obj.hResult0D.invoke('GetDerivativeDataComplex', Parameter, ValueRe, doubleValueIm);
+        function [ValueRe, ValueIm] = GetDerivativeDataComplex(obj, Parameter)
+            % This function was not implemented due to the Result0D
+            % arguments being seemingly impossible to pass from MATLAB.
+            warning('Used unimplemented function ''GetDerivativeDataComplex''.');
+            ValueRe = nan;
+            ValueIm = nan;
+            return;
+            % Writes real and imaginary part of the derivative information corresponding to the Parameter into the variables ValueRe and ValueIm if set previously.
+            obj.hResult0D.invoke('GetDerivativeDataComplex', Parameter, ValueRe, ValueIm);
         end
         function long = GetN(obj)
             % Returns 1 if the object is nonempty, otherwise 0.
