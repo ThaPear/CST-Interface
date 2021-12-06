@@ -19,7 +19,7 @@
 % This object offers access and manipulation functions to result tables. A table contains a collection of individual data items. Each of these data items is associated with a particular parameter combination and can be a either single 0d result (real or complex data value) or an entire xy data set.
 classdef Table < handle
     %% CST Interface specific functions.
-    methods(Access = ?CST.Project)
+    methods(Access = ?CST.DS.Project)
         % Only CST.DS.Project can create a Table object.
         function obj = Table(dsproject, hDSProject, path)
             obj.dsproject = dsproject;

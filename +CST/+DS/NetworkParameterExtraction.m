@@ -19,7 +19,7 @@
 % Determine an equivalent SPICE circuit which has the same behavior at the ports as the simulation model. This command represents the "Spice Extraction" in the "Signal Post-Processing" ribbon.
 classdef NetworkParameterExtraction < handle
     %% CST Interface specific functions.
-    methods(Access = ?CST.Project)
+    methods(Access = ?CST.DS.Project)
         % Only CST.DS.Project can create a NetworkParameterExtraction object.
         function obj = NetworkParameterExtraction(dsproject, hDSProject)
             obj.dsproject = dsproject;

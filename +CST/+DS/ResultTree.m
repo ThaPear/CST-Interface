@@ -19,7 +19,7 @@
 % This object allows operations on the CST DESIGN STUDIO result tree.
 classdef ResultTree < handle
     %% CST Interface specific functions.
-    methods(Access = ?CST.Project)
+    methods(Access = ?CST.DS.Project)
         % Only CST.DS.Project can create a ResultTree object.
         function obj = ResultTree(dsproject, hDSProject)
             obj.dsproject = dsproject;
