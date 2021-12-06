@@ -31,9 +31,9 @@ classdef Project < handle
             % Selects the tree Item, specified by name. The view will be updated according to the selection or a different view will be activated. A tree Item is specified by the full path, e.g. SelectTreeItem ("Tasks\SPara1"). The return value is True if the selection was successful.
             bool = obj.hDSProject.invoke('SelectTreeItem', itemname);
         end
-        function string = GetSelectedTreeItem(obj)
+        function str = GetSelectedTreeItem(obj)
             % Returns the path name of the currently selected tree item or folder with regard to the root of the tree. E.g. if the task "SPara1" is selected, the returned path name will be "Tasks\SPara1".
-            string = obj.hDSProject.invoke('GetSelectedTreeItem');
+            str = obj.hDSProject.invoke('GetSelectedTreeItem');
         end
         function PositionWindow(obj, location, handle)
             % This functions sets the position of a window relatively to the location of the main application window. The following settings are valid locations:
@@ -110,9 +110,9 @@ classdef Project < handle
             % Enables or disables the creation of pins for the automatically created schematic block. This can only be called for 3D projects, since no schematic block exists in pure CST DS projects. Disabling the pins can improve performance for projects with many sources in the 3D part, but this should only be done if the schematic part is not needed.
             obj.hDSProject.invoke('EnableSchematicBlockPins', enable);
         end
-        function string = CreateProjectTemplate(obj, application, workflow)
+        function str = CreateProjectTemplate(obj, application, workflow)
             % Creates a project template for the specified application ("MW & RF & Optical", "EDA / Electronics", "EMC / EMI", "Charged Particle Dynamics" or "Statics and Low Frequency") and workflow (needs to match the name shown in the project template wizard). The function returns the name of the project template. If a project template for the workflow does already exist no new template is created and the name of the existing template is returned.
-            string = obj.hDSProject.invoke('CreateProjectTemplate', application, workflow);
+            str = obj.hDSProject.invoke('CreateProjectTemplate', application, workflow);
         end
         %% File Handling
         function OpenFile(obj, filename)
@@ -148,33 +148,33 @@ classdef Project < handle
             % Returns the number of parameters defined so far.
             long = obj.hDSProject.invoke('GetNumberOfParameters');
         end
-        function string = GetParameterName(obj, index)
+        function str = GetParameterName(obj, index)
             % Returns the name of the parameter referenced by the given index. The first parameter is reference by the index 0.
-            string = obj.hDSProject.invoke('GetParameterName', index);
+            str = obj.hDSProject.invoke('GetParameterName', index);
         end
         function double = GetParameterNValue(obj, index)
             % Returns the value of the double parameter referenced by the given index. The first parameter is referenced by the index 0.
             double = obj.hDSProject.invoke('GetParameterNValue', index);
         end
-        function string = GetParameterSValue(obj, index)
+        function str = GetParameterSValue(obj, index)
             % Returns the numerical expression for the parameter referenced by the given index. The first parameter is referenced by the index 0.
-            string = obj.hDSProject.invoke('GetParameterSValue', index);
+            str = obj.hDSProject.invoke('GetParameterSValue', index);
         end
         function RenameParameter(obj, oldName, newName)
             % Change the name of existing parameter 'oldName' to 'newName'.
             obj.hDSProject.invoke('RenameParameter', oldName, newName);
         end
-        function string = RestoreParameter(obj, name)
+        function str = RestoreParameter(obj, name)
             % Gets the value of the specified string parameter.
-            string = obj.hDSProject.invoke('RestoreParameter', name);
+            str = obj.hDSProject.invoke('RestoreParameter', name);
         end
         function double = RestoreDoubleParameter(obj, name)
             % Gets the value of a specified double parameter.
             double = obj.hDSProject.invoke('RestoreDoubleParameter', name);
         end
-        function string = RestoreParameterExpression(obj, name)
+        function str = RestoreParameterExpression(obj, name)
             % Gets the numerical expression for the specified string parameter.
-            string = obj.hDSProject.invoke('RestoreParameterExpression', name);
+            str = obj.hDSProject.invoke('RestoreParameterExpression', name);
         end
         function StoreParameterWithDescription(obj, name, value, description)
             % Creates a new string parameter or changes an existing one, with the specified string value and the description.
@@ -306,9 +306,9 @@ classdef Project < handle
             % Delete a global data value with a given name.
             obj.hDSProject.invoke('DeleteGlobalDataValue', name);
         end
-        function string = RestoreGlobalDataValue(obj, name)
+        function str = RestoreGlobalDataValue(obj, name)
             % Returnes a global data value with a given name.
-            string = obj.hDSProject.invoke('RestoreGlobalDataValue', name);
+            str = obj.hDSProject.invoke('RestoreGlobalDataValue', name);
         end
         function StoreGlobalDataValue(obj, name, value)
             % Creates a new global data value with a given name and value or changes an existing one.
@@ -436,20 +436,20 @@ classdef Project < handle
 
             result1DComplex = CST.DS.Result1DComplex(obj, hResult1DComplex);
         end
-        function string = GetLastResultID(obj)
+        function str = GetLastResultID(obj)
             % This method returns the Result ID which identifies the last result. It allows access
             % to the last 1D or 0D result via DSResulttree.GetResultFromTreeItem, e.g.:
                 % Dim o As Object
                 % Set o = DSResultTree.GetResultFromTreeItem("Tasks\SPara1\S-Parameters\S1,1", DS.GetLastResultID())
                 % DS.ReportInformationToWindow("Last 1D/0D result object type: " + o.GetResultObjectType())
-            string = obj.hDSProject.invoke('GetLastResultID');
+            str = obj.hDSProject.invoke('GetLastResultID');
         end
-        function string = GetScriptSetting(obj, name, default_value)
+        function str = GetScriptSetting(obj, name, default_value)
             % This function is only active if a result template is currently in process. It returns
             % the internal settings of the previously customized result item using the
             % StoreScriptSetting method. In case that no settings has been stored, the default value
             % will be returned.
-            string = obj.hDSProject.invoke('GetScriptSetting', name, default_value);
+            str = obj.hDSProject.invoke('GetScriptSetting', name, default_value);
         end
         function StoreScriptSetting(obj, name, value)
             % This function is only active if a result template is currently in process. It offers
@@ -458,7 +458,7 @@ classdef Project < handle
             % name defining the internal setting. 'value' is the value of the setting.
             obj.hDSProject.invoke('StoreScriptSetting', name, value);
         end
-        function string = GetTreeNameScriptSetting(obj, name, default_value)
+        function str = GetTreeNameScriptSetting(obj, name, default_value)
             % This function is only active if a result template is currently in process. It returns
             % the internal settings of the previously customized result item using the
             % StoreTreeNameScriptSetting method. In case that no settings has been stored, the
@@ -472,7 +472,7 @@ classdef Project < handle
             % copied as well, then the template setting will also be adjusted to point to the copied
             % object. It will not be adjusted if the referenced object is not copied. The following
             % items will be automatically adjusted: Blocks, tasks, external ports and probes.
-            string = obj.hDSProject.invoke('GetTreeNameScriptSetting', name, default_value);
+            str = obj.hDSProject.invoke('GetTreeNameScriptSetting', name, default_value);
         end
         function StoreTreeNameScriptSetting(obj, setting, value)
             % This function is only active if a result template is currently in process. It offers
@@ -546,14 +546,14 @@ classdef Project < handle
             % Numerical returns.
             bool = str2double(bool);
         end
-        function string = GetFileType(obj, filename)
+        function str = GetFileType(obj, filename)
             % Checks the file type of the file with absolute path specified in the variable
             % 'filename'. If the file is a complex signal file, the string "complex" will be
             % returned. If the file is a real-valued signal file, the string "real" will be
             % returned. If the file is a real-valued 0D file, the string "real0D" will be returned.
             % If the file is a complex-valued 0D file, the string "complex0D" will be returned. If
             % the file type is unknown or the file can not be found, "unknown" will be returned.
-            string = obj.hDSProject.invoke('GetFileType', filename);
+            str = obj.hDSProject.invoke('GetFileType', filename);
         end
         function result1DComplex = GetImpedanceFromTreeItem(obj, treename)
             % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this
@@ -564,36 +564,36 @@ classdef Project < handle
 
             result1DComplex = CST.DS.Result1DComplex(obj, hResult1DComplex);
         end
-        function string = GetFirstTableResult(obj, resultname)
+        function str = GetFirstTableResult(obj, resultname)
             % Returns the name of the table that was created on evaluation of the template with the
             % name 'resultname' or an empty string.
-            string = obj.hDSProject.invoke('GetFirstTableResult', resultname);
+            str = obj.hDSProject.invoke('GetFirstTableResult', resultname);
         end
-        function string = GetNextTableResult(obj, resultname)
+        function str = GetNextTableResult(obj, resultname)
             % If the template created more than one table on evaluation, this method returns the
             % names of next table that was created on evaluation of the template with the name
             % 'resultname'. If no more table names are available, this method returns an empty
             % string. Please note that GetFirstTableName needs to be called before and that this
             % method needs to be called with the same value for parameter 'resultname'.
-            string = obj.hDSProject.invoke('GetNextTableResult', resultname);
+            str = obj.hDSProject.invoke('GetNextTableResult', resultname);
         end
         function bool = GetTemplateAborted(obj)
             % Returns true if the user aborted the template based post-processing evaluation,
             % otherwise false.
             bool = obj.hDSProject.invoke('GetTemplateAborted');
         end
-        function string = GetActivePostprocessingTask(obj)
+        function str = GetActivePostprocessingTask(obj)
             % Returns the tree path of the running Post-Processing task or an empty string.
-            string = obj.hDSProject.invoke('GetActivePostprocessingTask');
+            str = obj.hDSProject.invoke('GetActivePostprocessingTask');
         end
         %% Macros
-        function string = GetMacroPath(obj)
+        function str = GetMacroPath(obj)
             % Returns the directory, that has been set as preferential location for globally defined macros.
-            string = obj.hDSProject.invoke('GetMacroPath');
+            str = obj.hDSProject.invoke('GetMacroPath');
         end
-        function string = GetMacroPathFromIndex(obj, index)
+        function str = GetMacroPathFromIndex(obj, index)
             % Returns the indexth directory, that has been set as location for globally defined macros.
-            string = obj.hDSProject.invoke('GetMacroPathFromIndex', index);
+            str = obj.hDSProject.invoke('GetMacroPathFromIndex', index);
         end
         function RunAndWait(obj, command)
             % Executes a 'command' and waits with the execution of the current VBA-Script until 'command' has finished. The VBA-command shell in contrast, executes a command in a second thread such that the execution of the script continues. 'command' is the command to be executed. For instance every properly installed program on the current computer can be started.
@@ -694,19 +694,19 @@ classdef Project < handle
             obj.hDSProject.invoke('DeleteResults');
         end
         %% Queries
-        function string = GetApplicationName(obj)
+        function str = GetApplicationName(obj)
             % Returns the application name.
-            string = obj.hDSProject.invoke('GetApplicationName');
+            str = obj.hDSProject.invoke('GetApplicationName');
         end
-        function string = GetApplicationVersion(obj)
+        function str = GetApplicationVersion(obj)
             % Returns the current version number as a string.
-            string = obj.hDSProject.invoke('GetApplicationVersion');
+            str = obj.hDSProject.invoke('GetApplicationVersion');
         end
-        function string = GetInstallPath(obj)
+        function str = GetInstallPath(obj)
             % Returns the path where the program is installed.
-            string = obj.hDSProject.invoke('GetInstallPath');
+            str = obj.hDSProject.invoke('GetInstallPath');
         end
-        function string = GetProjectPath(obj, path_id)
+        function str = GetProjectPath(obj, path_id)
             % Returns the path to the project's sub-folder specified by path_id. Valid settings for path_id are:
             % "Root"
             % Returns the path to the folder where the project file is stored, e.g. "c:\test" for a project stored under "c:\test\project.cst".
@@ -724,11 +724,11 @@ classdef Project < handle
             % Returns the path to the sub-folder where result data are stored that have been added by the user.
             % "TempDS"
             % Returns the path to a temporary sub-folder where temporary data is stored for the current session.
-            string = obj.hDSProject.invoke('GetProjectPath', path_id);
+            str = obj.hDSProject.invoke('GetProjectPath', path_id);
         end
-        function string = GetProjectSeparator(obj)
+        function str = GetProjectSeparator(obj)
             % Gets the separator character used for separating the project's base name from specific result file endings. Currently the default separator character is the hat separator "^".
-            string = obj.hDSProject.invoke('GetProjectSeparator');
+            str = obj.hDSProject.invoke('GetProjectSeparator');
         end
         function object = GetOwnProject(obj)
             % Returns the COM interface of the current project.
@@ -738,20 +738,20 @@ classdef Project < handle
             % Returns the COM interface of the simulation project.
             object = obj.hDSProject.invoke('GetSimulationProject', name);
         end
-        function string = GetLicenseHostId(obj)
+        function str = GetLicenseHostId(obj)
             % Gets the host id for the currently used license (hardlock). This information may be useful for support purposes.
-            string = obj.hDSProject.invoke('GetLicenseHostId');
+            str = obj.hDSProject.invoke('GetLicenseHostId');
         end
-        function string = GetLicenseCustomerNumber(obj)
+        function str = GetLicenseCustomerNumber(obj)
             % Gets the current customer number from the license. This information may be useful for support purposes.
-            string = obj.hDSProject.invoke('GetLicenseCustomerNumber');
+            str = obj.hDSProject.invoke('GetLicenseCustomerNumber');
         end
         function bool = SchematicBlockPinsEnabled(obj)
             % Gets whether the pins of the schematic block are enabled. This can only be called for 3D projects, since no schematic block exists in pure CST DS projects.
             bool = obj.hDSProject.invoke('SchematicBlockPinsEnabled');
         end
         %% Result Plotting
-        function string = ResultNavigatorRequest(obj, request, parameter)
+        function str = ResultNavigatorRequest(obj, request, parameter)
             % Sends modification requests or queries to the Result Navigator. Allowed strings for request are "set selection", "get selection", "reset selection". The expected format of the string parameter and the return value of the function depend on the request. The function requires a preselected 1D or 0D result in the Navigation Tree, which can be achieved by a preceding call of SelectTreeItem. If no 1D Plot is selected, the method will return an error.
             % The request "set selection" allows modifying the selection state of the Result Navigator and expects parameter to be a string containing a whitespace separated list of non-negative integers which correspond to Run IDs to be selected. The return value of the function will be an empty string. The following example shows how to select and plot parametric s-parameters from the Navigation Tree:
             % SelectTreeItem("Tasks\SPara1\S-Parameters")
@@ -764,7 +764,7 @@ classdef Project < handle
             % The request "reset selection" resets the selection state of the Result Navigator to default behavior (similar to "Reset Selection" in the context menu). The variable parameter is ignored and the return value of the function will be an empty string. The following example shows how to reset the selection in the Result Navigator:
             % SelectTreeItem("Tasks\SPara1\S-Parameters")
             % ResultNavigatorRequest("reset selection","") 'reset Result Navigator selection state to default behavior
-            string = obj.hDSProject.invoke('ResultNavigatorRequest', request, parameter);
+            str = obj.hDSProject.invoke('ResultNavigatorRequest', request, parameter);
         end
         %% View
         function StoreViewInBmpFile(obj, file_name)

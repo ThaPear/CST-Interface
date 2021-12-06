@@ -210,17 +210,17 @@ classdef Plot < handle
             % Set the background color in the main view.
             obj.hPlot.invoke('SetBackgroundcolor', r, g, b);
         end
-        function string = GetBackgroundcolorR(obj)
+        function str = GetBackgroundcolorR(obj)
             % Returns the red component of the background color in the main view.
-            string = obj.hPlot.invoke('GetBackgroundcolorR');
+            str = obj.hPlot.invoke('GetBackgroundcolorR');
         end
-        function string = GetBackgroundcolorG(obj)
+        function str = GetBackgroundcolorG(obj)
             % Returns the green component of the background color in the main view.
-            string = obj.hPlot.invoke('GetBackgroundcolorG');
+            str = obj.hPlot.invoke('GetBackgroundcolorG');
         end
-        function string = GetBackgroundcolorB(obj)
+        function str = GetBackgroundcolorB(obj)
             % Returns the blue component of the background color in the main view.
-            string = obj.hPlot.invoke('GetBackgroundcolorB');
+            str = obj.hPlot.invoke('GetBackgroundcolorB');
         end
         %% CST 2019 Functions.
         function StoreView3(obj, name, parameters)

@@ -51,9 +51,9 @@ classdef ConnectionLabel < handle
             obj.hConnectionLabel.invoke('Name', labelname);
         end
         %% Getter
-        function string = GetLabel(obj)
+        function str = GetLabel(obj)
             % Returns the label text of the currently selected connection label.
-            string = obj.hConnectionLabel.invoke('GetLabel');
+            str = obj.hConnectionLabel.invoke('GetLabel');
         end
         %% Setter
         function SetName(obj, labelname)

@@ -95,17 +95,17 @@ classdef ResultDatabase < handle
             % Returns the integer value of a result database entry specified by it's key value.
             int = obj.hResultDatabase.invoke('GetIntegerEntry', key);
         end
-        function string = GetStringEntry(obj, key)
+        function str = GetStringEntry(obj, key)
             % Returns the string value of a result database entry specified by it's key value.
-            string = obj.hResultDatabase.invoke('GetStringEntry', key);
+            str = obj.hResultDatabase.invoke('GetStringEntry', key);
         end
         function int = GetNumberOfDoubleEntries(obj)
             % Returns the total number of double entries in the result database.
             int = obj.hResultDatabase.invoke('GetNumberOfDoubleEntries');
         end
-        function string = GetDoubleKeyFromIndex(obj, index)
+        function str = GetDoubleKeyFromIndex(obj, index)
             % Returns the key-string  of a double result entry specified by it's integer index. The index value must be greater or equal zero and smaller than the total number of double result entries (can  be obtained by GetNumberOfDoubleEntries).
-            string = obj.hResultDatabase.invoke('GetDoubleKeyFromIndex', index);
+            str = obj.hResultDatabase.invoke('GetDoubleKeyFromIndex', index);
         end
         function int = GetNumberOfDoubleEntriesForDir(obj, dirname)
             % Returns the total number of double entries within a subfolder in the result database.
@@ -115,9 +115,9 @@ classdef ResultDatabase < handle
             % Returns the double value of a result database entry specified by it's directory name and the remaining subkey value. When combined, directory name and subkey form the reference key together.
             double = obj.hResultDatabase.invoke('GetDoubleEntryForDir', subkey, dirname);
         end
-        function string = GetDoubleKeyFromIndexForDir(obj, index, dirname)
+        function str = GetDoubleKeyFromIndexForDir(obj, index, dirname)
             % Returns the subkey-string  of a double result entry specified by it's integer index. The index value must be greater or equal zero and smaller than the total number of double result entries (can  be obtained by GetNumberOfDoubleEntriesForDir).
-            string = obj.hResultDatabase.invoke('GetDoubleKeyFromIndexForDir', index, dirname);
+            str = obj.hResultDatabase.invoke('GetDoubleKeyFromIndexForDir', index, dirname);
         end
     end
     %% MATLAB-side stored settings of CST state.

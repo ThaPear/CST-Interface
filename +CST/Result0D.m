@@ -118,9 +118,9 @@ classdef Result0D < handle
             % Returns the number of derivatives set to the result.
             long = obj.hResult0D.invoke('HasNDerivatives');
         end
-        function string = GetDervativeParName(obj, Index)
+        function str = GetDervativeParName(obj, Index)
             % Returns the name of the parameter corresponding to the derivative Index.
-            string = obj.hResult0D.invoke('GetDervativeParName', Index);
+            str = obj.hResult0D.invoke('GetDervativeParName', Index);
         end
         function HasDerivativeForParameter(obj, Parameter)
             % Returns if a derivative value was set for the corresponding Parameter.
@@ -131,17 +131,17 @@ classdef Result0D < handle
             % Defines the title of the result.
             obj.hResult0D.invoke('Title', Name);
         end
-        function string = GetTitle(obj)
+        function str = GetTitle(obj)
             % Returns the title of the result.
-            string = obj.hResult0D.invoke('GetTitle');
+            str = obj.hResult0D.invoke('GetTitle');
         end
-        function string = GetType(obj)
+        function str = GetType(obj)
             % Returns "double" if the result is real valued or "complex double" if the result is complex valued.
-            string = obj.hResult0D.invoke('GetType');
+            str = obj.hResult0D.invoke('GetType');
         end
-        function string = GetResultObjectType(obj)
+        function str = GetResultObjectType(obj)
             % Returns the string "0DC" if the result object contains complex-valued data, otherwise it returns the string "0D". This method can be used to distinguish the result object from Result1D and Result1DComplex objects in a context where the type of a result object is unknown.
-            string = obj.hResult0D.invoke('GetResultObjectType');
+            str = obj.hResult0D.invoke('GetResultObjectType');
         end
         %% CST 2014 Functions.
         function SetUnit(obj, unit)

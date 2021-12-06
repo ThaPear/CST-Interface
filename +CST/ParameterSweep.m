@@ -155,9 +155,9 @@ classdef ParameterSweep < handle
             % Get the number of varying parameters.
             long = obj.hParameterSweep.invoke('GetNumberOfVaryingParameters');
         end
-        function string = GetNameOfVaryingParameter(obj, index)
+        function str = GetNameOfVaryingParameter(obj, index)
             % Returns the name of the specified parameter.
-            string = obj.hParameterSweep.invoke('GetNameOfVaryingParameter', index);
+            str = obj.hParameterSweep.invoke('GetNameOfVaryingParameter', index);
         end
         function double = GetValueOfVaryingParameter(obj, index)
             % Returns the value of the specified parameter.

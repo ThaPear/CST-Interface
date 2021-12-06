@@ -241,17 +241,17 @@ classdef Result1D < handle
             % Defines the y-axis label of the result.
             obj.hResult1D.invoke('Ylabel', name);
         end
-        function string = GetTitle(obj)
+        function str = GetTitle(obj)
             % Returns the title label of the result. This function works only for user added tree result objects.
-            string = obj.hResult1D.invoke('GetTitle');
+            str = obj.hResult1D.invoke('GetTitle');
         end
-        function string = GetXlabel(obj)
+        function str = GetXlabel(obj)
             % Returns the x-axis label of the result. This function works only for user added tree result objects.
-            string = obj.hResult1D.invoke('GetXlabel');
+            str = obj.hResult1D.invoke('GetXlabel');
         end
-        function string = GetYlabel(obj)
+        function str = GetYlabel(obj)
             % Returns the y-axis label of the result. This function works only for user added tree result objects.
-            string = obj.hResult1D.invoke('GetYlabel');
+            str = obj.hResult1D.invoke('GetYlabel');
         end
         function Type(obj, key)
             % Defines the type of the Result1D object.
@@ -270,9 +270,9 @@ classdef Result1D < handle
             % Returns the total number of value pairs stored in the Result1D object.
             long = obj.hResult1D.invoke('GetN');
         end
-        function string = GetResultObjectType(obj)
+        function str = GetResultObjectType(obj)
             % Returns the string "1D". This method can be used to distinguish the result object from Result1D and Result1DComplex objects in a context where the type of a result object is unknown.
-            string = obj.hResult1D.invoke('GetResultObjectType');
+            str = obj.hResult1D.invoke('GetResultObjectType');
         end
     end
     %% MATLAB-side stored settings of CST state.

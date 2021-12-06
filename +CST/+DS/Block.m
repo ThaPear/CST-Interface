@@ -51,21 +51,21 @@ classdef Block < handle
             obj.hBlock.invoke('Name', blockname);
         end
         %% Getter
-        function string = GetTypeName(obj)
+        function str = GetTypeName(obj)
             % Returns the "type" name of a block. For example the type name of a resistor would be "resistor".
-            string = obj.hBlock.invoke('GetTypeName');
+            str = obj.hBlock.invoke('GetTypeName');
         end
-        function string = GetTypeShortName(obj)
+        function str = GetTypeShortName(obj)
             % Returns the short "type" name of a block. For example the short type name of a resistor would be "RES".
-            string = obj.hBlock.invoke('GetTypeShortName');
+            str = obj.hBlock.invoke('GetTypeShortName');
         end
-        function string = GetSpiceFilter(obj)
+        function str = GetSpiceFilter(obj)
             % This method can only be applied to SPICE import blocks. It returns the SPICE dialect being applied to the block.  For possible return values see the description of the SetSpiceFilter command.
-            string = obj.hBlock.invoke('GetSpiceFilter');
+            str = obj.hBlock.invoke('GetSpiceFilter');
         end
-        function string = GetPackage(obj)
+        function str = GetPackage(obj)
             %  It returns the package name specified in the selected block. For possible return values see the description of the SetPackage command. If no package was specified the function returns an empty string.
-            string = obj.hBlock.invoke('GetPackage');
+            str = obj.hBlock.invoke('GetPackage');
         end
         function double = GetPackageLengthMM(obj)
             %  It returns the package length of the selected block in mm. If no package was specified the function returns zero.
@@ -79,9 +79,9 @@ classdef Block < handle
             %  It returns the package height of the selected block in mm. If no package was specified the function returns zero.
             double = obj.hBlock.invoke('GetPackageHeightMM');
         end
-        function string = GetReferenceName(obj)
+        function str = GetReferenceName(obj)
             % Returns the name of block's reference block (or an empty string if the block has no reference block).
-            string = obj.hBlock.invoke('GetReferenceName');
+            str = obj.hBlock.invoke('GetReferenceName');
         end
         function GetNextUnusedName(obj, basename)
             % searches the model for the named blocks 'base name + index' and returns the block name with this base + first index that is not used.
@@ -246,9 +246,9 @@ classdef Block < handle
             % Converts a file block into a project block or vice versa. For conversion of a project block into a file block a file dialog opens, where you need to specify where the external file will be stored. The file(s) inside the project which were used by the original block will be deleted after conversion. In both cases, the file(s) used by the block will be copied from the old to the new location.
             obj.hBlock.invoke('Convert');
         end
-        function string = ImportLibraryModel(obj, filename, path)
+        function str = ImportLibraryModel(obj, filename, path)
             % Imports a new model form a spice or touchstone file into the device model library. The imported model must be compatible with the current block. The path parameter can be used to import the device model to a specific path in the device model library, pass an empty string if the model should be imported into the device base path. If a library model with the same name and path is already present in the device model library it will be overwritten. Use the command LibraryModelExists to check the existence of a model before import. The return value is the tree path in the device model library which can be used together with the SetLibraryModel command.
-            string = obj.hBlock.invoke('ImportLibraryModel', filename, path);
+            str = obj.hBlock.invoke('ImportLibraryModel', filename, path);
         end
         function bool = LibraryModelExists(obj, model)
             % Checks if a model exists in device model library. The name is the tree path in the device model library.
@@ -356,9 +356,9 @@ classdef Block < handle
             % Queries whether differential ports are set for a block.
             bool = obj.hBlock.invoke('GetDifferentialPorts');
         end
-        function string = GetPinName(obj, pinindex)
+        function str = GetPinName(obj, pinindex)
             % Returns the name of a block pin specified by the given index. Index must be an integer between 0 and GetNumberOfPins()-1.
-            string = obj.hBlock.invoke('GetPinName', pinindex);
+            str = obj.hBlock.invoke('GetPinName', pinindex);
         end
         function SetPinName(obj, pinindex, pinname)
             % Set the name of a block pin specified by the given index. Index must be an integer between 0 and GetNumberOfPins()-1. Specifying an empty name resets the pin name to the default name.
@@ -373,15 +373,15 @@ classdef Block < handle
             % (See Example)
             int = obj.hBlock.invoke('GetPortIndex', portname);
         end
-        function string = GetPortLabel(obj, portindex)
+        function str = GetPortLabel(obj, portindex)
             % Returns the label of a block port specified by the given portindex. Since not all blocks support port labels, this function may return an empty string. Index must be an integer between 0 and GetNumberOfPorts()-1.
             % (See Example)
-            string = obj.hBlock.invoke('GetPortLabel', portindex);
+            str = obj.hBlock.invoke('GetPortLabel', portindex);
         end
-        function string = GetPortName(obj, portindex)
+        function str = GetPortName(obj, portindex)
             % Returns the name of a block port specified by the given portindex that must be an integer between 0 and GetNumberOfPorts()-1.
             % (See Example)
-            string = obj.hBlock.invoke('GetPortName', portindex);
+            str = obj.hBlock.invoke('GetPortName', portindex);
         end
         function bool = IsPinConnected(obj, pinindex)
             % Checks if the specified pin of this block is connected. pinindex must be an integer between 0 and GetNumberOfPins()-1.
@@ -450,9 +450,9 @@ classdef Block < handle
             % Indicates whether the accuracy of Vector Fitting is to be enhanced at DC to improve the steady-state behavior of the model in transient simulation. The method can only be applied to blocks that use Vector Fitting to represent dispersive data. This can be queried by the method CanUseMOR.
             bool = obj.hBlock.invoke('GetMOR_EnhanceAccuracyAtDC');
         end
-        function string = GetMOR_ErrorNorm(obj)
+        function str = GetMOR_ErrorNorm(obj)
             % Returns the type of Error norm applied to the vector Fitting algorithm. The return value can assume values "Max" or "L2". The method can only be applied to blocks that use Vector Fitting to represent dispersive data. This can be queried by the method CanUseMOR.
-            string = obj.hBlock.invoke('GetMOR_ErrorNorm');
+            str = obj.hBlock.invoke('GetMOR_ErrorNorm');
         end
         function int = GetMOR_InitialPoles(obj)
             % Returns the initial number of poles used in Vector Fitting. A return value of 0 indicates that the required number of poles will be calculated automatically. The method can only be applied to blocks that use Vector Fitting to represent dispersive data. This can be queried by the method CanUseMOR.
@@ -585,33 +585,33 @@ classdef Block < handle
         end
         %% Assembly
         % All methods in this section require that the block already exists.
-        function string = GetGlobalTranslationInAssembly(obj)
+        function str = GetGlobalTranslationInAssembly(obj)
             % Returns the block translation vector with respect to the global assembly coordinate system, comprising the (potentially parameterized) expressions for x, y, and z translation.
-            string = obj.hBlock.invoke('GetGlobalTranslationInAssembly');
+            str = obj.hBlock.invoke('GetGlobalTranslationInAssembly');
         end
         function double_array = GetGlobalTranslationInAssemblyValues(obj)
             % Returns the block translation vector with respect to the global assembly coordinate system, comprising the numerical values for x, y, and z translation.
             double_array = obj.hBlock.invoke('GetGlobalTranslationInAssemblyValues');
         end
-        function string = GetLocalTranslationInAssembly(obj)
+        function str = GetLocalTranslationInAssembly(obj)
             % Returns the block translation vector in the assembly model with respect to the block's local coordinate system, comprising the (potentially parameterized) expressions for x, y, and z translation.
-            string = obj.hBlock.invoke('GetLocalTranslationInAssembly');
+            str = obj.hBlock.invoke('GetLocalTranslationInAssembly');
         end
         function double_array = GetLocalTranslationInAssemblyValues(obj)
             % Returns the block translation vector in the assembly model with respect to the block's local coordinate system, comprising the numerical values for x, y, and z translation.
             double_array = obj.hBlock.invoke('GetLocalTranslationInAssemblyValues');
         end
-        function string = GetRotationAnglesInAssembly(obj)
+        function str = GetRotationAnglesInAssembly(obj)
             % Returns the block rotation angles (Euler angles) in the assembly model, comprising the (potentially parameterized) expressions for the angles around the x-, y-, and z-axes.
-            string = obj.hBlock.invoke('GetRotationAnglesInAssembly');
+            str = obj.hBlock.invoke('GetRotationAnglesInAssembly');
         end
         function double_array = GetRotationAnglesInAssemblyValues(obj)
             % Returns the block rotation angles (Euler angles) in the assembly model, comprising the numerical values for the angles around the x-, y-, and z-axes.
             double_array = obj.hBlock.invoke('GetRotationAnglesInAssemblyValues');
         end
-        function string = GetRotationCenterInAssembly(obj)
+        function str = GetRotationCenterInAssembly(obj)
             % Returns the block rotation center (pivot offset) with respect to the block's local coordinate system  in the assembly model, comprising the (potentially parameterized) expressions for x, y, and z offset.
-            string = obj.hBlock.invoke('GetRotationCenterInAssembly');
+            str = obj.hBlock.invoke('GetRotationCenterInAssembly');
         end
         function double_array = GetRotationCenterInAssemblyValues(obj)
             % Returns the block rotation center (pivot offset) with respect to the block's local coordinate system  in the assembly model, comprising the numerical values for x, y, and z offset.

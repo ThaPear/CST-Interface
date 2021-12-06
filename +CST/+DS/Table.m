@@ -38,18 +38,18 @@ classdef Table < handle
             obj.hTable.invoke('ExportData', name);
         end
         %% Access to General Table Data
-        function string = GetName(obj)
+        function str = GetName(obj)
             % This method returns the name which has been assigned with the current table.
-            string = obj.hTable.invoke('GetName');
+            str = obj.hTable.invoke('GetName');
         end
         %% Access to Table Parameters
         function long = GetNumberOfParameters(obj)
             % This method returns the number of parameters which are associated with the data of the current table object.
             long = obj.hTable.invoke('GetNumberOfParameters');
         end
-        function string = GetParameterNameFromIndex(obj, index)
+        function str = GetParameterNameFromIndex(obj, index)
             % This method returns the name of a parameter by specifying its index. The index must be within the range of 0 to GetNumberOfParameters - 1.
-            string = obj.hTable.invoke('GetParameterNameFromIndex', index);
+            str = obj.hTable.invoke('GetParameterNameFromIndex', index);
         end
         function double = GetParameterValueFromIndex(obj, index)
             % This method returns the current value of a parameter by specifying its index. The index must be within the range of 0 to GetNumberOfParameters - 1. This value will be used when the table properties dialog box is opened.
@@ -60,13 +60,13 @@ classdef Table < handle
             % This method returns the total number of data items contained in the table.
             long = obj.hTable.invoke('GetNumberOfDataItems');
         end
-        function string = GetResultTypeOfDataItem(obj, index)
+        function str = GetResultTypeOfDataItem(obj, index)
             % This method returns a string containing the type of the data item specified by its index. The index must be within the range of 0 to GetNumberOfDataItems - 1. The type can be any one of the following strings:
             % "0d real"    - The data item represents a single real value.
             % "0d complex" - The data item represents a single complex value.
             % "1d"         - The data item represents an entire xy curve.
             % "1d complex" - The data item represents an entire complex curve.
-            string = obj.hTable.invoke('GetResultTypeOfDataItem', index);
+            str = obj.hTable.invoke('GetResultTypeOfDataItem', index);
         end
         function double = GetParameterValueOfDataItem(obj, dataindex, parameterindex)
             % This method returns the value of a parameter corresponding to the data item specified by its index (dataindex). The parameter itself is speicifed by its index, too (parameterindex). The dataindex must be within the range of 0 to GetNumberOfDataItems - 1 and the parameterindex must be within the range of 0 to GetNumberOfParameters - 1.

@@ -151,11 +151,11 @@ classdef SimulationTask < handle
             % Tells whether the result specified by name is considered. The available result names are identical to those used by EnableResult.
             bool = obj.hSimulationTask.invoke('ResultEnabled', resultname);
         end
-        function string = GetResultOption(obj, resultoptiondescription)
+        function str = GetResultOption(obj, resultoptiondescription)
             % Returns the value of the named result option of  the selected task.
             % Parameter resultoptiondescription: (case sensitive as displayed in the 'Results Settings'-tab in the 'Simulation Task'-dialog). An error is thrown if the name couldn't be recognized as a result option name of the task .
             % An error is thrown if no task is selected or if the given name couldn't be recognized as a result option of the task .
-            string = obj.hSimulationTask.invoke('GetResultOption', resultoptiondescription);
+            str = obj.hSimulationTask.invoke('GetResultOption', resultoptiondescription);
         end
         function SetResultOption(obj, resultoptiondescription, resultoptionvalue)
             % Sets the value of the named result option of  the selected task to the named value.
@@ -298,9 +298,9 @@ classdef SimulationTask < handle
             % Checks if two external ports specified by their names are dependent. The method returns True if the two ports are connected through some components of the model.
             bool = obj.hSimulationTask.invoke('ArePortsDependent', portname1, portname2);
         end
-        function string = GetUnit(obj, unittype)
+        function str = GetUnit(obj, unittype)
             % Returns the unit for the given type specified for the selected task. This is either the task's local unit or the project's global unit.
-            string = obj.hSimulationTask.invoke('GetUnit', unittype);
+            str = obj.hSimulationTask.invoke('GetUnit', unittype);
         end
         function double = GetUnitScale(obj, unittype)
             % Returns the unit scale for the given type specified for the selected task. This is either the task's local scale or the project's global scale.
@@ -310,29 +310,29 @@ classdef SimulationTask < handle
             % Returns the name of the currently running task while the simulation is performed.
             name = obj.hSimulationTask.invoke('GetNameOfCurrentTask');
         end
-        function string = GetModelFolder(obj, absolute)
+        function str = GetModelFolder(obj, absolute)
             % Returns the generic model folder of the selected task, or an empty string if no task is selected. If absolute is false, the path is returned relative to the project model folder that can be obtained with GetProjectPath("ModelDS"). Note that not all tasks store individual model files, so the returned folder might not contain any files or not exist.
-            string = obj.hSimulationTask.invoke('GetModelFolder', absolute);
+            str = obj.hSimulationTask.invoke('GetModelFolder', absolute);
         end
-        function string = GetResultFolder(obj, absolute)
+        function str = GetResultFolder(obj, absolute)
             % Returns the generic result folder of the selected task, or an empty string if no task is selected. If absolute is false, the path is returned relative to the project result folder that can be obtained with GetProjectPath("ResultDS"). Note that the returned folder is only used for result files without tree item. 1D results and tables are stored in different locations. You can get those paths via the ResultTree Object from the corresponding tree names.
-            string = obj.hSimulationTask.invoke('GetResultFolder', absolute);
+            str = obj.hSimulationTask.invoke('GetResultFolder', absolute);
         end
-        function string = GetProperty(obj, propertyname)
+        function str = GetProperty(obj, propertyname)
             % Inverse method to SetProperty(). Returns the value of the specified property.  For details on valid properties, see SetProperty().
-            string = obj.hSimulationTask.invoke('GetProperty', propertyname);
+            str = obj.hSimulationTask.invoke('GetProperty', propertyname);
         end
         function bool = GetUpconverting(obj)
             % Returns if the selected mixer simulation task considers the up-converting mode.
             bool = obj.hSimulationTask.invoke('GetUpconverting');
         end
-        function string = GetPortSignalType(obj, portname)
+        function str = GetPortSignalType(obj, portname)
             % Returns the signal type associated with the given port for the selected simulation task. Possible return values are "None" (if no signal is assigned to the specified port, i.e. the port will be considered as impedance), "Gaussian", "Pulse", "Sine", "Damped sine", "Exponential rising", "Exponential rising and falling", "PRBS", "PRBS random initialization", "K285", "K285 inverted", "Random", "Pulse Sequence" and "Import".
-            string = obj.hSimulationTask.invoke('GetPortSignalType', portname);
+            str = obj.hSimulationTask.invoke('GetPortSignalType', portname);
         end
-        function string = GetPortSourceType(obj, portname)
+        function str = GetPortSourceType(obj, portname)
             % Returns the source type associated with the given port for the selected simulation task. Possible return values are "None" (if no signal is assigned to the specified port, i.e. the port will be considered as impedance), "Voltage", "Current" and "Signal".
-            string = obj.hSimulationTask.invoke('GetPortSourceType', portname);
+            str = obj.hSimulationTask.invoke('GetPortSourceType', portname);
         end
         function [amplitude, fmin, fmax] = GetGaussProperties(obj, portname)
             % Retrieves the settings for a gaussian excitation signal at the given port.

@@ -203,17 +203,17 @@ classdef LFSolver < handle
             % Get the result database directory for a certain run, which is accessed by its frequency (given as string or double value).
             filename = obj.hLFSolver.invoke('GetDatabaseResultDirName', frequency);
         end
-        function string = GetFirstFrequencyWithResult(obj, result_key)
+        function str = GetFirstFrequencyWithResult(obj, result_key)
             % Returns the first frequency from a list (sorted by double value) for which a result with the specified result_key exists. For example, result_key can be "Accuracy" or "Total Losses" or any other key which exists in the result data base. If result_key is empty, i.e. result_key="", this routine returns the first frequency for which any results are available.
             % If no such frequency is found, the return value will be "0.0".
             % The data type of the returned value is a string, because it may contain the name of a parameter. To get the corresponding double value of the returned frequency, use Eval(return_value).
-            string = obj.hLFSolver.invoke('GetFirstFrequencyWithResult', result_key);
+            str = obj.hLFSolver.invoke('GetFirstFrequencyWithResult', result_key);
         end
-        function string = GetNextFrequencyWithResult(obj)
+        function str = GetNextFrequencyWithResult(obj)
             % Requires an initialized list (sorted by double value) of frequencies for which certain results exist. This list is initialized by calling GetFirstFrequencyWithResult(...).
             % This function increases the "frequency counter" by one and returns the next frequency from this sorted list. The data type of the returned value is a string, because it may contain the name of a parameter. To get the corresponding double value of the returned frequency, use Eval(return_value).
             % If no further frequency with appropriate results is found, the return value will be "0.0".
-            string = obj.hLFSolver.invoke('GetNextFrequencyWithResult');
+            str = obj.hLFSolver.invoke('GetNextFrequencyWithResult');
         end
         function int = GetNumberOfFrequenciesWithResult(obj, result_key)
             % Returns the number of frequencies for which a result with the specified result_key exists. For example, result_key can be "Accuracy" or "Total Losses" or any other key which exists in the result data base. If result_key is empty, i.e. result_key="", this routine returns the number of frequencies for which any results are available.

@@ -219,9 +219,9 @@ classdef Plot1D < handle
             % Returns the index of the curve with the specified curve label. If the curve label is not found  -1 will be returned. In case the curve label is not unique, the first matching index will be returned. Please note that it is the curve label which is needed, not the name of the Tree entry. In a Smith chart plot, this could be for example "S1,1 (var. ref. imp.)". Use the method GetCurveLabelOfCurveIndex to get the correct spelling of a certain curve label.
             int = obj.hPlot1D.invoke('GetCurveIndexOfCurveLabel', curvelabel);
         end
-        function string = GetCurveLabelOfCurveIndex(obj, curveindex)
+        function str = GetCurveLabelOfCurveIndex(obj, curveindex)
             % Returns the label of the curve with the specified index. If no curve with this index is found an empty string will be returned.
-            string = obj.hPlot1D.invoke('GetCurveLabelOfCurveIndex', curveindex);
+            str = obj.hPlot1D.invoke('GetCurveLabelOfCurveIndex', curveindex);
         end
         function double = GetCurveValue(obj, curvelabel, abscissa)
             % This method returns the ordinate value of the curve specified
@@ -243,7 +243,7 @@ classdef Plot1D < handle
             % Returns the total number of displayed curves in a 1D plot. If some curves are hidden they are not counted anymore.
             double = obj.hPlot1D.invoke('GetNumberOfCurves');
         end
-        function string = GetCurrentPlotSettings(obj)
+        function str = GetCurrentPlotSettings(obj)
             % Returns the current plot settings as a string. The parameter 'options' is expected to be an empty string. The string returned by this method contains VBA commands that can be used to restore the current plot state.
             functionString = [...
                 'Dim options As String', newline, ...

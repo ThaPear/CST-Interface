@@ -77,17 +77,17 @@ classdef Result2D < handle
             % Sets / returns the title / x-axis label / y-axis label of the result.
             obj.hResult2D.invoke('SetYLabel', sName);
         end
-        function string = GetTitle(obj)
+        function str = GetTitle(obj)
             % Sets / returns the title / x-axis label / y-axis label of the result.
-            string = obj.hResult2D.invoke('GetTitle');
+            str = obj.hResult2D.invoke('GetTitle');
         end
-        function string = GetXLabel(obj)
+        function str = GetXLabel(obj)
             % Sets / returns the title / x-axis label / y-axis label of the result.
-            string = obj.hResult2D.invoke('GetXLabel');
+            str = obj.hResult2D.invoke('GetXLabel');
         end
-        function string = GetYLabel(obj)
+        function str = GetYLabel(obj)
             % Sets / returns the title / x-axis label / y-axis label of the result.
-            string = obj.hResult2D.invoke('GetYLabel');
+            str = obj.hResult2D.invoke('GetYLabel');
         end
         function SetXMin(obj, dValue)
             % Sets / returns the minimum / maximum value on the x- / y-axis. This defines the rectangular domain of the Result2D object.
@@ -133,17 +133,17 @@ classdef Result2D < handle
             % Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
             obj.hResult2D.invoke('etYUnit', sUnit);
         end
-        function string = GetDataUnit(obj)
+        function str = GetDataUnit(obj)
             % Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
-            string = obj.hResult2D.invoke('GetDataUnit');
+            str = obj.hResult2D.invoke('GetDataUnit');
         end
-        function string = GetXUnit(obj)
+        function str = GetXUnit(obj)
             % Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
-            string = obj.hResult2D.invoke('GetXUnit');
+            str = obj.hResult2D.invoke('GetXUnit');
         end
-        function string = GetYUnit(obj)
+        function str = GetYUnit(obj)
             % Sets / returns the unit of the stored data / x-axis / y-axis as string. The unit string uses the syntax described on the Units help page.
-            string = obj.hResult2D.invoke('GetYUnit');
+            str = obj.hResult2D.invoke('GetYUnit');
         end
         function SetLogarithmicFactor(obj, dValue)
             % Sets / returns logarithmic factor used for dB Scaling. The logarithmic factor can be 10 for power quantities, 20 for field quantities and zero if dB scaling is not available.
@@ -174,9 +174,9 @@ classdef Result2D < handle
             % Returns true if the Result2D object holds complex-valued data ("2DC"), otherwise false ("2D").
             bool = obj.hResult2D.invoke('IsComplex');
         end
-        function string = GetResultObjectType(obj)
+        function str = GetResultObjectType(obj)
             % Returns the string "2DC" if the result object contains complex-valued data, otherwise it returns the string "2D". This method can be used to distinguish the result object from other result objects in a context where the type of a result object is unknown.
-            string = obj.hResult2D.invoke('GetResultObjectType');
+            str = obj.hResult2D.invoke('GetResultObjectType');
         end
         function SetValue(obj, iX, iY, dValue)
             % Sets / returns the real data value at the specified x/y index in the Result2D object. NOTE: If used with a "2DC" object an error is produced.

@@ -49,13 +49,13 @@ classdef ResultTree < handle
             % Enable or disable the update of the tree. After enabling the tree update, this method does actually update the tree also.
             obj.hResultTree.invoke('EnableTreeUpdate', boolean);
         end
-        function string = GetFirstChildName(obj, sParentTreePath)
+        function str = GetFirstChildName(obj, sParentTreePath)
             % Get the name including tree path of the first child item of the specified parent item. An empty string will be returned if no child exists.
-            string = obj.hResultTree.invoke('GetFirstChildName', sParentTreePath);
+            str = obj.hResultTree.invoke('GetFirstChildName', sParentTreePath);
         end
-        function string = GetNextItemName(obj, sCurrentTreeItem)
+        function str = GetNextItemName(obj, sCurrentTreeItem)
             % Get the name including tree path of the item following sCurrentTreeItem in the same tree folder. sCurrentTreeItem has to specify the tree folder and the current item name. An empty string will be returned if sCurrentTreeItem is the last item in the tree folder.
-            string = obj.hResultTree.invoke('GetNextItemName', sCurrentTreeItem);
+            str = obj.hResultTree.invoke('GetNextItemName', sCurrentTreeItem);
         end
         function RefreshView(obj)
             % Updates the results stored in the  tree.
@@ -125,17 +125,17 @@ classdef ResultTree < handle
             % If switch is True, the item is treated like a normal solver result item.
             obj.hResultTree.invoke('IsResult', boolean);
         end
-        function string = GetResultTypeFromItemName(obj, sTreePath)
+        function str = GetResultTypeFromItemName(obj, sTreePath)
             % Returns the result type of the tree item. See the Result Type Overview.
-            string = obj.hResultTree.invoke('GetResultTypeFromItemName', sTreePath);
+            str = obj.hResultTree.invoke('GetResultTypeFromItemName', sTreePath);
         end
-        function string = GetFileFromTreeItem(obj, sTreePath)
+        function str = GetFileFromTreeItem(obj, sTreePath)
             % Returns the file name of the result file associated with this tree entry. If there is no result file, the return value will be an empty string.
-            string = obj.hResultTree.invoke('GetFileFromTreeItem', sTreePath);
+            str = obj.hResultTree.invoke('GetFileFromTreeItem', sTreePath);
         end
-        function string = GetTableFileFromItemName(obj, sTreePath)
+        function str = GetTableFileFromItemName(obj, sTreePath)
             % Get the file name of the table if the tree item represents a table or an empty string.
-            string = obj.hResultTree.invoke('GetTableFileFromItemName', sTreePath);
+            str = obj.hResultTree.invoke('GetTableFileFromItemName', sTreePath);
         end
         function variant = GetResultIDsFromTreeItem(obj, sTreePath)
             % Returns an array of Result IDs, which are strings are of the format "3D:RunID:1" and correspond to the existing Run IDs for the parametric data of the specified tree item. A Result ID can be resolved to a parameter combination with the command GetParameterCombination of the Project-object.
@@ -188,9 +188,9 @@ classdef ResultTree < handle
             % Sets the string to be evaluated by the VBA Interpreter.
             obj.hResultTree.invoke('Macro', sCommand);
         end
-        function string = GetTypeFromItemName(obj, sTreePath)
+        function str = GetTypeFromItemName(obj, sTreePath)
             % Returns the result type of the tree item. See the Result Type Overview.
-            string = obj.hResultTree.invoke('GetTypeFromItemName', sTreePath);
+            str = obj.hResultTree.invoke('GetTypeFromItemName', sTreePath);
         end
     end
     %% MATLAB-side stored settings of CST state.

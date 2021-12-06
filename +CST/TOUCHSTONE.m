@@ -36,9 +36,9 @@ classdef TOUCHSTONE < handle
             % Sets the name of the exported file.
             obj.hTOUCHSTONE.invoke('FileName', filename);
         end
-        function string = GetFileName(obj)
+        function str = GetFileName(obj)
             % Returns the full filename of the stored touchstone file including the automatically generated extension.
-            string = obj.hTOUCHSTONE.invoke('GetFileName');
+            str = obj.hTOUCHSTONE.invoke('GetFileName');
         end
         function UserPrefix(obj, name)
             % Set prefix for the S-parameter input files. The expected filename will be i.e. "project^prefix^a1(1)1(1).sig". Renormalization is disabled in this case. Use this before ".Write". Prefix will be reset to "" after ".Write".

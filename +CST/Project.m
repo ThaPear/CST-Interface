@@ -68,15 +68,15 @@ classdef Project < handle
             % Returns the number of tree items which are currently selected.
             long = obj.hProject.invoke('GetNumberOfSelectedTreeItems');
         end
-        function string = GetSelectedTreeItem(obj)
+        function str = GetSelectedTreeItem(obj)
             % Returns the path name of the currently selected tree item or folder with regard to the root of the tree.
             % Example: If a solid named "solid1" is selected in the "component1" folder of the "Components" folder, the returned path name will be "Components\component1\sold1".
-            string = obj.hProject.invoke('GetSelectedTreeItem');
+            str = obj.hProject.invoke('GetSelectedTreeItem');
         end
-        function string = GetNextSelectedTreeItem(obj)
+        function str = GetNextSelectedTreeItem(obj)
             % Returns the path name of the next selected tree item or folder if multiple items are selected. You need to use GetSelectedTreeItem  once before using this command.
             % Example: If a solid named "solid1" is selected in the "component1" folder of the "Components" folder, the returned path name will be "Components\component1\sold1".
-            string = obj.hProject.invoke('GetNextSelectedTreeItem');
+            str = obj.hProject.invoke('GetNextSelectedTreeItem');
         end
         function SetLock(obj, boolean)
             % Disables the interaction. No user actions can be made. After a VBA-Script has been executed, SetLock is automatically reset to False.
@@ -154,25 +154,25 @@ classdef Project < handle
             % End Function
             obj.hProject.invoke('PositionWindow', location, handle);
         end
-        function string = GetDataBaseValue(obj, key)
+        function str = GetDataBaseValue(obj, key)
             % Provide access to the settings database. Returnes the data base value specified by key as a string.
-            string = obj.hProject.invoke('GetDataBaseValue', key);
+            str = obj.hProject.invoke('GetDataBaseValue', key);
         end
-        function string = GetDataBaseArrayValue(obj, key, index)
+        function str = GetDataBaseArrayValue(obj, key, index)
             % Provide access to the settings database. Returnes the data base value specified by key as a string.
-            string = obj.hProject.invoke('GetDataBaseArrayValue', key, index);
+            str = obj.hProject.invoke('GetDataBaseArrayValue', key, index);
         end
         function ChangeSolverType(obj, type)
             % Switch to another solver. Valid solver types are: "HF Time Domain", "HF Eigenmode", "HF Frequency Domain", "HF IntegralEq", "HF Multilayer", "HF Asymptotic", "LF EStatic", "LF MStatic", "LF Stationary Current", "LF Frequency Domain", "LF Time Domain (MQS)", "PT Tracking", "PT Wakefields", "PT PIC", "Thermal Steady State", "Thermal Transient",  "Mechanics".
             obj.AddToHistory(['ChangeSolverType "', type, '"']);
         end
-        function string = GetSolverType(obj)
+        function str = GetSolverType(obj)
             % Returns the currently active solver.
-            string = obj.hProject.invoke('GetSolverType');
+            str = obj.hProject.invoke('GetSolverType');
         end
-        function string = ImportSubProject(obj, filename, do_wcs_alignment)
+        function str = ImportSubProject(obj, filename, do_wcs_alignment)
             % This function performs a subproject import and adds the command into the history. filename is the name of the project which will be imported. And with do_wcs_alignment it can be specified if the sub project will be imported into the currently active WCS. If an error occurs during the import, the error message will be returned.
-            string = obj.hProject.invoke('ImportSubProject', filename, do_wcs_alignment);
+            str = obj.hProject.invoke('ImportSubProject', filename, do_wcs_alignment);
         end
         %% File Handling
         function Backup(obj, filename)
@@ -222,33 +222,33 @@ classdef Project < handle
             % Returns the number of parameters defined so far.
             long = obj.hProject.invoke('GetNumberOfParameters');
         end
-        function string = GetParameterName(obj, index)
+        function str = GetParameterName(obj, index)
             % Returns the name of the parameter referenced by the given index. The first parameter is reference by the index 0.
-            string = obj.hProject.invoke('GetParameterName', index);
+            str = obj.hProject.invoke('GetParameterName', index);
         end
         function double = GetParameterNValue(obj, index)
             % Returns the value of the double parameter referenced by the given index. The first parameter is referenced by the index 0.
             double = obj.hProject.invoke('GetParameterNValue', index);
         end
-        function string = GetParameterSValue(obj, index)
+        function str = GetParameterSValue(obj, index)
             % Returns the numerical expression for the parameter referenced by the given index. The first parameter is referenced by the index 0.
-            string = obj.hProject.invoke('GetParameterSValue', index);
+            str = obj.hProject.invoke('GetParameterSValue', index);
         end
         function RenameParameter(obj, oldName, newName)
             % Change the name of existing parameter 'oldName' to 'newName'.
             obj.hProject.invoke('RenameParameter', oldName, newName);
         end
-        function string = RestoreParameter(obj, name)
+        function str = RestoreParameter(obj, name)
             % Gets the value of the specified string parameter.
-            string = obj.hProject.invoke('RestoreParameter', name);
+            str = obj.hProject.invoke('RestoreParameter', name);
         end
         function double = RestoreDoubleParameter(obj, name)
             % Gets the value of a specified double parameter.
             double = obj.hProject.invoke('RestoreDoubleParameter', name);
         end
-        function string = RestoreParameterExpression(obj, name)
+        function str = RestoreParameterExpression(obj, name)
             % Gets the numerical expression for the specified string parameter.
-            string = obj.hProject.invoke('RestoreParameterExpression', name);
+            str = obj.hProject.invoke('RestoreParameterExpression', name);
         end
         function StoreParameterWithDescription(obj, name, value, description)
             % Creates a new string parameter or changes an existing one, with the specified string value and the description.
@@ -293,9 +293,9 @@ classdef Project < handle
             % Defines the description for a given parameter, which is specified by its name.
             obj.hProject.invoke('SetParameterDescription', name, description);
         end
-        function string = GetParameterDescription(obj, name)
+        function str = GetParameterDescription(obj, name)
             % Returns the description of a given parameter, which is specified by its name.
-            string = obj.hProject.invoke('GetParameterDescription', name);
+            str = obj.hProject.invoke('GetParameterDescription', name);
         end
         function [bool, parameters] = GetParameterCombination(obj, resultID)
             % Fills the variant 'parameterValues'  with an array of double values that correspond to
@@ -366,9 +366,9 @@ classdef Project < handle
             % Delete a global data value with a given name.
             obj.hProject.invoke('DeleteGlobalDataValue', name);
         end
-        function string = RestoreGlobalDataValue(obj, name)
+        function str = RestoreGlobalDataValue(obj, name)
             % Returnes a global data value with a given name.
-            string = obj.hProject.invoke('RestoreGlobalDataValue', name);
+            str = obj.hProject.invoke('RestoreGlobalDataValue', name);
         end
         function StoreGlobalDataValue(obj, name, value)
             % Creates a new global data value with a given name and value or changes an existing one.
@@ -482,7 +482,7 @@ classdef Project < handle
 
             result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
-        function string = GetLastResultID(obj)
+        function str = GetLastResultID(obj)
             % This method returns the Result ID which identifies the last
             % result. It allows access to the last 1D or 0D result via
             % Resulttree.GetResultFromTreeItem, e.g.:
@@ -490,15 +490,15 @@ classdef Project < handle
             % Dim o As Object
             % Set o = Resulttree.GetResultFromTreeItem("1D Results\S-Parameters\S1,1", GetLastResultID())
             % ReportInformationToWindow("Last 1D/0D result object type: " + o.GetResultObjectType())
-            string = obj.hProject.invoke('GetLastResultID');
+            str = obj.hProject.invoke('GetLastResultID');
         end
-        function string = GetScriptSetting(obj, name, default_value)
+        function str = GetScriptSetting(obj, name, default_value)
             % This function is only active if a result template is
             % currently in process. It returns the internal settings of the
             % previously customized result item using the
             % StoreScriptSetting method. In case that no settings has been
             % stored, the default value will be returned.
-            string = obj.hProject.invoke('GetScriptSetting', name, default_value);
+            str = obj.hProject.invoke('GetScriptSetting', name, default_value);
         end
         function StoreScriptSetting(obj, name, value)
             % This function is only active if a result template is
@@ -521,9 +521,9 @@ classdef Project < handle
             % be found on the Post-Processing Template Layout help page.
             obj.hProject.invoke('StoreTemplateSetting', setting, value);
         end
-        function string = GetScriptFileName(obj)
+        function str = GetScriptFileName(obj)
             % Returns the file name of the currently active script.
-            string = obj.hProject.invoke('GetScriptFileName');
+            str = obj.hProject.invoke('GetScriptFileName');
         end
         function EvaluateResultTemplates(obj)
             % Evaluates all existing result templates. As well as after a
@@ -560,9 +560,9 @@ classdef Project < handle
             % Wend
             bool = obj.hProject.invoke('GetNextTemplate', resultname, type, templatename, folder);
         end
-        function string = GetFileType(obj, filename)
+        function str = GetFileType(obj, filename)
             % Checks the file type of the file with absolute path specified in the variable 'filename'. If the file is a complex signal file, the string "complex" will be returned. If the file is a real-valued signal file, the string "real" will be returned. If the file is a real-valued 0D file, the string "real0D" will be returned. If the file is a complex-valued 0D file, the string "complex0D" will be returned. If the file type is unknown or the file can not be found, "unknown" will be returned.
-            string = obj.hProject.invoke('GetFileType', filename);
+            str = obj.hProject.invoke('GetFileType', filename);
         end
         function result1DComplex = GetImpedanceFromTreeItem(obj, treename)
             % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this method returns a Result1DComplex object filled with the corresponding impedance data. If no impedance data is available, this method returns an empty Result1DComplex object.
@@ -570,26 +570,26 @@ classdef Project < handle
 
             result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
-        function string = GetFirstTableResult(obj, resultname)
+        function str = GetFirstTableResult(obj, resultname)
             % Returns the name of the table that was created on evaluation of the template with the name 'resultname' or an empty string.
-            string = obj.hProject.invoke('GetFirstTableResult', resultname);
+            str = obj.hProject.invoke('GetFirstTableResult', resultname);
         end
-        function string = GetNextTableResult(obj, resultname)
+        function str = GetNextTableResult(obj, resultname)
             % If the template created more than one table on evaluation, this method returns the names of next table that was created on evaluation of the template with the name 'resultname'. If no more table names are available, this method returns an empty string. Please note that GetFirstTableName needs to be called before and that this method needs to be called with the same value for parameter 'resultname'.
-            string = obj.hProject.invoke('GetNextTableResult', resultname);
+            str = obj.hProject.invoke('GetNextTableResult', resultname);
         end
         function bool = GetTemplateAborted(obj)
             % Returns true if the user aborted the template based post-processing evaluation, otherwise false.
             bool = obj.hProject.invoke('GetTemplateAborted');
         end
         %% Macros
-        function string = GetMacroPath(obj)
+        function str = GetMacroPath(obj)
             % Returns the first directory, that has been set as location for globally defined macros. This function is the same as "GetMacroPathFromIndex(0)"
-            string = obj.hProject.invoke('GetMacroPath');
+            str = obj.hProject.invoke('GetMacroPath');
         end
-        function string = GetMacroPathFromIndex(obj, index)
+        function str = GetMacroPathFromIndex(obj, index)
             % Returns the name of the macro path referenced by the given index. The first macro path is reference by the index 0.
-            string = obj.hProject.invoke('GetMacroPathFromIndex', index);
+            str = obj.hProject.invoke('GetMacroPathFromIndex', index);
         end
         function int = GetNumberOfMacroPaths(obj)
             % Returns the number of defined macro directories.
@@ -829,19 +829,19 @@ classdef Project < handle
             double = obj.hProject.invoke('GetMinVectorLength', vxre, vxim, vyre, vyim, vzre, vzim);
         end
         %% Queries
-        function string = GetApplicationName(obj)
+        function str = GetApplicationName(obj)
             % Returns the application name.
-            string = obj.hProject.invoke('GetApplicationName');
+            str = obj.hProject.invoke('GetApplicationName');
         end
-        function string = GetApplicationVersion(obj)
+        function str = GetApplicationVersion(obj)
             % Returns the current version number as a string.
-            string = obj.hProject.invoke('GetApplicationVersion');
+            str = obj.hProject.invoke('GetApplicationVersion');
         end
-        function string = GetInstallPath(obj)
+        function str = GetInstallPath(obj)
             % Returns the path where the program is installed.
-            string = obj.hProject.invoke('GetInstallPath');
+            str = obj.hProject.invoke('GetInstallPath');
         end
-        function string = GetProjectPath(obj, type)
+        function str = GetProjectPath(obj, type)
             % Gets the project path. If the name of the current project is Try and its location is in c:\MySolvedProblems, the result of this function will be
             % type        Path returned
             % Root        c:\MySolvedProblems
@@ -850,7 +850,7 @@ classdef Project < handle
             % ModelCache  c:\MySolvedProblems\Try\ModelCache
             % Result      c:\MySolvedProblems\Try\Result
             % Temp        c:\MySolvedProblems\Try\Temp
-            string = obj.hProject.invoke('GetProjectPath', type);
+            str = obj.hProject.invoke('GetProjectPath', type);
         end
         function object = GetOwnProject(obj)
             % Returns the COM interface of the current project.
@@ -860,13 +860,13 @@ classdef Project < handle
             % Encounters whether the history list is currently processing or not
             bool = obj.hProject.invoke('IsBuildingModel');
         end
-        function string = GetLicenseHostId(obj)
+        function str = GetLicenseHostId(obj)
             % Gets the host id for the currently used license (hardlock). This information may be useful for support purposes.
-            string = obj.hProject.invoke('GetLicenseHostId');
+            str = obj.hProject.invoke('GetLicenseHostId');
         end
-        function string = GetLicenseCustomerNumber(obj)
+        function str = GetLicenseCustomerNumber(obj)
             % Gets the current customer number from the license. This information may be useful for support purposes.
-            string = obj.hProject.invoke('GetLicenseCustomerNumber');
+            str = obj.hProject.invoke('GetLicenseCustomerNumber');
         end
         %% Parametric Modelling
         function Assign(obj, variable_name)
@@ -996,9 +996,9 @@ classdef Project < handle
             obj.AddToHistory(['.SetGlobalData "', num2str(name, '%.15g'), '", '...
                                              '"', num2str(value, '%.15g'), '"']);
         end
-        function string = GetGlobalData(obj, name)
+        function str = GetGlobalData(obj, name)
             % Returns a global data storage setting.
-            string = obj.hProject.invoke('GetGlobalData', name);
+            str = obj.hProject.invoke('GetGlobalData', name);
         end
         %% CST 2019 Functions.
         function object = GetSimulationProject(obj, name)

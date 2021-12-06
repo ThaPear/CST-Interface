@@ -72,9 +72,9 @@ classdef CombineResults < handle
         function the = For(obj, time)
             the = obj.hCombineResults.invoke('For', time);
         end
-        function string = GetCombinationFromLabel(obj, labelName)
+        function str = GetCombinationFromLabel(obj, labelName)
             % Returns the combination string for the given label.
-            string = obj.hCombineResults.invoke('GetCombinationFromLabel', labelName);
+            str = obj.hCombineResults.invoke('GetCombinationFromLabel', labelName);
         end
         function SetAllExcitations(obj, amplitude, phase_or_timedelay)
             % For all available excitations the amplitudes are set to amplitude and the phase values (respectively  time shift values) are set to phase_or_timedelay.

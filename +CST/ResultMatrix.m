@@ -38,21 +38,21 @@ classdef ResultMatrix < handle
             % The method returns the number of rows or columns. The argument is expected to be the string "row" or "column" to indicate which size is queried.
             long = obj.hResultMatrix.invoke('GetSize', row_or_column);
         end
-        function string = GetName(obj, row_or_column, index)
+        function str = GetName(obj, row_or_column, index)
             % This method returns the name of a row or column. The first argument is expected to be the string "row" or "column" . The second argument is the zero-based index of the queried row or column.
-            string = obj.hResultMatrix.invoke('GetName', row_or_column, index);
+            str = obj.hResultMatrix.invoke('GetName', row_or_column, index);
         end
-        function string = GetElementType(obj)
+        function str = GetElementType(obj)
             % This method returns the ResultObjectType of a single matrix element, e.g. the string "0D".
-            string = obj.hResultMatrix.invoke('GetElementType');
+            str = obj.hResultMatrix.invoke('GetElementType');
         end
         function Result0D = GetElement(obj, row, column)
             % This method returns a Result 0D object which contains the data of the matrix at the given row and column.
             Result0D = obj.hResultMatrix.invoke('GetElement', row, column);
         end
-        function string = GetResultObjectType(obj)
+        function str = GetResultObjectType(obj)
             % Returns the string "matrix". This method can be used to distinguish this result object from other objects (e.g. Result1D,  Result1DComplex)  in a context where the type of a result object is unknown.
-            string = obj.hResultMatrix.invoke('GetResultObjectType');
+            str = obj.hResultMatrix.invoke('GetResultObjectType');
         end
     end
     %% MATLAB-side stored settings of CST state.

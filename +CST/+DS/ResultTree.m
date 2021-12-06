@@ -28,21 +28,21 @@ classdef ResultTree < handle
     end
     %% CST Object functions.
     methods
-        function string = GetNextItemName(obj, treeItemName)
+        function str = GetNextItemName(obj, treeItemName)
             % Returns the next tree item name after "treeItemName". It does only return folder names in the same hierarchy level. If there is no next tree item the function returns an empty string.
-            string = obj.hResultTree.invoke('GetNextItemName', treeItemName);
+            str = obj.hResultTree.invoke('GetNextItemName', treeItemName);
         end
-        function string = GetFirstChildName(obj, treeItemName)
+        function str = GetFirstChildName(obj, treeItemName)
             % Returns the first child tree item of  "treeItemName". If there is no child of the specified tree item the function returns an empty string.
-            string = obj.hResultTree.invoke('GetFirstChildName', treeItemName);
+            str = obj.hResultTree.invoke('GetFirstChildName', treeItemName);
         end
-        function string = GetFileFromTreeItem(obj, resultTreeItemName)
+        function str = GetFileFromTreeItem(obj, resultTreeItemName)
             % This function only affects tree items containing results. It returns the file name of the CST MICROWAVE STUDIO compatible result file associated with this entry. If there is no result file, the return value will be an empty string.
-            string = obj.hResultTree.invoke('GetFileFromTreeItem', resultTreeItemName);
+            str = obj.hResultTree.invoke('GetFileFromTreeItem', resultTreeItemName);
         end
-        function string = GetTableFileFromItemName(obj, resultTreeItemName)
+        function str = GetTableFileFromItemName(obj, resultTreeItemName)
             % If the result tree item represents a table this function returns the file name of the table, otherwise an empty string will be returned.
-            string = obj.hResultTree.invoke('GetTableFileFromItemName', resultTreeItemName);
+            str = obj.hResultTree.invoke('GetTableFileFromItemName', resultTreeItemName);
         end
         function variant = GetResultIDsFromTreeItem(obj, treeItemName)
             % Returns an array of Result IDs, which are strings are of the format "Schematic:RunID:1" and correspond to the existing Run IDs for the parametric data of the specified tree item. A Result ID can be resolved to a parameter combination with the command GetParameterCombination of the Project object.

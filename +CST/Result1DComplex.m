@@ -243,17 +243,17 @@ classdef Result1DComplex < handle
             % Defines the y-axis label of the result.
             obj.hResult1DComplex.invoke('Ylabel', name);
         end
-        function string = GetTitle(obj)
+        function str = GetTitle(obj)
             % Returns the title label of the result. This function works only for user added tree result objects.
-            string = obj.hResult1DComplex.invoke('GetTitle');
+            str = obj.hResult1DComplex.invoke('GetTitle');
         end
-        function string = GetXlabel(obj)
+        function str = GetXlabel(obj)
             % Returns the x-axis label of the result. This function works only for user added tree result objects.
-            string = obj.hResult1DComplex.invoke('GetXlabel');
+            str = obj.hResult1DComplex.invoke('GetXlabel');
         end
-        function string = GetYlabel(obj)
+        function str = GetYlabel(obj)
             % Returns the y-axis label of the result. This function works only for user added tree result objects.
-            string = obj.hResult1DComplex.invoke('GetYlabel');
+            str = obj.hResult1DComplex.invoke('GetYlabel');
         end
         function SetLogarithmicFactor(obj, LogFactor)
             % When the complex curve contained in the Result1DComplex object is visualized in dB, the logarithmic factor provides the scaling of the data. The string LogFactor can be 10 for a power quantity, 20 for a field quantity, or -1 which will disable the dB option. The default is 20.
@@ -267,21 +267,21 @@ classdef Result1DComplex < handle
             % This command allows adding a 1D result to the Navigation Tree which can be visualized as a Smith Chart. One can specify a link to another existing 1D result in the Navigation Tree which will be interpreted as reference impedance data. The link is created when the Result1DComplex object is added to the Navigation Tree via a subsequent call of AddToTree. The reference impedance item needs to be an existing complex-valued item of the same sampling as the processed data. It also needs to be located within the same Navigation Tree folder as the reference impedance tree item, otherwise AddToTree will report an error. See also Example.
             obj.hResult1DComplex.invoke('SetReferenceImpedanceLink', TreePath);
         end
-        function string = GetReferenceImpedanceLink(obj)
+        function str = GetReferenceImpedanceLink(obj)
             % Returns the tree item specified by SetReferenceImpedanceLink.
-            string = obj.hResult1DComplex.invoke('GetReferenceImpedanceLink');
+            str = obj.hResult1DComplex.invoke('GetReferenceImpedanceLink');
         end
         function SetDefaultPlotView(obj, Type)
             % This setting specifies the default plot view type that should be used when a 1D plot of  this result is opened. The variable Type specifies the type of view that should be plotted and can be one of the following strings: "real", "imaginary", "magnitude", "magnitudedb", "phase", "polar", or an empty string. This setting is considered if the Result1DComplex object is created and processed within a template evaluation in the Template Based Post-Processing framework or if the object is added to the Navigation Tree via AddToTree.
             obj.hResult1DComplex.invoke('SetDefaultPlotView', Type);
         end
-        function string = GetDefaultPlotView(obj)
+        function str = GetDefaultPlotView(obj)
             % Returns the default plot view type specified by SetDefaultPlotView.
-            string = obj.hResult1DComplex.invoke('GetDefaultPlotView');
+            str = obj.hResult1DComplex.invoke('GetDefaultPlotView');
         end
-        function string = GetResultObjectType(obj)
+        function str = GetResultObjectType(obj)
             % Returns the string "1DC". This method can be used to distinguish the result object from Result0D and Result1D objects in a context where the type of a result object is unknown.
-            string = obj.hResult1DComplex.invoke('GetResultObjectType');
+            str = obj.hResult1DComplex.invoke('GetResultObjectType');
         end
         function DeleteAt(obj, Lifetime)
             % This setting specifies the lifetime of the Result1DComplex object. The variable Lifetime can be one of the following strings: "never", "solverstart" or "rebuild". This setting is considered if the Result1DComplex object is added to the Navigation Tree via AddToTree.
@@ -296,29 +296,29 @@ classdef Result1DComplex < handle
             % Sets the Unit string for the Result1DComplex object.
             obj.hResult1DComplex.invoke('Yunit', Unit);
         end
-        function string = GetXunit(obj)
+        function str = GetXunit(obj)
             % Returns the Unit string of the Result1DComplex object.
-            string = obj.hResult1DComplex.invoke('GetXunit');
+            str = obj.hResult1DComplex.invoke('GetXunit');
         end
-        function string = GetYunit(obj)
+        function str = GetYunit(obj)
             % Returns the Unit string of the Result1DComplex object.
-            string = obj.hResult1DComplex.invoke('GetYunit');
+            str = obj.hResult1DComplex.invoke('GetYunit');
         end
         function AttachImpedanceOfTreeItem(obj, Name)
             % If the Result1DComplex object is created and processed within a multiple template evaluation in the Template Based Postprocessing framework, this setting creates a separate result entry of the impedance of the specified tree item and attaches it to the result entry of the current Result1DComplex object to allow visualizing a Smith Chart.
             obj.hResult1DComplex.invoke('AttachImpedanceOfTreeItem', Name);
         end
-        function string = GetAttachedImpedanceTreeItem(obj)
+        function str = GetAttachedImpedanceTreeItem(obj)
             % Returns the tree item specified by AttachImpedanceOfTreeItem.
-            string = obj.hResult1DComplex.invoke('GetAttachedImpedanceTreeItem');
+            str = obj.hResult1DComplex.invoke('GetAttachedImpedanceTreeItem');
         end
         function SetImpedanceTreeItem(obj, Name)
             % If the Result1DComplex object is created and processed within a multiple template evaluation in the Template Based Postprocessing framework, this setting stores a reference to a tree item. The data of this tree item is used as impedance data to allow visualizing a Smith Chart. The data is expected to be stored in complex data format.
             obj.hResult1DComplex.invoke('SetImpedanceTreeItem', Name);
         end
-        function string = GetImpedanceTreeItem(obj)
+        function str = GetImpedanceTreeItem(obj)
             % Returns the tree item specified by SetImpedanceTreeItem.
-            string = obj.hResult1DComplex.invoke('GetImpedanceTreeItem');
+            str = obj.hResult1DComplex.invoke('GetImpedanceTreeItem');
         end
     end
     %% MATLAB-side stored settings of CST state.

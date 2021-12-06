@@ -295,9 +295,9 @@ classdef Result3D < handle
             % Sets / returns the unit as string of the stored field. The unit string uses the syntax described on the Units help page.
             obj.hResult3D.invoke('SetUnit', sUnit);
         end
-        function string = GetUnit(obj)
+        function str = GetUnit(obj)
             % Sets / returns the unit as string of the stored field. The unit string uses the syntax described on the Units help page.
-            string = obj.hResult3D.invoke('GetUnit');
+            str = obj.hResult3D.invoke('GetUnit');
         end
         function SetLogarithmicFactor(obj, dValue)
             % Sets / returns logarithmic factor used for dB Scaling. The logarithmic factor can be 10 for power quantities, 20 for field quantities and zero if dB scaling is not available.

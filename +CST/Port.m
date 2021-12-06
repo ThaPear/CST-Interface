@@ -452,9 +452,9 @@ classdef Port < handle
             sizevalue1 = str2double(sizevalue1);
             sizevalue2 = str2double(sizevalue2);
         end
-        function string = GetLabel(obj, portnumber)
+        function str = GetLabel(obj, portnumber)
             % This function returns the label of the port.
-            string = obj.hPort.invoke('GetLabel', portnumber);
+            str = obj.hPort.invoke('GetLabel', portnumber);
         end
         %% Undocumented functions.
         % Found in history list upon creating a waveguide port.

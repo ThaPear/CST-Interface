@@ -648,21 +648,21 @@ classdef FarfieldPlot < handle
             %       'hplane'
             double = obj.hFarfieldPlot.invoke('GetPhaseCenterResult', direction, mode);
         end
-        function string = GetPhaseCenterResultExpr(obj)
+        function str = GetPhaseCenterResultExpr(obj)
             % Returns the previously calculated  phase center location in global coordinates  as character string as displayed in the main view window.
-            string = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExpr');
+            str = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExpr');
         end
-        function string = GetPhaseCenterResultExprAvg(obj)
+        function str = GetPhaseCenterResultExprAvg(obj)
             % Returns the previously calculated  phase center location in global coordinates  as character string. The phase center location is average by the values calculated in the E-plane and H-plane.
-            string = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprAvg');
+            str = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprAvg');
         end
-        function string = GetPhaseCenterResultExprEPlane(obj)
+        function str = GetPhaseCenterResultExprEPlane(obj)
             % Returns the previously calculated  phase center location calculated in the E-plane in global coordinates  as character string.
-            string = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprEPlane');
+            str = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprEPlane');
         end
-        function string = GetPhaseCenterResultExprHPlane(obj)
+        function str = GetPhaseCenterResultExprHPlane(obj)
             % Returns the previously calculated  phase center location calculated in the H-plane in global coordinates  as character string.
-            string = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprHPlane');
+            str = obj.hFarfieldPlot.invoke('GetPhaseCenterResultExprHPlane');
         end
         %% CST 2019 Functions.
         function SetMaxReferenceMode(obj, maxRefMode)

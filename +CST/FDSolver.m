@@ -554,9 +554,9 @@ classdef FDSolver < handle
                                                            '"', num2str(names, '%.15g'), '", '...
                                                            '"', num2str(anchor, '%.15g'), '"']);
         end
-        function string = UpdateInterpolationSettings(obj, navigationtreepath)
+        function str = UpdateInterpolationSettings(obj, navigationtreepath)
             % This method is available as a post-processing step for the general purpose sweep. It updates the interpolation settings of results below the given path in the Navigation Tree. navigationtreepath has slash or backslash characters as separators and is case-insensitive, for instance "1D Results/Probes". The solver's interpolation settings are then applied to some 1D results. See SetNumberOfResultDataSamples and SetResultDataSamplingMode for details. The interpolation will be removed again if SetMethod was called with "Discrete samples only". UpdateInterpolationSettings returns a string with a summary.
-            string = obj.hFDSolver.invoke('UpdateInterpolationSettings', navigationtreepath);
+            str = obj.hFDSolver.invoke('UpdateInterpolationSettings', navigationtreepath);
         end
         function ExportMORSolution(obj, frequency)
             % This method exports available 3D solutions at the chosen frequency to CST PARTICLE Studio. Afterwards the exported fields can be imported in CST PARTICLE Studio with the Predefined Field feature. Applies to the fast reduced order model sweep method only.

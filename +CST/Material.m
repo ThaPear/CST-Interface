@@ -1913,21 +1913,21 @@ classdef Material < handle
             % Returns the number of materials.
             long = obj.hMaterial.invoke('GetNumberOfMaterials');
         end
-        function string = GetNameOfMaterialFromIndex(obj, index)
+        function str = GetNameOfMaterialFromIndex(obj, index)
             % Returns the material name for the material specified by the zero-based index index < .GetNumberOfMaterials - 1.
-            string = obj.hMaterial.invoke('GetNameOfMaterialFromIndex', index);
+            str = obj.hMaterial.invoke('GetNameOfMaterialFromIndex', index);
         end
         function bool = IsBackgroundMaterial(obj, name)
             % Returns True if this is the background material. Typically the name is air_0;
             bool = obj.hMaterial.invoke('IsBackgroundMaterial', name);
         end
-        function string = GetTypeOfBackgroundMaterial(obj)
+        function str = GetTypeOfBackgroundMaterial(obj)
             % Returns the material type. Valid types are: "PEC", "Normal", "Anisotropic", "Lossy Metal", "Corrugated wall", "Ohmic sheet", "Tensor formula", "Nonlinear".
-            string = obj.hMaterial.invoke('GetTypeOfBackgroundMaterial');
+            str = obj.hMaterial.invoke('GetTypeOfBackgroundMaterial');
         end
-        function string = GetTypeOfMaterial(obj, name)
+        function str = GetTypeOfMaterial(obj, name)
             % Returns the material type. Valid types are: "PEC", "Normal", "Anisotropic", "Lossy Metal", "Corrugated wall", "Ohmic sheet", "Tensor formula", "Nonlinear".
-            string = obj.hMaterial.invoke('GetTypeOfMaterial', name);
+            str = obj.hMaterial.invoke('GetTypeOfMaterial', name);
         end
         function [red, green, blue] = GetColour(obj, name)
             % Returns the current color values of the material named name in the parameters red, green and blue. The color values vary between 0 and 1.
