@@ -954,7 +954,7 @@ classdef Project < handle
             while(contains(parameter, '  '))
                 parameter = strrep(parameter, '  ', ' ');
             end
-            str = obj.hProject.invoke('ResultNavigatorRequest', request, parameter);
+            str = obj.hProject.invoke('ResultNavigatorRequest', request, string(parameter));
         end
         %% Distributed Computing Setup
         function UseDistributedComputingForParameters(obj, flag)

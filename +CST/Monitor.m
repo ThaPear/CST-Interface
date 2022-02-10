@@ -68,7 +68,7 @@ classdef Monitor < handle
             % Creates the monitor with the previously applied settings.
             % Used for single-frequency monitors and time-domain monitors.
             if(isempty(obj.name))
-                if(strcmp(obj.domain, 'Time'))
+                if(strcmpi(obj.domain, 'Time'))
                     if(~isempty(obj.tend) && obj.tend); tend = num2str(obj.tend); else; tend = 'end'; end %#ok<PROP>
                     obj.Name([obj.fieldtype, ' (t=', num2str(obj.tstart), '..', tend, '(', num2str(obj.tstep), '))']); %#ok<PROP>
                 else
@@ -80,7 +80,7 @@ classdef Monitor < handle
 
             % Prepend With and append End With
             obj.history = ['With Monitor', newline, obj.history, 'End With'];
-            if(strcmp(obj.domain, 'Time'))
+            if(strcmpi(obj.domain, 'Time'))
                 obj.project.AddToHistory(['define time monitor: ', obj.name], obj.history);
             else
                 obj.project.AddToHistory(['define monitor: ', obj.name], obj.history);

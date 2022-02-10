@@ -404,13 +404,11 @@ classdef FarfieldPlot < handle
         %% Farfield Orientation, Origin and Coordinate Systems
         function Origin(obj, originType)
             % The origin type of the farfield calculation.
-            obj.hFarfieldPlot.invoke('Origin', originType);
-        end
-        function can = originType(obj)
+            % originType can have one of the following values:
             % bbox - The center of the bounding box of the structure.
             % zero - Origin of coordinate system.
             % free - Any desired point defined by Userorigin
-            can = obj.hFarfieldPlot.invoke('originType');
+            obj.hFarfieldPlot.invoke('Origin', originType);
         end
         function Userorigin(obj, x, y, z)
             % Sets origin of the farfield calculation if the origin type is set to free.
@@ -450,14 +448,12 @@ classdef FarfieldPlot < handle
         end
         function SetCoordinateSystemType(obj, coordSys)
             % Sets the coordinate system to the type coordSys. According to the chosen coordinate system different field components are calculated based on the respective coordinate transforms.
-            obj.hFarfieldPlot.invoke('SetCoordinateSystemType', coordSys);
-        end
-        function can = coordSys(obj)
+            % coordSys can have one of the following values:
             % "spherical" - Sets the coordinate system to spherical coordinates.
             % "ludwig2ae" - Sets the coordinate system to Ludwig2 - azimuth over elevation
             % "ludwig2ea" - Sets the coordinate system to Ludwig2 - elevation over azimuth
             % "ludwig3"   - Sets the coordinate system to Ludwig3
-            can = obj.hFarfieldPlot.invoke('coordSys');
+            obj.hFarfieldPlot.invoke('SetCoordinateSystemType', coordSys);
         end
         function SetAutomaticCoordinateSystem(obj, bFlag)
             % Activates the automatic choice of the coordinate system based on the axes type.
@@ -640,9 +636,15 @@ classdef FarfieldPlot < handle
         function GroundKappa(obj, value)
             obj.hFarfieldPlot.invoke('GroundKappa', value);
         end
-        % Found in the history list of migrated CST 2014 file in 'farfield plot options'
+        % Found in the history list of migrated CST 2014 file in 'farfield plot options' with argument 'unknown'.
+        % Likely a duplicate of SetAntennaType, so documentation is copied from there.
         function SetAnntenaType(obj, type)
-            % type: 'unknown'
+            % Specifies the antenna used to preconfigure the axes settings. The following types are available
+            % "unknown"              - Antenna type is not known.
+            % "isotropic"            - Isotropic antenna.
+            % "isotropic_linear"     - Linearly polarized isotropic antenna.
+            % "directional_linear"   - Linearly polarized directional antenna.
+            % "directional_circular" - Circularly  polarized directional antenna.
             obj.hFarfieldPlot.invoke('SetAnntenaType', type);
         end
     end

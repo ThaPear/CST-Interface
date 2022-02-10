@@ -708,21 +708,13 @@ Origin ( enum originType )
 
 The origin type of the farfield calculation.
 
- 
-
 originType can have one of the following values:
 
-bbox
+bbox - The center of the bounding box of the structure.
 
-The center of the bounding box of the structure.
+zero - Origin of coordinate system.
 
-zero
-
-Origin of coordinate system.
-
-free
-
-Any desired point defined by Userorigin
+free - Any desired point defined by Userorigin
 
  
 
@@ -789,8 +781,6 @@ Set the polarization vector or y'-axis in global cartesian coordinates . You may
 SetCoordinateSystemType ( enum coordSys )
 
 Sets the coordinate system to the type coordSys. According to the chosen coordinate system different field components are calculated based on the respective coordinate transforms.
-
- 
 
 coordSys can have one of the following values:
 

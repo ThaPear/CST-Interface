@@ -764,7 +764,7 @@ classdef Project < handle
             % The request "reset selection" resets the selection state of the Result Navigator to default behavior (similar to "Reset Selection" in the context menu). The variable parameter is ignored and the return value of the function will be an empty string. The following example shows how to reset the selection in the Result Navigator:
             % SelectTreeItem("Tasks\SPara1\S-Parameters")
             % ResultNavigatorRequest("reset selection","") 'reset Result Navigator selection state to default behavior
-            str = obj.hDSProject.invoke('ResultNavigatorRequest', request, parameter);
+            str = obj.hDSProject.invoke('ResultNavigatorRequest', request, string(parameter));
         end
         %% View
         function StoreViewInBmpFile(obj, file_name)
