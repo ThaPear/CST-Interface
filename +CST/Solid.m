@@ -142,7 +142,7 @@ classdef Solid < handle
             obj.AddToHistory(['.BlendEdge "', num2str(rad, '%.15g'), '"']);
         end
         function ChamferEdge(obj, depth, angle, boolean, faceID)
-            % This option cuts all previously picked edges to the specified depth. The parameter angle defines the angle of the chamfer in degrees (default is 45.0°). There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. The parameter switch is to apply the specified settings to the other direction. The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
+            % This option cuts all previously picked edges to the specified depth. The parameter angle defines the angle of the chamfer in degrees (default is 45.0ï¿½). There are two possibilities the chamfer width and the angle can be applied to the selected edge. Once is to the right and once is to the left of the selected edges. The parameter switch is to apply the specified settings to the other direction. The faceID will determine from which face we measure the angle (if switch is true, it is the opposite)
             % If depth is chosen in a way that the structure would change significantly, the operation might not be possible.
             % If no edge is picked this method performs no action.
             obj.AddToHistory(['.ChamferEdge "', num2str(depth, '%.15g'), '", '...
@@ -373,9 +373,9 @@ classdef Solid < handle
             obj.AddToHistory(['.CleanShape "', num2str(solid1, '%.15g'), '"']);
         end
         %% Show Problems
-        function CheckSoild(obj, solid1, CheckLevel)
+        function CheckSolid(obj, solid1, CheckLevel)
             % Opens a window displaying all interesting information about the specified shape concerning existing bad edges, vertices or faces. A smaller value  for CheckLevel causes a faster, but less detailed check of the solid. Valid values are 20, 30, 40, 50.
-            obj.AddToHistory(['.CheckSoild "', num2str(solid1, '%.15g'), '", '...
+            obj.AddToHistory(['.CheckSolid "', num2str(solid1, '%.15g'), '", '...
                                           '"', num2str(CheckLevel, '%.15g'), '"']);
         end
         function PickDanglingEdges(obj, solid1)
@@ -544,9 +544,9 @@ classdef Solid < handle
                                                         '"', num2str(key, '%.15g'), '"']);
         end
         %% Queries
-        function name = DoesExist(obj)
+        function bool = DoesExist(obj, name)
             % Returns whether a solid with the given name does exist. This can be useful if your script tries to find a new telling name that does not exist yet - try your name first with this method.
-            name = obj.hSolid.invoke('DoesExist');
+            bool = obj.hSolid.invoke('DoesExist', name);
         end
         function name = GetNextFreeName(obj)
             % Returns an unused solid name.

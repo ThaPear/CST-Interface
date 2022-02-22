@@ -1036,9 +1036,12 @@ classdef Project < handle
             % ASCIIExport.Execute();
             obj.hProject.invoke('ExportPlotData', filename);
         end
-        % Found in history list of migrated CST 2014 file.
+        % Found in several macro demo examples.
         function ChangeSolverAndMeshType(obj, type)
-            % type: 'HF Frequency Domain'
+            % type: 'HF Frequency Domain'   % Found in "Library\Macros\Construct\Demo Examples\Waveguide Iris Filter^+MWS.mcs"
+            %       'Thermal Stationary'    % Found in "Library\Macros\Construct\Demo Examples\Heat Sink with Thermal Source^+MPS.mcs"
+            %       'LF Stationary Current' % Found in "Library\Macros\Construct\Demo Examples\JS - DC Power Splitter - Resistance^+EMS.mcs"
+            %       'LF MStatic'            % Found in "Library\Macros\Construct\Demo Examples\JS - DC Power Splitter - Resistance^+EMS.mcs"
             obj.AddToHistory(['ChangeSolverAndMeshType "', type, '"']);
         end
         %% Utility functions.

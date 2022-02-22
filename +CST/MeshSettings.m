@@ -94,6 +94,8 @@ classdef MeshSettings < handle
             % StepsPerBoxFar                | 1         | "10"
             % Found in history list when setting local mesh settings in .ItemMeshSettings with .SetMeshType "Tet"
             % LayerStackup                  | 1         | "Automatic"
+            % LocalAutomaticEdgeRefinement  | 1         | "0"
+            % LocalAutomaticEdgeRefinementOverwrite | 1 | 0
             % MaterialIndependent           | 1         | 0
             % OctreeSizeFaces	            | 1         | "0"
             % PatchIndependent              | 1         | 0
@@ -181,7 +183,7 @@ End With
 % % Add microstrip conductor to local mesh group.
 % group.AddItem(['solid$Microstrip:Conductor'], 'localmeshgroup');
 % meshsettings = project.MeshSettings();
-% meshsettings.StartBulkmode();
+% meshsettings.StartBulkMode();
 % meshsettings.SetMeshType('Tet');
 % meshsettings.Set('Size', 1);
 % meshsettings.ApplyToMeshGroup('group$localmeshgroup');

@@ -305,7 +305,7 @@ classdef FarfieldPlot < handle
             % "rcssw"           - The radar cross section (square wavelength)  is plotted in the farfield plot.
             obj.hFarfieldPlot.invoke('SetPlotMode', plotMode);
         end
-        function GetPlotMode(obj, plotMode)
+        function plotMode = GetPlotMode(obj)
             % GetPlotMode returns the currently set plot mode.
             % plotMode can have one of the following values:
             % "directivity"     - The directivity is plotted in the farfield plot.
@@ -318,7 +318,7 @@ classdef FarfieldPlot < handle
             % "rcs"             - The radar cross section (square meters) is plotted in the farfield plot.
             % "rcsunits"        - The radar cross section (project length units squared)  is plotted in the farfield plot.
             % "rcssw"           - The radar cross section (square wavelength)  is plotted in the farfield plot.
-            obj.hFarfieldPlot.invoke('GetPlotMode', plotMode);
+            plotMode = obj.hFarfieldPlot.invoke('GetPlotMode');
         end
         function SelectComponent(obj, fieldComponent)
             % Changes the currently plotted field component. fieldComponent specifies the desired component as it appears in the tree/ribbon, e.g., "Abs", "Phi/Theta", "Axial Ratio", ...
@@ -334,6 +334,10 @@ classdef FarfieldPlot < handle
             % "showtis"                 - Display the total isotropic sensitivity.
             % "showtisdb"               - Display the total isotropic sensitivity in dBmW.
             % "showtisoff"              - Hide the total isotropic sensitivity.
+            % Undocumented arguments
+            % Found in "Library\Result Templates\Farfield and Antenna Properties\- Mix Farfield Results^+MWS.rtp"
+            % "disableplot"
+            % "enableplot"
             obj.hFarfieldPlot.invoke('SetSpecials', option);
         end
         function Distance(obj, radius)
@@ -646,6 +650,14 @@ classdef FarfieldPlot < handle
             % "directional_linear"   - Linearly polarized directional antenna.
             % "directional_circular" - Circularly  polarized directional antenna.
             obj.hFarfieldPlot.invoke('SetAnntenaType', type);
+        end
+        % Found in "Library\Macros\Results\Farfield\Plot 3D Farfield on UV plane^+MWS.mcr"
+        function AddListItem(obj, theta, phi, r)
+            obj.hFarfieldPlot.invoke('AddListItem', theta, phi, r);
+        end
+        % Found in "Library\Macros\Results\Farfield\Plot 3D Farfield on UV plane^+MWS.mcr"
+        function AddListItemFreq(obj, theta, phi, r, arg4)
+            obj.hFarfieldPlot.invoke('AddListItem', theta, phi, r, arg4);
         end
     end
     %% MATLAB-side stored settings of CST state.
