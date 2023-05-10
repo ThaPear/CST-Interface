@@ -35,12 +35,12 @@ classdef Application < handle
                     if(contains(err.message, 'Unknown name or named argument'))
                         % The handle is valid, so return it.
                         return;
-                    elseif(contains(err.message, 'The RPC server is unavailable'))
+                    elseif(contains(err.message, 'The RPC server is unavailable') || contains(err.message, 'The object invoked has disconnected from its clients'))
                         fprintf('CST was closed. Re-acquiring CST handle...\n');
                         hCST_Persistent = [];
                         % Continue into version selection.
                     else
-                        fprintf('Unknown error occurred. CST handle invalid, re-acquiring...\n');
+                        fprintf('CST handle invalid, re-acquiring...\n');
                     end
                 end
             end
