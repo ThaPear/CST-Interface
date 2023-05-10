@@ -20,16 +20,106 @@
 classdef Application < handle
     %% CST Interface specific functions.
     methods(Static)
-        function hCST = GetHandle()
-%             persistent hCST_Persistent;
-%             if(~isempty(hCST_Persistent))
-%                 if(~isa(hCST_Persistent, 'COM.CSTStudio_Application'))
-%                     error(['Invalid CST handle of type ', class(hCST_Persistent)]);
-%                 end
-%             else
+        function hCST = GetHandle(reset)
+            persistent hCST_Persistent;
+            if(nargin > 0 && reset)
+                clear hCST_Persistent;
+                return;
+            end
+            if(~isempty(hCST_Persistent))
+                hCST = hCST_Persistent;
+                try
+                    hCST.invoke('a');
+                    fprintf('ERROR: Should not reach this point, assuming CST is unavailable.\n');
+                catch err
+                    if(contains(err.message, 'Unknown name or named argument'))
+                        % The handle is valid, so return it.
+                        return;
+                    elseif(contains(err.message, 'The RPC server is unavailable'))
+                        fprintf('CST was closed. Re-acquiring CST handle...\n');
+                        hCST_Persistent = [];
+                        % Continue into version selection.
+                    else
+                        fprintf('Unknown error occurred. CST handle invalid, re-acquiring...\n');
+                    end
+                end
+            end
+
+            % Get the installed CST versions.
+            fprintf('Getting available CST versions...\n');
+            % Query the system.
+            versions = evalc('system(''powershell -command "dir REGISTRY::HKEY_CLASSES_ROOT\CLSID -include PROGID -recurse | foreach {$_.GetValue(\"\")} | Select-String \"CST DESIGN\""'');');
+            % Split resulting output.
+            versions = strsplit(versions, newline);
+            % Remove lines that are not versions.
+            versions(cellfun(@length, versions) < 2) = [];
+            % Now we have something like the following:
+            % {'CST DESIGN ENVIRONMENT_AMD64.Application.2022', 'CST DESIGN ENVIRONMENT_AMD64.Application.2018'}
+            if(length(versions) < 1)
+                % No versions were found.
+                fprintf('No versions found.\nFalling back to default.\n');
+                % Fall back to the general way of getting the handle.
                 hCST_Persistent = actxserver('CSTStudio.Application');
                 hCST = hCST_Persistent;
-%             end
+                return;
+            elseif(length(versions) == 1)
+                % Only 1 version was found.
+                fprintf('Single installed version found, using that one.');
+                % Simply use the general way of getting the handle.
+                hCST_Persistent = actxserver('CSTStudio.Application');
+                hCST = hCST_Persistent;
+                return;
+            end
+            % Only retain the year.
+            versions = strrep(versions, 'CST DESIGN ENVIRONMENT_AMD64.Application.', '');
+            versions = strrep(versions, ' ', '');
+            versions(cellfun(@length, versions) > 4) = [];
+            versions = sort(versions);
+
+            versionstr = strcat(versions(1:end-1), {', '});
+            versionstr = [versionstr{:}, versions{end}];
+
+            % Request a choice from the user.
+            query = ['Please select your preferred version.', newline, ...
+                     ['Available versions: ', versionstr, '.'], newline, ...
+                     'Add an asterisk (*) to remember your choice.', newline, ...
+                     'Call CST.Application.Reset() to change your choice later.'];
+            answer = inputdlg(query);
+
+            % Should we remember the choice?
+            remember = false;
+            if(contains(answer, '*'))
+                remember = true;
+                answer = strrep(answer, '*', '');
+            end
+
+            % Check if the answer matches any of the versions.
+            if(length([answer{:}]) < 4 || length([answer{:}]) > 5 || ~any(strcmp(answer, versions)))
+                error('Invalid version ''%s''.\nPlease select one of the following versions: ''%s''.', [answer{:}], strrep(versionstr, ', ', ''', '''));
+            end
+            
+            % Construct the string to retrieve the actxserver
+            actxstr = ['CST DESIGN ENVIRONMENT_AMD64.Application.', answer{:}];
+
+            % Try to get the desired server.
+            try
+                if(remember)
+                    hCST_Persistent = actxserver(actxstr);
+                    hCST = hCST_Persistent;
+                else
+                    hCST = actxserver(actxstr);
+                end
+            catch err
+                % Couldn't get the given server.
+                % Fall back to the general way of getting the handle.
+                fprintf('Failed to retrieve given actxserver. Error message: %s.\nFalling back to default.\n', err.message);
+                hCST_Persistent = actxserver('CSTStudio.Application');
+                hCST = hCST_Persistent;
+                return;
+            end
+        end
+        function Reset()
+            CST.Application.GetHandle(true);
         end
     end
     %% CST Object functions.
