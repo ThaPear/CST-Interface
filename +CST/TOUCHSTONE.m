@@ -56,6 +56,14 @@ classdef TOUCHSTONE < handle
             end
             obj.hTOUCHSTONE.invoke('ExportType', type);
         end
+        function Format(obj, type)
+            % Sets the format of the complex values. "MA" for magnitude (linear) and phase (deg), "DB" for magnitude (dB) and phase (deg), and "RI" for real and imaginary part
+            arguments
+                obj
+                type string {mustBeMember(type, ["MA", "DB", "RI"])}
+            end
+            obj.hTOUCHSTONE.invoke('Format', type);
+        end
         function FrequencyRange(obj, type)
             % Sets the Frequency range to "Full" or "Limited".
             % type can have one of  the following values:
