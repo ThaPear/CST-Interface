@@ -89,6 +89,8 @@ classdef TOUCHSTONE < handle
                 obj
                 type char {mustBeMember(type, {'S', 'Y', 'Z'})}
             end
+            if (obj.project.Version(1) < 2022) error("ExportType can only be set for CST version 2022 or higher!"); end
+            
             obj.hTOUCHSTONE.invoke('ExportType', type);
         end
         function Format(obj, type)
@@ -97,6 +99,8 @@ classdef TOUCHSTONE < handle
                 obj
                 type string {mustBeMember(type, ["MA", "DB", "RI"])}
             end
+            if (obj.project.Version(1) < 2022) error("Format can only be set for CST version 2022 or higher!"); end
+            
             obj.hTOUCHSTONE.invoke('Format', type);
         end
     end
