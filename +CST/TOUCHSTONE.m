@@ -80,12 +80,37 @@ classdef TOUCHSTONE < handle
             obj.hTOUCHSTONE.invoke('Write');
         end
     end
+    
+    % Version 2022 and above functions
+    methods
+        function ExportType(obj, type)
+            % Sets the type of the TOUCHSTONE file to be exported. 'S', 'Y', or 'Z' for S-, Y-, or Z- parameters
+            arguments
+                obj
+                type char {mustBeMember(type, {'S', 'Y', 'Z'})}
+            end
+            if (obj.project.Version(1) < 2022) error("ExportType can only be set for CST version 2022 or higher!"); end
+            
+            obj.hTOUCHSTONE.invoke('ExportType', type);
+        end
+        function Format(obj, type)
+            % Sets the format of the complex values. "MA" for magnitude (linear) and phase (deg), "DB" for magnitude (dB) and phase (deg), and "RI" for real and imaginary part
+            arguments
+                obj
+                type string {mustBeMember(type, ["MA", "DB", "RI"])}
+            end
+            if (obj.project.Version(1) < 2022) error("Format can only be set for CST version 2022 or higher!"); end
+            
+            obj.hTOUCHSTONE.invoke('Format', type);
+        end
+    end
+    
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
     properties(SetAccess = protected)
         project
         hTOUCHSTONE
-
+        
     end
 end
 

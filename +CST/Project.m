@@ -1594,4 +1594,20 @@ classdef Project < handle
         function wire                        = Wire(obj);                        if(isempty(obj.wire));                        obj.wire                        = CST.Wire(obj, obj.hProject);                        end; wire                        = obj.wire;                        end
         function yieldanalysis               = YieldAnalysis(obj);               if(isempty(obj.yieldanalysis));               obj.yieldanalysis               = CST.YieldAnalysis(obj, obj.hProject);               end; yieldanalysis               = obj.yieldanalysis;               end
     end
+    properties (Dependent)
+        Version (2, 1) uint32 % Major and Minor version of the current application/project
+    end
+    methods
+        function version = get.Version(obj)
+            appVersion = obj.GetApplicationVersion();
+            
+            % The string will look something like this: 'Version <major>.<minor>...'
+            versions = regexp(appVersion, "Version ([0-9]{4})\.([0-9]+) .+", 'tokens');
+            
+            major = str2double(versions{1}{1});
+            minor = str2double(versions{1}{2});
+            
+            version = [major, minor];
+        end
+    end
 end
