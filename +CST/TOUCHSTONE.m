@@ -48,6 +48,14 @@ classdef TOUCHSTONE < handle
             % The TOUCHSTONE file contains a fixed reference impedance. During the export process the S-parameters will be automatically normed to the impedance specified by this method.
             obj.hTOUCHSTONE.invoke('Impedance', impedance);
         end
+        function ExportType(obj, type)
+            % Sets the type of the TOUCHSTONE file to be exported. 'S', 'Y', or 'Z' for S-, Y-, or Z- parameters
+            arguments
+                obj
+                type char {mustBeMember(type, {'S', 'Y', 'Z'})}
+            end
+            obj.hTOUCHSTONE.invoke('ExportType', type);
+        end
         function FrequencyRange(obj, type)
             % Sets the Frequency range to "Full" or "Limited".
             % type can have one of  the following values:
@@ -85,7 +93,7 @@ classdef TOUCHSTONE < handle
     properties(SetAccess = protected)
         project
         hTOUCHSTONE
-
+        
     end
 end
 
