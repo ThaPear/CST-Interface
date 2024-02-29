@@ -48,22 +48,6 @@ classdef TOUCHSTONE < handle
             % The TOUCHSTONE file contains a fixed reference impedance. During the export process the S-parameters will be automatically normed to the impedance specified by this method.
             obj.hTOUCHSTONE.invoke('Impedance', impedance);
         end
-        function ExportType(obj, type)
-            % Sets the type of the TOUCHSTONE file to be exported. 'S', 'Y', or 'Z' for S-, Y-, or Z- parameters
-            arguments
-                obj
-                type char {mustBeMember(type, {'S', 'Y', 'Z'})}
-            end
-            obj.hTOUCHSTONE.invoke('ExportType', type);
-        end
-        function Format(obj, type)
-            % Sets the format of the complex values. "MA" for magnitude (linear) and phase (deg), "DB" for magnitude (dB) and phase (deg), and "RI" for real and imaginary part
-            arguments
-                obj
-                type string {mustBeMember(type, ["MA", "DB", "RI"])}
-            end
-            obj.hTOUCHSTONE.invoke('Format', type);
-        end
         function FrequencyRange(obj, type)
             % Sets the Frequency range to "Full" or "Limited".
             % type can have one of  the following values:
@@ -96,6 +80,27 @@ classdef TOUCHSTONE < handle
             obj.hTOUCHSTONE.invoke('Write');
         end
     end
+    
+    % Version 2022 and above functions
+    methods
+        function ExportType(obj, type)
+            % Sets the type of the TOUCHSTONE file to be exported. 'S', 'Y', or 'Z' for S-, Y-, or Z- parameters
+            arguments
+                obj
+                type char {mustBeMember(type, {'S', 'Y', 'Z'})}
+            end
+            obj.hTOUCHSTONE.invoke('ExportType', type);
+        end
+        function Format(obj, type)
+            % Sets the format of the complex values. "MA" for magnitude (linear) and phase (deg), "DB" for magnitude (dB) and phase (deg), and "RI" for real and imaginary part
+            arguments
+                obj
+                type string {mustBeMember(type, ["MA", "DB", "RI"])}
+            end
+            obj.hTOUCHSTONE.invoke('Format', type);
+        end
+    end
+    
     %% MATLAB-side stored settings of CST state.
     % Note that these can be incorrect at times.
     properties(SetAccess = protected)
