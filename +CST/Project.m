@@ -18,7 +18,7 @@
 
 % Suppress warnings:
 % Use of brackets [] is unnecessary. Use parenteses to group, if needed.
-%#ok<*NBRAK>
+     %#ok<*NBRAK>
 
 % The Project Object offers miscellaneous functions concerning the program in general.
 classdef Project < handle
@@ -97,7 +97,7 @@ classdef Project < handle
                             condition = modifier{2};
                             contents = [...
                                 'If ', condition, ' Then', newline, ...
-                                contents, newline, ...
+                                    contents, newline, ...
                                 'End If', newline]; %#ok<AGROW>
                         case 'Loop'
                             % For counter = startval To endval [ Step stepval ]
@@ -115,7 +115,7 @@ classdef Project < handle
                             contents = [...
                                 'Dim ', counter, newline, ...
                                 'For ', counter, ' = ', startval, ' To ', endval, stepstr, newline, ...
-                                contents, newline, ...
+                                    contents, newline, ...
                                 'Next ', counter, newline]; %#ok<AGROW>
                         otherwise
                             error('Unknown next command modifier ''%s''.', obj.nextcommandmodifier{i});
@@ -323,19 +323,19 @@ classdef Project < handle
                 'StoreGlobalDataValue("matlab1", bool)', newline, ...
                 ... % If the resultID was valid, then bool will be true.
                 'If bool Then', newline, ...
-                ... % Store the number of parameters.
-                'StoreGlobalDataValue("matlab2", UBound(parameterValues))', newline, ...
-                ... % Store parameter names & values.
-                'Dim i As Long', newline, ...
-                'For i = 0 To UBound(parameterValues)', newline, ...
-                'StoreGlobalDataValue("matlab" + CStr(3+2*i  ), parameterNames(i))', newline, ...
-                'StoreGlobalDataValue("matlab" + CStr(3+2*i+1), CStr(parameterValues(i)))', newline, ...
-                'Next', newline, ...
+                    ... % Store the number of parameters.
+                    'StoreGlobalDataValue("matlab2", UBound(parameterValues))', newline, ...
+                    ... % Store parameter names & values.
+                    'Dim i As Long', newline, ...
+                    'For i = 0 To UBound(parameterValues)', newline, ...
+                        'StoreGlobalDataValue("matlab" + CStr(3+2*i  ), parameterNames(i))', newline, ...
+                        'StoreGlobalDataValue("matlab" + CStr(3+2*i+1), CStr(parameterValues(i)))', newline, ...
+                    'Next', newline, ...
                 'End If', newline, ...
-                ];
+            ];
             returnvalues = {}; % Handle returns ourselves.
             obj.RunVBACode(functionString, returnvalues);
-            
+
             % Extract returns.
             bool = obj.RestoreGlobalDataValue('matlab1');
             bool = str2double(bool);
@@ -472,14 +472,14 @@ classdef Project < handle
             % This method returns the last 1D result of the selected result template. 'name' is the
             % name of a previously defined result template.
             hResult1D = obj.hProject.invoke('GetLast1DResult', name);
-            
+
             result1D = CST.Result1D(obj, hResult1D);
         end
         function result1DComplex = GetLast1DComplexResult(obj, name)
             % This method returns the last complex 1D result of the selected result template. 'name'
             % is the name of a previously defined result template.
             hResult1DComplex = obj.hProject.invoke('GetLast1DComplexResult', name);
-            
+
             result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
         function str = GetLastResultID(obj)
@@ -567,7 +567,7 @@ classdef Project < handle
         function result1DComplex = GetImpedanceFromTreeItem(obj, treename)
             % If the 1D tree item with the name 'treename' can be visualized as a Smith Chart, this method returns a Result1DComplex object filled with the corresponding impedance data. If no impedance data is available, this method returns an empty Result1DComplex object.
             hResult1DComplex = obj.hProject.invoke('GetImpedanceFromTreeItem', treename);
-            
+
             result1DComplex = CST.Result1DComplex(obj, hResult1DComplex);
         end
         function str = GetFirstTableResult(obj, resultname)
@@ -726,7 +726,7 @@ classdef Project < handle
             % a - First sequence to be convoluted.
             % b - Second sequence to be convoluted.
             % conv - Convolution of sequence_a and sequence_b
-            %             obj.hProject.invoke('CalculateCONV', a, b, conv);
+%             obj.hProject.invoke('CalculateCONV', a, b, conv);
         end
         function CalculateCROSSCOR(obj, a, b, corr, bNorm) %#ok<INUSD>
             % This function was not implemented due to the Result1D
@@ -740,7 +740,7 @@ classdef Project < handle
             % b - Second sequence to be correlated.
             % corr - Sequence of correlation coefficients of the sequences above.
             % bNorm - Flag if normed or standard correlation is calculated.
-            %             obj.hProject.invoke('CalculateCROSSCOR', a, b, corr, bNorm);
+%             obj.hProject.invoke('CalculateCROSSCOR', a, b, corr, bNorm);
         end
         function DeleteResults(obj)
             % Deletes all results of the actual project.
@@ -757,7 +757,7 @@ classdef Project < handle
             functionString = [...
                 'Dim value As Double, x As Double, y As Double, z As Double', newline, ...
                 'value = GetFieldPlotMaximumPos(x, y, z)', newline, ...
-                ];
+            ];
             returnvalues = {'value', 'x', 'y', 'z'};
             [value, x, y, z] = obj.RunVBACode(functionString, returnvalues);
             % Numerical returns.
@@ -773,7 +773,7 @@ classdef Project < handle
             functionString = [...
                 'Dim value As Double, x As Double, y As Double, z As Double', newline, ...
                 'value = GetFieldPlotMinimumPos(x, y, z)', newline, ...
-                ];
+            ];
             returnvalues = {'value', 'x', 'y', 'z'};
             [value, x, y, z] = obj.RunVBACode(functionString, returnvalues);
             % Numerical returns.
@@ -801,7 +801,7 @@ classdef Project < handle
                 'Dim vxre As Double, vyre As Double, vzre As Double', newline, ...
                 'Dim vxim As Double, vyim As Double, vzim As Double', newline, ...
                 'bool = GetFieldVector(x, y, z, vxre, vyre, vzre, vxim, vyim, vzim)', newline, ...
-                ];
+            ];
             returnvalues = {'bool', 'x', 'y', 'z', 'vxre', 'vyre', 'vzre', 'vxim', 'vyim', 'vzim'};
             [bool, x, y, z, vxre, vyre, vzre, vxim, vyim, vzim] = obj.RunVBACode(functionString, returnvalues);
             % Numerical returns.
@@ -875,12 +875,12 @@ classdef Project < handle
         end
         function BeginHide(obj)
             % These function has an effect only if they are used in connection with the History List .
-            %             obj.hProject.invoke('BeginHide');
+%             obj.hProject.invoke('BeginHide');
             obj.AddToHistory('BeginHide');
         end
         function EndHide(obj)
             % These function has an effect only if they are used in connection with the History List .
-            %             obj.hProject.invoke('EndHide');
+%             obj.hProject.invoke('EndHide');
             obj.AddToHistory('EndHide');
         end
         function double = dist2d(obj, id, x, y)
@@ -948,7 +948,7 @@ classdef Project < handle
             % The request "reset selection" resets the selection state of the Result Navigator to default behavior (similar to "Reset Selection" in the context menu). The variable parameter is ignored and the return value of the function will be an empty string. The following example shows how to reset the selection in the Result Navigator:
             % SelectTreeItem("1D Results\S-Parameters")
             % ResultNavigatorRequest("reset selection","") 'reset Result Navigator selection state to default behavior
-            
+
             % Convert all double spaces into single spaces.
             % This is added because num2str converts an array into a double-space separated string.
             while(contains(parameter, '  '))
@@ -994,7 +994,7 @@ classdef Project < handle
             % Creates a new global data storage setting with a given name and value or changes an existing one. For storing floating point numbers it is recommended to use an explicit conversion first to double and then to string to avoid errors caused by locale dependent decimal separators:
             % SetGlobalData(name, CStr(Cdbl(value)))
             obj.AddToHistory(['.SetGlobalData "', num2str(name, '%.15g'), '", '...
-                '"', num2str(value, '%.15g'), '"']);
+                                             '"', num2str(value, '%.15g'), '"']);
         end
         function str = GetGlobalData(obj, name)
             % Returns a global data storage setting.
@@ -1025,7 +1025,7 @@ classdef Project < handle
             % The following example shows how a plot style can be modified:
             % SetPlotStyleForTreeItem("1D Results\S-Parameters\S1,1","color=177;1;165 linetype=Dotted linewidth=8")
             obj.AddToHistory(['.SetPlotStyleForTreeItem "', num2str(treepath, '%.15g'), '", '...
-                '"', num2str(settings, '%.15g'), '"']);
+                                                       '"', num2str(settings, '%.15g'), '"']);
         end
         %% Undocumented functions.
         % Found at https://www.researchgate.net/post/How_to_export_all_tables_obtained_from_parameter_sweep_in_CST_together
@@ -1054,14 +1054,14 @@ classdef Project < handle
                 if(nargout ~= length(returnvalues))
                     error('Invalid number of return values specified.');
                 end
-                
+
                 % Append the code to return the values to MATLAB.
                 for(i = 1:length(returnvalues))
                     functionstring = [functionstring, newline, ...
-                        'StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
+                    'StoreGlobalDataValue("matlab', num2str(i), '", ', returnvalues{i}, ')']; %#ok<AGROW>
                 end
             end
-            
+
             % Determine the full path to the RunVBACode.bas file.
             folders = what('+CST');
             cstinterfacefolder = [];
@@ -1083,11 +1083,11 @@ classdef Project < handle
             if(~exist(basfilepath, 'file'))
                 error('RunVBACode.bas macro not found, ensure it is placed in the Bas folder.\nThe Bas folder should be next to the +CST folder.');
             end
-            
+
             % Run the code in CST.
             obj.StoreGlobalDataValue('matlabfcn', functionstring);
             obj.RunScript(basfilepath);
-            
+
             if(nargin >= 3 && ~isempty(returnvalues))
                 % Retrieve return arguments.
                 varargout = cell(1, nargout);
@@ -1102,7 +1102,7 @@ classdef Project < handle
             for(i = 0:nparams-1)
                 parametername = obj.GetParameterName(i);
                 parameters.(parametername) = obj.GetParameterSValue(double(i));
-                %                 parameters.(parametername) = obj.RestoreParameterExpression(parametername);
+%                 parameters.(parametername) = obj.RestoreParameterExpression(parametername);
             end
         end
         function [parameters, descriptions] = GetAllParametersWithDescription(obj)
@@ -1112,7 +1112,7 @@ classdef Project < handle
             for(i = 0:nparams-1)
                 parametername = obj.GetParameterName(i);
                 parameters.(parametername) = obj.RestoreParameterExpression(parametername);
-                %                 parameters.(parametername) = obj.GetParameterSValue(double(i));
+%                 parameters.(parametername) = obj.GetParameterSValue(double(i));
                 descriptions.(parametername) = obj.GetParameterDescription(parametername);
             end
         end
@@ -1135,7 +1135,7 @@ classdef Project < handle
             % Translate caption & content history.
             for(i = 1:length(obj.captionhistory))
                 caption = obj.captionhistory{i};
-                
+
                 content = obj.contenthistory{i};
                 % Double the double quotes
                 vbacaption = strrep(caption, '"', '""');
@@ -1143,14 +1143,14 @@ classdef Project < handle
                 % Add the right newlines
                 vbacaption = strrep(vbacaption, newline, ['" + vbNewLine + _', newline, '"']);
                 vbacontent = strrep(vbacontent, newline, ['" + vbNewLine + _', newline, '"']);
-                
+
                 vba = [vba, newline, ...
                     'AddToHistory("', vbacaption, '", _', newline, '"', vbacontent, '")', newline, ...
                     ]; %#ok<AGROW>
             end
-            
+
             obj.RunVBACode(vba);
-            
+
             obj.captionhistory = {};
             obj.contenthistory = {};
             obj.bulkmode = 0;
@@ -1168,13 +1168,13 @@ classdef Project < handle
             % Next [ counter ]
             if(nargin < 5)
                 obj.nextcommandmodifiers{end+1} = {'Loop', counter, ...
-                    num2str(startval, '%.15g'), ...
-                    num2str(endval, '%.15g')};
+                                                           num2str(startval, '%.15g'), ...
+                                                           num2str(endval, '%.15g')};
             else
                 obj.nextcommandmodifiers{end+1} = {'Loop', counter, ...
-                    num2str(startval, '%.15g'), ...
-                    num2str(endval, '%.15g'), ...
-                    num2str(stepval, '%.15g')};
+                                                           num2str(startval, '%.15g'), ...
+                                                           num2str(endval, '%.15g'), ...
+                                                           num2str(stepval, '%.15g')};
             end
         end
     end
@@ -1319,14 +1319,14 @@ classdef Project < handle
         qfactor                     CST.QFactor
         rayresultcreator            CST.RayResultCreator
         rectangle                   CST.Rectangle
-        %       result0d                    CST.Result0D
-        %       result1d                    CST.Result1D
-        %       result1dcomplex             CST.Result1DComplex
-        %       result2d                    CST.Result2D
-        %       result3d                    CST.Result3D
+%       result0d                    CST.Result0D
+%       result1d                    CST.Result1D
+%       result1dcomplex             CST.Result1DComplex
+%       result2d                    CST.Result2D
+%       result3d                    CST.Result3D
         resultdatabase              CST.ResultDatabase
-        %       resultmap                   CST.ResultMap
-        %       resultmatrix                CST.ResultMatrix
+%       resultmap                   CST.ResultMap
+%       resultmatrix                CST.ResultMatrix
         resulttree                  CST.ResultTree
         rigidbodymotion             CST.RigidBodyMotion
         rotate                      CST.Rotate
@@ -1351,7 +1351,7 @@ classdef Project < handle
         stl                         CST.STL
         structuralmechanicssolver   CST.StructuralMechanicsSolver
         sweepcurve                  CST.SweepCurve
-        %       table                       CST.Table
+%       table                       CST.Table
         temperaturesource           CST.TemperatureSource
         thermallossimport           CST.ThermalLossImport
         thermalsolver               CST.ThermalSolver
@@ -1514,26 +1514,26 @@ classdef Project < handle
         function qfactor                     = QFactor(obj);                     if(isempty(obj.qfactor));                     obj.qfactor                     = CST.QFactor(obj, obj.hProject);                     end; qfactor                     = obj.qfactor;                     end
         function rayresultcreator            = RayResultCreator(obj);            if(isempty(obj.rayresultcreator));            obj.rayresultcreator            = CST.RayResultCreator(obj, obj.hProject);            end; rayresultcreator            = obj.rayresultcreator;            end
         function rectangle                   = Rectangle(obj);                   if(isempty(obj.rectangle));                   obj.rectangle                   = CST.Rectangle(obj, obj.hProject);                   end; rectangle                   = obj.rectangle;                   end
-        %       function result0d                    = Result0D(obj, resultname);        if(isempty(obj.result0d));                    obj.result0d                    = CST.Result0D(obj, obj.hProject, resultname);        end; result0d                    = obj.result0d;                    end
+%       function result0d                    = Result0D(obj, resultname);        if(isempty(obj.result0d));                    obj.result0d                    = CST.Result0D(obj, obj.hProject, resultname);        end; result0d                    = obj.result0d;                    end
         % Each result0d can be different depending on resultname, so don't store it.
         function result0d                    = Result0D(obj, resultname);                                                          result0d                    = CST.Result0D(obj, obj.hProject, resultname);                                                                            end
-        %       function result1d                    = Result1D(obj, resultname);        if(isempty(obj.result1d));                    obj.result1d                    = CST.Result1D(obj, obj.hProject, resultname);        end; result1d                    = obj.result1d;                    end
+%       function result1d                    = Result1D(obj, resultname);        if(isempty(obj.result1d));                    obj.result1d                    = CST.Result1D(obj, obj.hProject, resultname);        end; result1d                    = obj.result1d;                    end
         % Each result1d can be different depending on resultname, so don't store it.
         function result1d                    = Result1D(obj, resultname);                                                          result1d                    = CST.Result1D(obj, obj.hProject, resultname);                                                                            end
-        %       function result1dcomplex             = Result1DComplex(obj, resultname); if(isempty(obj.result1dcomplex));             obj.result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname); end; result1dcomplex             = obj.result1dcomplex;             end
+%       function result1dcomplex             = Result1DComplex(obj, resultname); if(isempty(obj.result1dcomplex));             obj.result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname); end; result1dcomplex             = obj.result1dcomplex;             end
         % Each result1dcomplex can be different depending on resultname, so don't store it.
         function result1dcomplex             = Result1DComplex(obj, resultname);                                                   result1dcomplex             = CST.Result1DComplex(obj, obj.hProject, resultname);                                                                     end
-        %       function result2d                    = Result2D(obj, resultname);        if(isempty(obj.result2d));                    obj.result2d                    = CST.Result2D(obj, obj.hProject, resultname);        end; result2d                    = obj.result2d;                    end
+%       function result2d                    = Result2D(obj, resultname);        if(isempty(obj.result2d));                    obj.result2d                    = CST.Result2D(obj, obj.hProject, resultname);        end; result2d                    = obj.result2d;                    end
         % Each result2d can be different depending on resultname, so don't store it.
         function result2d                    = Result2D(obj, resultname);                                                          result2d                    = CST.Result2D(obj, obj.hProject, resultname);                                                                            end
-        %       function result3d                    = Result3D(obj, resultname);        if(isempty(obj.result3d));                    obj.result3d                    = CST.Result3D(obj, obj.hProject, resultname);        end; result3d                    = obj.result3d;                    end
+%       function result3d                    = Result3D(obj, resultname);        if(isempty(obj.result3d));                    obj.result3d                    = CST.Result3D(obj, obj.hProject, resultname);        end; result3d                    = obj.result3d;                    end
         % Each result3d can be different depending on resultname, so don't store it.
         function result3d                    = Result3D(obj, resultname);                                                          result3d                    = CST.Result3D(obj, obj.hProject, resultname);                                                                            end
         function resultdatabase              = ResultDatabase(obj);              if(isempty(obj.resultdatabase));              obj.resultdatabase              = CST.ResultDatabase(obj, obj.hProject);              end; resultdatabase              = obj.resultdatabase;              end
-        %       function resultmap                   = ResultMap(obj, treepath);         if(isempty(obj.resultmap));                   obj.resultmap                   = CST.ResultMap(obj, obj.hProject, treepath);         end; resultmap                   = obj.resultmap;                   end
+%       function resultmap                   = ResultMap(obj, treepath);         if(isempty(obj.resultmap));                   obj.resultmap                   = CST.ResultMap(obj, obj.hProject, treepath);         end; resultmap                   = obj.resultmap;                   end
         % Each resultmap can be different depending on treepath, so don't store it.
         function resultmap                   = ResultMap(obj, treepath);                                                           resultmap                   = CST.ResultMap(obj, obj.hProject, treepath);                                                                             end
-        %       function resultmatrix                = ResultMatrix(obj, treepath);      if(isempty(obj.resultmatrix));                obj.resultmatrix                = CST.ResultMatrix(obj, obj.hProject, treepath);      end; resultmatrix                = obj.resultmatrix;                end
+%       function resultmatrix                = ResultMatrix(obj, treepath);      if(isempty(obj.resultmatrix));                obj.resultmatrix                = CST.ResultMatrix(obj, obj.hProject, treepath);      end; resultmatrix                = obj.resultmatrix;                end
         % Each resultmatrix can be different depending on treepath, so don't store it.
         function resultmatrix                = ResultMatrix(obj, treepath);                                                        resultmatrix                = CST.ResultMatrix(obj, obj.hProject, treepath);                                                                          end
         function resulttree                  = ResultTree(obj);                  if(isempty(obj.resulttree));                  obj.resulttree                  = CST.ResultTree(obj, obj.hProject);                  end; resulttree                  = obj.resulttree;                  end
@@ -1560,7 +1560,7 @@ classdef Project < handle
         function stl                         = STL(obj);                         if(isempty(obj.stl));                         obj.stl                         = CST.STL(obj, obj.hProject);                         end; stl                         = obj.stl;                         end
         function structuralmechanicssolver   = StructuralMechanicsSolver(obj);   if(isempty(obj.structuralmechanicssolver));   obj.structuralmechanicssolver   = CST.StructuralMechanicsSolver(obj, obj.hProject);   end; structuralmechanicssolver   = obj.structuralmechanicssolver;   end
         function sweepcurve                  = SweepCurve(obj);                  if(isempty(obj.sweepcurve));                  obj.sweepcurve                  = CST.SweepCurve(obj, obj.hProject);                  end; sweepcurve                  = obj.sweepcurve;                  end
-        %       function table                       = Table(obj, tablefilename);        if(isempty(obj.table));                       obj.table                       = CST.Table(obj, obj.hProject, tablefilename);        end; table                       = obj.table;                       end
+%       function table                       = Table(obj, tablefilename);        if(isempty(obj.table));                       obj.table                       = CST.Table(obj, obj.hProject, tablefilename);        end; table                       = obj.table;                       end
         % Each table can be different depending on tablefilename, so don't store it.
         function table                       = Table(obj, tablefilename);                                                          table                       = CST.Table(obj, obj.hProject, tablefilename);                                                                            end
         function temperaturesource           = TemperatureSource(obj);           if(isempty(obj.temperaturesource));           obj.temperaturesource           = CST.TemperatureSource(obj, obj.hProject);           end; temperaturesource           = obj.temperaturesource;           end
@@ -1594,7 +1594,6 @@ classdef Project < handle
         function wire                        = Wire(obj);                        if(isempty(obj.wire));                        obj.wire                        = CST.Wire(obj, obj.hProject);                        end; wire                        = obj.wire;                        end
         function yieldanalysis               = YieldAnalysis(obj);               if(isempty(obj.yieldanalysis));               obj.yieldanalysis               = CST.YieldAnalysis(obj, obj.hProject);               end; yieldanalysis               = obj.yieldanalysis;               end
     end
-    
     properties (Dependent)
         Version (2, 1) uint32 % Major and Minor version of the current application/project
     end
